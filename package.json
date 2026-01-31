@@ -3,13 +3,17 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start:frontend": "cmd /c start \"frontend\" cmd /k \"pnpm nx serve frontend\"",
-    "start:api": "cmd /c start \"api\" cmd /k \"pnpm nx serve api\"",
-    "start:heavy": "cmd /c start \"heavy\" cmd /k \"pnpm nx serve heavy\"",
-    "start:deps": "cmd /c start \"deps\" cmd /k \"docker compose up --build\"",
-    "start:all": "pnpm run start:deps && pnpm run start:frontend && pnpm run start:api && pnpm run start:heavy && pnpm run build:watch",
+    "start:frontend": "pnpm nx serve frontend",
+    "start:frontend:win": "cmd /c start \"frontend\" cmd /k \"pnpm nx serve frontend\"",
+    "start:api": "pnpm nx serve api",
+    "start:api:win": "cmd /c start \"api\" cmd /k \"pnpm nx serve api\"",
+    "start:heavy": "pnpm nx serve heavy",
+    "start:heavy:win": "cmd /c start \"heavy\" cmd /k \"pnpm nx serve heavy\"",
+    "start:deps": "docker compose up --build",
+    "start:deps:win": "cmd /c start \"deps\" cmd /k \"docker compose up --build\"",
+    "start:all": "node scripts/start-all.js",
     "build": "pnpm nx run-many --target=build --projects=frontend,shared --parallel=false",
-    "build:watch": "pnpm nx build frontend --watch",
+    "build:watch": "pnpm nx build frontend --watch || echo \"No frontend project found; skipping build:watch\"",
     "lint": "pnpm nx lint",
     "lint:rule-tests": "node tools/eslint-rule-tests/test-rules.js",
     "lint:rule-tests:typing": "node tools/eslint-rule-tests/test-rules-typing.js",
@@ -65,7 +69,8 @@
     "tslib": "^2.3.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.40.0",
-    "verdaccio": "^6.0.5"
+    "verdaccio": "^6.0.5",
+    "concurrently": "^8.2.0"
   },
   "dependencies": {},
   "nx": {
