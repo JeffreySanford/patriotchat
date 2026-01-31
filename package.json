@@ -13,7 +13,7 @@
     "start:deps:win": "cmd /c start \"deps\" cmd /k \"docker compose up --build\"",
     "start:all": "concurrently -n deps,frontend,api,heavy,build \"pnpm run start:deps\" \"pnpm run start:frontend\" \"pnpm run start:api\" \"pnpm run start:heavy\" \"pnpm run build:watch\"",
     "build": "pnpm nx run-many --target=build --projects=frontend,shared --parallel=false",
-    "build:watch": "pnpm nx build frontend --watch || echo \"No frontend project found; skipping build:watch\"",
+    "build:watch": "pnpm nx build frontend --configuration=development --watch || echo \"No frontend project found; skipping build:watch\"",
     "lint": "pnpm nx lint",
     "lint:rule-tests": "node tools/eslint-rule-tests/test-rules.js",
     "lint:rule-tests:typing": "node tools/eslint-rule-tests/test-rules-typing.js",
