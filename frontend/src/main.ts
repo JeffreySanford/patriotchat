@@ -3,6 +3,6 @@ import { AppModule } from './app/app-module';
 
 platformBrowser()
   .bootstrapModule(AppModule)
-  .catch((err: unknown) => {
+  .catch((err: Error) => {
     console.error(err);
   });

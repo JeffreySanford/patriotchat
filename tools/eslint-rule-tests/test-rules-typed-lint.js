@@ -7,15 +7,18 @@ async function run() {
     overrideConfig: {
       languageOptions: {
         parserOptions: {
-          project: ['./libs/shared/tsconfig.lib.json']
-        }
-      }
-    }
+          project: ['./libs/shared/tsconfig.lib.json'],
+        },
+      },
+    },
   });
 
   const fs = require('fs');
   const path = require('path');
-  const tmpDir = path.resolve(process.cwd(), 'libs/shared/src/eslint-typed-tests');
+  const tmpDir = path.resolve(
+    process.cwd(),
+    'libs/shared/src/eslint-typed-tests',
+  );
 
   if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
 
@@ -26,22 +29,22 @@ async function run() {
 export {};
 `,
       filename: path.join(tmpDir, 'test-no-floating.ts'),
-      expectMessage: 'promises' // message mentions promises
+      expectMessage: 'promises', // message mentions promises
     },
     {
       name: 'no-unsafe-assignment',
       code: `declare const x: any; const y: number = x; export {};
 `,
       filename: path.join(tmpDir, 'test-no-unsafe.ts'),
-      expectMessage: 'unsafe' // message mentions unsafe
+      expectMessage: 'unsafe', // message mentions unsafe
     },
     {
       name: 'no-unsafe-call',
       code: `declare const f: any; f(); export {};
 `,
       filename: path.join(tmpDir, 'test-no-unsafe-call.ts'),
-      expectMessage: 'unsafe' // message mentions unsafe
-    }
+      expectMessage: 'unsafe', // message mentions unsafe
+    },
   ];
 
   // Write temp files
@@ -53,9 +56,11 @@ export {};
 
   for (const c of cases) {
     const results = await eslint.lintFiles([c.filename]);
-    const messages = results[0].messages.map(m => m.message).join('\n');
+    const messages = results[0].messages.map((m) => m.message).join('\n');
     if (!messages.toLowerCase().includes(c.expectMessage)) {
-      console.error(`Case ${c.name} did NOT find expected message. Found:\n${messages || '<no messages>'}`);
+      console.error(
+        `Case ${c.name} did NOT find expected message. Found:\n${messages || '<no messages>'}`,
+      );
       failed = true;
     } else {
       console.log(`Case ${c.name} OK: found expected message.`);
@@ -64,11 +69,10 @@ export {};
 
   // Clean up temp files directory
   try {
-    const rimraf = require('fs');
     const files = fs.readdirSync(tmpDir);
     for (const f of files) fs.unlinkSync(path.join(tmpDir, f));
     fs.rmdirSync(tmpDir);
-  } catch (e) {
+  } catch {
     // ignore cleanup errors
   }
 
@@ -80,7 +84,7 @@ export {};
   console.log('All ESLint typed rule tests passed');
 }
 
-run().catch(err => {
+run().catch((err) => {
   console.error(err);
   process.exit(2);
 });

@@ -101,6 +101,7 @@ export default [
       '@typescript-eslint/no-unsafe-member-access': 'error',
       '@typescript-eslint/no-unsafe-return': 'error',
       '@typescript-eslint/no-misused-promises': ['error', { 'checksVoidReturn': false }],
+      '@typescript-eslint/no-inferrable-types': 'off',
 
       // Disallow explicit `any` and `unknown` as syntax nodes; provide clear messages
       'no-restricted-syntax': [
@@ -123,5 +124,15 @@ export default [
         }
       ]
     },
+  },
+  // Test files: relax strict 'no-unsafe-*' rules to allow idiomatic testing patterns while maintaining typedefs
+  {
+    files: ['**/*.spec.ts', '**/*.spec.tsx', 'frontend-e2e/**', 'api-e2e/**'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off'
+    }
   }
 ];
