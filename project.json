@@ -1,0 +1,20 @@
+{
+  "name": "@patriotchat/source",
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "local-registry": {
+      "executor": "@nx/js:verdaccio",
+      "options": {
+        "port": 4873,
+        "config": ".verdaccio/config.yml",
+        "storage": "tmp/local-registry/storage"
+      }
+    },
+    "guardrail-regressions": {
+      "executor": "@nx/workspace:run-commands",
+      "options": {
+        "command": "echo Guardrail regression suite placeholder (implement real tests before release)"
+      }
+    }
+  }
+}

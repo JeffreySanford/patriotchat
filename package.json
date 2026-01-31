@@ -2,12 +2,73 @@
   "name": "@patriotchat/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start:frontend": "cmd /c start \"frontend\" cmd /k \"pnpm nx serve frontend\"",
+    "start:api": "cmd /c start \"api\" cmd /k \"pnpm nx serve api\"",
+    "start:heavy": "cmd /c start \"heavy\" cmd /k \"pnpm nx serve heavy\"",
+    "start:deps": "cmd /c start \"deps\" cmd /k \"docker compose up --build\"",
+    "start:all": "pnpm run start:deps && pnpm run start:frontend && pnpm run start:api && pnpm run start:heavy && pnpm run build:watch",
+    "build": "pnpm nx run-many --target=build --projects=frontend,shared --parallel=false",
+    "build:watch": "pnpm nx build frontend --watch",
+    "lint": "pnpm nx lint",
+    "lint:rule-tests": "node tools/eslint-rule-tests/test-rules.js",
+    "lint:rule-tests:typing": "node tools/eslint-rule-tests/test-rules-typing.js",
+    "lint:rule-tests:typed-lint": "node tools/eslint-rule-tests/test-rules-typed-lint.js",
+    "lint:typed": "pnpm exec eslint . --ext .ts,.tsx --max-warnings=0",
+    "prepare": "husky install",
+    "lint:staged": "pnpm exec lint-staged",
+    "test": "pnpm nx test"
+  },
+  "lint-staged": {
+    "*.(ts|tsx|js|jsx)": [
+      "pnpm exec eslint --fix",
+      "pnpm exec prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pnpm run lint:staged"
+    }
+  },
   "private": true,
-  "dependencies": {},
   "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^14.0.0",
+    "@angular-devkit/core": "~21.1.0",
+    "@eslint/js": "^9.8.0",
+    "@nestjs/schematics": "^11.0.0",
+    "@nx/angular": "22.4.4",
+    "@nx/esbuild": "22.4.4",
+    "@nx/eslint": "22.4.4",
+    "@nx/eslint-plugin": "22.4.4",
+    "@nx/jest": "22.4.4",
     "@nx/js": "22.4.4",
+    "@nx/nest": "22.4.4",
     "@nx/workspace": "22.4.4",
-    "nx": "22.4.4"
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "@types/jest": "^30.0.0",
+    "@types/node": "20.19.9",
+    "esbuild": "^0.19.2",
+    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^10.0.0",
+    "jest": "^30.0.2",
+    "jest-environment-node": "^30.0.2",
+    "jest-util": "^30.0.2",
+    "jsonc-eslint-parser": "^2.1.0",
+    "nx": "22.4.4",
+    "prettier": "~3.6.2",
+    "ts-jest": "^29.4.0",
+    "ts-node": "10.9.1",
+    "tslib": "^2.3.0",
+    "typescript": "~5.9.2",
+    "typescript-eslint": "^8.40.0",
+    "verdaccio": "^6.0.5"
+  },
+  "dependencies": {},
+  "nx": {
+    "includedScripts": []
   }
 }
