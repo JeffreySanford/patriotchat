@@ -1,12 +1,15 @@
 # Incident Response Playbook
 
 Purpose
+
 - Outline detection, triage, containment, eradication, recovery, and post-incident review steps for security, guardrail, and data incidents.
 
 Scope
+
 - Applies to data exfiltration, guardrail failures, model drift/backdoor discoveries, and critical availability incidents.
 
 Process
+
 1. Detection & Triage
    - Create an issue with label `security` and include anonymized request IDs, timeline, and relevant logs (no raw user content).
    - Assign SecurityOps and the Governance reviewer.
@@ -21,10 +24,12 @@ Process
    - Record the incident in the governance log with relevant artifacts (issue/PR numbers) and a list of owners.
 
 Contacts
+
 - Security lead: `security@patriotchat.local`
 - Legal/Ethics reviewer: `legal@patriotchat.local`
 - Governance reviewer: `governance@patriotchat.local`
 
 Notes
+
 - Preserve privacy: do not store raw inference payloads in public issues; use hashed/anonymized identifiers.
 - For severe incidents, follow legal reporting and notification obligations per applicable jurisdiction.

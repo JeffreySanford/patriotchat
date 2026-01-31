@@ -10,6 +10,7 @@ This directory documents the expected metadata format for model checkpoints crea
 - `commit` (string) — commit SHA of the code used to create the checkpoint
 
 Example
+
 ```json
 {
   "modelName": "patriotchat-llama2-finetuned",
@@ -22,5 +23,6 @@ Example
 ```
 
 Recommendations
+
 - Store the metadata alongside the artifact in `tools/checkpoints` and reference it from the governance log when releasing a model.
 - Include guardrail tags (e.g., `patriotism, civics`) in checkpoint metadata when relevant.
