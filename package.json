@@ -6,7 +6,7 @@
     "start:frontend": "pnpm nx serve frontend --port 4200",
     "start:api": "pnpm nx serve api --port 3000",
     "start:heavy": "pnpm nx serve heavy --port 4000",
-    "start:deps": "docker compose up --build",
+    "start:deps": "docker compose up --build || echo \"No docker-compose.yml or docker not available; skipping deps\"",
     "start:all": "concurrently -n deps,build \"pnpm run start:deps\" \"pnpm run build\"",
     "build": "pnpm nx run-many --target=build --projects=frontend,shared --parallel=false",
     "build:watch": "pnpm nx build frontend --configuration=development --watch || echo \"No frontend project found; skipping build:watch\"",
