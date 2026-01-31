@@ -74,7 +74,7 @@ Alignment with `documentation/CODING-STANDARDS.md` is required: no standalone co
 
 ## Next steps
 
-- TODO: Add a GitHub Actions workflow that runs the Nx lint/test/guardrail suites, builds containers, and scans images.
-- TODO: Publish `documentation/METRICS.md`, `SECURITY.md`, `CONTRIBUTING.md`, and a governance log so the above operations sections link to living documents.
+- Ensure the `CI Pipeline` workflow (`.github/workflows/ci.yml`) continues to run the Nx lint/test/guardrail suites, build containers, and scan images on every push and PR.
+- Publish and maintain `documentation/METRICS.md`, `SECURITY.md`, `CONTRIBUTING.md`, and the governance log as living documents; link to these from PR templates and the governance review process.
 
 Use this overview as the baseline for Copilot prompts, sprint plans, and guardrail documentation; update it whenever the stack shifts.

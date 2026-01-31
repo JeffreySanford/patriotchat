@@ -67,6 +67,6 @@ We recommend running Ollama inside Docker (`ollama/ollama:latest`) because the c
 - Keep CI gates (`pnpm nx lint`, `pnpm nx test`, guardrail regression suites, container builds/scans) green before merging.
 
 ## Next steps for planning phase
-- Monitor the new `CI Pipeline` workflow (`.github/workflows/ci.yml`) so the Nx lint/test/guardrail suite and container build/scan steps stay green as the codebase grows.
+- Monitor the `CI Pipeline` workflow (`.github/workflows/ci.yml`) so the Nx lint/test/guardrail suite and container build/scan steps stay green as the codebase grows.
 - Keep `documentation/METRICS.md`, `documentation/SECURITY.md`, and `documentation/GOVERNANCE.md` in sync with dashboards, alerts, and governance changes—each doc is a living artifact for ongoing audits.
 - Harden dataset/model governance by tying metadata, license, and guardrail reviews into PR templates, issue workflows, and the governance log.
