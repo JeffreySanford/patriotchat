@@ -1,0 +1,29 @@
+{
+  "name": "heavy",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "root": "services/heavy",
+  "sourceRoot": "services/heavy",
+  "projectType": "application",
+  "targets": {
+    "serve": {
+      "executor": "@nx/workspace:run-commands",
+      "options": {
+        "command": "go run main.go",
+        "cwd": "services/heavy"
+      }
+    },
+    "build": {
+      "executor": "@nx/workspace:run-commands",
+      "options": {
+        "command": "docker build -t patriotchat/heavy:local .",
+        "cwd": "services/heavy"
+      }
+    },
+    "test": {
+      "executor": "@nx/workspace:run-commands",
+      "options": {
+        "command": "echo \"No tests configured for heavy yet\""
+      }
+    }
+  }
+}
