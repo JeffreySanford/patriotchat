@@ -1,0 +1,16 @@
+# CODEOWNERS
+# Single owner for the planning phase
+# Replace or add additional owners if/when more collaborators join.
+
+# Default owner for the entire repo
+* @jeffreysanford
+
+# Owners for critical docs and governance changes
+/docs/ @jeffreysanford
+/documentation/ @jeffreysanford
+
+# Owners for CI and infra changes
+.github/workflows/ @jeffreysanford
+tools/ @jeffreysanford
+
+# NOTE: This config makes @jeffreysanford the default reviewer for all changes. Update this file when you add more collaborators.
