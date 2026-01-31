@@ -7,7 +7,7 @@
     "start:api": "pnpm nx serve api --port 3000",
     "start:heavy": "pnpm nx serve heavy --port 4000",
     "start:deps": "docker compose up --build",
-    "start:all": "concurrently -n deps,frontend,api,heavy,build \"pnpm run start:deps\" \"pnpm run start:frontend\" \"pnpm run start:api\" \"pnpm run start:heavy\" \"pnpm run build\"",
+    "start:all": "concurrently -n deps,build \"pnpm run start:deps\" \"pnpm run build\"",
     "build": "pnpm nx run-many --target=build --projects=frontend,shared --parallel=false",
     "build:watch": "pnpm nx build frontend --configuration=development --watch || echo \"No frontend project found; skipping build:watch\"",
     "lint": "pnpm nx lint",
