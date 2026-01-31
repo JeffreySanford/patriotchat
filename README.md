@@ -80,3 +80,4 @@ We recommend running Ollama inside Docker (`ollama/ollama:latest`) because the c
 - Monitor the `CI Pipeline` workflow (`.github/workflows/ci.yml`) so the Nx lint/test/guardrail suite and container build/scan steps stay green as the codebase grows.
 - Keep `documentation/METRICS.md`, `documentation/SECURITY.md`, and `documentation/GOVERNANCE.md` in sync with dashboards, alerts, and governance changes—each doc is a living artifact for ongoing audits.
 - Harden dataset/model governance by tying metadata, license, and guardrail reviews into PR templates, issue workflows, and the governance log.
+<!-- PR validation: test branch to validate CI and branch protection; do not merge -->
