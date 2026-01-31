@@ -25,7 +25,8 @@ When requesting an exception to the policies (standalone components, Signals, Pr
 - [ ] Tests added/updated
 - [ ] Lint and typed-lint passes (`pnpm run lint`, `pnpm run lint:typed`)
 - [ ] CI green
-- [ ] Docs updated (where applicable)
+- [ ] Docs updated (where applicable) — include links to `CODE_OF_CONDUCT.md`, `documentation/INCIDENT_RESPONSE.md`, `documentation/SOCKET-SERVICES.md`, and `tools/checkpoints/README.md` when relevant
+- [ ] Governance log updated (if this PR affects datasets/models/guardrails)
 
 ## Risk & Rollback
 Describe risk and rollback plan if this change introduces regressions.
