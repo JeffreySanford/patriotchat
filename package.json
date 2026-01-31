@@ -11,7 +11,7 @@
     "start:heavy:win": "cmd /c start \"heavy\" cmd /k \"pnpm nx serve heavy\"",
     "start:deps": "docker compose up --build",
     "start:deps:win": "cmd /c start \"deps\" cmd /k \"docker compose up --build\"",
-    "start:all": "node scripts/start-all.js",
+    "start:all": "concurrently -k -n deps,frontend,api,heavy,build \"pnpm run start:deps\" \"pnpm run start:frontend\" \"pnpm run start:api\" \"pnpm run start:heavy\" \"pnpm run build:watch\"",
     "build": "pnpm nx run-many --target=build --projects=frontend,shared --parallel=false",
     "build:watch": "pnpm nx build frontend --watch || echo \"No frontend project found; skipping build:watch\"",
     "lint": "pnpm nx lint",
