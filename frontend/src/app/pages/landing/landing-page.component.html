@@ -1,0 +1,48 @@
+<section class="landing-hero" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <p class="eyebrow">LLM client · status</p>
+    <h1 id="hero-title">A direct window into the assistant</h1>
+    <p class="intro">
+      Send prompts, log responses, and surface patrol metrics without leaving the guardrails you already trust.
+      The console stays focused on requests, latency, and policy compliance so every exchange is auditable.
+    </p>
+    <div class="hero-actions">
+      <button class="primary-action" type="button" routerLink="/guardrails">
+        View guardrails
+      </button>
+      <button class="secondary-action" type="button" routerLink="/metrics">
+        Performance overview
+      </button>
+    </div>
+    <div class="chip-row" aria-label="Hero tags">
+      <ng-container *ngFor="let tag of heroTags">
+        <span class="chip">{{ tag }}</span>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <article
+      class="stat-card"
+      *ngFor="let stat of heroStats"
+      [style.borderColor]="stat.accent"
+    >
+      <span class="stat-label">{{ stat.label }}</span>
+      <strong>{{ stat.value }}</strong>
+      <p>{{ stat.meta }}</p>
+    </article>
+  </div>
+</section>
+
+<section class="landing-performance" aria-label="Performance insights">
+  <header>
+    <h2>Performance highlights</h2>
+    <p>Telemetry and resilience metrics keep the team centered on throughput and policy adherence.</p>
+  </header>
+  <div class="performance-grid">
+    <article class="performance-card" *ngFor="let insight of performanceInsights">
+      <h3>{{ insight.title }}</h3>
+      <p>{{ insight.detail }}</p>
+    </article>
+  </div>
+</section>

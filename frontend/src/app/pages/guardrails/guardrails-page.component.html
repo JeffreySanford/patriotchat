@@ -1,0 +1,25 @@
+<section class="guardrails-page" aria-labelledby="guardrails-title">
+  <header class="guardrails-header">
+    <h1 id="guardrails-title">Guardrail watch</h1>
+    <p>See which policies are being monitored so you can keep every request inside the documented constraints.</p>
+  </header>
+  <div class="guardrail-grid">
+    <article class="guardrail-card" *ngFor="let guardrail of guardrails" [attr.data-severity]="guardrail.severity">
+      <div class="guardrail-card__header">
+        <span>{{ guardrail.title }}</span>
+        <span class="guardrail-pill">{{ guardrail.severity }}</span>
+      </div>
+      <p class="guardrail-detail">{{ guardrail.detail }}</p>
+      <p class="guardrail-advice">{{ guardrail.advice }}</p>
+      <footer>
+        <strong>{{ guardrail.status }}</strong>
+        <button type="button">Capture log</button>
+      </footer>
+    </article>
+  </div>
+  <div class="guardrail-tip">
+    <h3>Need extra context?</h3>
+    <p>{{ tip }}</p>
+    <button type="button" routerLink="/metrics">View the metrics board</button>
+  </div>
+</section>

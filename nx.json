@@ -13,7 +13,12 @@
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s"
     ],
-    "sharedGlobals": []
+    "sharedGlobals": ["{workspaceRoot}/jest-preset/jest-preset.js"],
+    "jest-preset": ["sharedGlobals"],
+    "../jest-preset": ["sharedGlobals"],
+    "..\\jest-preset": ["sharedGlobals"],
+    "../../jest-preset": ["sharedGlobals"],
+    "..\\..\\jest-preset": ["sharedGlobals"]
   },
   "plugins": [
     {

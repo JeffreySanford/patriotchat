@@ -12,6 +12,8 @@ These standards apply to Angular 19 with Nx 20 workspace management and keep eve
 - Hot observables (e.g., `shareReplay`, `BehaviorSubject`, facades) drive state; avoid Promises for recurring or multi-subscriber data.
 - Prefer reactive forms for complex input and leverage resolvers for route data hydration to minimize flicker and duplication.
 - Use dependency injection and `providedIn: 'root'` services so guards, interceptors, and sockets can reuse DTO-powered logic consistently.
+- Prefer Angular's `inject()` helper over constructor injection when wiring services or helpers into components/services so dependencies stay explicit and easier to mock during tests.
+- **Favor `inject()` everywhere**: guard against implicit constructor wiring by calling `inject()` (or helper `provideXxx()` wrappers) inside guards, interceptors, resolvers, and components so every dependency path can be overridden in tests without relying on metadata reflection.
 
 ## Enterprise Enforcement: Standalone, Signals & Promise policy
 
