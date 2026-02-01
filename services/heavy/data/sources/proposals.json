@@ -1,0 +1,11 @@
+[
+  {
+    "id": "nyt",
+    "new_score": 0.3,
+    "rationale": "test change",
+    "proposer": "tester",
+    "time": "2026-02-01T21:47:07Z",
+    "approved": true,
+    "reviewer": "admin"
+  }
+]

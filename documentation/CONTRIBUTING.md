@@ -16,6 +16,7 @@ We value clarity, reproducibility, and auditable guardrails. Contributors should
 - Reference `documentation/METRICS.md` for KPIs/data you are helping to protect or improve.
 - Review `documentation/SECURITY.md` before touching datasets, models, or guardrail logic.
 - Update `documentation/GOVERNANCE.md` when submitting new datasets, models, or guardrail rules.
+- For LLM development, consult `documentation/LLM/` subdirectory: charter, training sources, evaluation, and philosophical notes.
 - When working on rate limits, tiering, or 2FA flows, cite the access policies in `documentation/GOVERNANCE.md` and describe how anonymized audit logs plus blockchain anchoring behave.
 
 ## Pull Request Guidelines

@@ -1,0 +1,4 @@
+{
+  "name": "shared-jest-preset",
+  "main": "jest-preset.js"
+}

@@ -42,6 +42,7 @@ Enforcement:
 - CI runs a typed linter job; PRs must pass the typed-lint before merge.
 
 ### Onboarding (quick start)
+
 - Install dependencies: `pnpm install` (this installs dev tools and runs `prepare` to install Husky hooks).
 - If hooks are missing: run `pnpm run prepare` to install Husky locally.
 - Local checks you should run before opening a PR:
@@ -51,6 +52,7 @@ Enforcement:
 - If a typed-lint failure appears, fix the issue or request an exception per the exception process below.
 
 ### Exception process
+
 - Add a short **Typing exception** section in the PR description explaining why the exception is needed and how long it will last.
 - Tag an approver from `CODEOWNERS` and add an entry to `documentation/GOVERNANCE.md` referencing the PR and rationale.
 - Exceptions should have an owner and an expiry and be corrected before merging to `master` where possible.

@@ -6,23 +6,24 @@
   "projectType": "application",
   "targets": {
     "serve": {
-      "executor": "@nx/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
-        "command": "go run main.go",
+        "command": "go run .",
         "cwd": "services/heavy"
       }
     },
     "build": {
-      "executor": "@nx/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "docker build -t patriotchat/heavy:local .",
         "cwd": "services/heavy"
       }
     },
     "test": {
-      "executor": "@nx/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
-        "command": "echo \"No tests configured for heavy yet\""
+        "command": "go test ./...",
+        "cwd": "services/heavy"
       }
     }
   }

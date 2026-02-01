@@ -12,6 +12,7 @@ Use this log to track datasets, models, guardrails, and ethics reviews before th
 
 - Update this log whenever datasets/models are added or retuned; reference the relevant issue/PR and metric changes.
 - Keep `documentation/METRICS.md` and `documentation/SECURITY.md` in sync with any governance updates so the audit trail remains complete.
+- For LLM training data and models, follow the sources and charter in `documentation/LLM/` and ensure ethical reviews align with the constitutional values outlined.
 
 ## Hybrid storage & blockchain audit anchoring
 

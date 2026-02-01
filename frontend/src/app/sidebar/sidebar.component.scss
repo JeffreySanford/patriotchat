@@ -1,0 +1,138 @@
+.sidebar-shell {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  height: 100%;
+  color: #f8fbff;
+  background: linear-gradient(180deg, rgba(79, 70, 229, 0.25), rgba(14, 165, 233, 0.15));
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 60px rgba(2, 6, 23, 0.6);
+  position: relative;
+}
+
+.sidebar-shell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(249, 115, 22, 0.2), transparent 45%);
+  pointer-events: none;
+  border-radius: 1.5rem;
+}
+
+.sidebar-header h2 {
+  margin: 0.25rem 0;
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.sidebar-eyebrow {
+  letter-spacing: 0.4em;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.section-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.section-card {
+  padding: 0.95rem 1.2rem;
+  border-radius: 1rem;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 25px rgba(14, 165, 233, 0.4);
+  animation: floatCard 9s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(236, 72, 153, 0.3), transparent 55%);
+  pointer-events: none;
+}
+
+.section-card h3 {
+  margin: 0.3rem 0;
+}
+
+.section-card p {
+  margin: 0;
+  color: rgba(248, 251, 255, 0.85);
+  font-size: 0.85rem;
+}
+
+.section-pill {
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 0.6rem;
+}
+
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sidebar-links h3 {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.link-row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.75rem;
+  border-radius: 0.85rem;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.link-row:hover {
+  transform: translateX(4px);
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+.link-row span {
+  font-size: 1.3rem;
+  color: rgba(236, 72, 153, 1);
+}
+
+.link-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.link-content span {
+  font-weight: 600;
+}
+
+.link-content small {
+  font-size: 0.75rem;
+  color: rgba(248, 250, 252, 0.7);
+}
+
+@keyframes floatCard {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

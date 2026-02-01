@@ -1,0 +1,85 @@
+.history-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.history-header h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.2rem);
+}
+
+.history-header p {
+  margin: 0.35rem 0 0;
+  color: rgba(248, 250, 252, 0.7);
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.history-card {
+  border-radius: 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.25rem;
+  background: rgba(12, 14, 23, 0.9);
+  box-shadow: 0 20px 40px rgba(2, 6, 23, 0.65);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.history-card__meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.6);
+}
+
+.model-label {
+  padding: 0.15rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.history-status {
+  padding: 0.15rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.history-status[data-state='success'] {
+  color: #10b981;
+}
+
+.history-status[data-state='warning'] {
+  color: #fbbf24;
+}
+
+.history-status[data-state='error'] {
+  color: #f87171;
+}
+
+.history-card h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.history-prompt {
+  margin: 0;
+  color: rgba(248, 250, 252, 0.75);
+  font-size: 0.9rem;
+}
+
+.history-card__footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: rgba(248, 250, 252, 0.6);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}

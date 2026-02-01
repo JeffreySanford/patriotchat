@@ -1,0 +1,248 @@
+[
+  {
+    "id": "ap",
+    "rationale": "Automated funding proposal for ap: aggregated from available providers",
+    "proposer": "system",
+    "time": "2026-02-01T21:47:07Z",
+    "approved": false,
+    "funding": {
+      "owner_donations": {
+        "D": 0,
+        "R": 0
+      }
+    },
+    "evidence_links": [
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FEC API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "OpenCorporates API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FORM990_DATA_PATH not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "metaads",
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+      }
+    ],
+    "provider_stubs": [
+      "fec",
+      "opencorporates",
+      "form990",
+      "metaads"
+    ]
+  },
+  {
+    "id": "wapo",
+    "rationale": "Automated funding proposal for wapo: aggregated from available providers",
+    "proposer": "system",
+    "time": "2026-02-01T21:47:07Z",
+    "approved": false,
+    "funding": {
+      "owner_donations": {
+        "D": 0,
+        "R": 0
+      }
+    },
+    "evidence_links": [
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FEC API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "OpenCorporates API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FORM990_DATA_PATH not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "metaads",
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+      }
+    ],
+    "provider_stubs": [
+      "fec",
+      "opencorporates",
+      "form990",
+      "metaads"
+    ]
+  },
+  {
+    "id": "snopes",
+    "rationale": "Automated funding proposal for snopes: aggregated from available providers",
+    "proposer": "system",
+    "time": "2026-02-01T21:47:07Z",
+    "approved": false,
+    "funding": {
+      "owner_donations": {
+        "D": 0,
+        "R": 0
+      }
+    },
+    "evidence_links": [
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FEC API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "OpenCorporates API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FORM990_DATA_PATH not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "metaads",
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+      }
+    ],
+    "provider_stubs": [
+      "fec",
+      "opencorporates",
+      "form990",
+      "metaads"
+    ]
+  },
+  {
+    "id": "splc",
+    "rationale": "Automated funding proposal for splc: aggregated from available providers",
+    "proposer": "system",
+    "time": "2026-02-01T21:47:07Z",
+    "approved": false,
+    "funding": {
+      "owner_donations": {
+        "D": 0,
+        "R": 0
+      }
+    },
+    "evidence_links": [
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FEC API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "OpenCorporates API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FORM990_DATA_PATH not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "metaads",
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+      }
+    ],
+    "provider_stubs": [
+      "fec",
+      "opencorporates",
+      "form990",
+      "metaads"
+    ]
+  },
+  {
+    "id": "nyt",
+    "rationale": "Automated funding proposal for nyt: aggregated from available providers",
+    "proposer": "system",
+    "time": "2026-02-01T21:47:07Z",
+    "approved": false,
+    "funding": {
+      "owner_donations": {
+        "D": 0,
+        "R": 0
+      }
+    },
+    "evidence_links": [
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FEC API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "OpenCorporates API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FORM990_DATA_PATH not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "metaads",
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+      }
+    ],
+    "provider_stubs": [
+      "fec",
+      "opencorporates",
+      "form990",
+      "metaads"
+    ]
+  },
+  {
+    "id": "fox",
+    "rationale": "Automated funding proposal for fox: aggregated from available providers",
+    "proposer": "system",
+    "time": "2026-02-01T21:47:07Z",
+    "approved": false,
+    "funding": {
+      "owner_donations": {
+        "D": 0,
+        "R": 0
+      }
+    },
+    "evidence_links": [
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FEC API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "OpenCorporates API key not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "stub",
+        "excerpt": "FORM990_DATA_PATH not configured; stubbed result"
+      },
+      {
+        "url": "",
+        "type": "metaads",
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+      }
+    ],
+    "provider_stubs": [
+      "fec",
+      "opencorporates",
+      "form990",
+      "metaads"
+    ]
+  }
+]

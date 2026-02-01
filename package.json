@@ -7,7 +7,7 @@
     "start:api": "pnpm nx serve api --port 3000",
     "start:heavy": "pnpm nx serve heavy --port 4000",
     "start:deps": "docker compose up --build || echo \"No docker-compose.yml or docker not available; skipping deps\"",
-    "start:all": "concurrently -n deps,build \"pnpm run start:deps\" \"pnpm run build\"",
+    "start:all": "concurrently -n deps,build,frontend,api \"pnpm run start:deps\" \"pnpm run build\" \"pnpm run start:frontend\" \"pnpm run start:api\"",
     "build": "pnpm nx run-many --target=build --projects=frontend,shared --parallel=false",
     "build:watch": "pnpm nx build frontend --configuration=development --watch || echo \"No frontend project found; skipping build:watch\"",
     "lint": "pnpm nx lint",
@@ -17,6 +17,7 @@
     "lint:typed": "pnpm exec eslint . --ext .ts,.tsx --max-warnings=0",
     "prepare": "husky install",
     "lint:staged": "pnpm exec lint-staged",
+    "test:vitest": "vitest run --config=vitest.config.ts",
     "test": "pnpm nx test"
   },
   "lint-staged": {
@@ -88,18 +89,28 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@angular/animations": "~21.1.0",
+    "@angular/cdk": "~21.1.0",
     "@angular/common": "~21.1.0",
     "@angular/compiler": "~21.1.0",
     "@angular/core": "~21.1.0",
     "@angular/forms": "~21.1.0",
+    "@angular/material": "~21.1.0",
     "@angular/platform-browser": "~21.1.0",
     "@angular/router": "~21.1.0",
+    "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
+    "@nestjs/platform-socket.io": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
+    "@nestjs/websockets": "^11.0.0",
     "axios": "^1.6.0",
+    "chart.js": "^4.5.1",
+    "ng2-charts": "^8.0.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "~7.8.0"
+    "rxjs": "~7.8.0",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3"
   },
   "nx": {
     "includedScripts": []

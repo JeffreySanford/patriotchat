@@ -43,7 +43,7 @@ describe('MainStageComponent', () => {
 
     const request: TestRequest = httpController.expectOne(
       (req: HttpRequest<Record<string, string>>) =>
-        req.url.endsWith('/llm') && req.params.get('q') === prompt,
+        req.url.endsWith('/api/query') && req.body?.['prompt'] === prompt,
     );
     request.flush({ response: 'safe response' });
 

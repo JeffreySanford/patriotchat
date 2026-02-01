@@ -1,0 +1,22 @@
+<section class="history-page">
+  <header class="history-header">
+    <h1>Conversation history</h1>
+    <p>Review each prompt, the assistant response, and whether the round trip succeeded.</p>
+  </header>
+  <div class="history-grid">
+    <ng-container *ngFor="let entry of historyEntries">
+      <article class="history-card">
+        <div class="history-card__meta">
+          <span class="model-label">{{ entry.model }}</span>
+          <span class="history-status" [attr.data-state]="entry.status">{{ entry.status }}</span>
+        </div>
+        <h2>{{ entry.summary }}</h2>
+        <p class="history-prompt">{{ entry.prompt }}</p>
+        <div class="history-card__footer">
+          <span>{{ entry.timestamp }}</span>
+          <span>{{ entry.duration }} elapsed</span>
+        </div>
+      </article>
+    </ng-container>
+  </div>
+</section>

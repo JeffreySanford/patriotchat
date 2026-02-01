@@ -1,12 +1,15 @@
+import { HttpModule } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ApiStatusResponse, AppService } from './app.service';
+import { PipelineTelemetryService } from './pipeline-telemetry.service';
 
 describe('AppService', () => {
   let service: AppService;
 
   beforeAll(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      providers: [AppService],
+      imports: [HttpModule],
+      providers: [AppService, PipelineTelemetryService],
     }).compile();
 
     service = app.get<AppService>(AppService);

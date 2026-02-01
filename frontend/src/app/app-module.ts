@@ -31,7 +31,6 @@ import { StatusPageComponent } from './pages/status/status-page.component';
     MetricsPageComponent,
     StatusPageComponent,
   ],
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

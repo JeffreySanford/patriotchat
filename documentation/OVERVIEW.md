@@ -77,4 +77,18 @@ Alignment with `documentation/CODING-STANDARDS.md` is required: no standalone co
 - Ensure the `CI Pipeline` workflow (`.github/workflows/ci.yml`) continues to run the Nx lint/test/guardrail suites, build containers, and scan images on every push and PR.
 - Publish and maintain `documentation/METRICS.md`, `SECURITY.md`, `CONTRIBUTING.md`, and the governance log as living documents; link to these from PR templates and the governance review process.
 
+## LLM Development
+
+For creating and training a custom LLM aligned with constitutional values, refer to:
+
+- [LLM Creation Guide](LLM/LLM-CREATION.md): Step-by-step process for training and implementation.
+- [Model Charter](LLM/MODEL-CHARTER.md): Detailed charter for the Constitutional Experiment Assistant.
+- [Training Data Sources](LLM/TRAINING-DATA-SOURCES.md): Recommended sources and recipes for unbiased data.
+- [Evaluation Checklist](LLM/EVALUATION-CHECKLIST.md): Criteria for testing alignment and bias.
+- [Philosophical Notes](LLM/PHILOSOPHICAL-NOTES.md): Reflections on bias, neutrality, and American values.
+- [Project Roadmap](LLM/ROADMAP.md): Timeline and milestones for development.
+- [Risk Assessment](LLM/RISK-ASSESSMENT.md): Identified risks and mitigations.
+- [Architecture Overview](LLM/ARCHITECTURE.md): System components and data flow.
+- [Testing Plan](LLM/TESTING-PLAN.md): Strategies for quality assurance.
+
 Use this overview as the baseline for Copilot prompts, sprint plans, and guardrail documentation; update it whenever the stack shifts.

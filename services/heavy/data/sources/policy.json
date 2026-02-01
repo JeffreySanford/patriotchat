@@ -1,0 +1,7 @@
+{
+  "min_trust_score": 0.6,
+  "min_concordance_score": 0.75,
+  "min_primary_links": 3,
+  "whitelist": ["ap", "wapo", "nyt"],
+  "blacklist": ["splc", "bbc"]
+}

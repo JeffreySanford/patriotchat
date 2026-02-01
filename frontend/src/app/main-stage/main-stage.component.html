@@ -1,0 +1,99 @@
+<section class="main-stage-shell">
+  <div class="badge-row">
+    <ng-container *ngFor="let badge of badges">
+      <article class="badge">
+        <span>{{ badge.label }}</span>
+        <p>{{ badge.detail }}</p>
+      </article>
+    </ng-container>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-grid">
+      <div class="stage-main">
+        <div class="stage-intro">
+          <span class="stage-eyebrow">Live stage</span>
+          <h2>Keep every LLM exchange accountable</h2>
+          <p>
+            Track prompts, acceptances, and diagnostics in one view so the team can explain every automation decision.
+          </p>
+        </div>
+        <div class="stage-content">
+          <router-outlet></router-outlet>
+        </div>
+        <section class="query-shell">
+          <div class="query-card">
+            <div class="query-card-header">
+              <h3>Ask the LLM</h3>
+            </div>
+            <form class="query-form" [formGroup]="queryForm" (ngSubmit)="submitQuery()" novalidate>
+              <label class="query-label" for="query-input">Type your question for the assistant</label>
+              <textarea
+                id="query-input"
+                formControlName="query"
+                rows="3"
+                class="query-field"
+                placeholder="Describe the repair, refactor, or summary you need from the assistant."
+              ></textarea>
+              <p class="field-error" *ngIf="queryForm.get('query')?.hasError('required')">
+                Please enter a query.
+              </p>
+              <p class="field-error" *ngIf="queryForm.get('query')?.hasError('minlength')">
+                Queries should be at least 3 characters.
+              </p>
+              <div class="query-actions">
+                <button type="submit" [disabled]="queryForm.invalid || loading">
+                  <span class="material-symbols-outlined">send</span>
+                  <span>{{ loading ? 'Sending…' : 'Send to LLM' }}</span>
+                </button>
+                <div class="spinner" *ngIf="loading" aria-live="polite">
+                  <span class="loader" aria-hidden="true"></span>
+                  <span>Awaiting answer…</span>
+                </div>
+              </div>
+              <p class="query-progress" *ngIf="loading">
+                Waiting for the assistant… elapsed {{ loadingElapsedSeconds }}s · est {{ remainingSeconds }}s
+                remaining
+              </p>
+            </form>
+            <div class="response-shell" *ngIf="response">
+              <h4>Assistant response</h4>
+              <p>{{ response }}</p>
+              <p class="latency" *ngIf="latencyMs !== null">LLM latency {{ latencyMs }} ms</p>
+            </div>
+            <div class="error-shell" *ngIf="error">
+              <span class="material-symbols-outlined">warning</span>
+              <span>{{ error }}</span>
+            </div>
+            <div class="telemetry-shell" *ngIf="telemetryStages$ | async as stages">
+              <h4>Pipeline telemetry</h4>
+              <ul>
+                <li *ngFor="let stage of stages">
+                  <div>
+                    <strong>{{ stageLabels[stage.stage] }}</strong>
+                    <span [ngClass]="stage.state">{{ stage.state }}</span>
+                  </div>
+                  <small>{{ stage.latencyMs !== null ? stage.latencyMs + ' ms' : '―' }}</small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+      <aside class="stage-sidebar">
+        <h3>LLM insights</h3>
+        <ul>
+          <ng-container *ngFor="let insight of insights">
+            <li>
+              <span class="insight-dot" [style.background]="insight.accent"></span>
+              <div>
+                <strong>{{ insight.title }}</strong>
+                <p>{{ insight.detail }}</p>
+              </div>
+            </li>
+          </ng-container>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,4 @@
+{
+  "name": "api-e2e-jest-preset",
+  "main": "jest-preset.js"
+}

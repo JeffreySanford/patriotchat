@@ -14,11 +14,7 @@
       "!{projectRoot}/test-setup.[jt]s"
     ],
     "sharedGlobals": ["{workspaceRoot}/jest-preset/jest-preset.js"],
-    "jest-preset": ["sharedGlobals"],
-    "../jest-preset": ["sharedGlobals"],
-    "..\\jest-preset": ["sharedGlobals"],
-    "../../jest-preset": ["sharedGlobals"],
-    "..\\..\\jest-preset": ["sharedGlobals"]
+    "jest-preset": ["sharedGlobals"]
   },
   "plugins": [
     {
@@ -80,6 +76,13 @@
     "@angular/build:unit-test": {
       "cache": true,
       "inputs": ["default", "^production"]
+    },
+    "@nx/eslint:lint": {
+      "cache": true,
+      "inputs": ["default", "^production"],
+      "options": {
+        "lintFilePatterns": ["{projectRoot}/**/*.{ts,tsx,js,jsx}"]
+      }
     }
   },
   "release": {

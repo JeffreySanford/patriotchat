@@ -1,4 +1,5 @@
 autoInstallPeers: true
 
 onlyBuiltDependencies:
+  - '@nestjs/core'
   - esbuild

@@ -2,7 +2,7 @@ import path from 'path';
 
 export default {
   displayName: 'api-e2e',
-  preset: path.join(__dirname, '../jest-preset'),
+  preset: path.join(__dirname, 'jest-preset'),
   globalSetup: '<rootDir>/src/support/global-setup.ts',
   globalTeardown: '<rootDir>/src/support/global-teardown.ts',
   setupFiles: ['<rootDir>/src/support/test-setup.ts'],

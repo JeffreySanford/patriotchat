@@ -2,7 +2,7 @@
 FROM golang:1.20-alpine AS build
 WORKDIR /src
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags='-s -w' -o /out/heavy ./main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags='-s -w' -o /out/heavy .
 
 FROM alpine:3.18 AS runtime
 RUN addgroup -S heavy && adduser -S -G heavy heavy

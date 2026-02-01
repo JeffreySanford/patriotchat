@@ -44,3 +44,6 @@ Thumbs.db
 .angular
 
 __screenshots__/
+
+# Ignore local service env files
+services/heavy/.env

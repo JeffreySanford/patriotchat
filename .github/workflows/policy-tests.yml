@@ -1,0 +1,23 @@
+name: Policy Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  policy-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+      - name: Run policy tests
+        run: |
+          cd services/heavy
+          go test -run TestRegistryEditorialNotesNeutral -v ./...
+          go test -run TestSelectEvidenceSources -v ./...
+          go test -run TestBuildEvidenceInstruction -v ./...

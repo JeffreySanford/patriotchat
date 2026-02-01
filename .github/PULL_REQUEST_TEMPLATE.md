@@ -1,6 +1,6 @@
 <!-- Please use this template for changes that request an exception to the coding standards or typing rules. -->
 
-## Summary
+# Summary
 
 Brief description of the change (one paragraph):
 

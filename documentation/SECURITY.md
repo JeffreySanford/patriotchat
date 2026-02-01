@@ -30,6 +30,7 @@
 - Every dataset must include metadata (source, license, version, owner) stored in `documentation/GOVERNANCE.md` and referenced in pull requests.
 - Fine-tuned models log MCP checkpoints (`tools/checkpoints`: loss, dataset hash, timestamp). Each version requires manual sign-off from the ethics/legal reviewer before deployment.
 - Maintain an artifact store (or Git-tracked metadata file) marking which GGUF models have passed QA plus their guardrail tags.
+- For LLM models, use the evaluation checklist in `documentation/LLM/EVALUATION-CHECKLIST.md` to ensure alignment with security and guardrail objectives.
 
 ## Review Checklist (per dataset/model change)
 
