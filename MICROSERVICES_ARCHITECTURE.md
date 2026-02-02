@@ -7,7 +7,7 @@
 
 ## 🏗️ Architecture Overview
 
-```
+```text
                     Frontend (Angular)
                           |
                     [Port 4200]
@@ -81,7 +81,7 @@
 
 ## 📁 Directory Structure
 
-```
+```text
 patriotchat/
 ├── apps/
 │   ├── frontend/                    ← Angular SPA (Port 4200)
@@ -245,7 +245,7 @@ patriotchat/
 
 ### Frontend → Gateway (HTTP/REST)
 
-```
+```text
 GET    /api/funding                 → Auth + Funding Service
 GET    /api/policy/:id              → Auth + Policy Service
 POST   /api/query                   → Auth + LLM Service (model selector optional)
@@ -255,7 +255,7 @@ GET    /api/analytics/summary       → Auth + Analytics Service
 
 ### Gateway ↔ Microservices (HTTP/gRPC)
 
-```
+```text
 Service-to-service communication:
 - HTTP for REST operations
 - gRPC for high-performance operations (optional)
@@ -269,7 +269,7 @@ All requests include:
 
 ### Service Data Flow
 
-```
+```text
 Frontend Request
     ↓
 Gateway [Rate Limit Check: IP + User + Endpoint + Tier]
@@ -580,6 +580,7 @@ const scrubAuditForUser = (audit: AuditLog) => ({
 The gateway will enforce rate limits across 4 dimensions:
 
 #### 1. **Per IP Address** (DDoS Protection)
+
 ```
 Free: 1,000 req/min
 Power: 5,000 req/min  
@@ -587,6 +588,7 @@ Premium: 10,000 req/min
 ```
 
 #### 2. **Per User/API Key** (Account Limits)
+
 ```
 Free tier user: 100 requests/hour
 Power tier user: 10,000 requests/hour
@@ -594,6 +596,7 @@ Premium tier user: 100,000 requests/hour
 ```
 
 #### 3. **Per Endpoint** (Sensitive Operations)
+
 ```
 POST /api/auth/register          → 5 req/min (prevent registration spam)
 POST /api/auth/login             → 10 req/min (prevent brute force)
@@ -602,6 +605,7 @@ GET  /api/funding/search         → 30 req/min (external API calls)
 ```
 
 #### 4. **Per Tier** (Business Model)
+
 ```
 Free Tier:
   - 100 requests/hour total
@@ -620,11 +624,13 @@ Premium Tier:
 ```
 
 ### Implementation Location
+
 - **Gateway Rate Limiter:** Enforces all rules before routing to services
 - **Redis Backend:** Stores counters for distributed rate limiting
 - **Headers:** Return `X-RateLimit-*` headers in responses for visibility
 
 ### Example Rate Limit Header Response
+
 ```
 HTTP/1.1 200 OK
 X-RateLimit-Limit: 100

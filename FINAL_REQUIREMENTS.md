@@ -9,6 +9,7 @@
 ## Executive Summary
 
 All critical requirements gathered and finalized for PatriotChat V2 microservices architecture. System designed for:
+
 - **Auditability:** Immutable audit trails + user-visible scrubbed data
 - **Security:** Multi-dimensional rate limiting (IP + user + endpoint + tier)
 - **Performance:** < 100ms Auth, < 500ms heavy operations
@@ -20,9 +21,11 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 ## ✅ Five Critical Requirements (APPROVED)
 
 ### 1. Performance Target
+
 **Answer:** MVP good start (< 100ms Auth, < 500ms heavy)
 
 **Implementation:**
+
 - OpenTelemetry distributed tracing from day 1
 - Monitor latency per endpoint
 - Alert if Auth > 100ms, others > 500ms
@@ -31,9 +34,11 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 ---
 
 ### 2. Audit Trail Visibility
+
 **Answer:** Internal + eventual user-visible scrubbed data + API responses
 
 **Implementation:**
+
 - **Internal:** Full audit_logs table with all changes, PII, IP addresses
 - **User-Visible:** Scrubbed audit trail via `/api/audit/my-activity` endpoint
 - **API Response:** Include metadata (who changed, when, what)
@@ -44,9 +49,11 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 ---
 
 ### 3. Database Strategy
+
 **Answer:** PostgreSQL (not MongoDB) - all services
 
 **Implementation:**
+
 - PostgreSQL 16+ for all services
 - Shared database with role-based access
 - ACID guarantees for audit trail integrity
@@ -58,9 +65,11 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 ---
 
 ### 4. LLM Model
+
 **Answer:** Mistral (fine-tuned) + optional 3-model selector if easy
 
 **Implementation:**
+
 - Primary model: Mistral (fine-tuned locally)
 - No external APIs (no OpenAI/Grok)
 - Optional: 3-model dropdown in UI (if common patterns)
@@ -74,9 +83,11 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 ---
 
 ### 5. Rate Limiting Strategy
+
 **Answer:** Free + Power + Premium tiers with multi-dimensional limits
 
 **Implementation:**
+
 - **Per IP:** 1K (free), 5K (power), 10K (premium) req/min
 - **Per User/API Key:** 100 (free), 10K (power), 100K (premium) req/hour
 - **Per Endpoint:**
@@ -110,6 +121,7 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 | **Database** | 5432 | PostgreSQL | Audit trails, all data |
 
 ### Technology Stack
+
 - **Frontend:** Angular 21.1.0 + Angular Material 21.1.0 + ngrx/component-store
 - **Gateway:** NestJS 11.0.0 (TypeScript)
 - **Microservices:** Go 1.21
@@ -150,6 +162,7 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 ## Implementation Roadmap
 
 ### Phase 1: Auth Service (Foundation)
+
 - Scaffold Go service
 - JWT token generation/validation
 - User registration/login
@@ -160,6 +173,7 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 - E2E tests (curl)
 
 ### Phase 2: API Gateway (Entry Point)
+
 - NestJS gateway
 - Service proxying
 - Rate limiting (Redis)
@@ -168,6 +182,7 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 - CORS & security headers
 
 ### Phase 3-5: Domain Services
+
 - Funding Service (Go)
 - Policy Service (Go)
 - LLM Service (Mistral) with optional model selector
@@ -175,6 +190,7 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 - Each with audit logging, health checks, tests
 
 ### Phase 6: Frontend UI
+
 - Angular SPA
 - Login/registration
 - Dashboard
@@ -184,6 +200,7 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 - Settings & account management
 
 ### Phase 7: Integration & Polish
+
 - Service-to-service communication
 - Complete E2E flows
 - Performance optimization
@@ -195,6 +212,7 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 ## Documentation Created/Updated
 
 ### NEW Documents
+
 1. [MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md)
    - Service definitions, communication patterns
    - Docker deployment, development workflow
@@ -217,6 +235,7 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
    - Responsive design & accessibility
 
 ### UPDATED Documents
+
 1. [INDEX.md](INDEX.md) - Added new docs to navigation
 2. [documentation/](.) - Updated role-based quick starts
 
@@ -263,6 +282,7 @@ RATE_LIMIT_TIER=development
 ## Success Criteria
 
 ### Code Quality
+
 ✅ Each service independently testable  
 ✅ Unit tests verify business logic  
 ✅ Integration tests verify database operations  
@@ -270,6 +290,7 @@ RATE_LIMIT_TIER=development
 ✅ 80%+ code coverage per service  
 
 ### Auditability
+
 ✅ Immutable audit logs capture all changes  
 ✅ User-visible scrubbed audit trail  
 ✅ Correlation IDs trace requests  
@@ -277,6 +298,7 @@ RATE_LIMIT_TIER=development
 ✅ Error logs with full context  
 
 ### Security
+
 ✅ Rate limiting enforced (4 dimensions)  
 ✅ Service-to-service authentication  
 ✅ Secrets in environment variables  
@@ -284,6 +306,7 @@ RATE_LIMIT_TIER=development
 ✅ CORS properly configured  
 
 ### Performance
+
 ✅ Auth operations < 100ms  
 ✅ Heavy operations < 500ms  
 ✅ OpenTelemetry tracing  
@@ -291,6 +314,7 @@ RATE_LIMIT_TIER=development
 ✅ No cascading failures  
 
 ### Operations
+
 ✅ Docker containers with health checks  
 ✅ docker-compose orchestration  
 ✅ Service dependencies defined  
@@ -302,18 +326,21 @@ RATE_LIMIT_TIER=development
 ## Next Steps
 
 ### Immediate (Next Meeting)
+
 1. Review and approve final requirements
 2. Confirm database hosting (local/cloud)
 3. Clarify LLM fine-tuning approach
 4. Assign roles (who owns which service)
 
 ### Week 1
+
 1. Scaffold Auth Service (Go)
 2. Create docker-compose.yml
 3. Database initialization scripts
 4. CI/CD pipeline setup
 
 ### Week 2+
+
 1. Auth Service tests (unit/integration/E2E)
 2. API Gateway scaffold
 3. First service-to-service call

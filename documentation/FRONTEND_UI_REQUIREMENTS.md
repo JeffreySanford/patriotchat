@@ -9,6 +9,7 @@
 ## Overview
 
 PatriotChat frontend is a single-page application (SPA) that provides interfaces for:
+
 - User authentication & account management
 - Funding data search & visualization
 - Policy exploration
@@ -23,6 +24,7 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 ### 1. Authentication Pages
 
 #### Login Page
+
 - Email/password login
 - "Forgot Password" link
 - Social login options (optional future)
@@ -30,12 +32,14 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 - Rate limit status display
 
 #### Registration Page
+
 - Email, username, password
 - Terms & conditions checkbox
 - Email verification flow
 - Tier selection (display free tier default)
 
 #### Account Settings
+
 - Change password
 - Update email
 - View account tier
@@ -46,6 +50,7 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 ### 2. Main Dashboard
 
 #### Header/Navigation
+
 - Logo + app name
 - Search bar (global search)
 - User profile dropdown
@@ -53,6 +58,7 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 - Help/documentation link
 
 #### Dashboard Cards
+
 - **Quick Stats:** Queries this month, total funding tracked, etc.
 - **Recent Activity:** Last 5 queries, last policy changes
 - **Your Tier:** Current tier, usage limits, upgrade path
@@ -61,6 +67,7 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 ### 3. Funding Data Explorer
 
 #### Search/Filter View
+
 - Text search by entity name
 - Filter by entity type (person, organization, candidate)
 - Filter by funding source (FEC, ProPublica, etc.)
@@ -68,11 +75,13 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 - Sort options (funding amount, date, name)
 
 #### Results Display
+
 - Table with columns: Name, Type, Amount, Last Updated
 - Pagination with page size selector
 - Click row to view details
 
 #### Detail View
+
 - Full funding record
 - Historical changes (from audit log - scrubbed)
 - Related entities (organizations, individuals)
@@ -81,12 +90,14 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 ### 4. Policy Management
 
 #### Policy List View
+
 - Searchable list of policies
 - Filter by category
 - Status indicators (active, archived)
 - Sort by date modified
 
 #### Policy Detail View
+
 - Full policy content
 - Version history (from audit log)
 - Related funding data
@@ -96,13 +107,16 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 ### 5. LLM Query Interface
 
 #### Query Input Panel
+
 - **Model Selector** (NEW - if feasible)
-  ```
+
+  ```text
   Dropdown: [Mistral (Default) ▼]
   - Mistral (primary)
   - Mistral Variant 2 (alternative 1)
   - Mistral Variant 3 (alternative 2)
   ```
+
   - Default to Mistral
   - Remember user's last selection
   - Show model description on hover
@@ -115,6 +129,7 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
   - Max tokens
 
 #### Query Results Panel
+
 - Model used (display which variant was selected)
 - Response text (streaming or full)
 - Performance metrics
@@ -126,6 +141,7 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 - Audit trail of this query
 
 #### Rate Limit Display
+
 - Current tier limits
 - Usage this hour
 - Visual indicator (progress bar)
@@ -134,6 +150,7 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 ### 6. User Audit Trail / Activity View
 
 #### Personal Audit Trail
+
 - List of user's own activities
 - **Columns:** Date, Action, Resource, Status
 - Scrubbed data only (PII removed)
@@ -142,6 +159,7 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 - Download as CSV
 
 #### Activity Detail
+
 - Timestamp
 - What changed (safe to show)
 - Old value → New value (for fields user modified)
@@ -150,12 +168,14 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 ### 7. Account & Settings Pages
 
 #### Tier Management
+
 - Current tier display
 - Upgrade options
 - Feature comparison (free vs power vs premium)
 - Billing information (if applicable)
 
 #### API Keys (Power/Premium only)
+
 - List of API keys
 - Create new key button
 - Revoke key button
@@ -163,6 +183,7 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 - Rate limit per key
 
 #### Privacy & Data
+
 - Download my data (GDPR export)
 - View audit trail
 - Request deletion (with confirmation)
@@ -173,6 +194,7 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 ## Components Library
 
 ### Material Components Used
+
 - **Navigation:** `<mat-sidenav>`, `<mat-toolbar>`, `<mat-menu>`
 - **Tables:** `<mat-table>`, `<mat-paginator>`, `<mat-sort>`
 - **Forms:** `<mat-form-field>`, `<mat-select>`, `<mat-input>`
@@ -181,6 +203,7 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 - **Progress:** `<mat-progress-bar>` for rate limits
 
 ### Custom Components
+
 - `AppHeader` - Top navigation bar
 - `RateLimitIndicator` - Display current rate limit status
 - `AuditTrailViewer` - Display scrubbed audit logs
@@ -196,12 +219,14 @@ PatriotChat frontend is a single-page application (SPA) that provides interfaces
 ### Implementation Approach
 
 **IF Common Patterns Exist:**
+
 - Add dropdown to query panel
 - Store selected model in component state + localStorage
 - Pass `model` parameter to API call
 - Display selected model in results
 
 **Implementation:**
+
 ```typescript
 // query.component.ts
 selectedModel: string = 'mistral';
@@ -226,7 +251,8 @@ submitQuery() {
 ```
 
 **API Integration:**
-```
+
+```json
 POST /api/query
 {
   "query": "...",
@@ -237,12 +263,14 @@ POST /api/query
 ```
 
 **Backend Routing:**
+
 - Gateway routes to `/llm/query` with model parameter
 - LLM service loads appropriate fine-tuned model
 - Returns response with model metadata
 
 **UI Display:**
-```
+
+```text
 Query Results
 
 Model: Mistral (fine-tuned)  [Change Model ▼]
@@ -256,12 +284,14 @@ Rate Limit: 8/10 queries remaining
 ### Feasibility Assessment
 
 **Easy Path (Recommended Start):**
+
 - Simple dropdown component
 - Store selection in localStorage
 - Pass to API, display in results
 - Effort: 2-3 hours
 
 **Complete Implementation (Future):**
+
 - Per-model analytics (which variant works best?)
 - Model-specific rate limiting
 - A/B testing framework
@@ -314,11 +344,13 @@ export class QueryStore extends ComponentStore<QueryState> {
 ## Responsive Design
 
 ### Breakpoints
+
 - **Mobile:** < 600px (single column)
 - **Tablet:** 600px - 1200px (2 columns)
 - **Desktop:** > 1200px (3 columns)
 
 ### Mobile Considerations
+
 - Drawer navigation instead of sidenav
 - Simplified tables with card layout
 - Full-width modals instead of dialogs
@@ -369,12 +401,14 @@ export class QueryStore extends ComponentStore<QueryState> {
 ## Error Handling
 
 ### Error States
+
 - **Network Error:** "Unable to connect. Please check your internet."
 - **Rate Limited:** "You've exceeded your rate limit. Current tier: Free. Upgrade for more?"
 - **Auth Error:** "Your session expired. Please log in again."
 - **Validation Error:** "Query must be at least 5 characters."
 
 ### Error Display
+
 - Toast notifications for non-critical errors
 - Full page error boundary for critical failures
 - Detailed error in browser console
@@ -385,16 +419,19 @@ export class QueryStore extends ComponentStore<QueryState> {
 ## Testing Strategy
 
 ### Unit Tests
+
 - Component specs with @angular/core/testing
 - Service mocks with Jasmine
 - Store selectors tested
 
 ### Integration Tests
+
 - Query flow end-to-end (input → submit → results)
 - Authentication flow (login → dashboard)
 - Audit trail viewing (permissions, scrubbing)
 
 ### E2E Tests
+
 - Playwright tests in `frontend-e2e/`
 - Happy path: login → query → view results
 - Error path: invalid input → see error message

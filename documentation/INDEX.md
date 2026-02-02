@@ -76,7 +76,7 @@
 | **Frontend Dev** | [FRONTEND_UI_REQUIREMENTS.md](FRONTEND_UI_REQUIREMENTS.md) | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) → Component implementation |
 | **ML Engineer** | [LLM_TUNING_AND_RAG.md](LLM_TUNING_AND_RAG.md) | [LLM/](LLM/) folder → Mistral fine-tuning |
 | **QA/Tester** | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) | [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) → Test data seeding |
-| **Newcomer** | [../README.md](../README.md) | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) → Pick a service to learn
+| **Newcomer** | [../README.md](../README.md) | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) → Pick a service to learn |
 
 ---
 

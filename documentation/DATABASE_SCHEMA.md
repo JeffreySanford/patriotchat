@@ -8,6 +8,7 @@
 ## Overview
 
 All services share a single PostgreSQL database. Schema design emphasizes:
+
 - **Auditability:** Immutable append-only audit logs
 - **Data Provenance:** Track who changed what, when, and why
 - **Privacy:** Scrubbed data for user visibility
@@ -292,12 +293,14 @@ CREATE TABLE analytics_events (
 ### What Gets Scrubbed for User Visibility
 
 **Removed (Never shown to users):**
+
 - Personal identifiable information (email, phone, address)
 - Internal system fields (password hashes, internal IDs)
 - Other users' data
 - Admin/system operations
 
 **Kept (Safe to show):**
+
 - Timestamps (when things happened)
 - Operation types (created, updated, deleted)
 - Non-sensitive fields (status, category, title)
@@ -385,13 +388,16 @@ ORDER BY created_at DESC;
 ## Performance Considerations
 
 ### Indexes Strategy
+
 - **Fast Lookups:** Index by user, entity, timestamp
 - **Sort Operations:** Descending timestamp indexes for "recent first"
 - **Joins:** Index foreign keys (user_id, entity_id)
 - **Audit Queries:** Composite indexes on (entity_type, created_at)
 
 ### Partitioning (Future)
+
 When audit_logs exceeds 1M rows:
+
 ```sql
 -- Partition by month
 CREATE TABLE audit_logs_2026_02 PARTITION OF audit_logs
@@ -399,6 +405,7 @@ CREATE TABLE audit_logs_2026_02 PARTITION OF audit_logs
 ```
 
 ### Archival Strategy
+
 - Keep hot data (< 90 days) in main tables
 - Archive older audit logs monthly to cold storage
 - Delete user_activity older than 1 year
