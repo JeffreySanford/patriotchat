@@ -1,10 +1,10 @@
 import { Route } from '@angular/router';
 import { LandingPageComponent } from './pages/landing/landing-page.component';
-import { VscodeGuidePageComponent } from './pages/vscode-guide/vscode-guide-page.component.ts';
+import { VscodeGuidePageComponent } from './pages/vscode-guide/vscode-guide-page.component';
 import { GuardrailsPageComponent } from './pages/guardrails/guardrails-page.component';
-import { HistoryPageComponent } from './pages/history/history-page.component.ts';
+import { HistoryPageComponent } from './pages/history/history-page.component';
 import { MetricsPageComponent } from './pages/metrics/metrics-page.component';
-import { StatusPageComponent } from './pages/status/status-page.component.ts';
+import { StatusPageComponent } from './pages/status/status-page.component';
 
 export const appRoutes: Route[] = [
   { path: '', component: LandingPageComponent },
