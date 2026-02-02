@@ -190,9 +190,29 @@ services:
       - patriotchat
     restart: unless-stopped
 
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+    container_name: patriotchat-frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - api-gateway
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://localhost:4200/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - patriotchat
+    restart: unless-stopped
+
 volumes:
   postgres_data:
 
 networks:
   patriotchat:
     driver: bridge
+
+
