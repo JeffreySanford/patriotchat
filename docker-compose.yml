@@ -58,6 +58,8 @@ services:
       - OLLAMA_MODELS_DIR=/models
     ports:
       - "11434:11434"
+    networks:
+      - patriotchat
 
 volumes:
   postgres_data:
@@ -65,36 +67,3 @@ volumes:
 networks:
   patriotchat:
     driver: bridge
-    entrypoint: ["/bin/sh"]
-    command: ["-c", "ollama serve & sleep 5 && ollama pull llama2 && wait"]
-    # Docker host supports NVIDIA device requests
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: all
-
-  heavy:
-    build:
-      context: ./services/heavy
-    restart: unless-stopped
-    depends_on:
-      - ollama
-    environment:
-      - OLLAMA_HOST=ollama
-      - OLLAMA_PORT=11434
-      - PORT=4000
-    ports:
-      - "4000:4000"
-    volumes:
-      - ./tools/checkpoints:/app/checkpoints
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:4000/health || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-
-networks:
-  default:
-    name: patriotchat

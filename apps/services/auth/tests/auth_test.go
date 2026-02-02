@@ -95,9 +95,9 @@ func TestHealthResponse(t *testing.T) {
 
 func TestRegisterRequestValidation(t *testing.T) {
 	testCases := []struct {
-		name      string
-		req       RegisterRequest
-		isValid   bool
+		name    string
+		req     RegisterRequest
+		isValid bool
 	}{
 		{
 			name:    "valid request",

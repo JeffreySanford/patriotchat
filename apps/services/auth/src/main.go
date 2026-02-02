@@ -10,21 +10,14 @@ import (
 	"os"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 	_ "github.com/lib/pq"
 	"golang.org/x/crypto/bcrypt"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/jaeger"
-	"go.opentelemetry.io/otel/sdk/resource"
-	"go.opentelemetry.io/otel/sdk/trace"
-	semconv "go.opentelemetry.io/otel/semconv/v1.21.0"
 )
 
 var (
-	db     *sql.DB
-	tracer = otel.Tracer("auth-service")
-	tp     *trace.TracerProvider
+	db *sql.DB
 )
 
 // User represents a user in the system
@@ -51,8 +44,8 @@ type LoginRequest struct {
 
 // AuthResponse represents the response with JWT token
 type AuthResponse struct {
-	Token   string    `json:"token"`
-	User    User      `json:"user"`
+	Token     string    `json:"token"`
+	User      User      `json:"user"`
 	ExpiresAt time.Time `json:"expires_at"`
 }
 
@@ -61,32 +54,6 @@ type HealthResponse struct {
 	Status  string `json:"status"`
 	Service string `json:"service"`
 	Time    string `json:"time"`
-}
-
-func init() {
-	// Initialize OpenTelemetry
-	exp, err := jaeger.New(jaeger.WithAgentHost(getEnv("JAEGER_HOST", "localhost")))
-	if err != nil {
-		log.Fatalf("failed to create jaeger exporter: %v", err)
-	}
-
-	res, err := resource.Merge(
-		resource.Default(),
-		resource.NewWithAttributes(
-			semconv.SchemaURL,
-			semconv.ServiceName("auth-service"),
-		),
-	)
-	if err != nil {
-		log.Fatalf("failed to create resource: %v", err)
-	}
-
-	tp = trace.NewTracerProvider(
-		trace.WithBatcher(exp),
-		trace.WithResource(res),
-	)
-
-	otel.SetTracerProvider(tp)
 }
 
 func main() {
@@ -170,9 +137,6 @@ func createTables() error {
 }
 
 func handleHealth(w http.ResponseWriter, r *http.Request) {
-	ctx, span := tracer.Start(r.Context(), "health-check")
-	defer span.End()
-
 	response := HealthResponse{
 		Status:  "ok",
 		Service: "auth-service",
@@ -183,7 +147,7 @@ func handleHealth(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(response)
 
-	logAudit(ctx, "system", "auth-service", "HEALTH_CHECK", "success")
+	logAudit(r.Context(), "system", "auth-service", "HEALTH_CHECK", "success")
 }
 
 func handleReady(w http.ResponseWriter, r *http.Request) {
@@ -200,9 +164,6 @@ func handleReady(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleRegister(w http.ResponseWriter, r *http.Request) {
-	ctx, span := tracer.Start(r.Context(), "register-user")
-	defer span.End()
-
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
@@ -239,13 +200,13 @@ func handleRegister(w http.ResponseWriter, r *http.Request) {
 	`
 
 	var user User
-	err = db.QueryRowContext(ctx, query, userID, req.Username, req.Email, hashedPassword, "free").
+	err = db.QueryRowContext(r.Context(), query, userID, req.Username, req.Email, hashedPassword, "free").
 		Scan(&user.ID, &user.Username, &user.Email, &user.Tier, &user.CreatedAt)
 
 	if err != nil {
 		w.WriteHeader(http.StatusConflict)
 		json.NewEncoder(w).Encode(map[string]string{"error": "user already exists"})
-		logAudit(ctx, userID, "auth", "REGISTER", "failed - user exists")
+		logAudit(r.Context(), userID, "auth", "REGISTER", "failed - user exists")
 		return
 	}
 
@@ -261,13 +222,10 @@ func handleRegister(w http.ResponseWriter, r *http.Request) {
 		ExpiresAt: expiresAt,
 	})
 
-	logAudit(ctx, userID, "auth", "REGISTER", "success")
+	logAudit(r.Context(), userID, "auth", "REGISTER", "success")
 }
 
 func handleLogin(w http.ResponseWriter, r *http.Request) {
-	ctx, span := tracer.Start(r.Context(), "login-user")
-	defer span.End()
-
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
@@ -288,13 +246,13 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 		FROM users WHERE email = $1 AND status = 'active'
 	`
 
-	err := db.QueryRowContext(ctx, query, req.Email).
+	err := db.QueryRowContext(r.Context(), query, req.Email).
 		Scan(&user.ID, &user.Username, &user.Email, &user.Tier, &passwordHash, &user.CreatedAt)
 
 	if err == sql.ErrNoRows {
 		w.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(w).Encode(map[string]string{"error": "invalid credentials"})
-		logAudit(ctx, "", "auth", "LOGIN", "failed - user not found")
+		logAudit(r.Context(), "", "auth", "LOGIN", "failed - user not found")
 		return
 	}
 
@@ -308,12 +266,12 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	if err := bcrypt.CompareHashAndPassword([]byte(passwordHash), []byte(req.Password)); err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(w).Encode(map[string]string{"error": "invalid credentials"})
-		logAudit(ctx, user.ID, "auth", "LOGIN", "failed - wrong password")
+		logAudit(r.Context(), user.ID, "auth", "LOGIN", "failed - wrong password")
 		return
 	}
 
 	// Update last login
-	_, _ = db.ExecContext(ctx, "UPDATE users SET last_login = NOW() WHERE id = $1", user.ID)
+	_, _ = db.ExecContext(r.Context(), "UPDATE users SET last_login = NOW() WHERE id = $1", user.ID)
 
 	// Generate JWT
 	token := generateJWT(user.ID)
@@ -327,13 +285,10 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 		ExpiresAt: expiresAt,
 	})
 
-	logAudit(ctx, user.ID, "auth", "LOGIN", "success")
+	logAudit(r.Context(), user.ID, "auth", "LOGIN", "success")
 }
 
 func handleValidate(w http.ResponseWriter, r *http.Request) {
-	ctx, span := tracer.Start(r.Context(), "validate-token")
-	defer span.End()
-
 	// Extract JWT from header
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
@@ -359,7 +314,7 @@ func handleValidate(w http.ResponseWriter, r *http.Request) {
 		"user_id": claims.Subject,
 	})
 
-	logAudit(ctx, claims.Subject, "auth", "VALIDATE_TOKEN", "success")
+	logAudit(r.Context(), claims.Subject, "auth", "VALIDATE_TOKEN", "success")
 }
 
 func generateJWT(userID string) string {
@@ -394,9 +349,34 @@ func validateJWT(tokenString string) (jwt.RegisteredClaims, error) {
 }
 
 func logAudit(ctx context.Context, userID, service, operation, status string) {
-	// TODO: Insert into audit_logs table
-	// For now, just log to stdout
-	log.Printf("[AUDIT] user_id=%s service=%s operation=%s status=%s", userID, service, operation, status)
+	// Insert into audit_logs table
+	var userIDPtr *string
+	if userID != "" {
+		userIDPtr = &userID
+	}
+
+	// Use user_id as entity_id if available, otherwise use a well-known system UUID
+	entityID := userID
+	if entityID == "" {
+		entityID = "00000000-0000-0000-0000-000000000001" // System operations marker
+	}
+
+	query := `
+		INSERT INTO audit_logs (entity_type, entity_id, operation, user_id, service)
+		VALUES ($1, $2, $3, $4, $5)
+	`
+
+	_, err := db.ExecContext(ctx, query,
+		"user",    // entity_type
+		entityID,  // entity_id
+		operation, // operation
+		userIDPtr, // user_id (can be NULL)
+		service,   // service
+	)
+
+	if err != nil {
+		log.Printf("[AUDIT_ERROR] Failed to log audit: %v", err)
+	}
 }
 
 func getEnv(key, defaultValue string) string {

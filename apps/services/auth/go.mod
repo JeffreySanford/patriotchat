@@ -6,10 +6,6 @@ require (
 	github.com/golang-jwt/jwt/v5 v5.1.0
 	github.com/google/uuid v1.6.0
 	github.com/lib/pq v1.10.9
-	go.opentelemetry.io/otel v1.21.0
-	go.opentelemetry.io/otel/exporters/jaeger v1.21.0
-	go.opentelemetry.io/otel/sdk v1.21.0
-	go.opentelemetry.io/otel/trace v1.21.0
 	golang.org/x/crypto v0.21.0
 )
 
