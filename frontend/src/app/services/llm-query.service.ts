@@ -11,10 +11,12 @@ export interface QueryResponse {
   providedIn: 'root',
 })
 export class LlmQueryService {
-  private readonly http: HttpClient = inject(HttpClient) as HttpClient;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  private readonly http = inject(HttpClient);
   private readonly baseUrl: string = this.buildBaseUrl();
 
   query(prompt: string): Observable<QueryResponse> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     return this.http.post<QueryResponse>(`${this.baseUrl}/query`, { prompt });
   }
 

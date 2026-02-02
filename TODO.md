@@ -10,9 +10,10 @@ _Updated 2026-02-01 19:45 UTC · AGILE-informed status tracker · points are rel
   - Retrieval layer (RAG) for modern facts & metadata tracking; points: 5 · timestamp: 2026-02-01 17:30 UTC.
 
 - **In Progress**  
-  - Stabilize the telemetry socket handshake and API CORS guardrail so the UI, API, and WebSocket gateway can safely exchange updates; Points: 3 · started 2026-02-01 19:40 UTC.
-  - Ensure the front-end-to-heavy e2e path remains observable once the telemetry pipeline is healthy; Points: 3 · started 2026-02-01 17:00 UTC.
-  - Fix LLM model loading in heavy service to use available Ollama models and update Docker setup for model pulling; Points: 2 · started 2026-02-01 21:45 UTC.
+  - Stabilize the telemetry socket handshake and API CORS guardrail so the UI, API, and WebSocket gateway can safely exchange updates; Points: 3 · started 2026-02-01 19:40 UTC · updated 2026-02-01 22:00 UTC - Frontend build failing due to component import resolution errors, added .ts extensions to imports.
+  - Ensure the front-end-to-heavy e2e path remains observable once the telemetry pipeline is healthy; Points: 3 · started 2026-02-01 17:00 UTC · updated 2026-02-01 22:00 UTC - Ready to test once build fixed.
+  - Fix LLM model loading in heavy service to use available Ollama models and update Docker setup for model pulling; Points: 2 · started 2026-02-01 21:45 UTC · completed 2026-02-01 22:00 UTC - Model pulling working, ready for API testing.
+  - Fix frontend build errors for missing component imports and Nx daemon issues; Points: 2 · started 2026-02-01 22:00 UTC.
 
 - **Done**  
   - Landing + guardrail / metrics UI overhaul; Points: 5 · completed 2026-02-01 16:40 UTC.  
@@ -26,6 +27,7 @@ _Updated 2026-02-01 19:45 UTC · AGILE-informed status tracker · points are rel
   - Review and align all documentation markdown files for consistency; Points: 2 · completed 2026-02-01 19:30 UTC.
   - Fixed telemetry WebSocket path configuration to use correct namespace and removed redundant path options; Points: 1 · completed 2026-02-01 21:50 UTC.
   - Updated heavy service LLM client to use llama2 model and modified Docker Compose to pull the model on startup; Points: 2 · completed 2026-02-01 21:55 UTC.
+  - Reset Nx daemon by removing .nx cache directory to resolve project graph computation errors; Points: 1 · completed 2026-02-01 22:00 UTC.
 
 ## AGILE Notes & Principles
 
