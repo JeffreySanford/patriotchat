@@ -1,4 +1,54 @@
+version: '3.9'
+
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: patriotchat-postgres
+    environment:
+      POSTGRES_DB: patriotchat
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - patriotchat
+
+  auth:
+    build:
+      context: ./apps/services/auth
+      dockerfile: Dockerfile
+    container_name: patriotchat-auth
+    ports:
+      - "4001:4001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - PORT=4001
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=patriotchat
+      - JWT_SECRET=dev-secret-change-in-prod
+      - JAEGER_HOST=localhost
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - patriotchat
+    restart: unless-stopped
+
   ollama:
     image: ollama/ollama:latest
     restart: unless-stopped
@@ -8,6 +58,13 @@ services:
       - OLLAMA_MODELS_DIR=/models
     ports:
       - "11434:11434"
+
+volumes:
+  postgres_data:
+
+networks:
+  patriotchat:
+    driver: bridge
     entrypoint: ["/bin/sh"]
     command: ["-c", "ollama serve & sleep 5 && ollama pull llama2 && wait"]
     # Docker host supports NVIDIA device requests
