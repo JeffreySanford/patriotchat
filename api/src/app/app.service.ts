@@ -34,13 +34,16 @@ export class AppService {
   ) {}
 
   async executeQuery(prompt: string): Promise<QueryResult> {
+    console.log('[AppService.executeQuery] Starting query:', { prompt });
     this.telemetry.recordStage('frontToApi', 'processing');
     this.telemetry.recordStage('apiToGo', 'idle');
     const frontStart: number = Date.now();
     const heavyStart: number = Date.now();
     this.telemetry.recordStage('apiToGo', 'processing');
     this.telemetry.recordStage('goToLlm', 'processing');
+    console.log('[AppService.executeQuery] Telemetry stages recorded: frontToApi=processing, apiToGo=processing, goToLlm=processing');
     try {
+      console.log('[AppService.executeQuery] Calling heavy service at:', `${this.heavyUrl}/llm`);
       const response: AxiosResponse<{ response: string }> = await lastValueFrom(
         this.http.get(`${this.heavyUrl}/llm`, {
           params: { q: prompt },
@@ -51,6 +54,14 @@ export class AppService {
       const apiToGoLatency: number = Date.now() - heavyStart;
       const frontToApiLatency: number = Date.now() - frontStart;
 
+      console.log('[AppService.executeQuery] Heavy service responded:', {
+        status: response.status,
+        heavyLatency,
+        apiToGoLatency,
+        frontToApiLatency,
+        payload: response.data,
+      });
+
       this.logger.debug('Heavy /llm responded', {
         status: response.status,
         payload: response.data,
@@ -59,11 +70,14 @@ export class AppService {
       this.telemetry.recordStage('goToLlm', 'success', heavyLatency);
       this.telemetry.recordStage('apiToGo', 'success', apiToGoLatency);
       this.telemetry.recordStage('frontToApi', 'success', frontToApiLatency);
+      console.log('[AppService.executeQuery] Telemetry stages updated to success state');
 
-      return {
+      const result: QueryResult = {
         response: response.data.response,
         latencyMs: heavyLatency,
       };
+      console.log('[AppService.executeQuery] Returning result:', result);
+      return result;
     } catch (error) {
       const apiToGoLatency: number = Date.now() - heavyStart;
       const frontToApiLatency: number = Date.now() - frontStart;
@@ -72,6 +86,12 @@ export class AppService {
       this.telemetry.recordStage('goToLlm', 'error', null);
       const normalizedError: Error =
         error instanceof Error ? error : new Error(String(error ?? 'Unknown error'));
+      console.error('[AppService.executeQuery] ❌ Query failed:', {
+        error: normalizedError.message,
+        prompt,
+        apiToGoLatency,
+        frontToApiLatency,
+      });
       this.logger.error('Heavy /llm call failed', {
         error: normalizedError.message,
         prompt,

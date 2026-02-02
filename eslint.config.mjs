@@ -1,4 +1,6 @@
 import nx from '@nx/eslint-plugin';
+import vitestPlugin from 'eslint-plugin-vitest';
+import testingLibraryPlugin from 'eslint-plugin-testing-library';
 
 export default [
   ...nx.configs['flat/base'],
@@ -6,6 +8,33 @@ export default [
   ...nx.configs['flat/javascript'],
   {
     ignores: ['**/dist', '**/out-tsc'],
+  },
+  // Vitest & Testing Library Configuration for Test Files
+  {
+    files: ['**/*.spec.ts', '**/*.spec.tsx'],
+    plugins: {
+      vitest: vitestPlugin,
+      'testing-library': testingLibraryPlugin,
+    },
+    languageOptions: {
+      globals: {
+        expect: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        vi: 'readonly',
+      },
+    },
+    rules: {
+      'vitest/no-disabled-tests': 'warn',
+      'vitest/no-focused-tests': 'warn',
+      'vitest/prefer-to-be-truthy': 'error',
+      'vitest/prefer-to-be-falsy': 'error',
+      'testing-library/prefer-screen-queries': 'warn',
+    },
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],

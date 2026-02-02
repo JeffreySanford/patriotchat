@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { App } from './app';
 import { appRoutes } from './app.routes';
-import { FooterComponent } from './footer/footer.component.ts';
+import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { MainStageComponent } from './main-stage/main-stage.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -32,7 +32,6 @@ import { StatusPageComponent } from './pages/status/status-page.component';
     StatusPageComponent,
   ],
   imports: [
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

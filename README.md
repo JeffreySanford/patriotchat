@@ -45,6 +45,20 @@ Use these commands and checks as part of your daily dev cycle:
 
 Follow this flow and run typed linting regularly to avoid surprises in CI and to keep the codebase consistent and auditable.
 
+## 📚 Documentation
+
+All documentation is organized in the `documentation/` folder:
+
+- **[documentation/INDEX.md](documentation/INDEX.md)** — Master documentation index (start here!)
+- **[documentation/LEGENDARY_V2/](documentation/LEGENDARY_V2/)** — Legendary V2 infrastructure (persistent storage, logging, tracing, LLM tuning)
+- **[documentation/api/](documentation/api/)** — Complete API reference
+- **[documentation/LLM/](documentation/LLM/)** — LLM system & governance
+- **[documentation/CODING-STANDARDS.md](documentation/CODING-STANDARDS.md)** — Code standards & patterns
+- **[documentation/CONTRIBUTING.md](documentation/CONTRIBUTING.md)** — How to contribute
+- **[documentation/GOVERNANCE.md](documentation/GOVERNANCE.md)** — Project governance & exceptions
+
+For implementation planning, see **[documentation/LEGENDARY_V2/INFRASTRUCTURE_SUITE.md](documentation/LEGENDARY_V2/INFRASTRUCTURE_SUITE.md)** for the complete roadmap.
+
 ## Ollama: Docker vs native
 
 We recommend running Ollama inside Docker (`ollama/ollama:latest`) because the container bundles the server/runtime and keeps the inference endpoint (`http://ollama:11434`) consistent across environments, making guardrail instrumentation and container scanning straightforward. The Go heavy service communicates over HTTP (or via `ollama-go`), so it works equally well with a native Ollama binary, but Docker ensures clean isolation for multi-tenant deployments and easier CI. Point the Go service at your preferred Ollama host with `OLLAMA_HOST=localhost` (or the Docker service name) and `OLLAMA_PORT=11434`.

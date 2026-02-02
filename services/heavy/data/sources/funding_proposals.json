@@ -3,7 +3,7 @@
     "id": "ap",
     "rationale": "Automated funding proposal for ap: aggregated from available providers",
     "proposer": "system",
-    "time": "2026-02-01T21:47:07Z",
+    "time": "2026-02-02T20:06:49Z",
     "approved": false,
     "funding": {
       "owner_donations": {
@@ -30,7 +30,7 @@
       {
         "url": "",
         "type": "metaads",
-        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-02T20:06:49Z"
       }
     ],
     "provider_stubs": [
@@ -44,7 +44,7 @@
     "id": "wapo",
     "rationale": "Automated funding proposal for wapo: aggregated from available providers",
     "proposer": "system",
-    "time": "2026-02-01T21:47:07Z",
+    "time": "2026-02-02T20:06:49Z",
     "approved": false,
     "funding": {
       "owner_donations": {
@@ -71,7 +71,7 @@
       {
         "url": "",
         "type": "metaads",
-        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-02T20:06:49Z"
       }
     ],
     "provider_stubs": [
@@ -85,7 +85,7 @@
     "id": "snopes",
     "rationale": "Automated funding proposal for snopes: aggregated from available providers",
     "proposer": "system",
-    "time": "2026-02-01T21:47:07Z",
+    "time": "2026-02-02T20:06:49Z",
     "approved": false,
     "funding": {
       "owner_donations": {
@@ -112,7 +112,7 @@
       {
         "url": "",
         "type": "metaads",
-        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-02T20:06:49Z"
       }
     ],
     "provider_stubs": [
@@ -126,7 +126,7 @@
     "id": "splc",
     "rationale": "Automated funding proposal for splc: aggregated from available providers",
     "proposer": "system",
-    "time": "2026-02-01T21:47:07Z",
+    "time": "2026-02-02T20:06:49Z",
     "approved": false,
     "funding": {
       "owner_donations": {
@@ -153,7 +153,7 @@
       {
         "url": "",
         "type": "metaads",
-        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-02T20:06:49Z"
       }
     ],
     "provider_stubs": [
@@ -167,7 +167,7 @@
     "id": "nyt",
     "rationale": "Automated funding proposal for nyt: aggregated from available providers",
     "proposer": "system",
-    "time": "2026-02-01T21:47:07Z",
+    "time": "2026-02-02T20:06:49Z",
     "approved": false,
     "funding": {
       "owner_donations": {
@@ -194,7 +194,7 @@
       {
         "url": "",
         "type": "metaads",
-        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-02T20:06:49Z"
       }
     ],
     "provider_stubs": [
@@ -208,7 +208,7 @@
     "id": "fox",
     "rationale": "Automated funding proposal for fox: aggregated from available providers",
     "proposer": "system",
-    "time": "2026-02-01T21:47:07Z",
+    "time": "2026-02-02T20:06:49Z",
     "approved": false,
     "funding": {
       "owner_donations": {
@@ -235,7 +235,7 @@
       {
         "url": "",
         "type": "metaads",
-        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-01T21:47:07Z"
+        "excerpt": "estimated_meta_ad_spend=0.00; META_ADS_API_KEY not configured; stubbed result; timestamp=2026-02-02T20:06:49Z"
       }
     ],
     "provider_stubs": [

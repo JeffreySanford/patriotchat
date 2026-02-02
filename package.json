@@ -18,7 +18,9 @@
     "prepare": "husky install",
     "lint:staged": "pnpm exec lint-staged",
     "test:vitest": "vitest run --config=vitest.config.ts",
-    "test": "pnpm nx test"
+    "test": "pnpm nx test",
+    "test:api:endpoints": "node test-api-endpoints.js",
+    "test:api:e2e": "pnpm nx run api-e2e:e2e"
   },
   "lint-staged": {
     "*.(ts|tsx|js|jsx)": [
@@ -38,8 +40,10 @@
     "@angular-devkit/schematics": "~21.1.0",
     "@angular/build": "~21.1.0",
     "@angular/cli": "~21.1.0",
+    "@angular/compiler": "~21.1.0",
     "@angular/compiler-cli": "~21.1.0",
     "@angular/language-service": "~21.1.0",
+    "@angular/platform-browser-dynamic": "^21.1.2",
     "@eslint/js": "^9.8.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.0",
@@ -70,6 +74,8 @@
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-playwright": "^1.6.2",
+    "eslint-plugin-testing-library": "^7.15.4",
+    "eslint-plugin-vitest": "^0.5.4",
     "husky": "^8.0.0",
     "jest": "^30.0.2",
     "jest-environment-node": "^30.0.2",
@@ -92,7 +98,6 @@
     "@angular/animations": "~21.1.0",
     "@angular/cdk": "~21.1.0",
     "@angular/common": "~21.1.0",
-    "@angular/compiler": "~21.1.0",
     "@angular/core": "~21.1.0",
     "@angular/forms": "~21.1.0",
     "@angular/material": "~21.1.0",
@@ -101,15 +106,12 @@
     "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
-    "@nestjs/platform-socket.io": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
-    "@nestjs/websockets": "^11.0.0",
     "axios": "^1.6.0",
     "chart.js": "^4.5.1",
     "ng2-charts": "^8.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
-    "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3"
   },
   "nx": {
