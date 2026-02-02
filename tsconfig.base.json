@@ -15,7 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@patriotchat/shared": ["libs/shared/src/index.ts"]
+      "@patriotchat/shared": ["libs/shared/src/index.ts"],
+      "@patriotchat/domain": ["libs/domain/src/index.ts"],
+      "@patriotchat/ui": ["libs/ui/src/index.ts"],
+      "@patriotchat/api/*": ["apps/api/src/*"],
+      "@patriotchat/gateway/*": ["apps/gateway/src/*"],
+      "@patriotchat/services/*": ["apps/services/*/src/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]
