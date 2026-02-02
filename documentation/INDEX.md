@@ -23,6 +23,9 @@
 ### Legendary V2 Infrastructure
 
 - [INFRASTRUCTURE_SUITE.md](INFRASTRUCTURE_SUITE.md) - Master overview & roadmap
+- [MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) - **NEW:** Microservices architecture with API gateway, services, and deployment
+- [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) - **NEW:** PostgreSQL schema with audit trails, data provenance, scrubbing strategy
+- [FRONTEND_UI_REQUIREMENTS.md](FRONTEND_UI_REQUIREMENTS.md) - **NEW:** Frontend UI with LLM model selector, rate limits, audit trail viewer
 - [PERSISTENCE.md](PERSISTENCE.md) - MongoDB design patterns
 - [DATA_MODELING.md](DATA_MODELING.md) - Type safety & models
 - [TRACING.md](TRACING.md) - Distributed tracing setup
@@ -68,11 +71,12 @@
 
 | Role | Read First | Then |
 | --- | --- | --- |
-| **Backend Dev** | [INFRASTRUCTURE_SUITE.md](INFRASTRUCTURE_SUITE.md) | [PERSISTENCE.md](PERSISTENCE.md) → [DATA_MODELING.md](DATA_MODELING.md) |
-| **DevOps** | [INFRASTRUCTURE_SUITE.md](INFRASTRUCTURE_SUITE.md) | [TRACING.md](TRACING.md) → [METRICS.md](METRICS.md) |
-| **ML Engineer** | [LLM_TUNING_AND_RAG.md](LLM_TUNING_AND_RAG.md) | [LLM/](LLM/) folder |
-| **QA/Tester** | [SEEDING.md](SEEDING.md) | [debug/DEBUGGING_QUICK_START.md](debug/DEBUGGING_QUICK_START.md) |
-| **Newcomer** | [../README.md](../README.md) | [OVERVIEW.md](OVERVIEW.md) |
+| **Backend Dev** | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) | [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) → Go service scaffolding |
+| **DevOps** | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) | Docker setup → Service health checks |
+| **Frontend Dev** | [FRONTEND_UI_REQUIREMENTS.md](FRONTEND_UI_REQUIREMENTS.md) | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) → Component implementation |
+| **ML Engineer** | [LLM_TUNING_AND_RAG.md](LLM_TUNING_AND_RAG.md) | [LLM/](LLM/) folder → Mistral fine-tuning |
+| **QA/Tester** | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) | [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) → Test data seeding |
+| **Newcomer** | [../README.md](../README.md) | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) → Pick a service to learn
 
 ---
 
