@@ -1,0 +1,42 @@
+{
+  "name": "api-gateway",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/services/api-gateway/src",
+  "prefix": "patriotchat",
+  "targets": {
+    "build": {
+      "executor": "@nx/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/services/api-gateway",
+        "main": "apps/services/api-gateway/src/main.ts",
+        "tsConfig": "apps/services/api-gateway/tsconfig.json",
+        "assets": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "sourceMap": false
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nx/node:execute",
+      "options": {
+        "buildTarget": "api-gateway:build"
+      }
+    },
+    "docker": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t patriotchat-api-gateway:latest -f apps/services/api-gateway/Dockerfile ."
+      }
+    }
+  },
+  "tags": ["type:service", "scope:backend"]
+}

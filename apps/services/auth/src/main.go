@@ -349,34 +349,37 @@ func validateJWT(tokenString string) (jwt.RegisteredClaims, error) {
 }
 
 func logAudit(ctx context.Context, userID, service, operation, status string) {
-	// Insert into audit_logs table
-	var userIDPtr *string
-	if userID != "" {
-		userIDPtr = &userID
-	}
+	// Run async to avoid blocking requests
+	go func() {
+		var userIDPtr *string
+		if userID != "" && userID != "system" {
+			userIDPtr = &userID
+		}
 
-	// Use user_id as entity_id if available, otherwise use a well-known system UUID
-	entityID := userID
-	if entityID == "" {
-		entityID = "00000000-0000-0000-0000-000000000001" // System operations marker
-	}
+		// Use user_id as entity_id if available, otherwise use system marker
+		entityID := userID
+		if entityID == "" || entityID == "system" {
+			entityID = "00000000-0000-0000-0000-000000000001" // System operations marker
+		}
 
-	query := `
-		INSERT INTO audit_logs (entity_type, entity_id, operation, user_id, service)
-		VALUES ($1, $2, $3, $4, $5)
-	`
+		query := `
+			INSERT INTO audit_logs (entity_type, entity_id, operation, user_id, service)
+			VALUES ($1, $2, $3, $4, $5)
+		`
 
-	_, err := db.ExecContext(ctx, query,
-		"user",    // entity_type
-		entityID,  // entity_id
-		operation, // operation
-		userIDPtr, // user_id (can be NULL)
-		service,   // service
-	)
+		// Use background context to avoid request cancellation
+		_, err := db.ExecContext(context.Background(), query,
+			"user",    // entity_type
+			entityID,  // entity_id
+			operation, // operation
+			userIDPtr, // user_id (can be NULL)
+			service,   // service
+		)
 
-	if err != nil {
-		log.Printf("[AUDIT_ERROR] Failed to log audit: %v", err)
-	}
+		if err != nil {
+			log.Printf("[AUDIT_ERROR] Failed to insert audit log: %v | userID=%s op=%s", err, userID, operation)
+		}
+	}()
 }
 
 func getEnv(key, defaultValue string) string {
