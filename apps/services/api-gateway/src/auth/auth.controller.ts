@@ -21,10 +21,11 @@ export class AuthController {
     try {
       const result = await this.authService.register(dto);
       return result;
-    } catch (error) {
+    } catch (error: unknown) {
+      const err = error as any;
       throw new HttpException(
-        error.response?.data || 'Registration failed',
-        error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        err.response?.data || 'Registration failed',
+        err.response?.status || HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
@@ -34,10 +35,11 @@ export class AuthController {
     try {
       const result = await this.authService.login(dto);
       return result;
-    } catch (error) {
+    } catch (error: unknown) {
+      const err = error as any;
       throw new HttpException(
-        error.response?.data || 'Login failed',
-        error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        err.response?.data || 'Login failed',
+        err.response?.status || HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
@@ -49,7 +51,7 @@ export class AuthController {
       const token = auth.split(' ')[1];
       const result = await this.authService.validate(token);
       return result;
-    } catch (error) {
+    } catch (error: unknown) {
       throw new HttpException(
         'Token validation failed',
         HttpStatus.UNAUTHORIZED,
@@ -64,7 +66,7 @@ export class AuthController {
       const token = auth.split(' ')[1];
       const result = await this.authService.validate(token);
       return result;
-    } catch (error) {
+    } catch (error: unknown) {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     }
   }

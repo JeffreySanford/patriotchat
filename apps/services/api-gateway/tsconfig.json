@@ -1,10 +1,7 @@
 {
-  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../../dist/apps/services/api-gateway",
+    "outDir": "./dist",
     "declaration": true,
-    "declarationMap": true,
-    "inlineSourceMap": true,
     "types": ["node"],
     "target": "ES2020",
     "module": "commonjs",
@@ -13,7 +10,10 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "rootDir": "./src"
   },
   "include": ["src/**/*.ts"]
 }
