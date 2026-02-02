@@ -12,16 +12,19 @@ NestJS-based API Gateway for PatriotChat microservices.
 ## API Endpoints
 
 ### Health Check
+
 ```bash
 GET /health
 ```
 
 ### Ready Check
+
 ```bash
 GET /ready
 ```
 
 ### User Registration
+
 ```bash
 POST /auth/register
 Content-Type: application/json
@@ -34,6 +37,7 @@ Content-Type: application/json
 ```
 
 ### User Login
+
 ```bash
 POST /auth/login
 Content-Type: application/json
@@ -45,12 +49,14 @@ Content-Type: application/json
 ```
 
 ### Token Validation
+
 ```bash
 GET /auth/validate
 Authorization: Bearer <JWT_TOKEN>
 ```
 
 ### Get Current User
+
 ```bash
 GET /auth/me
 Authorization: Bearer <JWT_TOKEN>
@@ -65,6 +71,7 @@ Rate limits are applied per tier:
 - **Premium**: 10,000 requests/hour, 100,000 requests/day
 
 Limits are tracked per:
+
 - IP address
 - User ID (if authenticated)
 - Endpoint
@@ -77,6 +84,20 @@ PORT=3000
 JWT_SECRET=your-secret-key
 AUTH_SERVICE_URL=http://patriotchat-auth:4001
 CORS_ORIGIN=http://localhost:4200
+```
+
+## Development
+
+```bash
+npm install
+npm run dev
+```
+
+## Production Build
+
+```bash
+npm run build
+npm start
 ```
 
 ## Development
