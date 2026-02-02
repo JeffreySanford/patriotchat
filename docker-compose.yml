@@ -10,7 +10,7 @@ services:
       - "11434:11434"
     entrypoint: ["/bin/sh"]
     command: ["-c", "ollama serve & sleep 5 && ollama pull llama2 && wait"]
-    # GPU: uncomment device_requests when your Docker host supports NVIDIA device requests
+    # Docker host supports NVIDIA device requests
     # deploy:
     #   resources:
     #     reservations:
