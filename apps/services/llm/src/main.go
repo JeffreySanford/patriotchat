@@ -1,0 +1,233 @@
+package main
+
+import (
+	"bytes"
+	"database/sql"
+	"encoding/json"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"os"
+	"time"
+
+	_ "github.com/lib/pq"
+)
+
+var db *sql.DB
+
+type InferenceRequest struct {
+	Prompt  string `json:"prompt"`
+	Model   string `json:"model"`
+	Context string `json:"context,omitempty"`
+	UserID  string `json:"user_id"`
+}
+
+type InferenceResponse struct {
+	Result    string    `json:"result"`
+	Model     string    `json:"model"`
+	Tokens    int       `json:"tokens"`
+	Duration  string    `json:"duration"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
+type HealthResponse struct {
+	Status  string    `json:"status"`
+	Service string    `json:"service"`
+	Time    time.Time `json:"time"`
+}
+
+type ReadyResponse struct {
+	Status string `json:"status"`
+}
+
+type ErrorResponse struct {
+	Error string `json:"error"`
+}
+
+func init() {
+	var err error
+	dbHost := os.Getenv("DB_HOST")
+	if dbHost == "" {
+		dbHost = "localhost"
+	}
+	dbPort := os.Getenv("DB_PORT")
+	if dbPort == "" {
+		dbPort = "5432"
+	}
+	dbUser := os.Getenv("DB_USER")
+	if dbUser == "" {
+		dbUser = "postgres"
+	}
+	dbPassword := os.Getenv("DB_PASSWORD")
+	if dbPassword == "" {
+		dbPassword = "postgres"
+	}
+	dbName := os.Getenv("DB_NAME")
+	if dbName == "" {
+		dbName = "patriotchat"
+	}
+
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		dbHost, dbPort, dbUser, dbPassword, dbName)
+
+	db, err = sql.Open("postgres", psqlInfo)
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
+	}
+
+	db.SetMaxOpenConns(25)
+	db.SetMaxIdleConns(5)
+	db.SetConnMaxLifetime(5 * time.Minute)
+
+	// Test connection
+	err = db.Ping()
+	if err != nil {
+		log.Printf("Warning: Database connection test failed: %v", err)
+	} else {
+		log.Println("Database connection successful")
+	}
+}
+
+func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "4004"
+	}
+
+	http.HandleFunc("/health", handleHealth)
+	http.HandleFunc("/ready", handleReady)
+	http.HandleFunc("/inference/generate", handleGenerate)
+	http.HandleFunc("/inference/models", handleListModels)
+
+	log.Printf("LLM Inference Service listening on port %s", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
+}
+
+func handleHealth(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(HealthResponse{
+		Status:  "ok",
+		Service: "llm-service",
+		Time:    time.Now().UTC(),
+	})
+}
+
+func handleReady(w http.ResponseWriter, r *http.Request) {
+	err := db.Ping()
+	if err != nil {
+		w.WriteHeader(http.StatusServiceUnavailable)
+		json.NewEncoder(w).Encode(ErrorResponse{Error: "Database unavailable"})
+		return
+	}
+
+	// Check Ollama availability
+	resp, err := http.Get("http://patriotchat-ollama:11434/api/tags")
+	if err != nil {
+		w.WriteHeader(http.StatusServiceUnavailable)
+		json.NewEncoder(w).Encode(ErrorResponse{Error: "Ollama service unavailable"})
+		return
+	}
+	defer resp.Body.Close()
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(ReadyResponse{Status: "ready"})
+}
+
+func handleGenerate(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode(ErrorResponse{Error: "Method not allowed"})
+		return
+	}
+
+	var req InferenceRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(ErrorResponse{Error: "Invalid request body"})
+		return
+	}
+
+	if req.Prompt == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(ErrorResponse{Error: "prompt is required"})
+		return
+	}
+
+	if req.Model == "" {
+		req.Model = "llama2"
+	}
+
+	// Call Ollama
+	start := time.Now()
+	result, err := callOllama(req.Model, req.Prompt)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(ErrorResponse{Error: fmt.Sprintf("Inference failed: %v", err)})
+		return
+	}
+
+	response := InferenceResponse{
+		Result:    result,
+		Model:     req.Model,
+		Tokens:    len(result) / 4, // Rough estimate
+		Duration:  time.Since(start).String(),
+		CreatedAt: time.Now().UTC(),
+	}
+
+	// Log to database (async)
+	go logInference(req.UserID, req.Model, req.Prompt, result)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func handleListModels(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode(ErrorResponse{Error: "Method not allowed"})
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"models": []string{"llama2", "mistral", "neural-chat"},
+	})
+}
+
+func callOllama(model, prompt string) (string, error) {
+	ollamaURL := "http://patriotchat-ollama:11434/api/generate"
+
+	payload := map[string]interface{}{
+		"model":  model,
+		"prompt": prompt,
+		"stream": false,
+	}
+
+	body, _ := json.Marshal(payload)
+	resp, err := http.Post(ollamaURL, "application/json", bytes.NewReader(body))
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("ollama returned status %d", resp.StatusCode)
+	}
+
+	respBody, _ := io.ReadAll(resp.Body)
+	var result map[string]interface{}
+	json.Unmarshal(respBody, &result)
+
+	if response, ok := result["response"].(string); ok {
+		return response, nil
+	}
+	return "", fmt.Errorf("invalid response from Ollama")
+}
+
+func logInference(userID, model, prompt, result string) {
+	// Placeholder for logging to database
+	log.Printf("Inference: user=%s, model=%s, prompt_len=%d, result_len=%d",
+		userID, model, len(prompt), len(result))
+}
