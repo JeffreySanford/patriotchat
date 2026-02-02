@@ -11,7 +11,8 @@
 | --- | --- |
 | **Start here** | [../README.md](../README.md) |
 | **Current tasks** | [../TODO.md](../TODO.md) |
-| **Legendary V2 overview** | [INFRASTRUCTURE_SUITE.md](INFRASTRUCTURE_SUITE.md) |
+| **Architecture** | [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) |
+| **Requirements** | [FINAL_REQUIREMENTS.md](FINAL_REQUIREMENTS.md) |
 | **API reference** | [api/GUIDE.md](api/GUIDE.md) |
 | **Debugging** | [debug/DEBUGGING_QUICK_START.md](debug/DEBUGGING_QUICK_START.md) |
 | **Contributing** | [CONTRIBUTING.md](CONTRIBUTING.md) |
@@ -20,17 +21,12 @@
 
 ## ��� By Category
 
-### Legendary V2 Infrastructure
+### Microservices Architecture & Requirements
 
-- [INFRASTRUCTURE_SUITE.md](INFRASTRUCTURE_SUITE.md) - Master overview & roadmap
-- [MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) - **NEW:** Microservices architecture with API gateway, services, and deployment
-- [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) - **NEW:** PostgreSQL schema with audit trails, data provenance, scrubbing strategy
-- [FRONTEND_UI_REQUIREMENTS.md](FRONTEND_UI_REQUIREMENTS.md) - **NEW:** Frontend UI with LLM model selector, rate limits, audit trail viewer
-- [PERSISTENCE.md](PERSISTENCE.md) - MongoDB design patterns
-- [DATA_MODELING.md](DATA_MODELING.md) - Type safety & models
-- [TRACING.md](TRACING.md) - Distributed tracing setup
-- [SEEDING.md](SEEDING.md) - Test data strategy
-- [LLM_TUNING_AND_RAG.md](LLM_TUNING_AND_RAG.md) - LLM & RAG strategy
+- [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) - Full microservices pattern with 6 services + gateway
+- [FINAL_REQUIREMENTS.md](FINAL_REQUIREMENTS.md) - All 5 requirements finalized (performance, audit, database, LLM, rate limiting)
+- [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) - PostgreSQL schema with audit trails, data provenance, scrubbing
+- [FRONTEND_UI_REQUIREMENTS.md](FRONTEND_UI_REQUIREMENTS.md) - UI spec with LLM model selector, rate limits, audit viewer
 
 ### API Reference
 
@@ -71,12 +67,12 @@
 
 | Role | Read First | Then |
 | --- | --- | --- |
-| **Backend Dev** | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) | [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) → Go service scaffolding |
-| **DevOps** | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) | Docker setup → Service health checks |
-| **Frontend Dev** | [FRONTEND_UI_REQUIREMENTS.md](FRONTEND_UI_REQUIREMENTS.md) | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) → Component implementation |
+| **Backend Dev** | [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) | [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) → Go service scaffolding |
+| **DevOps** | [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) | Docker setup → Service health checks |
+| **Frontend Dev** | [FRONTEND_UI_REQUIREMENTS.md](FRONTEND_UI_REQUIREMENTS.md) | [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) → Component implementation |
 | **ML Engineer** | [LLM_TUNING_AND_RAG.md](LLM_TUNING_AND_RAG.md) | [LLM/](LLM/) folder → Mistral fine-tuning |
-| **QA/Tester** | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) | [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) → Test data seeding |
-| **Newcomer** | [../README.md](../README.md) | [../MICROSERVICES_ARCHITECTURE.md](../MICROSERVICES_ARCHITECTURE.md) → Pick a service to learn |
+| **QA/Tester** | [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) | [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) → Test data seeding |
+| **Newcomer** | [../README.md](../README.md) | [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) → Pick a service to learn |
 
 ---
 
