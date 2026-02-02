@@ -1,0 +1,4 @@
+# This directory will contain shared libraries
+# - shared/ (Shared utilities, models, services)
+# - ui/ (Shared UI components)
+# - domain/ (Domain models and logic)

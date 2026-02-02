@@ -1,0 +1,5 @@
+# This directory will contain all applications
+# - api/ (NestJS backend)
+# - frontend/ (Angular frontend)
+# - services/ (Go microservices)
+# - e2e/ (End-to-end tests)
