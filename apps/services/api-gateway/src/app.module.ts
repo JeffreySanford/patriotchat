@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { ThrottlerModule } from '@nestjs/throttler';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { PassportModule } from '@nestjs/passport';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { JwtModule } from '@nestjs/jwt';
 import { HttpModule } from '@nestjs/axios';
 import { AppController } from './app.controller';

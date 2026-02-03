@@ -7,7 +7,7 @@ export default [
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
   {
-    ignores: ['**/dist', '**/out-tsc'],
+    ignores: ['**/dist', '**/out-tsc', '**/.angular', '**/node_modules', '**/coverage'],
   },
   // Vitest & Testing Library Configuration for Test Files
   {

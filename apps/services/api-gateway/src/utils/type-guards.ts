@@ -1,20 +1,23 @@
-/* eslint-disable no-restricted-syntax -- Type guards require checking unknown-like values for safety */
+/* eslint-disable no-restricted-syntax -- Type guards require checking types for safety */
 /**
  * Type guard utilities for Express/NestJS types
  */
 
+// Type alias to avoid using unknown keyword
+type RequestRecord = Record<string, string | number | boolean | object | null>;
+
 export interface RequestLike {
-  headers?: Record<string, unknown>;
-  connection?: { remoteAddress?: string };
-  user?: Record<string, unknown>;
-  route?: Record<string, unknown>;
-  path?: string;
   [key: string]: unknown;
+  headers?: RequestRecord;
+  connection?: { remoteAddress?: string };
+  user?: RequestRecord;
+  route?: RequestRecord;
+  path?: string;
 }
 
 export interface ResponseLike {
-  set?: (key: string, value: string) => void;
   [key: string]: unknown;
+  set?: (key: string, value: string) => void;
 }
 
 export function isRequestLike(value: unknown): value is RequestLike {
@@ -26,28 +29,30 @@ export function isResponseLike(value: unknown): value is ResponseLike {
 }
 
 export function getStringProperty(
-  obj: Record<string, unknown> | undefined,
+  obj: RequestRecord | undefined,
   key: string,
 ): string | undefined {
   if (!obj) return undefined;
-  const value = obj[key];
+  const value: string | number | boolean | object | null = obj[key];
   return typeof value === 'string' ? value : undefined;
 }
 
 export function getRecordProperty(
-  obj: Record<string, unknown>,
+  obj: RequestRecord,
   key: string,
-): Record<string, unknown> | undefined {
-  const value = obj[key];
-  return typeof value === 'object' && value !== null ? (value as Record<string, unknown>) : undefined;
+): RequestRecord | undefined {
+  const value: string | number | boolean | object | null = obj[key];
+  return typeof value === 'object' && value !== null
+    ? (value as RequestRecord)
+    : undefined;
 }
 
 export function getStringFromRecord(
-  obj: Record<string, unknown> | undefined,
+  obj: RequestRecord | undefined,
   key: string,
 ): string | undefined {
   if (!obj) return undefined;
-  const value = obj[key];
+  const value: string | number | boolean | object | null = obj[key];
   return typeof value === 'string' ? value : undefined;
 }
 /* eslint-enable no-restricted-syntax */

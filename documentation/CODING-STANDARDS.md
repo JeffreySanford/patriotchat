@@ -37,6 +37,7 @@ Strong typing is mandatory across the workspace to prevent `any`/`unknown` creep
 - **Building types from any/unknown**: When you encounter `any` or `unknown` in existing code, **build proper interfaces** rather than just removing them. Example:
   - ❌ **Don't do**: Delete the parameter entirely
   - ✅ **Do this**: Create a proper interface and use it:
+
     ```typescript
     // Create interface based on actual usage
     export interface ErrorDetails {
@@ -49,6 +50,7 @@ Strong typing is mandatory across the workspace to prevent `any`/`unknown` creep
     // Replace: catchError((err: any) =>
     // With: catchError((err: Error | ErrorDetails) =>
     ```
+
   - For event handlers like `onChange`, `onTouch`, implement them or add `// TODO: Implement handler` comments rather than just removing
 - **Typing exceptions**: Temporary exceptions during prototyping are allowed but must be documented in the PR and converted to typed APIs before merging to `master`.
 
@@ -333,6 +335,125 @@ export class RecordListComponent implements OnInit {
 - Keep `px` for hairline details and optical effects (borders, outlines, shadows, and similar 1–2px treatments).
 - Keep layout breakpoints in `px` to preserve responsive behavior.
 
+## Error Handling Standards
+
+### Catch Clause Type Annotations
+
+TypeScript requires catch clause parameters to be typed as `unknown` (per ECMAScript spec). To satisfy strict type checking, implement proper type narrowing:
+
+```typescript
+// ✅ CORRECT: Use unknown with proper type guards
+try {
+  await someAsyncOperation();
+} catch (error: unknown) {
+  // eslint-disable-next-line no-restricted-syntax -- TypeScript spec requires unknown in catch clauses
+  const errorMessage: string = error instanceof Error ? error.message : String(error);
+  logger.error('Operation failed:', errorMessage);
+}
+
+// ✅ CORRECT: Handle different error types
+try {
+  await httpService.get(url);
+} catch (error: unknown) {
+  // eslint-disable-next-line no-restricted-syntax
+  if (error instanceof HttpException) {
+    handleHttpError(error);
+  } else if (error instanceof Error) {
+    handleStandardError(error);
+  } else {
+    handleUnknownError(error);
+  }
+}
+
+// ❌ WRONG: Type error parameters as Error | CustomType
+try {
+  // ...
+} catch (error: Error | CustomException) {  // ❌ Not valid in TypeScript
+  // Type errors will occur
+}
+```
+
+### RxJS Error Handling in Observables
+
+For RxJS operators like `catchError`, properly type parameters even though they originate from `unknown`:
+
+```typescript
+// ✅ CORRECT: Type the error parameter
+return this.http.get(url).pipe(
+  catchError((error: unknown): Observable<DefaultResponse> => {
+    // eslint-disable-next-line no-restricted-syntax
+    const message: string = error instanceof Error ? error.message : String(error);
+    logger.error('HTTP error:', message);
+    return of(DEFAULT_RESPONSE);
+  })
+);
+
+// ✅ CORRECT: Use type guards with proper narrowing
+private isHttpError(err: unknown): err is HttpErrorResponse {
+  return err instanceof HttpErrorResponse;
+}
+
+private handleError(error: unknown): void {
+  // eslint-disable-next-line no-restricted-syntax
+  if (this.isHttpError(error)) {
+    this.logger.error(`HTTP ${error.status}:`, error.message);
+  } else if (error instanceof Error) {
+    this.logger.error('Standard error:', error.message);
+  }
+}
+```
+
+### When to Disable no-restricted-syntax for unknown
+
+The ESLint rule `no-restricted-syntax` restricts `unknown` to encourage concrete types. However, TypeScript's specification **requires** `catch` clauses to use `unknown`. In these cases, add an eslint-disable comment:
+
+```typescript
+// ALLOWED: Use eslint-disable when TypeScript specification requires unknown
+// eslint-disable-next-line no-restricted-syntax
+catch (error: unknown) {
+  // Implementation with proper type guards
+}
+
+// Type guard predicates that examine unknown values are allowed:
+// eslint-disable-next-line no-restricted-syntax
+return (event as Record<string, unknown>)['property'];
+```
+
+### Interface Design for Error Handling
+
+Define error interfaces instead of relying on `any`:
+
+```typescript
+export interface AppError {
+  message: string;
+  code: string;
+  timestamp: number;
+  details?: Record<string, unknown>;
+}
+
+export interface ValidationError extends AppError {
+  field: string;
+  value: unknown;
+}
+
+// Use in error handlers
+try {
+  validate(data);
+} catch (error: unknown) {
+  // eslint-disable-next-line no-restricted-syntax
+  const appError: AppError = error instanceof AppException 
+    ? error.toJSON() 
+    : { message: String(error), code: 'UNKNOWN', timestamp: Date.now() };
+  throw appError;
+}
+```
+
+## Design System Specifications
+
+- Use `em` for sizing and spacing by default (padding, margin, gaps, widths, heights, font sizes).
+- Keep `px` for hairline details and optical effects (borders, outlines, shadows, and similar 1–2px treatments).
+- Keep layout breakpoints in `px` to preserve responsive behavior.
+
 ## Operational Expectations
 
 - Tie every change to CI gates that run `pnpm nx lint frontend api shared`, `pnpm nx test api`, and (when defined) `pnpm nx test heavy` so DTO contracts, guardrails, and formatting stay enforced.
@@ -341,10 +462,5 @@ export class RecordListComponent implements OnInit {
 - Keep security, legal, and ethics assessments explicit in `SECURITY.md` and a dedicated governance log so the political alignment strategy remains auditable.
 - When automation scripts change, ensure shared prep and output conventions (as outlined in the project-wide standards) continue to run inside Nx targets or automated workflows.
 - Audit focus: call/response telemetry, DTO validation per transport, public/anonymous content filtering (illegal content detection, takedown logging), dataset provenance, and model checkpoint traceability. Include alerts for metric breaches (latency, hallucination, guardrail failure) and log anonymized violations for review.
-- Tie every change to CI gates that run `pnpm nx lint frontend api shared`, `pnpm nx test api`, and (when defined) `pnpm nx test heavy` so DTO contracts, guardrails, and formatting stay enforced.
-- Document key metrics such as inference latency, hallucination rate, guardrail pass rate, and end-to-end test coverage in `documentation/METRICS.md`; add onboarding references to promote monitoring and alerts.
-- Treat dataset versioning, licensing metadata, and guardrail updates as governed artifacts by linking them to approvals and change logs; provide dataset owners with a checklist before each release.
-- Keep security, legal, and ethics assessments explicit in `SECURITY.md` and a dedicated governance log so the political alignment strategy remains auditable.
-- When automation scripts change, ensure shared prep and output conventions (as outlined in the project-wide standards) continue to run inside Nx targets or automated workflows.
 
-Last Updated: 2026-01-05
+Last Updated: 2026-02-03

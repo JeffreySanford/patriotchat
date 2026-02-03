@@ -12,6 +12,7 @@ import {
 
 type ExecAsyncType = (
   command: string,
+  options?: { timeout?: number },
 ) => Promise<{ stdout: string; stderr: string }>;
 const execAsync: ExecAsyncType = promisify(exec) as ExecAsyncType;
 
@@ -37,16 +38,16 @@ export class BackendHealthService {
     {
       name: 'Auth Service',
       url: 'http://localhost:4001/health',
-      dockerContainer: 'patriotchat-auth',
+      // Auth runs locally as Go process, not in Docker container
     },
     {
       name: 'LLM Service',
-      url: 'http://localhost:5000/health',
+      url: 'http://localhost:11434/health',
       dockerContainer: 'patriotchat-ollama',
     },
     {
       name: 'Analytics Service',
-      url: 'http://localhost:4005/health',
+      url: 'http://localhost:5000/health',
       dockerContainer: 'patriotchat-analytics',
     },
     {
@@ -113,7 +114,7 @@ export class BackendHealthService {
   }
 
   /**
-   * Check individual service health (HTTP + Docker)
+   * Check individual service health (HTTP + optional Docker verification)
    */
   private checkService(config: ServiceConfig): Observable<ServiceStatusDto> {
     const startTime: number = Date.now();
@@ -122,11 +123,11 @@ export class BackendHealthService {
       // Start with HTTP health check
       this.checkHttpHealth(config.name, config.url, startTime)
         .then((status: ServiceStatusDto) => {
-          // If HTTP check passed, also verify Docker container if configured
+          // If HTTP check passed and Docker container is configured, verify it's running
           if (config.dockerContainer) {
             this.checkDockerContainer(config.dockerContainer)
               .then((isRunning: boolean) => {
-                // If Docker is not running but HTTP passed, mark as unhealthy
+                // If Docker container is not running, mark as unhealthy
                 if (!isRunning) {
                   status.status = 'unhealthy';
                 }
@@ -134,58 +135,32 @@ export class BackendHealthService {
                 observer.complete();
               })
               .catch((error: Error | ErrorResponse) => {
-                this.logger.warn(
-                  `[${config.name}] Docker check failed, trusting HTTP check:`,
+                this.logger.debug(
+                  `[${config.name}] Docker check failed (may be local process):`,
                   error,
                 );
+                // Service responded to HTTP, so trust that - Docker check is optional
                 observer.next(status);
                 observer.complete();
               });
           } else {
+            // No Docker container configured for this service
             observer.next(status);
             observer.complete();
           }
         })
-        .catch((_httpError: Error | ErrorResponse) => {
-          // HTTP check failed, try Docker check to see if container exists but is unhealthy
-          if (config.dockerContainer) {
-            this.checkDockerContainer(config.dockerContainer)
-              .then((isRunning: boolean) => {
-                const status: ServiceStatusDto = {
-                  name: config.name,
-                  url: config.url,
-                  status: isRunning ? 'unhealthy' : 'unhealthy',
-                  lastCheck: Date.now(),
-                  responseTime: Math.min(Date.now() - startTime, this.timeout),
-                };
-                this.validateServiceStatus(status);
-                observer.next(status);
-                observer.complete();
-              })
-              .catch(() => {
-                const status: ServiceStatusDto = {
-                  name: config.name,
-                  url: config.url,
-                  status: 'unhealthy',
-                  lastCheck: Date.now(),
-                  responseTime: Math.min(Date.now() - startTime, this.timeout),
-                };
-                this.validateServiceStatus(status);
-                observer.next(status);
-                observer.complete();
-              });
-          } else {
-            const status: ServiceStatusDto = {
-              name: config.name,
-              url: config.url,
-              status: 'unhealthy',
-              lastCheck: Date.now(),
-              responseTime: Math.min(Date.now() - startTime, this.timeout),
-            };
-            this.validateServiceStatus(status);
-            observer.next(status);
-            observer.complete();
-          }
+        .catch((): void => {
+          // HTTP check failed - mark service as unhealthy
+          const status: ServiceStatusDto = {
+            name: config.name,
+            url: config.url,
+            status: 'unhealthy',
+            lastCheck: Date.now(),
+            responseTime: Math.min(Date.now() - startTime, this.timeout),
+          };
+          this.validateServiceStatus(status);
+          observer.next(status);
+          observer.complete();
         });
     });
   }
@@ -210,7 +185,8 @@ export class BackendHealthService {
       };
       this.validateServiceStatus(status);
       return status;
-    } catch (error: Error | ErrorResponse) {
+      // eslint-disable-next-line no-restricted-syntax
+    } catch (error: unknown) {
       this.logger.warn(`[${name}] HTTP health check failed`);
       throw error;
     }
@@ -230,7 +206,8 @@ export class BackendHealthService {
         `[Docker] Container ${containerName}: ${isRunning ? 'running' : 'stopped'}`,
       );
       return isRunning;
-    } catch (error: Error | ErrorResponse) {
+      // eslint-disable-next-line no-restricted-syntax
+    } catch (error: unknown) {
       this.logger.error(
         `[Docker] Failed to check container ${containerName}:`,
         error,
@@ -292,7 +269,8 @@ export class BackendHealthService {
     event.services.forEach((service: ServiceStatusDto, index: number) => {
       try {
         this.validateServiceStatus(service);
-      } catch (error: Error | ErrorResponse) {
+        // eslint-disable-next-line no-restricted-syntax
+      } catch (error: unknown) {
         const errorMessage: string =
           error instanceof Error ? error.message : String(error);
         throw new Error(

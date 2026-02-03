@@ -19,8 +19,8 @@ export interface HealthCheckResponse {
   providedIn: 'root',
 })
 export class HealthService {
-  private readonly apiBaseUrl = 'http://localhost:3000';
-  private readonly pollInterval = 30000; // 30 seconds
+  private readonly apiBaseUrl: string = 'http://localhost:3000';
+  private readonly pollInterval: number = 30000; // 30 seconds
 
   private readonly serviceEndpoints: Map<string, string> = new Map([
     ['API Gateway', `${this.apiBaseUrl}/health`],
@@ -35,39 +35,46 @@ export class HealthService {
    * Check health of all services
    */
   checkAllServices(): Observable<ServiceHealth[]> {
-    const healthChecks = Array.from(this.serviceEndpoints.entries()).map(
-      ([name, endpoint]) => this.checkService(name, endpoint)
+    const healthChecks: Observable<ServiceHealth>[] = Array.from(
+      this.serviceEndpoints.entries(),
+    ).map(([name, endpoint]: [string, string]) =>
+      this.checkService(name, endpoint),
     );
     return forkJoin(healthChecks).pipe(
-      catchError((error) => {
-        console.error('[HealthService] forkJoin error:', error);
-        return of([]);
-      })
+      catchError(
+        (
+          error: Error | Record<string, string | number | boolean | null>,
+        ): Observable<ServiceHealth[]> => {
+          console.error('[HealthService] forkJoin error:', error);
+          return of([]);
+        },
+      ),
     );
   }
 
   /**
    * Check individual service health
    */
-  private checkService(name: string, endpoint: string): Observable<ServiceHealth> {
-    return this.http
-      .get(endpoint, { timeout: 5000 })
-      .pipe(
-        map(() => ({
+  private checkService(
+    name: string,
+    endpoint: string,
+  ): Observable<ServiceHealth> {
+    return this.http.get(endpoint, { timeout: 5000 }).pipe(
+      map(() => ({
+        name,
+        status: 'healthy' as const,
+        timestamp: Date.now(),
+        icon: '✓',
+      })),
+      catchError(() => {
+        return of({
           name,
-          status: 'healthy' as const,
+          status: 'unhealthy' as const,
           timestamp: Date.now(),
-          icon: '✓',
-        })),
-        catchError(() => {
-          return of({
-            name,
-            status: 'unhealthy' as const,
-            timestamp: Date.now(),
-            icon: '✗',
-          });
-        })
-      );
+          icon: '✗',
+        });
+      }),
+    );
   }
 
   /**

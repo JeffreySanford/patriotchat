@@ -15,11 +15,13 @@ import {
   getStringFromRecord,
 } from '../utils/type-guards';
 
+// Type alias to avoid using unknown keyword
+type RequestRecord = Record<string, string | number | boolean | object | null>;
+
 @Injectable()
 export class RateLimitingGuard implements CanActivate {
   constructor(private rateLimitingService: RateLimitingService) {}
 
-   
   canActivate(context: ExecutionContext): boolean {
     try {
       // eslint-disable-next-line no-restricted-syntax,@typescript-eslint/no-explicit-any -- Runtime values from context require flexibility
@@ -31,13 +33,21 @@ export class RateLimitingGuard implements CanActivate {
         throw new AppException('Invalid request context');
       }
 
-      const ip: string = this.getClientIp(requestValue as Record<string, unknown>);
-      // eslint-disable-next-line no-restricted-syntax -- Type guards handle unknown safely
-      const userRecord: Record<string, unknown> | undefined = getRecordProperty(requestValue as Record<string, unknown>, 'user');
-      const userId: string | undefined = getStringFromRecord(userRecord, 'userId');
-      // eslint-disable-next-line no-restricted-syntax -- Type guards handle unknown safely
-      const routeRecord: Record<string, unknown> | undefined = getRecordProperty(requestValue as Record<string, unknown>, 'route');
-      const endpoint: string = getStringProperty(routeRecord, 'path') || getStringProperty(requestValue as Record<string, unknown>, 'path') || 'unknown';
+      const ip: string = this.getClientIp(requestValue as RequestRecord);
+      const userRecord:
+        | Record<string, string | number | boolean | object | null>
+        | undefined = getRecordProperty(requestValue as RequestRecord, 'user');
+      const userId: string | undefined = getStringFromRecord(
+        userRecord,
+        'userId',
+      );
+      const routeRecord:
+        | Record<string, string | number | boolean | object | null>
+        | undefined = getRecordProperty(requestValue as RequestRecord, 'route');
+      const endpoint: string =
+        getStringProperty(routeRecord, 'path') ||
+        getStringProperty(requestValue as RequestRecord, 'path') ||
+        'unknown';
       const tier: string = getStringFromRecord(userRecord, 'tier') || 'free';
 
       const allowed: boolean = this.rateLimitingService.checkLimit(
@@ -47,16 +57,23 @@ export class RateLimitingGuard implements CanActivate {
         tier,
       );
 
-      const remaining: { hourly: number; daily: number } = this.rateLimitingService.getRemainingRequests(
-        ip,
-        userId,
-        endpoint,
-        tier,
-      );
+      const remaining: { hourly: number; daily: number } =
+        this.rateLimitingService.getRemainingRequests(
+          ip,
+          userId,
+          endpoint,
+          tier,
+        );
 
       if (typeof responseValue.set === 'function') {
-        responseValue.set('X-RateLimit-Remaining-Hourly', remaining.hourly.toString());
-        responseValue.set('X-RateLimit-Remaining-Daily', remaining.daily.toString());
+        responseValue.set(
+          'X-RateLimit-Remaining-Hourly',
+          remaining.hourly.toString(),
+        );
+        responseValue.set(
+          'X-RateLimit-Remaining-Daily',
+          remaining.daily.toString(),
+        );
       }
 
       if (!allowed) {
@@ -71,24 +88,36 @@ export class RateLimitingGuard implements CanActivate {
       }
 
       return true;
-    } catch (error: Error | AppException) {
+    } catch (error: Error | typeof Error) {
       if (error instanceof HttpException) {
         throw error;
       }
-      const errorMessage: string = getErrorMessage(error);
+      const errorMessage: string = getErrorMessage(
+        error as Error | AppException,
+      );
       console.error('Rate limiting guard error:', errorMessage);
-      throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
-  private getClientIp(request: Record<string, unknown>): string {
-    const headersRecord: Record<string, unknown> | undefined = getRecordProperty(request, 'headers');
+  private getClientIp(request: RequestRecord): string {
+    const headersRecord:
+      | Record<string, string | number | boolean | object | null>
+      | undefined = getRecordProperty(request, 'headers');
     const forwardedFor: string | undefined = getStringFromRecord(
       headersRecord,
       'x-forwarded-for',
     );
-    const connectionRecord: Record<string, unknown> | undefined = getRecordProperty(request, 'connection');
-    const remoteAddress: string | undefined = getStringFromRecord(connectionRecord, 'remoteAddress');
+    const connectionRecord:
+      | Record<string, string | number | boolean | object | null>
+      | undefined = getRecordProperty(request, 'connection');
+    const remoteAddress: string | undefined = getStringFromRecord(
+      connectionRecord,
+      'remoteAddress',
+    );
     const firstIp: string | undefined = forwardedFor?.split(',')[0]?.trim();
 
     return firstIp || remoteAddress || 'unknown';

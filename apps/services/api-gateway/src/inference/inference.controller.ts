@@ -16,26 +16,30 @@ import {
   InferenceGenerateRequest,
   InferenceGenerateResponse,
 } from '../types/api.dto';
+import { ErrorResponse } from '../types/api.dto';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 @Controller('inference')
 export class InferenceController {
-  constructor(@Inject(InferenceService) private readonly inferenceService: InferenceService) {}
+  constructor(
+    @Inject(InferenceService)
+    private readonly inferenceService: InferenceService,
+  ) {}
 
   @Get('models')
   getModels(): Observable<InferenceModelsResponse> {
     console.log('InferenceController: getModels called');
     return this.inferenceService.getModels().pipe(
-      map((modelIds) => ({
-        models: modelIds.map((id) => ({
+      map((modelIds: string[]) => ({
+        models: modelIds.map((id: string) => ({
           id,
           name: id,
           description: `${id} language model`,
           provider: 'Local',
         })),
       })),
-      catchError((err: Error | unknown) => {
+      catchError((err: Error | ErrorResponse) => {
         console.error('InferenceController: error in getModels:', err);
         throw new HttpException(
           'Failed to fetch models',
@@ -51,26 +55,31 @@ export class InferenceController {
   generateInference(
     @Body() body: InferenceGenerateRequest,
   ): Observable<InferenceGenerateResponse> {
-    console.log('InferenceController: generateInference called with body:', body);
+    console.log(
+      'InferenceController: generateInference called with body:',
+      body,
+    );
     // Support both 'model' and 'modelId' field names
-    const bodyRecord = body as Record<string, unknown>;
-    const modelId = (bodyRecord['model'] || bodyRecord['modelId']) as string | undefined;
-    
+    const modelId: string | undefined =
+      (body as InferenceGenerateRequest & { modelId?: string }).modelId ||
+      body.model;
+
     if (!modelId) {
-      throw new HttpException(
-        'Model is required',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Model is required', HttpStatus.BAD_REQUEST);
     }
 
-    return this.inferenceService.generateInference(body.prompt, modelId as string, body.context).pipe(
-      catchError((err: Error | unknown) => {
-        console.error('InferenceController: error in generateInference:', err);
-        const errorMessage = err instanceof Error ? err.message : 'Inference generation failed';
-        throw new HttpException(
-          HttpStatus.BAD_GATEWAY,
-        );
-      }),
-    );
+    return this.inferenceService
+      .generateInference(body.prompt, modelId, body.context)
+      .pipe(
+        catchError((err: Error | ErrorResponse) => {
+          console.error(
+            'InferenceController: error in generateInference:',
+            err,
+          );
+          const errorMessage: string =
+            err instanceof Error ? err.message : 'Inference generation failed';
+          throw new HttpException(errorMessage, HttpStatus.BAD_GATEWAY);
+        }),
+      );
   }
 }

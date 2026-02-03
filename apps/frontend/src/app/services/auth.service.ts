@@ -27,9 +27,10 @@ export class AuthService {
   public user$: Observable<User | null> = this.userSubject.asObservable();
 
   private authSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    this.isAuthenticatedSync()
+    this.isAuthenticatedSync(),
   );
-  public isAuthenticated$: Observable<boolean> = this.authSubject.asObservable();
+  public isAuthenticated$: Observable<boolean> =
+    this.authSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.loadUser();
@@ -48,12 +49,15 @@ export class AuthService {
       })
       .pipe(
         tap((response: LoginResponse): void => {
-          // Handle both wrapped and unwrapped responses
-          const responseAny = response as unknown as Record<string, unknown>;
-          const token = responseAny['token'] || (responseAny['data'] as Record<string, unknown>)?.['token'];
+          // Response is wrapped by the HTTP layer as {data: LoginResponse, timestamp, status}
+          const wrappedResponse: { data?: LoginResponse } = response as {
+            data?: LoginResponse;
+          };
+          const authData: LoginResponse | undefined = wrappedResponse.data;
+          const token: string | undefined = authData?.token;
           if (token && typeof token === 'string' && token !== 'undefined') {
             localStorage.setItem('token', token);
-            this.userSubject.next(response.user);
+            this.userSubject.next(authData!.user);
             this.authSubject.next(true);
           }
         }),
@@ -68,16 +72,25 @@ export class AuthService {
       })
       .pipe(
         tap((response: LoginResponse): void => {
-          // Handle both wrapped and unwrapped responses
-          const responseAny = response as unknown as Record<string, unknown>;
-          const token = responseAny['token'] || (responseAny['data'] as Record<string, unknown>)?.['token'];
+          console.log('[AuthService] Raw login response:', response);
+          // Response is wrapped by the HTTP layer as {data: LoginResponse, timestamp, status}
+          const wrappedResponse: { data?: LoginResponse } = response as {
+            data?: LoginResponse;
+          };
+          const authData: LoginResponse | undefined = wrappedResponse.data;
+          const token: string | undefined = authData?.token;
           if (token && typeof token === 'string' && token !== 'undefined') {
-            console.log('[AuthService] Storing token:', { tokenLength: (token as string).length });
-            localStorage.setItem('token', token as string);
-            this.userSubject.next(response.user);
+            console.log('[AuthService] Storing token:', {
+              tokenLength: token.length,
+            });
+            localStorage.setItem('token', token);
+            this.userSubject.next(authData!.user);
             this.authSubject.next(true);
           } else {
-            console.warn('[AuthService] Invalid token in response:', { token, response });
+            console.error('[AuthService] Invalid token in response:', {
+              token,
+              response,
+            });
           }
         }),
       );

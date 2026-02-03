@@ -74,12 +74,24 @@ These files provide detailed reference material and should link back to primary 
 | [documentation/debug/DEBUGGING_QUICK_START.md](documentation/debug/DEBUGGING_QUICK_START.md) | Quick debugging tips | Troubleshooting reference |
 | [documentation/debug/DEBUG_LOGGING_GUIDE.md](documentation/debug/DEBUG_LOGGING_GUIDE.md) | Structured logging approach | Developer reference |
 | [documentation/debug/DEBUG_ERRORS_REFERENCE.md](documentation/debug/DEBUG_ERRORS_REFERENCE.md) | Common error messages | Error lookup table |
+| [documentation/error-handling/INDEX.md](documentation/error-handling/INDEX.md) | Error handling documentation hub | Start here |
+| [documentation/error-handling/FAQ.md](documentation/error-handling/FAQ.md) | Quick answers on catch patterns | 5 min read |
+| [documentation/error-handling/VISUAL_GUIDE.md](documentation/error-handling/VISUAL_GUIDE.md) | Visual error handling patterns | Diagrams & examples |
+| [documentation/error-handling/COMPLETE_ANALYSIS.md](documentation/error-handling/COMPLETE_ANALYSIS.md) | Full error handling analysis | 15 min read |
+| [documentation/error-handling/DEEP_DIVE.md](documentation/error-handling/DEEP_DIVE.md) | TypeScript specification details | Technical reference |
+| [documentation/error-handling/ESLINT_DISABLE.md](documentation/error-handling/ESLINT_DISABLE.md) | Why eslint-disable is valid | Pattern validation |
 | [documentation/INCIDENT_RESPONSE.md](documentation/INCIDENT_RESPONSE.md) | Outage response procedure | Operations runbook |
 
-### Technical Deep-Dives
+### Technical Deep-Dives & Analysis
 
 | Document | Purpose | Notes |
 | --- | --- | --- |
+| [FINAL_STATUS_REPORT.md](FINAL_STATUS_REPORT.md) | Code quality campaign report | 95% improvement: 1860→92 problems |
+| [documentation/error-handling/INDEX.md](documentation/error-handling/INDEX.md) | Error handling comprehensive guide | Navigation hub |
+| [documentation/error-handling/COMPLETE_ANALYSIS.md](documentation/error-handling/COMPLETE_ANALYSIS.md) | Why unknown types required | Full technical analysis |
+| [documentation/error-handling/ESLINT_DISABLE.md](documentation/error-handling/ESLINT_DISABLE.md) | ESLint suppression patterns | Validation of usage |
+| [documentation/error-handling/FAQ.md](documentation/error-handling/FAQ.md) | Quick reference Q&A | Common questions answered |
+| [documentation/error-handling/VISUAL_GUIDE.md](documentation/error-handling/VISUAL_GUIDE.md) | Visual error patterns | Type safety guide |
 | [documentation/DATA_MODELING.md](documentation/DATA_MODELING.md) | DTO design patterns | References SHARED_DTO_PATTERN.md |
 | [documentation/SHARED_DTO_PATTERN.md](documentation/SHARED_DTO_PATTERN.md) | Shared TypeScript DTO library | Implementation reference |
 | [documentation/DTO_ENDPOINTS_REGISTRY.md](documentation/DTO_ENDPOINTS_REGISTRY.md) | DTO to endpoint mapping | Audit trail for API contracts |
@@ -107,53 +119,53 @@ These files provide detailed reference material and should link back to primary 
 
 ### When you need information about
 
-**🚀 System Status**
+### 🚀 System Status
 
 1. START: [README.md](README.md) – "Status at a Glance" section
 2. THEN: [PROJECT_STATUS.md](PROJECT_STATUS.md) – Full verification details
 3. THEN: [TODO.md](TODO.md) – Sprint progress tracking
 
-**🏗️ Architecture**
+### 🏗️ Architecture
 
 1. START: [documentation/OVERVIEW.md](documentation/OVERVIEW.md) – High-level overview
 2. THEN: [documentation/MICROSERVICES_ARCHITECTURE.md](documentation/MICROSERVICES_ARCHITECTURE.md) – Service details
 3. THEN: [docker-compose.yml](docker-compose.yml) – Infrastructure as Code
 4. DEEP: [documentation/DATABASE_SCHEMA.md](documentation/DATABASE_SCHEMA.md) – DB structure
 
-**💻 Code Quality & Standards**
+### 💻 Code Quality & Standards
 
 1. START: [documentation/CODING-STANDARDS.md](documentation/CODING-STANDARDS.md) – Rules & patterns
 2. THEN: [linting-summary.txt](linting-summary.txt) – Current metrics
 3. DEEP: [documentation/SHARED_DTO_PATTERN.md](documentation/SHARED_DTO_PATTERN.md) – DTO implementation
 
-**🤖 LLM Development**
+### 🤖 LLM Development
 
 1. START: [documentation/LLM/MODEL-CHARTER.md](documentation/LLM/MODEL-CHARTER.md) – Constitutional values
 2. THEN: [documentation/LLM/LLM-CREATION.md](documentation/LLM/LLM-CREATION.md) – Training steps
 3. THEN: [documentation/LLM/EVALUATION-CHECKLIST.md](documentation/LLM/EVALUATION-CHECKLIST.md) – Quality criteria
 4. DATA: [documentation/LLM/TRAINING-DATA-SOURCES.md](documentation/LLM/TRAINING-DATA-SOURCES.md) – Data curation
 
-**🔌 API Integration**
+### 🔌 API Integration
 
 1. START: [documentation/api/QUICK_REFERENCE.md](documentation/api/QUICK_REFERENCE.md) – Endpoints list
 2. EXAMPLES: [documentation/api/EXAMPLES.md](documentation/api/EXAMPLES.md) – Code samples
 3. GUIDE: [documentation/api/GUIDE.md](documentation/api/GUIDE.md) – Detailed usage
 4. FULL: [documentation/api/ENDPOINTS_SUMMARY.md](documentation/api/ENDPOINTS_SUMMARY.md) – All details
 
-**🔒 Security & Governance**
+### 🔒 Security & Governance
 
 1. START: [documentation/SECURITY.md](documentation/SECURITY.md) – Security requirements
 2. POLICY: [documentation/GOVERNANCE.md](documentation/GOVERNANCE.md) – Exception approvals
 3. CONDUCT: [documentation/CODE_OF_CONDUCT.md](documentation/CODE_OF_CONDUCT.md) – Community norms
 
-**🐛 Debugging Issues**
+### 🐛 Debugging Issues
 
 1. START: [documentation/debug/DEBUGGING_QUICK_START.md](documentation/debug/DEBUGGING_QUICK_START.md) – Quick tips
 2. ERRORS: [documentation/debug/DEBUG_ERRORS_REFERENCE.md](documentation/debug/DEBUG_ERRORS_REFERENCE.md) – Error lookup
 3. LOGS: [documentation/debug/DEBUG_LOGGING_GUIDE.md](documentation/debug/DEBUG_LOGGING_GUIDE.md) – Structured logging
 4. OUTAGE: [documentation/INCIDENT_RESPONSE.md](documentation/INCIDENT_RESPONSE.md) – Runbook
 
-**⚡ Operations & Deployment**
+### ⚡ Operations & Deployment
 
 1. START: [documentation/INFRASTRUCTURE_SUITE.md](documentation/INFRASTRUCTURE_SUITE.md) – Full infrastructure
 2. DB: [documentation/PERSISTENCE.md](documentation/PERSISTENCE.md) – Data persistence

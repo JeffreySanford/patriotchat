@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, User } from '../../services/auth.service';
 
 export interface NavRoute {
   label: string;
@@ -21,35 +21,59 @@ export interface NavRoute {
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
   routes: NavRoute[] = [
-    { label: 'Dashboard', path: '/dashboard', icon: '📊', requiredRoles: ['guest', 'user', 'power', 'admin'] },
-    { label: 'Analytics', path: '/analytics', icon: '📈', requiredRoles: ['user', 'power', 'admin'] },
-    { label: 'Settings', path: '/settings', icon: '⚙️', requiredRoles: ['user', 'power', 'admin'] },
+    {
+      label: 'Dashboard',
+      path: '/dashboard',
+      icon: '📊',
+      requiredRoles: ['guest', 'user', 'power', 'admin'],
+    },
+    {
+      label: 'Analytics',
+      path: '/analytics',
+      icon: '📈',
+      requiredRoles: ['user', 'power', 'admin'],
+    },
+    {
+      label: 'Settings',
+      path: '/settings',
+      icon: '⚙️',
+      requiredRoles: ['user', 'power', 'admin'],
+    },
     { label: 'Admin', path: '/admin', icon: '👑', requiredRoles: ['admin'] },
   ];
 
   activeRoute: string = '';
   userRole: string = 'guest';
   filteredRoutes: NavRoute[] = [];
-  private destroy$ = new Subject<void>();
+  private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
     // Track route changes
     this.router.events
       .pipe(
-        filter((event) => event instanceof NavigationEnd),
-        takeUntil(this.destroy$)
+        // eslint-disable-next-line no-restricted-syntax
+        filter(
+          (event: unknown): event is NavigationEnd =>
+            event instanceof NavigationEnd,
+        ),
+        takeUntil(this.destroy$),
       )
-      .subscribe((event: any) => {
+      .subscribe((event: NavigationEnd): void => {
         this.activeRoute = event.urlAfterRedirects;
       });
 
     // Get user role
-    this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
-      this.userRole = user?.role || 'guest';
-      this.filterRoutes();
-    });
+    this.authService.user$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user: User | null): void => {
+        this.userRole = user?.role || 'guest';
+        this.filterRoutes();
+      });
 
     this.filterRoutes();
   }
@@ -60,7 +84,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   }
 
   private filterRoutes(): void {
-    this.filteredRoutes = this.routes.filter((route) => {
+    this.filteredRoutes = this.routes.filter((route: NavRoute): boolean => {
       if (!route.requiredRoles) return true;
       return route.requiredRoles.includes(this.userRole);
     });

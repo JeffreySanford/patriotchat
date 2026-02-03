@@ -8,7 +8,11 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { BackendHealthService } from './backend-health.service';
-import { HealthCheckEventDto, HealthCheckErrorDto, ServiceStatusDto } from './dto/health-check.dto';
+import {
+  HealthCheckEventDto,
+  HealthCheckErrorDto,
+  ServiceStatusDto,
+} from './dto/health-check.dto';
 import { Subscription } from 'rxjs';
 import { Logger, Injectable, Inject } from '@nestjs/common';
 
@@ -19,16 +23,21 @@ import { Logger, Injectable, Inject } from '@nestjs/common';
     origin: '*',
   },
 })
-export class HealthGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+export class HealthGateway
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer()
   server!: Server;
 
   private healthCheckSubscription: Subscription | null = null;
-  private connectedClients = new Set<string>();
-  private readonly logger = new Logger('HealthGateway');
-  private initialized = false;
+  private connectedClients: Set<string> = new Set<string>();
+  private readonly logger: Logger = new Logger('HealthGateway');
+  private initialized: boolean = false;
 
-  constructor(@Inject(BackendHealthService) private readonly backendHealthService: BackendHealthService) {}
+  constructor(
+    @Inject(BackendHealthService)
+    private readonly backendHealthService: BackendHealthService,
+  ) {}
 
   onModuleInit(): void {
     this.logger.log('HealthGateway module initialized');
@@ -39,7 +48,7 @@ export class HealthGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     }
   }
 
-  afterInit(server: Server): void {
+  afterInit(): void {
     this.logger.log('WebSocket Gateway initialized on namespace /health');
     if (!this.initialized && this.backendHealthService) {
       this.initialized = true;
@@ -54,7 +63,9 @@ export class HealthGateway implements OnGatewayInit, OnGatewayConnection, OnGate
    */
   private startHealthChecks(): void {
     if (!this.backendHealthService) {
-      this.logger.error('BackendHealthService is undefined, cannot start health checks');
+      this.logger.error(
+        'BackendHealthService is undefined, cannot start health checks',
+      );
       return;
     }
 
@@ -69,20 +80,24 @@ export class HealthGateway implements OnGatewayInit, OnGatewayConnection, OnGate
 
             if (this.connectedClients.size > 0) {
               this.logger.debug(
-                `Broadcasting health status to ${this.connectedClients.size} clients`
+                `Broadcasting health status to ${this.connectedClients.size} clients`,
               );
               this.server.emit('health-status', event);
             }
-          } catch (error) {
+            // eslint-disable-next-line no-restricted-syntax
+          } catch (error: unknown) {
             this.handleDtoValidationError(error);
           }
         },
-        error: (error) => {
+        // eslint-disable-next-line no-restricted-syntax
+        error: (error: unknown) => {
           this.logger.error('Health check stream error:', error);
+          const errorMessage: string =
+            error instanceof Error ? error.message : String(error);
           this.broadcastError({
             statusCode: 500,
             message: 'Health check service error',
-            error: error?.message || 'Unknown error',
+            error: errorMessage,
             timestamp: Date.now(),
           });
 
@@ -101,7 +116,7 @@ export class HealthGateway implements OnGatewayInit, OnGatewayConnection, OnGate
   handleConnection(client: Socket): void {
     this.connectedClients.add(client.id);
     this.logger.log(
-      `Client connected: ${client.id}, total connected: ${this.connectedClients.size}`
+      `Client connected: ${client.id}, total connected: ${this.connectedClients.size}`,
     );
 
     // Health checks already started in afterInit, clients will receive updates automatically
@@ -113,7 +128,7 @@ export class HealthGateway implements OnGatewayInit, OnGatewayConnection, OnGate
   handleDisconnect(client: Socket): void {
     this.connectedClients.delete(client.id);
     this.logger.log(
-      `Client disconnected: ${client.id}, total connected: ${this.connectedClients.size}`
+      `Client disconnected: ${client.id}, total connected: ${this.connectedClients.size}`,
     );
 
     // Stop checks if no clients connected
@@ -154,32 +169,38 @@ export class HealthGateway implements OnGatewayInit, OnGatewayConnection, OnGate
 
     event.services.forEach((service: ServiceStatusDto, index: number) => {
       if (!service || typeof service !== 'object') {
-        throw new Error(`[DTO Validation] services[${index}] must be an object`);
+        throw new Error(
+          `[DTO Validation] services[${index}] must be an object`,
+        );
       }
 
       if (typeof service.name !== 'string' || !service.name) {
-        throw new Error(`[DTO Validation] services[${index}].name must be a non-empty string`);
+        throw new Error(
+          `[DTO Validation] services[${index}].name must be a non-empty string`,
+        );
       }
 
       if (typeof service.url !== 'string' || !service.url) {
-        throw new Error(`[DTO Validation] services[${index}].url must be a non-empty string`);
+        throw new Error(
+          `[DTO Validation] services[${index}].url must be a non-empty string`,
+        );
       }
 
       if (!['healthy', 'unhealthy'].includes(service.status)) {
         throw new Error(
-          `[DTO Validation] services[${index}].status must be 'healthy' or 'unhealthy', got '${service.status}'`
+          `[DTO Validation] services[${index}].status must be 'healthy' or 'unhealthy', got '${service.status}'`,
         );
       }
 
       if (!Number.isInteger(service.lastCheck) || service.lastCheck <= 0) {
         throw new Error(
-          `[DTO Validation] services[${index}].lastCheck must be a positive integer`
+          `[DTO Validation] services[${index}].lastCheck must be a positive integer`,
         );
       }
 
       if (!Number.isInteger(service.responseTime) || service.responseTime < 0) {
         throw new Error(
-          `[DTO Validation] services[${index}].responseTime must be a non-negative integer`
+          `[DTO Validation] services[${index}].responseTime must be a non-negative integer`,
         );
       }
     });
@@ -188,12 +209,15 @@ export class HealthGateway implements OnGatewayInit, OnGatewayConnection, OnGate
   /**
    * Handle DTO validation errors
    */
-  private handleDtoValidationError(error: Error | unknown): void {
-    this.logger.error('DTO Validation Error:', error.message);
+  // eslint-disable-next-line no-restricted-syntax
+  private handleDtoValidationError(error: unknown): void {
+    const errorMessage: string =
+      error instanceof Error ? error.message : String(error);
+    this.logger.error('DTO Validation Error:', errorMessage);
     this.broadcastError({
       statusCode: 400,
       message: 'Invalid health check data format',
-      error: error?.message || 'DTO validation failed',
+      error: errorMessage,
       timestamp: Date.now(),
     });
   }

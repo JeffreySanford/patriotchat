@@ -1,8 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { WebSocketHealthService, HealthCheckEvent, HealthCheckError } from '../../services/websocket-health.service';
+import {
+  WebSocketHealthService,
+  HealthCheckEvent,
+  HealthCheckError,
+  ServiceStatus,
+} from '../../services/websocket-health.service';
 import { AuthService } from '../../services/auth.service';
 import { Subject, takeUntil } from 'rxjs';
-
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -10,30 +14,32 @@ import { Subject, takeUntil } from 'rxjs';
   standalone: false,
 })
 export class FooterComponent implements OnInit, OnDestroy {
-  services: any[] = [];
-  isAuthenticated = false;
-  isLoading = false;
+  services: ServiceStatus[] = [];
+  isAuthenticated: boolean = false;
+  isLoading: boolean = false;
   lastCheckTime: number = 0;
-  wsConnected = false;
+  wsConnected: boolean = false;
   errorMessage: string = '';
 
-  private destroy$ = new Subject<void>();
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private wsHealthService: WebSocketHealthService,
-    public authService: AuthService
+    public authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     // Subscribe to auth state
-    this.authService.isAuthenticated$?.pipe(takeUntil(this.destroy$)).subscribe((isAuth) => {
-      this.isAuthenticated = isAuth;
-      if (isAuth) {
-        this.connectWebSocket();
-      } else {
-        this.disconnectWebSocket();
-      }
-    });
+    this.authService.isAuthenticated$
+      ?.pipe(takeUntil(this.destroy$))
+      .subscribe((isAuth: boolean) => {
+        this.isAuthenticated = isAuth;
+        if (isAuth) {
+          this.connectWebSocket();
+        } else {
+          this.disconnectWebSocket();
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -50,7 +56,7 @@ export class FooterComponent implements OnInit, OnDestroy {
     this.wsHealthService
       .getConnectionStatus()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((connected) => {
+      .subscribe((connected: boolean): void => {
         this.wsConnected = connected;
       });
 
@@ -65,7 +71,9 @@ export class FooterComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.errorMessage = '';
         },
-        error: (error: any) => {
+        error: (
+          error: Error | Record<string, string | number | boolean | null>,
+        ): void => {
           console.error('[FooterComponent] WebSocket connection error:', error);
           this.wsConnected = false;
           this.isLoading = false;
@@ -79,14 +87,19 @@ export class FooterComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (error: HealthCheckError) => {
-          console.error('[FooterComponent] Health check error received:', error);
+          console.error(
+            '[FooterComponent] Health check error received:',
+            error,
+          );
           this.errorMessage = `${error.message}: ${error.error}`;
         },
       });
   }
 
   private disconnectWebSocket(): void {
-    console.log('[FooterComponent] Disconnecting from WebSocket health service');
+    console.log(
+      '[FooterComponent] Disconnecting from WebSocket health service',
+    );
     this.wsHealthService.disconnect();
     this.wsConnected = false;
   }
@@ -117,7 +130,7 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   getTimeAgo(timestamp: number): string {
     if (!timestamp) return 'never';
-    const seconds = Math.floor((Date.now() - timestamp) / 1000);
+    const seconds: number = Math.floor((Date.now() - timestamp) / 1000);
     if (seconds < 60) return 'just now';
     if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
     if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;

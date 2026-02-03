@@ -91,7 +91,7 @@ export class AnalyticsController {
   @UseGuards(JwtAuthGuard)
   getStats(): Observable<StatsResponse> {
     return this.analyticsService.getStats().pipe(
-      tap((response: StatsResponse) => {
+      tap((): void => {
         console.log('[AnalyticsController] Stats retrieved');
       }),
       catchError((error: Error | ErrorResponse) => {

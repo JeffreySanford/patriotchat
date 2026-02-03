@@ -3,7 +3,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { InferenceService } from '../../services/inference.service';
 import { AnalyticsService } from '../../services/analytics.service';
 import { AuthService } from '../../services/auth.service';
-import { ApiError, InferenceModelsResponse, InferenceGenerateResponse } from '../../types/api.dto';
+import {
+  ApiError,
+  InferenceModelsResponse,
+  InferenceGenerateResponse,
+} from '../../types/api.dto';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -46,7 +50,11 @@ export class DashboardComponent implements OnInit {
 
   loadModels(): void {
     this.inferenceService.getModels().subscribe({
-      next: (response: { data: InferenceModelsResponse; timestamp: number; status: number }): void => {
+      next: (response: {
+        data: InferenceModelsResponse;
+        timestamp: number;
+        status: number;
+      }): void => {
         console.log('Dashboard: Models loaded:', response.data.models);
         this.availableModels = response.data.models;
         if (this.availableModels.length > 0) {
@@ -55,7 +63,8 @@ export class DashboardComponent implements OnInit {
         }
       },
       error: (err: ApiError | HttpErrorResponse): void => {
-        this.error = err instanceof ApiError ? err.message : 'Failed to load models';
+        this.error =
+          err instanceof ApiError ? err.message : 'Failed to load models';
         console.error('Dashboard: Error loading models:', err);
       },
     });
@@ -63,10 +72,12 @@ export class DashboardComponent implements OnInit {
 
   selectModel(modelId: string): void {
     this.selectedModel = modelId;
-    this.analyticsService.trackEvent('model_selected', { model: modelId }).subscribe({
-      error: (err: ApiError | HttpErrorResponse): void =>
-        console.error('Analytics error:', err),
-    });
+    this.analyticsService
+      .trackEvent('model_selected', { model: modelId })
+      .subscribe({
+        error: (err: ApiError | HttpErrorResponse): void =>
+          console.error('Analytics error:', err),
+      });
   }
 
   sendMessage(): void {
@@ -86,53 +97,62 @@ export class DashboardComponent implements OnInit {
         prompt: userMessage,
       })
       .subscribe({
-        next: (response: { data: InferenceGenerateResponse; timestamp: number; status: number }): void => {
+        next: (response: {
+          data: InferenceGenerateResponse;
+          timestamp: number;
+          status: number;
+        }): void => {
           console.log('[Dashboard] Full response:', response);
           console.log('[Dashboard] Response type:', typeof response);
           console.log('[Dashboard] Response.data type:', typeof response.data);
-          
-          // Defensive extraction - try multiple paths
-          let assistantText = '';
-          const responseData: any = response.data;
-          
-          // First try: response.data.text
-          if (responseData && responseData.text) {
+
+          // Extract text from response.data
+          let assistantText: string = '';
+          const responseData: InferenceGenerateResponse = response.data || {};
+
+          // Try text field first
+          if (responseData.text) {
             assistantText = responseData.text;
             console.log('[Dashboard] Found text in response.data.text');
           }
-          // Second try: response.data.result  
-          else if (responseData && responseData.result) {
+          // Try result field as fallback
+          else if (responseData.result) {
             assistantText = responseData.result;
             console.log('[Dashboard] Found text in response.data.result');
           }
-          // Third try: maybe response itself is the data
-          else if (response && (response as any).text) {
-            assistantText = (response as any).text;
-            console.log('[Dashboard] Found text in response.text');
-          } else if (response && (response as any).result) {
-            assistantText = (response as any).result;
-            console.log('[Dashboard] Found text in response.result');
-          }
-          
-          console.log('[Dashboard] Extracted text:', assistantText.substring(0, 50) + '...');
+
+          console.log(
+            '[Dashboard] Extracted text:',
+            assistantText.substring(0, 50) + '...',
+          );
           console.log('[Dashboard] Text is empty?', !assistantText);
-          
+
           if (assistantText) {
             this.messages.push({
               role: 'assistant',
               content: assistantText,
               model: this.selectedModel!,
             });
-            console.log('[Dashboard] Message pushed. Total messages:', this.messages.length);
+            console.log(
+              '[Dashboard] Message pushed. Total messages:',
+              this.messages.length,
+            );
           } else {
-            console.error('[Dashboard] ERROR: No text extracted! Response object:', response);
+            console.error(
+              '[Dashboard] ERROR: No text extracted! Response object:',
+              response,
+            );
           }
-          
+
           this.analyticsService
             .trackEvent('inference_generated', {
               model: this.selectedModel || 'unknown',
-              duration: (response.data as any).duration || 0,
-              tokens: (response.data as any).tokens || 0,
+              duration: responseData.duration
+                ? typeof responseData.duration === 'number'
+                  ? responseData.duration
+                  : parseInt(String(responseData.duration), 10) || 0
+                : 0,
+              tokens: responseData.tokens || responseData.tokensUsed || 0,
             })
             .subscribe({
               error: (err: ApiError | HttpErrorResponse): void =>
@@ -143,7 +163,10 @@ export class DashboardComponent implements OnInit {
         },
         error: (err: ApiError | HttpErrorResponse): void => {
           this.loading = false;
-          this.error = err instanceof ApiError ? err.message : 'Failed to generate response';
+          this.error =
+            err instanceof ApiError
+              ? err.message
+              : 'Failed to generate response';
           this.cdr.markForCheck();
           console.error('[Dashboard] Error in subscription:', err);
         },
@@ -163,14 +186,14 @@ export class DashboardComponent implements OnInit {
 
   // Simple spell check suggestions for common words
   private commonMisspellings: { [key: string]: string[] } = {
-    'teh': ['the'],
-    'recieve': ['receive'],
-    'occured': ['occurred'],
-    'seperate': ['separate'],
-    'bussiness': ['business'],
-    'definately': ['definitely'],
-    'goverment': ['government'],
-    'enviroment': ['environment'],
+    teh: ['the'],
+    recieve: ['receive'],
+    occured: ['occurred'],
+    seperate: ['separate'],
+    bussiness: ['business'],
+    definately: ['definitely'],
+    goverment: ['government'],
+    enviroment: ['environment'],
   };
 
   checkSpelling(text: string): { word: string; suggestions: string[] } | null {

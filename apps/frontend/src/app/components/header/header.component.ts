@@ -10,23 +10,27 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   user: User | null = null;
-  isAuthenticated = false;
-  isDropdownOpen = false;
+  isAuthenticated: boolean = false;
+  isDropdownOpen: boolean = false;
 
-  private destroy$ = new Subject<void>();
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     // Subscribe to user changes
-    this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
-      this.user = user;
-    });
+    this.authService.user$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user: User | null): void => {
+        this.user = user;
+      });
 
     // Subscribe to auth state
-    this.authService.isAuthenticated$.pipe(takeUntil(this.destroy$)).subscribe((isAuth) => {
-      this.isAuthenticated = isAuth;
-    });
+    this.authService.isAuthenticated$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isAuth: boolean): void => {
+        this.isAuthenticated = isAuth;
+      });
   }
 
   ngOnDestroy(): void {

@@ -7,13 +7,22 @@ interface ValidationSchema {
   [key: string]: string;
 }
 
+// Type for validated values - allows recursive structures
+type ValidatedValue =
+  | string
+  | number
+  | boolean
+  | null
+  | Record<string, ValidatedValue>
+  | ValidatedValue[];
+
 export class TypeValidator {
   /**
    * Validates an object matches the expected shape
    * Throws ValidationError if validation fails
    */
-  static validate<T extends Record<string, unknown>>(
-    data: unknown,
+  static validate<T extends Record<string, ValidatedValue>>(
+    data: Record<string, ValidatedValue> | null,
     schema: ValidationSchema,
     typeName: string,
   ): T {
@@ -23,13 +32,16 @@ export class TypeValidator {
       );
     }
 
-    const obj: Record<string, unknown> = data as Record<string, unknown>;
+    const obj: Record<string, ValidatedValue> = data as Record<
+      string,
+      ValidatedValue
+    >;
     const errors: ValidationSchema = {};
 
     // Check required fields
     for (const [key, expectedType] of Object.entries(schema)) {
-      const value: unknown = obj[key];
-      const actualType: string = this.getType(value);
+      const value: ValidatedValue | undefined = obj[key];
+      const actualType: string = this.getType(value ?? null);
 
       if (!this.typeMatches(actualType, expectedType)) {
         errors[key] = `Expected ${expectedType}, got ${actualType}`;
@@ -52,7 +64,7 @@ export class TypeValidator {
     return obj as T;
   }
 
-  private static getType(value: unknown): string {
+  private static getType(value: ValidatedValue): string {
     if (value === null) return 'null';
     if (Array.isArray(value)) return 'array';
     return typeof value;

@@ -13,7 +13,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@patriotchat/shared': path.resolve(__dirname, '../../types/api.dto.ts'),
+      '@patriotchat/shared': path.resolve(
+        __dirname,
+        '../../types/api.dto.ts',
+      ) as string,
     },
   },
 });

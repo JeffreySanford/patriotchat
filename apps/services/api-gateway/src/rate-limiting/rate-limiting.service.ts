@@ -6,13 +6,6 @@ interface RateLimitConfig {
   premium: { requestsPerHour: number; requestsPerDay: number };
 }
 
-interface RateLimitKey {
-  ip: string;
-  userId?: string;
-  endpoint: string;
-  timestamp: number;
-}
-
 @Injectable()
 export class RateLimitingService {
   private limits: RateLimitConfig = {
@@ -40,15 +33,19 @@ export class RateLimitingService {
     timestamps = timestamps.filter((t: number) => t > oneDayAgo);
 
     // Check hour limit
-    const hourCount: number = timestamps.filter((t: number) => t > oneHourAgo).length;
-    const hourLimit: number = this.limits[tier as keyof RateLimitConfig]?.requestsPerHour || 100;
+    const hourCount: number = timestamps.filter(
+      (t: number) => t > oneHourAgo,
+    ).length;
+    const hourLimit: number =
+      this.limits[tier as keyof RateLimitConfig]?.requestsPerHour || 100;
     if (hourCount >= hourLimit) {
       this.store.set(key, timestamps);
       return false;
     }
 
     // Check day limit
-    const dayLimit: number = this.limits[tier as keyof RateLimitConfig]?.requestsPerDay || 1000;
+    const dayLimit: number =
+      this.limits[tier as keyof RateLimitConfig]?.requestsPerDay || 1000;
     if (timestamps.length >= dayLimit) {
       this.store.set(key, timestamps);
       return false;
@@ -71,7 +68,9 @@ export class RateLimitingService {
     const oneDayAgo: number = now - 86400000;
 
     for (const [key, timestamps] of this.store.entries()) {
-      const filtered: number[] = timestamps.filter((t: number) => t > oneDayAgo);
+      const filtered: number[] = timestamps.filter(
+        (t: number) => t > oneDayAgo,
+      );
       if (filtered.length === 0) {
         this.store.delete(key);
       } else {
@@ -91,11 +90,16 @@ export class RateLimitingService {
     const oneHourAgo: number = now - 3600000;
     const oneDayAgo: number = now - 86400000;
 
-    const timestamps: number[] = (this.store.get(key) || []).filter((t: number) => t > oneDayAgo);
-    const hourCount: number = timestamps.filter((t: number) => t > oneHourAgo).length;
+    const timestamps: number[] = (this.store.get(key) || []).filter(
+      (t: number) => t > oneDayAgo,
+    );
+    const hourCount: number = timestamps.filter(
+      (t: number) => t > oneHourAgo,
+    ).length;
     const dayCount: number = timestamps.length;
 
-    const tierLimits: { requestsPerHour: number; requestsPerDay: number } = this.limits[tier as keyof RateLimitConfig] || this.limits.free;
+    const tierLimits: { requestsPerHour: number; requestsPerDay: number } =
+      this.limits[tier as keyof RateLimitConfig] || this.limits.free;
 
     return {
       hourly: Math.max(0, tierLimits.requestsPerHour - hourCount),

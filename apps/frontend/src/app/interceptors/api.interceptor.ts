@@ -10,7 +10,7 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ApiError, ValidationError } from '../types/api.dto';
+import { ApiError } from '../types/api.dto';
 
 /**
  * Frontend HTTP Interceptor
@@ -26,23 +26,25 @@ export class ApiInterceptor implements HttpInterceptor {
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
     // Add Authorization header if token exists
-    const token = localStorage.getItem('token');
+    const token: string | null = localStorage.getItem('token');
     let updatedReq: HttpRequest<unknown> = req;
-    
+
     console.log(`[Interceptor] ${req.method} ${req.url}`, {
       hasToken: !!token,
       tokenLength: token?.length || 0,
       tokenValue: token ? `${token.substring(0, 20)}...` : 'NO_TOKEN',
       hasAuthHeader: req.headers.has('Authorization'),
     });
-    
+
     if (token && !req.headers.has('Authorization')) {
       updatedReq = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(`[Interceptor] Added Authorization header with token: Bearer ${token.substring(0, 20)}...`);
+      console.log(
+        `[Interceptor] Added Authorization header with token: Bearer ${token.substring(0, 20)}...`,
+      );
     } else if (!token) {
       console.warn(`[Interceptor] No token found in localStorage`);
     }
@@ -62,7 +64,9 @@ export class ApiInterceptor implements HttpInterceptor {
     );
   }
 
-  private validateResponse(response: HttpResponse<unknown>): HttpResponse<unknown> {
+  private validateResponse(
+    response: HttpResponse<unknown>,
+  ): HttpResponse<unknown> {
     const { data } = response.body as Record<string, unknown>;
 
     // Log for debugging
@@ -87,7 +91,10 @@ export class ApiInterceptor implements HttpInterceptor {
     if (error instanceof HttpErrorResponse) {
       // Try to parse backend ApiError response
       if (error.error && typeof error.error === 'object') {
-        const errObj: Record<string, unknown> = error.error as Record<string, unknown>;
+        const errObj: Record<string, unknown> = error.error as Record<
+          string,
+          unknown
+        >;
         if ('code' in errObj && 'message' in errObj) {
           return new ApiError({
             status: error.status,
@@ -132,7 +139,8 @@ export class ApiInterceptor implements HttpInterceptor {
     if (url.includes('/inference/generate')) return 'InferenceGenerateResponse';
     if (url.includes('/auth/register')) return 'AuthResponse';
     if (url.includes('/auth/login')) return 'AuthResponse';
-    if (url.includes('/auth/validate') || url.includes('/auth/me')) return 'AuthValidateResponse';
+    if (url.includes('/auth/validate') || url.includes('/auth/me'))
+      return 'AuthValidateResponse';
     return 'Unknown';
   }
 }
