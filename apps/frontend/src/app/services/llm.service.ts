@@ -3,24 +3,24 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
-interface InferenceResponse {
+export interface InferenceResponse {
   result: string;
   model: string;
   tokens: number;
   duration: string;
 }
 
-interface ModelsResponse {
+export interface ModelsResponse {
   models: string[];
 }
 
 @Injectable({ providedIn: 'root' })
 export class LlmService {
-  private readonly API_URL = 'http://localhost:3000';
+  private readonly API_URL: string = 'http://localhost:3000';
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   getModels(): Observable<ModelsResponse> {
@@ -30,15 +30,15 @@ export class LlmService {
   generateInference(
     prompt: string,
     model: string,
-    context?: string
+    context?: string,
   ): Observable<InferenceResponse> {
-    const token = this.authService.getToken();
+    const token: string | null = this.authService.getToken();
     return this.http.post<InferenceResponse>(
       `${this.API_URL}/inference/generate`,
       { prompt, model, context, user_id: 'current-user' },
       {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+        headers: { Authorization: `Bearer ${token || ''}` },
+      },
     );
   }
 }

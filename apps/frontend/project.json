@@ -70,11 +70,10 @@
       "executor": "@nx/eslint:lint"
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/coverage/apps/frontend"],
       "options": {
-        "jestConfig": "jest.config.ts",
-        "passWithNoTests": true
+        "command": "pnpm vitest run --config vitest.config.ts --coverage"
       }
     }
   },

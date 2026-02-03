@@ -10,19 +10,22 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { routes } from './app.routes';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthComponent,
-    DashboardComponent
-  ],
+  declarations: [AppComponent, AuthComponent, DashboardComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    RouterModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -19,7 +19,7 @@ interface InferenceResponse {
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  standalone: false
+  standalone: false,
 })
 export class DashboardComponent implements OnInit {
   selectedModel: string | null = null;
@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private llmService: LlmService,
     private analyticsService: AnalyticsService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -72,40 +72,48 @@ export class DashboardComponent implements OnInit {
     this.loading = true;
     this.error = '';
 
-    this.llmService.generateInference(userMessage, this.selectedModel).subscribe(
-      (response: InferenceResponse): void => {
-        this.messages.push({
-          role: 'assistant',
-          content: response.result,
-          model: this.selectedModel!,
-        });
-        this.analyticsService
-          .trackEvent('inference_generated', {
-            model: this.selectedModel,
-            duration: response.duration,
-            tokens: response.tokens,
-          })
-          .subscribe({
-            error: (err: unknown): void => console.error('Analytics error:', err),
+    this.llmService
+      .generateInference(userMessage, this.selectedModel)
+      .subscribe(
+        (response: InferenceResponse): void => {
+          this.messages.push({
+            role: 'assistant',
+            content: response.result,
+            model: this.selectedModel!,
           });
-        this.loading = false;
-      },
-      (err: unknown): void => {
-        this.loading = false;
-        let errorMsg: string = 'Failed to generate inference';
-        if (err && typeof err === 'object' && 'error' in err) {
-          const errObj = err as Record<string, unknown>;
-          if (errObj['error'] && typeof errObj['error'] === 'object') {
-            const errorDetail = errObj['error'] as Record<string, unknown>;
-            if (typeof errorDetail['error'] === 'string') {
-              errorMsg = errorDetail['error'];
+          this.analyticsService
+            .trackEvent('inference_generated', {
+              model: this.selectedModel,
+              duration: response.duration,
+              tokens: response.tokens,
+            })
+            .subscribe({
+              error: (err: unknown): void =>
+                console.error('Analytics error:', err),
+            });
+          this.loading = false;
+        },
+        (err: unknown): void => {
+          this.loading = false;
+          let errorMsg: string = 'Failed to generate inference';
+          if (err && typeof err === 'object' && 'error' in err) {
+            const errObj: Record<string, unknown> = err as Record<
+              string,
+              unknown
+            >;
+            if (errObj['error'] && typeof errObj['error'] === 'object') {
+              const errorDetail: Record<string, unknown> = errObj[
+                'error'
+              ] as Record<string, unknown>;
+              if (typeof errorDetail['error'] === 'string') {
+                errorMsg = errorDetail['error'];
+              }
             }
           }
-        }
-        this.error = errorMsg;
-        console.error(err);
-      }
-    );
+          this.error = errorMsg;
+          console.error(err);
+        },
+      );
   }
 
   logout(): void {
@@ -119,4 +127,3 @@ export class DashboardComponent implements OnInit {
     }
   }
 }
-

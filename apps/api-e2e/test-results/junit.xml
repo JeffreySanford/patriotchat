@@ -1,6 +1,6 @@
-<testsuites id="" name="" tests="162" failures="102" skipped="0" errors="0" time="14.10115">
-<testsuite name="critical-requirements\audit-trail.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="chromium" tests="5" failures="5" skipped="0" time="0.616" errors="0">
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration" classname="critical-requirements\audit-trail.spec.ts" time="0.096">
+<testsuites id="" name="" tests="162" failures="105" skipped="0" errors="0" time="14.039947">
+<testsuite name="critical-requirements\audit-trail.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="chromium" tests="5" failures="5" skipped="0" time="0.561" errors="0">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration" classname="critical-requirements\audit-trail.spec.ts" time="0.099">
 <failure message="audit-trail.spec.ts:7:9 Should log user registration" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\audit-trail.spec.ts:7:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration 
 
@@ -19,7 +19,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login" classname="critical-requirements\audit-trail.spec.ts" time="0.164">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login" classname="critical-requirements\audit-trail.spec.ts" time="0.152">
 <failure message="audit-trail.spec.ts:39:9 Should log user login" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\audit-trail.spec.ts:39:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login 
 
@@ -39,11 +39,11 @@
 ]]>
 </failure>
 <system-out>
-<![CDATA[✓ Login logged for user: testuser_1770079705412_1@test.patriotchat.com
+<![CDATA[✓ Login logged for user: testuser_1770086857935_1@test.patriotchat.com
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries" classname="critical-requirements\audit-trail.spec.ts" time="0.097">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries" classname="critical-requirements\audit-trail.spec.ts" time="0.119">
 <failure message="audit-trail.spec.ts:87:9 Should track LLM inference queries" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\audit-trail.spec.ts:87:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries 
 
@@ -63,7 +63,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible)" classname="critical-requirements\audit-trail.spec.ts" time="0.129">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible)" classname="critical-requirements\audit-trail.spec.ts" time="0.091">
 <failure message="audit-trail.spec.ts:133:9 Logs should be immutable (no modification possible)" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\audit-trail.spec.ts:133:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible) 
 
@@ -83,7 +83,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped" classname="critical-requirements\audit-trail.spec.ts" time="0.13">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped" classname="critical-requirements\audit-trail.spec.ts" time="0.1">
 <failure message="audit-trail.spec.ts:167:9 All audit operations should be timestamped" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\audit-trail.spec.ts:167:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped 
 
@@ -104,21 +104,21 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\database.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="chromium" tests="7" failures="5" skipped="0" time="0.917" errors="0">
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Should handle concurrent requests efficiently" classname="critical-requirements\database.spec.ts" time="0.189">
+<testsuite name="critical-requirements\database.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="chromium" tests="7" failures="5" skipped="0" time="0.744" errors="0">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Should handle concurrent requests efficiently" classname="critical-requirements\database.spec.ts" time="0.11">
 <system-out>
 <![CDATA[✓ All 10 concurrent requests succeeded
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Connection pool should recover after spike" classname="critical-requirements\database.spec.ts" time="0.286">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Connection pool should recover after spike" classname="critical-requirements\database.spec.ts" time="0.281">
 <system-out>
 <![CDATA[✓ First spike succeeded (5 requests)
 ✓ Pool recovered - second spike succeeded (5 requests)
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests" classname="critical-requirements\database.spec.ts" time="0.169">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests" classname="critical-requirements\database.spec.ts" time="0.099">
 <failure message="database.spec.ts:90:9 Stored data should persist across requests" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\database.spec.ts:90:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests 
 
@@ -138,7 +138,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency" classname="critical-requirements\database.spec.ts" time="0.094">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency" classname="critical-requirements\database.spec.ts" time="0.1">
 <failure message="database.spec.ts:121:9 Multiple database operations should maintain consistency" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\database.spec.ts:121:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency 
 
@@ -158,7 +158,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly" classname="critical-requirements\database.spec.ts" time="0.117">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly" classname="critical-requirements\database.spec.ts" time="0.1">
 <failure message="database.spec.ts:165:9 Database queries should execute quickly" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\database.spec.ts:165:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly 
 
@@ -178,26 +178,27 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy" classname="critical-requirements\database.spec.ts" time="0.036">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy" classname="critical-requirements\database.spec.ts" time="0.026">
 <failure message="database.spec.ts:201:9 PostgreSQL connection should be healthy" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\database.spec.ts:201:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy 
 
-    Error: expect(received).toBeDefined()
+    Error: expect(received).toBe(expected) // Object.is equality
 
-    Received: undefined
+    Expected: true
+    Received: false
 
+      206 |       });
       207 |
-      208 |       expect(response.ok).toBe(true);
-    > 209 |       expect(response.data?.database).toBeDefined();
-          |                                       ^
+    > 208 |       expect(response.ok).toBe(true);
+          |                           ^
+      209 |       expect(response.data?.database).toBeDefined();
       210 |       console.log(`✓ Database health: OK`);
       211 |     });
-      212 |
-        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:209:39
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:208:27
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available" classname="critical-requirements\database.spec.ts" time="0.026">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available" classname="critical-requirements\database.spec.ts" time="0.028">
 <failure message="database.spec.ts:213:9 Connection pool status should be available" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\database.spec.ts:213:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available 
 
@@ -218,26 +219,26 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\llm-selector.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="chromium" tests="10" failures="6" skipped="0" time="0.581" errors="0">
-<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should list available LLM models" classname="critical-requirements\llm-selector.spec.ts" time="0.029">
+<testsuite name="critical-requirements\llm-selector.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="chromium" tests="10" failures="6" skipped="0" time="0.57" errors="0">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should list available LLM models" classname="critical-requirements\llm-selector.spec.ts" time="0.032">
 <system-out>
 <![CDATA[✓ Available models: llama2, mistral, neural-chat
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should include required models" classname="critical-requirements\llm-selector.spec.ts" time="0.032">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should include required models" classname="critical-requirements\llm-selector.spec.ts" time="0.031">
 <system-out>
 <![CDATA[✓ All required models present: llama2, mistral, neural-chat
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Model selector should be accessible via API" classname="critical-requirements\llm-selector.spec.ts" time="0.033">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Model selector should be accessible via API" classname="critical-requirements\llm-selector.spec.ts" time="0.031">
 <system-out>
 <![CDATA[✓ Model selector API operational
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model" classname="critical-requirements\llm-selector.spec.ts" time="0.093">
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model" classname="critical-requirements\llm-selector.spec.ts" time="0.09">
 <failure message="llm-selector.spec.ts:57:9 Should execute inference with llama2 model" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:57:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model 
 
@@ -257,7 +258,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model" classname="critical-requirements\llm-selector.spec.ts" time="0.088">
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model" classname="critical-requirements\llm-selector.spec.ts" time="0.06">
 <failure message="llm-selector.spec.ts:92:9 Should execute inference with mistral model" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:92:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model 
 
@@ -277,7 +278,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model" classname="critical-requirements\llm-selector.spec.ts" time="0.086">
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model" classname="critical-requirements\llm-selector.spec.ts" time="0.085">
 <failure message="llm-selector.spec.ts:127:9 Should execute inference with neural-chat model" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:127:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model 
 
@@ -297,7 +298,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully" classname="critical-requirements\llm-selector.spec.ts" time="0.102">
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully" classname="critical-requirements\llm-selector.spec.ts" time="0.088">
 <failure message="llm-selector.spec.ts:164:9 Should handle invalid model gracefully" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:164:9 › Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully 
 
@@ -317,7 +318,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available" classname="critical-requirements\llm-selector.spec.ts" time="0.034">
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available" classname="critical-requirements\llm-selector.spec.ts" time="0.031">
 <failure message="llm-selector.spec.ts:201:9 Model metadata should be available" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:201:9 › Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available 
 
@@ -337,13 +338,13 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Model selector should be available on frontend" classname="critical-requirements\llm-selector.spec.ts" time="0.027">
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Model selector should be available on frontend" classname="critical-requirements\llm-selector.spec.ts" time="0.032">
 <system-out>
 <![CDATA[✓ Model selector backend API available for frontend integration
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session" classname="critical-requirements\llm-selector.spec.ts" time="0.057">
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session" classname="critical-requirements\llm-selector.spec.ts" time="0.09">
 <failure message="llm-selector.spec.ts:240:9 Should support model switching during session" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:240:9 › Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session 
 
@@ -364,7 +365,7 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\performance.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="chromium" tests="8" failures="6" skipped="0" time="0.156" errors="0">
+<testsuite name="critical-requirements\performance.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="chromium" tests="8" failures="7" skipped="0" time="0.151" errors="0">
 <testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Auth service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.029">
 <failure message="performance.spec.ts:7:9 Auth service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\performance.spec.ts:7:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Auth service should respond in under 100ms 
@@ -385,13 +386,27 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › API Gateway should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.026">
-<system-out>
-<![CDATA[✓ Gateway latency: 20.90ms
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › API Gateway should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.03">
+<failure message="performance.spec.ts:19:9 API Gateway should respond in under 100ms" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\performance.spec.ts:19:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › API Gateway should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      24 |       });
+      25 |
+    > 26 |       expect(response.ok).toBe(true);
+         |                           ^
+      27 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      28 |       console.log(`✓ Gateway latency: ${latency.toFixed(2)}ms`);
+      29 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:26:27
 ]]>
-</system-out>
+</failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Funding service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.01">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Funding service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.007">
 <failure message="performance.spec.ts:31:9 Funding service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\performance.spec.ts:31:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Funding service should respond in under 100ms 
 
@@ -431,7 +446,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › LLM service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.008">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › LLM service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.007">
 <failure message="performance.spec.ts:55:9 LLM service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\performance.spec.ts:55:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › LLM service should respond in under 100ms 
 
@@ -451,7 +466,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Analytics service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.008">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Analytics service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.028">
 <failure message="performance.spec.ts:67:9 Analytics service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\performance.spec.ts:67:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Analytics service should respond in under 100ms 
 
@@ -471,9 +486,9 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › Should maintain consistent response times under load" classname="critical-requirements\performance.spec.ts" time="0.038">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › Should maintain consistent response times under load" classname="critical-requirements\performance.spec.ts" time="0.013">
 <system-out>
-<![CDATA[✓ Avg latency: 6.29ms, Max: 21.06ms
+<![CDATA[✓ Avg latency: 1.95ms, Max: 2.84ms
 ]]>
 </system-out>
 </testcase>
@@ -498,8 +513,8 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\rate-limiting.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="chromium" tests="6" failures="5" skipped="0" time="0.516" errors="0">
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user" classname="critical-requirements\rate-limiting.spec.ts" time="0.091">
+<testsuite name="critical-requirements\rate-limiting.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="chromium" tests="6" failures="5" skipped="0" time="0.497" errors="0">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user" classname="critical-requirements\rate-limiting.spec.ts" time="0.082">
 <failure message="rate-limiting.spec.ts:7:9 Should track requests per user" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\rate-limiting.spec.ts:7:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user 
 
@@ -519,13 +534,13 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-IP Rate Limiting › Should limit requests from same IP" classname="critical-requirements\rate-limiting.spec.ts" time="0.112">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-IP Rate Limiting › Should limit requests from same IP" classname="critical-requirements\rate-limiting.spec.ts" time="0.078">
 <system-out>
 <![CDATA[✓ Per-IP rate limiting configured (no block within 10 requests)
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits" classname="critical-requirements\rate-limiting.spec.ts" time="0.087">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits" classname="critical-requirements\rate-limiting.spec.ts" time="0.065">
 <failure message="rate-limiting.spec.ts:105:9 Should apply endpoint-specific limits" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\rate-limiting.spec.ts:105:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits 
 
@@ -545,7 +560,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window" classname="critical-requirements\rate-limiting.spec.ts" time="0.083">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window" classname="critical-requirements\rate-limiting.spec.ts" time="0.084">
 <failure message="rate-limiting.spec.ts:151:9 Should reset limits on time window" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\rate-limiting.spec.ts:151:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window 
 
@@ -565,7 +580,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers" classname="critical-requirements\rate-limiting.spec.ts" time="0.061">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers" classname="critical-requirements\rate-limiting.spec.ts" time="0.088">
 <failure message="rate-limiting.spec.ts:203:9 Should include rate limit information in response headers" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\rate-limiting.spec.ts:203:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers 
 
@@ -585,114 +600,114 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service" classname="critical-requirements\rate-limiting.spec.ts" time="0.082">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service" classname="critical-requirements\rate-limiting.spec.ts" time="0.1">
 <failure message="rate-limiting.spec.ts:250:9 Should protect against denial of service" type="FAILURE">
 <![CDATA[  [chromium] › critical-requirements\rate-limiting.spec.ts:250:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service 
 
-    Error: expect(received).toBe(expected) // Object.is equality
+    Error: expect(received).toBeGreaterThan(expected)
 
-    Expected: true
-    Received: false
+    Expected: > 0
+    Received:   0
 
-      263 |       });
-      264 |
-    > 265 |       expect(registerResponse.ok).toBe(true);
-          |                                   ^
-      266 |       const token = registerResponse.data?.token;
-      267 |
-      268 |       // Attempt rapid-fire requests
-        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:265:35
+      287 |       // At least most should succeed (rate limit protection doesn't reject all)
+      288 |       const successCount = results.filter((r) => r.ok).length;
+    > 289 |       expect(successCount).toBeGreaterThan(0);
+          |                            ^
+      290 |
+      291 |       console.log(
+      292 |         `✓ Rate limiting protects service (${successCount}/5 requests succeeded)`,
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:289:28
 ]]>
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="performance\service-latency.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="chromium" tests="9" failures="0" skipped="0" time="0.342" errors="0">
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure auth service latency" classname="performance\service-latency.spec.ts" time="0.03">
+<testsuite name="performance\service-latency.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="chromium" tests="9" failures="0" skipped="0" time="0.308" errors="0">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure auth service latency" classname="performance\service-latency.spec.ts" time="0.043">
 <system-out>
 <![CDATA[Auth Service Latency:
-  Average: 2.70ms
-  Min: 1.46ms
-  Max: 6.55ms
+  Average: 3.57ms
+  Min: 0.64ms
+  Max: 24.09ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure gateway latency" classname="performance\service-latency.spec.ts" time="0.058">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure gateway latency" classname="performance\service-latency.spec.ts" time="0.046">
 <system-out>
 <![CDATA[Gateway Latency:
-  Average: 5.26ms
-  Min: 2.29ms
-  Max: 23.51ms
+  Average: 3.74ms
+  Min: 1.72ms
+  Max: 18.72ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure funding service latency" classname="performance\service-latency.spec.ts" time="0.049">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure funding service latency" classname="performance\service-latency.spec.ts" time="0.044">
 <system-out>
 <![CDATA[Funding Service Latency:
-  Average: 4.10ms
-  Min: 1.51ms
-  Max: 22.77ms
+  Average: 3.87ms
+  Min: 1.46ms
+  Max: 20.69ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure policy service latency" classname="performance\service-latency.spec.ts" time="0.048">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure policy service latency" classname="performance\service-latency.spec.ts" time="0.045">
 <system-out>
 <![CDATA[Policy Service Latency:
-  Average: 4.16ms
-  Min: 1.32ms
-  Max: 22.91ms
+  Average: 3.92ms
+  Min: 1.47ms
+  Max: 20.62ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure LLM service latency" classname="performance\service-latency.spec.ts" time="0.051">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure LLM service latency" classname="performance\service-latency.spec.ts" time="0.05">
 <system-out>
 <![CDATA[LLM Service Latency:
-  Average: 4.18ms
-  Min: 1.39ms
-  Max: 23.27ms
+  Average: 4.29ms
+  Min: 1.46ms
+  Max: 24.17ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure analytics service latency" classname="performance\service-latency.spec.ts" time="0.02">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure analytics service latency" classname="performance\service-latency.spec.ts" time="0.018">
 <system-out>
 <![CDATA[Analytics Service Latency:
-  Average: 1.77ms
-  Min: 0.99ms
-  Max: 4.20ms
+  Average: 1.61ms
+  Min: 0.91ms
+  Max: 3.71ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Throughput Benchmarks › Should handle concurrent requests efficiently" classname="performance\service-latency.spec.ts" time="0.011">
+<testcase name="Performance Tests › Throughput Benchmarks › Should handle concurrent requests efficiently" classname="performance\service-latency.spec.ts" time="0.01">
 <system-out>
 <![CDATA[Concurrent Request Performance (10 requests):
-  Total time: 9.60ms
-  Average latency: 6.23ms
-  Max latency: 7.10ms
-  Throughput: 1041.19 req/s
+  Total time: 8.36ms
+  Average latency: 5.50ms
+  Max latency: 6.85ms
+  Throughput: 1195.64 req/s
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Database Query Performance › Should execute queries within acceptable time" classname="performance\service-latency.spec.ts" time="0.049">
+<testcase name="Performance Tests › Database Query Performance › Should execute queries within acceptable time" classname="performance\service-latency.spec.ts" time="0.029">
 <system-out>
 <![CDATA[Database Query Performance:
-  Average: 8.32ms
+  Average: 4.68ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › API Response Times › Health check responses should be fast" classname="performance\service-latency.spec.ts" time="0.026">
+<testcase name="Performance Tests › API Response Times › Health check responses should be fast" classname="performance\service-latency.spec.ts" time="0.023">
 <system-out>
 <![CDATA[Health Check Response Times:
-  Auth: 4.77ms
-  Gateway: 2.79ms
-  Funding: 3.73ms
-  Policy: 3.40ms
-  LLM: 3.21ms
-  Analytics: 1.77ms
+  Auth: 2.93ms
+  Gateway: 3.28ms
+  Funding: 3.56ms
+  Policy: 4.16ms
+  LLM: 1.47ms
+  Analytics: 1.58ms
 ]]>
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="workflows\user-journey.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="chromium" tests="9" failures="7" skipped="0" time="0.887" errors="0">
-<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full registration workflow" classname="workflows\user-journey.spec.ts" time="0.062">
+<testsuite name="workflows\user-journey.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="chromium" tests="9" failures="7" skipped="0" time="0.771" errors="0">
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full registration workflow" classname="workflows\user-journey.spec.ts" time="0.053">
 <failure message="user-journey.spec.ts:7:9 Should complete full registration workflow" type="FAILURE">
 <![CDATA[  [chromium] › workflows\user-journey.spec.ts:7:9 › E2E Workflows › User Registration & Login Flow › Should complete full registration workflow 
 
@@ -711,7 +726,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full login workflow" classname="workflows\user-journey.spec.ts" time="0.159">
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full login workflow" classname="workflows\user-journey.spec.ts" time="0.142">
 <failure message="user-journey.spec.ts:43:9 Should complete full login workflow" type="FAILURE">
 <![CDATA[  [chromium] › workflows\user-journey.spec.ts:43:9 › E2E Workflows › User Registration & Login Flow › Should complete full login workflow 
 
@@ -736,7 +751,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should execute complete query workflow" classname="workflows\user-journey.spec.ts" time="0.067">
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should execute complete query workflow" classname="workflows\user-journey.spec.ts" time="0.087">
 <failure message="user-journey.spec.ts:92:9 Should execute complete query workflow" type="FAILURE">
 <![CDATA[  [chromium] › workflows\user-journey.spec.ts:92:9 › E2E Workflows › Query & Inference Workflow › Should execute complete query workflow 
 
@@ -760,7 +775,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should support multiple queries in session" classname="workflows\user-journey.spec.ts" time="0.098">
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should support multiple queries in session" classname="workflows\user-journey.spec.ts" time="0.09">
 <failure message="user-journey.spec.ts:139:9 Should support multiple queries in session" type="FAILURE">
 <![CDATA[  [chromium] › workflows\user-journey.spec.ts:139:9 › E2E Workflows › Query & Inference Workflow › Should support multiple queries in session 
 
@@ -780,7 +795,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services" classname="workflows\user-journey.spec.ts" time="0.085">
+<testcase name="E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services" classname="workflows\user-journey.spec.ts" time="0.091">
 <failure message="user-journey.spec.ts:197:9 Should coordinate between auth and inference services" type="FAILURE">
 <![CDATA[  [chromium] › workflows\user-journey.spec.ts:197:9 › E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services 
 
@@ -804,7 +819,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Cross-Service Integration › Should maintain session across services" classname="workflows\user-journey.spec.ts" time="0.074">
+<testcase name="E2E Workflows › Cross-Service Integration › Should maintain session across services" classname="workflows\user-journey.spec.ts" time="0.064">
 <failure message="user-journey.spec.ts:242:9 Should maintain session across services" type="FAILURE">
 <![CDATA[  [chromium] › workflows\user-journey.spec.ts:242:9 › E2E Workflows › Cross-Service Integration › Should maintain session across services 
 
@@ -824,19 +839,19 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid credentials gracefully" classname="workflows\user-journey.spec.ts" time="0.157">
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid credentials gracefully" classname="workflows\user-journey.spec.ts" time="0.109">
 <system-out>
 <![CDATA[✓ Invalid credentials rejected (status: 401)
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should recover from service failures" classname="workflows\user-journey.spec.ts" time="0.097">
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should recover from service failures" classname="workflows\user-journey.spec.ts" time="0.06">
 <system-out>
 <![CDATA[✓ Service handled response appropriately (status: 404)
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid requests properly" classname="workflows\user-journey.spec.ts" time="0.088">
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid requests properly" classname="workflows\user-journey.spec.ts" time="0.075">
 <failure message="user-journey.spec.ts:370:9 Should handle invalid requests properly" type="FAILURE">
 <![CDATA[  [chromium] › workflows\user-journey.spec.ts:370:9 › E2E Workflows › Error Handling & Recovery › Should handle invalid requests properly 
 
@@ -857,8 +872,8 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\audit-trail.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="firefox" tests="5" failures="5" skipped="0" time="0.643" errors="0">
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration" classname="critical-requirements\audit-trail.spec.ts" time="0.099">
+<testsuite name="critical-requirements\audit-trail.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="firefox" tests="5" failures="5" skipped="0" time="0.505" errors="0">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration" classname="critical-requirements\audit-trail.spec.ts" time="0.081">
 <failure message="audit-trail.spec.ts:7:9 Should log user registration" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\audit-trail.spec.ts:7:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration 
 
@@ -877,7 +892,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login" classname="critical-requirements\audit-trail.spec.ts" time="0.177">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login" classname="critical-requirements\audit-trail.spec.ts" time="0.153">
 <failure message="audit-trail.spec.ts:39:9 Should log user login" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\audit-trail.spec.ts:39:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login 
 
@@ -897,11 +912,11 @@
 ]]>
 </failure>
 <system-out>
-<![CDATA[✓ Login logged for user: testuser_1770079709512_1@test.patriotchat.com
+<![CDATA[✓ Login logged for user: testuser_1770086862077_1@test.patriotchat.com
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries" classname="critical-requirements\audit-trail.spec.ts" time="0.089">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries" classname="critical-requirements\audit-trail.spec.ts" time="0.097">
 <failure message="audit-trail.spec.ts:87:9 Should track LLM inference queries" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\audit-trail.spec.ts:87:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries 
 
@@ -921,7 +936,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible)" classname="critical-requirements\audit-trail.spec.ts" time="0.148">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible)" classname="critical-requirements\audit-trail.spec.ts" time="0.086">
 <failure message="audit-trail.spec.ts:133:9 Logs should be immutable (no modification possible)" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\audit-trail.spec.ts:133:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible) 
 
@@ -941,7 +956,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped" classname="critical-requirements\audit-trail.spec.ts" time="0.13">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped" classname="critical-requirements\audit-trail.spec.ts" time="0.088">
 <failure message="audit-trail.spec.ts:167:9 All audit operations should be timestamped" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\audit-trail.spec.ts:167:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped 
 
@@ -962,21 +977,21 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\database.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="firefox" tests="7" failures="5" skipped="0" time="0.807" errors="0">
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Should handle concurrent requests efficiently" classname="critical-requirements\database.spec.ts" time="0.161">
+<testsuite name="critical-requirements\database.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="firefox" tests="7" failures="5" skipped="0" time="0.675" errors="0">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Should handle concurrent requests efficiently" classname="critical-requirements\database.spec.ts" time="0.107">
 <system-out>
 <![CDATA[✓ All 10 concurrent requests succeeded
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Connection pool should recover after spike" classname="critical-requirements\database.spec.ts" time="0.298">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Connection pool should recover after spike" classname="critical-requirements\database.spec.ts" time="0.254">
 <system-out>
 <![CDATA[✓ First spike succeeded (5 requests)
 ✓ Pool recovered - second spike succeeded (5 requests)
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests" classname="critical-requirements\database.spec.ts" time="0.105">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests" classname="critical-requirements\database.spec.ts" time="0.088">
 <failure message="database.spec.ts:90:9 Stored data should persist across requests" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\database.spec.ts:90:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests 
 
@@ -1016,7 +1031,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly" classname="critical-requirements\database.spec.ts" time="0.09">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly" classname="critical-requirements\database.spec.ts" time="0.085">
 <failure message="database.spec.ts:165:9 Database queries should execute quickly" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\database.spec.ts:165:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly 
 
@@ -1036,26 +1051,27 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy" classname="critical-requirements\database.spec.ts" time="0.035">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy" classname="critical-requirements\database.spec.ts" time="0.024">
 <failure message="database.spec.ts:201:9 PostgreSQL connection should be healthy" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\database.spec.ts:201:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy 
 
-    Error: expect(received).toBeDefined()
+    Error: expect(received).toBe(expected) // Object.is equality
 
-    Received: undefined
+    Expected: true
+    Received: false
 
+      206 |       });
       207 |
-      208 |       expect(response.ok).toBe(true);
-    > 209 |       expect(response.data?.database).toBeDefined();
-          |                                       ^
+    > 208 |       expect(response.ok).toBe(true);
+          |                           ^
+      209 |       expect(response.data?.database).toBeDefined();
       210 |       console.log(`✓ Database health: OK`);
       211 |     });
-      212 |
-        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:209:39
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:208:27
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available" classname="critical-requirements\database.spec.ts" time="0.03">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available" classname="critical-requirements\database.spec.ts" time="0.029">
 <failure message="database.spec.ts:213:9 Connection pool status should be available" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\database.spec.ts:213:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available 
 
@@ -1076,26 +1092,26 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\llm-selector.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="firefox" tests="10" failures="6" skipped="0" time="0.558" errors="0">
-<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should list available LLM models" classname="critical-requirements\llm-selector.spec.ts" time="0.029">
+<testsuite name="critical-requirements\llm-selector.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="firefox" tests="10" failures="6" skipped="0" time="0.534" errors="0">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should list available LLM models" classname="critical-requirements\llm-selector.spec.ts" time="0.033">
 <system-out>
 <![CDATA[✓ Available models: llama2, mistral, neural-chat
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should include required models" classname="critical-requirements\llm-selector.spec.ts" time="0.03">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should include required models" classname="critical-requirements\llm-selector.spec.ts" time="0.037">
 <system-out>
 <![CDATA[✓ All required models present: llama2, mistral, neural-chat
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Model selector should be accessible via API" classname="critical-requirements\llm-selector.spec.ts" time="0.026">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Model selector should be accessible via API" classname="critical-requirements\llm-selector.spec.ts" time="0.032">
 <system-out>
 <![CDATA[✓ Model selector API operational
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model" classname="critical-requirements\llm-selector.spec.ts" time="0.06">
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model" classname="critical-requirements\llm-selector.spec.ts" time="0.091">
 <failure message="llm-selector.spec.ts:57:9 Should execute inference with llama2 model" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:57:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model 
 
@@ -1115,7 +1131,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model" classname="critical-requirements\llm-selector.spec.ts" time="0.089">
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model" classname="critical-requirements\llm-selector.spec.ts" time="0.065">
 <failure message="llm-selector.spec.ts:92:9 Should execute inference with mistral model" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:92:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model 
 
@@ -1135,7 +1151,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model" classname="critical-requirements\llm-selector.spec.ts" time="0.099">
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model" classname="critical-requirements\llm-selector.spec.ts" time="0.093">
 <failure message="llm-selector.spec.ts:127:9 Should execute inference with neural-chat model" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:127:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model 
 
@@ -1155,7 +1171,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully" classname="critical-requirements\llm-selector.spec.ts" time="0.089">
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully" classname="critical-requirements\llm-selector.spec.ts" time="0.092">
 <failure message="llm-selector.spec.ts:164:9 Should handle invalid model gracefully" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:164:9 › Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully 
 
@@ -1175,7 +1191,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available" classname="critical-requirements\llm-selector.spec.ts" time="0.008">
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available" classname="critical-requirements\llm-selector.spec.ts" time="0.027">
 <failure message="llm-selector.spec.ts:201:9 Model metadata should be available" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:201:9 › Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available 
 
@@ -1195,13 +1211,13 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Model selector should be available on frontend" classname="critical-requirements\llm-selector.spec.ts" time="0.03">
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Model selector should be available on frontend" classname="critical-requirements\llm-selector.spec.ts" time="0.007">
 <system-out>
 <![CDATA[✓ Model selector backend API available for frontend integration
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session" classname="critical-requirements\llm-selector.spec.ts" time="0.098">
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session" classname="critical-requirements\llm-selector.spec.ts" time="0.057">
 <failure message="llm-selector.spec.ts:240:9 Should support model switching during session" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:240:9 › Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session 
 
@@ -1222,8 +1238,8 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\performance.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="firefox" tests="8" failures="6" skipped="0" time="0.189" errors="0">
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Auth service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.007">
+<testsuite name="critical-requirements\performance.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="firefox" tests="8" failures="7" skipped="0" time="0.198" errors="0">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Auth service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.036">
 <failure message="performance.spec.ts:7:9 Auth service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\performance.spec.ts:7:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Auth service should respond in under 100ms 
 
@@ -1243,13 +1259,27 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › API Gateway should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.031">
-<system-out>
-<![CDATA[✓ Gateway latency: 23.13ms
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › API Gateway should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.024">
+<failure message="performance.spec.ts:19:9 API Gateway should respond in under 100ms" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\performance.spec.ts:19:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › API Gateway should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      24 |       });
+      25 |
+    > 26 |       expect(response.ok).toBe(true);
+         |                           ^
+      27 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      28 |       console.log(`✓ Gateway latency: ${latency.toFixed(2)}ms`);
+      29 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:26:27
 ]]>
-</system-out>
+</failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Funding service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.034">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Funding service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.027">
 <failure message="performance.spec.ts:31:9 Funding service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\performance.spec.ts:31:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Funding service should respond in under 100ms 
 
@@ -1269,7 +1299,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Policy service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.032">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Policy service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.028">
 <failure message="performance.spec.ts:43:9 Policy service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\performance.spec.ts:43:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Policy service should respond in under 100ms 
 
@@ -1289,7 +1319,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › LLM service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.006">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › LLM service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.032">
 <failure message="performance.spec.ts:55:9 LLM service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\performance.spec.ts:55:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › LLM service should respond in under 100ms 
 
@@ -1309,7 +1339,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Analytics service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.028">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Analytics service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.01">
 <failure message="performance.spec.ts:67:9 Analytics service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\performance.spec.ts:67:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Analytics service should respond in under 100ms 
 
@@ -1329,13 +1359,13 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › Should maintain consistent response times under load" classname="critical-requirements\performance.spec.ts" time="0.018">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › Should maintain consistent response times under load" classname="critical-requirements\performance.spec.ts" time="0.011">
 <system-out>
-<![CDATA[✓ Avg latency: 2.95ms, Max: 4.63ms
+<![CDATA[✓ Avg latency: 1.57ms, Max: 2.77ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › All services should be operational" classname="critical-requirements\performance.spec.ts" time="0.033">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › All services should be operational" classname="critical-requirements\performance.spec.ts" time="0.03">
 <failure message="performance.spec.ts:104:9 All services should be operational" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\performance.spec.ts:104:9 › Critical Requirement: Performance (Auth < 100ms) › Performance Baseline › All services should be operational 
 
@@ -1356,8 +1386,8 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\rate-limiting.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="firefox" tests="6" failures="5" skipped="0" time="0.528" errors="0">
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user" classname="critical-requirements\rate-limiting.spec.ts" time="0.104">
+<testsuite name="critical-requirements\rate-limiting.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="firefox" tests="6" failures="5" skipped="0" time="0.467" errors="0">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user" classname="critical-requirements\rate-limiting.spec.ts" time="0.061">
 <failure message="rate-limiting.spec.ts:7:9 Should track requests per user" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\rate-limiting.spec.ts:7:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user 
 
@@ -1377,13 +1407,13 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-IP Rate Limiting › Should limit requests from same IP" classname="critical-requirements\rate-limiting.spec.ts" time="0.077">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-IP Rate Limiting › Should limit requests from same IP" classname="critical-requirements\rate-limiting.spec.ts" time="0.083">
 <system-out>
 <![CDATA[✓ Per-IP rate limiting configured (no block within 10 requests)
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits" classname="critical-requirements\rate-limiting.spec.ts" time="0.098">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits" classname="critical-requirements\rate-limiting.spec.ts" time="0.088">
 <failure message="rate-limiting.spec.ts:105:9 Should apply endpoint-specific limits" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\rate-limiting.spec.ts:105:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits 
 
@@ -1403,7 +1433,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window" classname="critical-requirements\rate-limiting.spec.ts" time="0.059">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window" classname="critical-requirements\rate-limiting.spec.ts" time="0.057">
 <failure message="rate-limiting.spec.ts:151:9 Should reset limits on time window" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\rate-limiting.spec.ts:151:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window 
 
@@ -1423,7 +1453,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers" classname="critical-requirements\rate-limiting.spec.ts" time="0.093">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers" classname="critical-requirements\rate-limiting.spec.ts" time="0.085">
 <failure message="rate-limiting.spec.ts:203:9 Should include rate limit information in response headers" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\rate-limiting.spec.ts:203:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers 
 
@@ -1443,7 +1473,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service" classname="critical-requirements\rate-limiting.spec.ts" time="0.097">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service" classname="critical-requirements\rate-limiting.spec.ts" time="0.093">
 <failure message="rate-limiting.spec.ts:250:9 Should protect against denial of service" type="FAILURE">
 <![CDATA[  [firefox] › critical-requirements\rate-limiting.spec.ts:250:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service 
 
@@ -1464,93 +1494,93 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="performance\service-latency.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="firefox" tests="9" failures="0" skipped="0" time="0.213" errors="0">
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure auth service latency" classname="performance\service-latency.spec.ts" time="0.045">
+<testsuite name="performance\service-latency.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="firefox" tests="9" failures="0" skipped="0" time="0.403" errors="0">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure auth service latency" classname="performance\service-latency.spec.ts" time="0.041">
 <system-out>
 <![CDATA[Auth Service Latency:
-  Average: 3.90ms
-  Min: 1.51ms
-  Max: 19.64ms
+  Average: 3.50ms
+  Min: 0.94ms
+  Max: 21.51ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure gateway latency" classname="performance\service-latency.spec.ts" time="0.05">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure gateway latency" classname="performance\service-latency.spec.ts" time="0.042">
 <system-out>
 <![CDATA[Gateway Latency:
-  Average: 4.60ms
-  Min: 3.20ms
-  Max: 9.24ms
+  Average: 3.61ms
+  Min: 1.76ms
+  Max: 15.59ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure funding service latency" classname="performance\service-latency.spec.ts" time="0.022">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure funding service latency" classname="performance\service-latency.spec.ts" time="0.05">
 <system-out>
 <![CDATA[Funding Service Latency:
-  Average: 1.85ms
-  Min: 1.16ms
-  Max: 3.69ms
+  Average: 4.25ms
+  Min: 1.85ms
+  Max: 21.45ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure policy service latency" classname="performance\service-latency.spec.ts" time="0.021">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure policy service latency" classname="performance\service-latency.spec.ts" time="0.05">
 <system-out>
 <![CDATA[Policy Service Latency:
-  Average: 1.88ms
-  Min: 1.05ms
-  Max: 4.45ms
+  Average: 4.34ms
+  Min: 1.76ms
+  Max: 23.46ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure LLM service latency" classname="performance\service-latency.spec.ts" time="0.017">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure LLM service latency" classname="performance\service-latency.spec.ts" time="0.051">
 <system-out>
 <![CDATA[LLM Service Latency:
-  Average: 1.63ms
-  Min: 0.84ms
-  Max: 3.66ms
+  Average: 4.37ms
+  Min: 1.63ms
+  Max: 22.65ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure analytics service latency" classname="performance\service-latency.spec.ts" time="0.02">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure analytics service latency" classname="performance\service-latency.spec.ts" time="0.047">
 <system-out>
 <![CDATA[Analytics Service Latency:
-  Average: 1.84ms
-  Min: 0.96ms
-  Max: 4.17ms
+  Average: 4.22ms
+  Min: 1.29ms
+  Max: 21.68ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Throughput Benchmarks › Should handle concurrent requests efficiently" classname="performance\service-latency.spec.ts" time="0.01">
+<testcase name="Performance Tests › Throughput Benchmarks › Should handle concurrent requests efficiently" classname="performance\service-latency.spec.ts" time="0.036">
 <system-out>
 <![CDATA[Concurrent Request Performance (10 requests):
-  Total time: 9.21ms
-  Average latency: 7.15ms
-  Max latency: 8.14ms
-  Throughput: 1085.66 req/s
+  Total time: 31.41ms
+  Average latency: 18.25ms
+  Max latency: 27.03ms
+  Throughput: 318.38 req/s
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Database Query Performance › Should execute queries within acceptable time" classname="performance\service-latency.spec.ts" time="0.013">
+<testcase name="Performance Tests › Database Query Performance › Should execute queries within acceptable time" classname="performance\service-latency.spec.ts" time="0.03">
 <system-out>
 <![CDATA[Database Query Performance:
-  Average: 2.33ms
+  Average: 4.75ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › API Response Times › Health check responses should be fast" classname="performance\service-latency.spec.ts" time="0.015">
+<testcase name="Performance Tests › API Response Times › Health check responses should be fast" classname="performance\service-latency.spec.ts" time="0.056">
 <system-out>
 <![CDATA[Health Check Response Times:
-  Auth: 1.36ms
-  Gateway: 2.66ms
-  Funding: 1.35ms
-  Policy: 1.18ms
-  LLM: 1.36ms
-  Analytics: 1.46ms
+  Auth: 21.68ms
+  Gateway: 3.98ms
+  Funding: 4.38ms
+  Policy: 4.51ms
+  LLM: 4.40ms
+  Analytics: 4.32ms
 ]]>
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="workflows\user-journey.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="firefox" tests="9" failures="7" skipped="0" time="0.89" errors="0">
-<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full registration workflow" classname="workflows\user-journey.spec.ts" time="0.07">
+<testsuite name="workflows\user-journey.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="firefox" tests="9" failures="7" skipped="0" time="0.794" errors="0">
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full registration workflow" classname="workflows\user-journey.spec.ts" time="0.085">
 <failure message="user-journey.spec.ts:7:9 Should complete full registration workflow" type="FAILURE">
 <![CDATA[  [firefox] › workflows\user-journey.spec.ts:7:9 › E2E Workflows › User Registration & Login Flow › Should complete full registration workflow 
 
@@ -1569,7 +1599,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full login workflow" classname="workflows\user-journey.spec.ts" time="0.159">
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full login workflow" classname="workflows\user-journey.spec.ts" time="0.131">
 <failure message="user-journey.spec.ts:43:9 Should complete full login workflow" type="FAILURE">
 <![CDATA[  [firefox] › workflows\user-journey.spec.ts:43:9 › E2E Workflows › User Registration & Login Flow › Should complete full login workflow 
 
@@ -1594,7 +1624,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should execute complete query workflow" classname="workflows\user-journey.spec.ts" time="0.1">
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should execute complete query workflow" classname="workflows\user-journey.spec.ts" time="0.089">
 <failure message="user-journey.spec.ts:92:9 Should execute complete query workflow" type="FAILURE">
 <![CDATA[  [firefox] › workflows\user-journey.spec.ts:92:9 › E2E Workflows › Query & Inference Workflow › Should execute complete query workflow 
 
@@ -1618,7 +1648,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should support multiple queries in session" classname="workflows\user-journey.spec.ts" time="0.065">
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should support multiple queries in session" classname="workflows\user-journey.spec.ts" time="0.07">
 <failure message="user-journey.spec.ts:139:9 Should support multiple queries in session" type="FAILURE">
 <![CDATA[  [firefox] › workflows\user-journey.spec.ts:139:9 › E2E Workflows › Query & Inference Workflow › Should support multiple queries in session 
 
@@ -1638,7 +1668,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services" classname="workflows\user-journey.spec.ts" time="0.087">
+<testcase name="E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services" classname="workflows\user-journey.spec.ts" time="0.072">
 <failure message="user-journey.spec.ts:197:9 Should coordinate between auth and inference services" type="FAILURE">
 <![CDATA[  [firefox] › workflows\user-journey.spec.ts:197:9 › E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services 
 
@@ -1662,7 +1692,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Cross-Service Integration › Should maintain session across services" classname="workflows\user-journey.spec.ts" time="0.095">
+<testcase name="E2E Workflows › Cross-Service Integration › Should maintain session across services" classname="workflows\user-journey.spec.ts" time="0.067">
 <failure message="user-journey.spec.ts:242:9 Should maintain session across services" type="FAILURE">
 <![CDATA[  [firefox] › workflows\user-journey.spec.ts:242:9 › E2E Workflows › Cross-Service Integration › Should maintain session across services 
 
@@ -1682,19 +1712,19 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid credentials gracefully" classname="workflows\user-journey.spec.ts" time="0.137">
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid credentials gracefully" classname="workflows\user-journey.spec.ts" time="0.111">
 <system-out>
 <![CDATA[✓ Invalid credentials rejected (status: 401)
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should recover from service failures" classname="workflows\user-journey.spec.ts" time="0.089">
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should recover from service failures" classname="workflows\user-journey.spec.ts" time="0.083">
 <system-out>
 <![CDATA[✓ Service handled response appropriately (status: 404)
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid requests properly" classname="workflows\user-journey.spec.ts" time="0.088">
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid requests properly" classname="workflows\user-journey.spec.ts" time="0.086">
 <failure message="user-journey.spec.ts:370:9 Should handle invalid requests properly" type="FAILURE">
 <![CDATA[  [firefox] › workflows\user-journey.spec.ts:370:9 › E2E Workflows › Error Handling & Recovery › Should handle invalid requests properly 
 
@@ -1715,8 +1745,8 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\audit-trail.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="webkit" tests="5" failures="5" skipped="0" time="0.483" errors="0">
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration" classname="critical-requirements\audit-trail.spec.ts" time="0.076">
+<testsuite name="critical-requirements\audit-trail.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="webkit" tests="5" failures="5" skipped="0" time="0.492" errors="0">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration" classname="critical-requirements\audit-trail.spec.ts" time="0.077">
 <failure message="audit-trail.spec.ts:7:9 Should log user registration" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\audit-trail.spec.ts:7:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration 
 
@@ -1755,11 +1785,11 @@
 ]]>
 </failure>
 <system-out>
-<![CDATA[✓ Login logged for user: testuser_1770079713805_1@test.patriotchat.com
+<![CDATA[✓ Login logged for user: testuser_1770086866364_1@test.patriotchat.com
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries" classname="critical-requirements\audit-trail.spec.ts" time="0.101">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries" classname="critical-requirements\audit-trail.spec.ts" time="0.089">
 <failure message="audit-trail.spec.ts:87:9 Should track LLM inference queries" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\audit-trail.spec.ts:87:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries 
 
@@ -1779,7 +1809,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible)" classname="critical-requirements\audit-trail.spec.ts" time="0.086">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible)" classname="critical-requirements\audit-trail.spec.ts" time="0.09">
 <failure message="audit-trail.spec.ts:133:9 Logs should be immutable (no modification possible)" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\audit-trail.spec.ts:133:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible) 
 
@@ -1799,7 +1829,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped" classname="critical-requirements\audit-trail.spec.ts" time="0.082">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped" classname="critical-requirements\audit-trail.spec.ts" time="0.098">
 <failure message="audit-trail.spec.ts:167:9 All audit operations should be timestamped" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\audit-trail.spec.ts:167:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped 
 
@@ -1820,21 +1850,21 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\database.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="webkit" tests="7" failures="5" skipped="0" time="0.74" errors="0">
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Should handle concurrent requests efficiently" classname="critical-requirements\database.spec.ts" time="0.128">
+<testsuite name="critical-requirements\database.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="webkit" tests="7" failures="5" skipped="0" time="0.701" errors="0">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Should handle concurrent requests efficiently" classname="critical-requirements\database.spec.ts" time="0.108">
 <system-out>
 <![CDATA[✓ All 10 concurrent requests succeeded
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Connection pool should recover after spike" classname="critical-requirements\database.spec.ts" time="0.27">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Connection pool should recover after spike" classname="critical-requirements\database.spec.ts" time="0.277">
 <system-out>
 <![CDATA[✓ First spike succeeded (5 requests)
 ✓ Pool recovered - second spike succeeded (5 requests)
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests" classname="critical-requirements\database.spec.ts" time="0.086">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests" classname="critical-requirements\database.spec.ts" time="0.088">
 <failure message="database.spec.ts:90:9 Stored data should persist across requests" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\database.spec.ts:90:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests 
 
@@ -1854,7 +1884,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency" classname="critical-requirements\database.spec.ts" time="0.096">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency" classname="critical-requirements\database.spec.ts" time="0.086">
 <failure message="database.spec.ts:121:9 Multiple database operations should maintain consistency" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\database.spec.ts:121:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency 
 
@@ -1874,7 +1904,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly" classname="critical-requirements\database.spec.ts" time="0.098">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly" classname="critical-requirements\database.spec.ts" time="0.09">
 <failure message="database.spec.ts:165:9 Database queries should execute quickly" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\database.spec.ts:165:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly 
 
@@ -1894,26 +1924,27 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy" classname="critical-requirements\database.spec.ts" time="0.035">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy" classname="critical-requirements\database.spec.ts" time="0.026">
 <failure message="database.spec.ts:201:9 PostgreSQL connection should be healthy" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\database.spec.ts:201:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy 
 
-    Error: expect(received).toBeDefined()
+    Error: expect(received).toBe(expected) // Object.is equality
 
-    Received: undefined
+    Expected: true
+    Received: false
 
+      206 |       });
       207 |
-      208 |       expect(response.ok).toBe(true);
-    > 209 |       expect(response.data?.database).toBeDefined();
-          |                                       ^
+    > 208 |       expect(response.ok).toBe(true);
+          |                           ^
+      209 |       expect(response.data?.database).toBeDefined();
       210 |       console.log(`✓ Database health: OK`);
       211 |     });
-      212 |
-        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:209:39
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:208:27
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available" classname="critical-requirements\database.spec.ts" time="0.027">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available" classname="critical-requirements\database.spec.ts" time="0.026">
 <failure message="database.spec.ts:213:9 Connection pool status should be available" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\database.spec.ts:213:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available 
 
@@ -1934,26 +1965,26 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\llm-selector.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="webkit" tests="10" failures="6" skipped="0" time="0.597" errors="0">
-<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should list available LLM models" classname="critical-requirements\llm-selector.spec.ts" time="0.029">
+<testsuite name="critical-requirements\llm-selector.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="webkit" tests="10" failures="6" skipped="0" time="0.539" errors="0">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should list available LLM models" classname="critical-requirements\llm-selector.spec.ts" time="0.034">
 <system-out>
 <![CDATA[✓ Available models: llama2, mistral, neural-chat
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should include required models" classname="critical-requirements\llm-selector.spec.ts" time="0.032">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should include required models" classname="critical-requirements\llm-selector.spec.ts" time="0.034">
 <system-out>
 <![CDATA[✓ All required models present: llama2, mistral, neural-chat
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Model selector should be accessible via API" classname="critical-requirements\llm-selector.spec.ts" time="0.03">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Model selector should be accessible via API" classname="critical-requirements\llm-selector.spec.ts" time="0.033">
 <system-out>
 <![CDATA[✓ Model selector API operational
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model" classname="critical-requirements\llm-selector.spec.ts" time="0.098">
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model" classname="critical-requirements\llm-selector.spec.ts" time="0.088">
 <failure message="llm-selector.spec.ts:57:9 Should execute inference with llama2 model" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:57:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model 
 
@@ -1973,7 +2004,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model" classname="critical-requirements\llm-selector.spec.ts" time="0.099">
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model" classname="critical-requirements\llm-selector.spec.ts" time="0.085">
 <failure message="llm-selector.spec.ts:92:9 Should execute inference with mistral model" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:92:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model 
 
@@ -1993,7 +2024,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model" classname="critical-requirements\llm-selector.spec.ts" time="0.063">
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model" classname="critical-requirements\llm-selector.spec.ts" time="0.061">
 <failure message="llm-selector.spec.ts:127:9 Should execute inference with neural-chat model" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:127:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model 
 
@@ -2013,7 +2044,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully" classname="critical-requirements\llm-selector.spec.ts" time="0.096">
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully" classname="critical-requirements\llm-selector.spec.ts" time="0.083">
 <failure message="llm-selector.spec.ts:164:9 Should handle invalid model gracefully" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:164:9 › Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully 
 
@@ -2033,7 +2064,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available" classname="critical-requirements\llm-selector.spec.ts" time="0.023">
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available" classname="critical-requirements\llm-selector.spec.ts" time="0.008">
 <failure message="llm-selector.spec.ts:201:9 Model metadata should be available" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:201:9 › Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available 
 
@@ -2053,13 +2084,13 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Model selector should be available on frontend" classname="critical-requirements\llm-selector.spec.ts" time="0.027">
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Model selector should be available on frontend" classname="critical-requirements\llm-selector.spec.ts" time="0.026">
 <system-out>
 <![CDATA[✓ Model selector backend API available for frontend integration
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session" classname="critical-requirements\llm-selector.spec.ts" time="0.1">
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session" classname="critical-requirements\llm-selector.spec.ts" time="0.087">
 <failure message="llm-selector.spec.ts:240:9 Should support model switching during session" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:240:9 › Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session 
 
@@ -2080,8 +2111,8 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\performance.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="webkit" tests="8" failures="6" skipped="0" time="0.164" errors="0">
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Auth service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.027">
+<testsuite name="critical-requirements\performance.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="webkit" tests="8" failures="7" skipped="0" time="0.153" errors="0">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Auth service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.026">
 <failure message="performance.spec.ts:7:9 Auth service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\performance.spec.ts:7:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Auth service should respond in under 100ms 
 
@@ -2101,13 +2132,27 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › API Gateway should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.008">
-<system-out>
-<![CDATA[✓ Gateway latency: 5.47ms
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › API Gateway should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.024">
+<failure message="performance.spec.ts:19:9 API Gateway should respond in under 100ms" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\performance.spec.ts:19:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › API Gateway should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      24 |       });
+      25 |
+    > 26 |       expect(response.ok).toBe(true);
+         |                           ^
+      27 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      28 |       console.log(`✓ Gateway latency: ${latency.toFixed(2)}ms`);
+      29 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:26:27
 ]]>
-</system-out>
+</failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Funding service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.008">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Funding service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.025">
 <failure message="performance.spec.ts:31:9 Funding service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\performance.spec.ts:31:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Funding service should respond in under 100ms 
 
@@ -2127,7 +2172,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Policy service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.014">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Policy service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.01">
 <failure message="performance.spec.ts:43:9 Policy service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\performance.spec.ts:43:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Policy service should respond in under 100ms 
 
@@ -2147,7 +2192,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › LLM service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.034">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › LLM service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.023">
 <failure message="performance.spec.ts:55:9 LLM service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\performance.spec.ts:55:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › LLM service should respond in under 100ms 
 
@@ -2167,7 +2212,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Analytics service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.027">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Analytics service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.025">
 <failure message="performance.spec.ts:67:9 Analytics service should respond in under 100ms" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\performance.spec.ts:67:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Analytics service should respond in under 100ms 
 
@@ -2187,13 +2232,13 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › Should maintain consistent response times under load" classname="critical-requirements\performance.spec.ts" time="0.04">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › Should maintain consistent response times under load" classname="critical-requirements\performance.spec.ts" time="0.013">
 <system-out>
-<![CDATA[✓ Avg latency: 6.37ms, Max: 21.82ms
+<![CDATA[✓ Avg latency: 1.87ms, Max: 3.15ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › All services should be operational" classname="critical-requirements\performance.spec.ts" time="0.006">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › All services should be operational" classname="critical-requirements\performance.spec.ts" time="0.007">
 <failure message="performance.spec.ts:104:9 All services should be operational" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\performance.spec.ts:104:9 › Critical Requirement: Performance (Auth < 100ms) › Performance Baseline › All services should be operational 
 
@@ -2214,8 +2259,8 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="critical-requirements\rate-limiting.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="webkit" tests="6" failures="5" skipped="0" time="0.526" errors="0">
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user" classname="critical-requirements\rate-limiting.spec.ts" time="0.095">
+<testsuite name="critical-requirements\rate-limiting.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="webkit" tests="6" failures="5" skipped="0" time="0.532" errors="0">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user" classname="critical-requirements\rate-limiting.spec.ts" time="0.066">
 <failure message="rate-limiting.spec.ts:7:9 Should track requests per user" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\rate-limiting.spec.ts:7:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user 
 
@@ -2235,13 +2280,13 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-IP Rate Limiting › Should limit requests from same IP" classname="critical-requirements\rate-limiting.spec.ts" time="0.082">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-IP Rate Limiting › Should limit requests from same IP" classname="critical-requirements\rate-limiting.spec.ts" time="0.109">
 <system-out>
 <![CDATA[✓ Per-IP rate limiting configured (no block within 10 requests)
 ]]>
 </system-out>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits" classname="critical-requirements\rate-limiting.spec.ts" time="0.084">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits" classname="critical-requirements\rate-limiting.spec.ts" time="0.087">
 <failure message="rate-limiting.spec.ts:105:9 Should apply endpoint-specific limits" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\rate-limiting.spec.ts:105:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits 
 
@@ -2250,14 +2295,14 @@
     Expected: true
     Received: false
 
-      118 |       });
-      119 |
-    > 120 |       expect(registerResponse.ok).toBe(true);
-          |                                   ^
-      121 |       const token = registerResponse.data?.token;
-      122 |
-      123 |       // Test inference endpoint
-        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:120:35
+      133 |       });
+      134 |
+    > 135 |       expect(inferenceResponse.ok).toBe(true);
+          |                                    ^
+      136 |
+      137 |       // Test profile endpoint (different limit)
+      138 |       const profileResponse = await apiRequest({
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:135:36
 ]]>
 </failure>
 </testcase>
@@ -2281,7 +2326,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers" classname="critical-requirements\rate-limiting.spec.ts" time="0.067">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers" classname="critical-requirements\rate-limiting.spec.ts" time="0.085">
 <failure message="rate-limiting.spec.ts:203:9 Should include rate limit information in response headers" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\rate-limiting.spec.ts:203:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers 
 
@@ -2301,7 +2346,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service" classname="critical-requirements\rate-limiting.spec.ts" time="0.108">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service" classname="critical-requirements\rate-limiting.spec.ts" time="0.095">
 <failure message="rate-limiting.spec.ts:250:9 Should protect against denial of service" type="FAILURE">
 <![CDATA[  [webkit] › critical-requirements\rate-limiting.spec.ts:250:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service 
 
@@ -2322,93 +2367,93 @@
 </failure>
 </testcase>
 </testsuite>
-<testsuite name="performance\service-latency.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="webkit" tests="9" failures="0" skipped="0" time="0.313" errors="0">
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure auth service latency" classname="performance\service-latency.spec.ts" time="0.048">
+<testsuite name="performance\service-latency.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="webkit" tests="9" failures="0" skipped="0" time="0.247" errors="0">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure auth service latency" classname="performance\service-latency.spec.ts" time="0.018">
 <system-out>
 <![CDATA[Auth Service Latency:
-  Average: 4.09ms
-  Min: 1.08ms
-  Max: 21.56ms
+  Average: 1.47ms
+  Min: 0.54ms
+  Max: 2.66ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure gateway latency" classname="performance\service-latency.spec.ts" time="0.058">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure gateway latency" classname="performance\service-latency.spec.ts" time="0.026">
 <system-out>
 <![CDATA[Gateway Latency:
-  Average: 5.31ms
-  Min: 2.12ms
-  Max: 25.27ms
+  Average: 2.40ms
+  Min: 1.15ms
+  Max: 7.78ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure funding service latency" classname="performance\service-latency.spec.ts" time="0.03">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure funding service latency" classname="performance\service-latency.spec.ts" time="0.048">
 <system-out>
 <![CDATA[Funding Service Latency:
-  Average: 2.75ms
-  Min: 1.61ms
-  Max: 7.21ms
+  Average: 4.12ms
+  Min: 1.24ms
+  Max: 23.18ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure policy service latency" classname="performance\service-latency.spec.ts" time="0.02">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure policy service latency" classname="performance\service-latency.spec.ts" time="0.048">
 <system-out>
 <![CDATA[Policy Service Latency:
-  Average: 1.72ms
-  Min: 1.00ms
-  Max: 3.99ms
+  Average: 3.94ms
+  Min: 1.47ms
+  Max: 18.94ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure LLM service latency" classname="performance\service-latency.spec.ts" time="0.035">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure LLM service latency" classname="performance\service-latency.spec.ts" time="0.018">
 <system-out>
 <![CDATA[LLM Service Latency:
-  Average: 3.00ms
-  Min: 1.01ms
-  Max: 15.75ms
+  Average: 1.54ms
+  Min: 0.85ms
+  Max: 3.94ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Service Latency Benchmarks › Should measure analytics service latency" classname="performance\service-latency.spec.ts" time="0.046">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure analytics service latency" classname="performance\service-latency.spec.ts" time="0.048">
 <system-out>
 <![CDATA[Analytics Service Latency:
-  Average: 4.05ms
-  Min: 1.18ms
-  Max: 20.13ms
+  Average: 4.20ms
+  Min: 1.34ms
+  Max: 20.71ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Throughput Benchmarks › Should handle concurrent requests efficiently" classname="performance\service-latency.spec.ts" time="0.012">
+<testcase name="Performance Tests › Throughput Benchmarks › Should handle concurrent requests efficiently" classname="performance\service-latency.spec.ts" time="0.009">
 <system-out>
 <![CDATA[Concurrent Request Performance (10 requests):
-  Total time: 10.80ms
-  Average latency: 8.70ms
-  Max latency: 9.49ms
-  Throughput: 926.01 req/s
+  Total time: 7.48ms
+  Average latency: 4.88ms
+  Max latency: 5.76ms
+  Throughput: 1337.15 req/s
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › Database Query Performance › Should execute queries within acceptable time" classname="performance\service-latency.spec.ts" time="0.04">
+<testcase name="Performance Tests › Database Query Performance › Should execute queries within acceptable time" classname="performance\service-latency.spec.ts" time="0.01">
 <system-out>
 <![CDATA[Database Query Performance:
-  Average: 6.70ms
+  Average: 1.67ms
 ]]>
 </system-out>
 </testcase>
-<testcase name="Performance Tests › API Response Times › Health check responses should be fast" classname="performance\service-latency.spec.ts" time="0.024">
+<testcase name="Performance Tests › API Response Times › Health check responses should be fast" classname="performance\service-latency.spec.ts" time="0.022">
 <system-out>
 <![CDATA[Health Check Response Times:
-  Auth: 3.87ms
-  Gateway: 4.96ms
-  Funding: 1.37ms
-  Policy: 1.65ms
-  LLM: 1.49ms
-  Analytics: 3.88ms
+  Auth: 1.00ms
+  Gateway: 1.39ms
+  Funding: 3.80ms
+  Policy: 4.44ms
+  LLM: 1.73ms
+  Analytics: 3.35ms
 ]]>
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="workflows\user-journey.spec.ts" timestamp="2026-02-03T00:48:24.178Z" hostname="webkit" tests="9" failures="7" skipped="0" time="0.769" errors="0">
-<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full registration workflow" classname="workflows\user-journey.spec.ts" time="0.06">
+<testsuite name="workflows\user-journey.spec.ts" timestamp="2026-02-03T02:47:36.631Z" hostname="webkit" tests="9" failures="7" skipped="0" time="0.752" errors="0">
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full registration workflow" classname="workflows\user-journey.spec.ts" time="0.077">
 <failure message="user-journey.spec.ts:7:9 Should complete full registration workflow" type="FAILURE">
 <![CDATA[  [webkit] › workflows\user-journey.spec.ts:7:9 › E2E Workflows › User Registration & Login Flow › Should complete full registration workflow 
 
@@ -2427,7 +2472,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full login workflow" classname="workflows\user-journey.spec.ts" time="0.139">
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full login workflow" classname="workflows\user-journey.spec.ts" time="0.111">
 <failure message="user-journey.spec.ts:43:9 Should complete full login workflow" type="FAILURE">
 <![CDATA[  [webkit] › workflows\user-journey.spec.ts:43:9 › E2E Workflows › User Registration & Login Flow › Should complete full login workflow 
 
@@ -2452,7 +2497,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should execute complete query workflow" classname="workflows\user-journey.spec.ts" time="0.068">
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should execute complete query workflow" classname="workflows\user-journey.spec.ts" time="0.078">
 <failure message="user-journey.spec.ts:92:9 Should execute complete query workflow" type="FAILURE">
 <![CDATA[  [webkit] › workflows\user-journey.spec.ts:92:9 › E2E Workflows › Query & Inference Workflow › Should execute complete query workflow 
 
@@ -2476,7 +2521,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should support multiple queries in session" classname="workflows\user-journey.spec.ts" time="0.079">
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should support multiple queries in session" classname="workflows\user-journey.spec.ts" time="0.083">
 <failure message="user-journey.spec.ts:139:9 Should support multiple queries in session" type="FAILURE">
 <![CDATA[  [webkit] › workflows\user-journey.spec.ts:139:9 › E2E Workflows › Query & Inference Workflow › Should support multiple queries in session 
 
@@ -2496,7 +2541,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services" classname="workflows\user-journey.spec.ts" time="0.077">
+<testcase name="E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services" classname="workflows\user-journey.spec.ts" time="0.081">
 <failure message="user-journey.spec.ts:197:9 Should coordinate between auth and inference services" type="FAILURE">
 <![CDATA[  [webkit] › workflows\user-journey.spec.ts:197:9 › E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services 
 
@@ -2520,7 +2565,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Cross-Service Integration › Should maintain session across services" classname="workflows\user-journey.spec.ts" time="0.076">
+<testcase name="E2E Workflows › Cross-Service Integration › Should maintain session across services" classname="workflows\user-journey.spec.ts" time="0.059">
 <failure message="user-journey.spec.ts:242:9 Should maintain session across services" type="FAILURE">
 <![CDATA[  [webkit] › workflows\user-journey.spec.ts:242:9 › E2E Workflows › Cross-Service Integration › Should maintain session across services 
 
@@ -2540,19 +2585,19 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid credentials gracefully" classname="workflows\user-journey.spec.ts" time="0.128">
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid credentials gracefully" classname="workflows\user-journey.spec.ts" time="0.115">
 <system-out>
 <![CDATA[✓ Invalid credentials rejected (status: 401)
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should recover from service failures" classname="workflows\user-journey.spec.ts" time="0.07">
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should recover from service failures" classname="workflows\user-journey.spec.ts" time="0.073">
 <system-out>
 <![CDATA[✓ Service handled response appropriately (status: 404)
 ]]>
 </system-out>
 </testcase>
-<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid requests properly" classname="workflows\user-journey.spec.ts" time="0.072">
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid requests properly" classname="workflows\user-journey.spec.ts" time="0.075">
 <failure message="user-journey.spec.ts:370:9 Should handle invalid requests properly" type="FAILURE">
 <![CDATA[  [webkit] › workflows\user-journey.spec.ts:370:9 › E2E Workflows › Error Handling & Recovery › Should handle invalid requests properly 
 
