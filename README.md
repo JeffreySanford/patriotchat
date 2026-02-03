@@ -23,7 +23,7 @@ PatriotChat is a privacy-first, enterprise-grade civic intelligence platform com
 All 5 critical requirements have been **met and verified**:
 
 | Requirement | Target | Status | Evidence |
-|------------|--------|--------|----------|
+| --- | --- | --- | --- |
 | **Performance** | Auth < 100ms | ✅ **57ms** | Measured via health endpoint |
 | **Audit Trail** | Immutable PostgreSQL logs | ✅ **Implemented** | `audit_logs` table with RULES |
 | **Database** | PostgreSQL with pooling | ✅ **Deployed** | 16-alpine, 25 max connections |
@@ -35,6 +35,7 @@ All 5 critical requirements have been **met and verified**:
 ## Quick Start
 
 ### Option 1: Docker Compose (Recommended)
+
 ```bash
 # Start all 9 services at once
 docker-compose up -d
@@ -49,6 +50,7 @@ docker-compose ps
 ```
 
 ### Option 2: Local Development
+
 ```bash
 # Install dependencies
 pnpm install
@@ -68,7 +70,7 @@ docker-compose up postgres ollama  # Terminal 3: Dependencies
    - `docker compose up` — Start PostgreSQL, Ollama, and all services
    - OR `pnpm run start:all` (Windows) or manually in separate terminals
 3. Verify: `docker-compose ps` (all services should be healthy)
-4. Access frontend: http://localhost:4200
+4. Access frontend: <http://localhost:4200>
 5. Test API: `curl http://localhost:3000/health`
 
 ## Developer workflow (recommended) 🛠️
@@ -116,11 +118,10 @@ For implementation planning, see **[documentation/LEGENDARY_V2/INFRASTRUCTURE_SU
 
 We recommend running Ollama inside Docker (`ollama/ollama:latest`) because the container bundles the server/runtime and keeps the inference endpoint (`http://ollama:11434`) consistent across environments, making guardrail instrumentation and container scanning straightforward. The Go heavy service communicates over HTTP (or via `ollama-go`), so it works equally well with a native Ollama binary, but Docker ensures clean isolation for multi-tenant deployments and easier CI. Point the Go service at your preferred Ollama host with `OLLAMA_HOST=localhost` (or the Docker service name) and `OLLAMA_PORT=11434`.
 
-## Metrics, security & governance
-
 ## 📊 Service Endpoints & Testing
 
 ### Health Checks (verify all services running)
+
 ```bash
 # Test each service
 curl http://localhost:3000/health          # API Gateway
@@ -132,6 +133,7 @@ curl http://localhost:4005/health          # Analytics service
 ```
 
 ### Core Workflows
+
 ```bash
 # 1. Register a new user
 curl -X POST http://localhost:3000/auth/register \
@@ -193,16 +195,19 @@ curl "http://localhost:4003/policy/search?entity_id=test-entity"
 ## Next Steps & Roadmap
 
 ### Phase 1: LLM Training (Sprint 1-2)
+
 - [ ] Build JSONL civic instruction dataset with TypeScript schema
 - [ ] Implement label-discipline evaluation suite (10 prompts)
 - [ ] Coordinate Constitutional Experiment Assistant (CEA) training with Go pipeline
 
 ### Phase 2: Data Integration (Sprint 3-4)
+
 - [ ] Add RAG retrieval layer for civic data sources
 - [ ] Implement provenance metadata tracking
 - [ ] Build values profile filters
 
 ### Phase 3: Production Ops (Ongoing)
+
 - [ ] Set up GitHub Actions CI/CD pipeline
 - [ ] Add Prometheus + Grafana monitoring
 - [ ] Create Kubernetes manifests for cloud deployment
@@ -213,16 +218,20 @@ curl "http://localhost:4003/policy/search?entity_id=test-entity"
 ## Production Deployment
 
 ### Docker Compose (Current)
+
 All 9 services run in Docker with health checks, proper dependency ordering, and named volumes for persistence.
 
 ### Kubernetes Ready
+
 Service architecture follows microservices best practices suitable for Kubernetes. Each service:
+
 - Has health (`/health`) and readiness (`/ready`) endpoints
 - Runs in isolated containers with minimal surface area
 - Configures via environment variables
 - Logs to stdout/stderr
 
 ### Scaling Considerations
+
 - **Stateless services** (frontend, gateway, microservices) can scale horizontally
 - **Stateful services** (PostgreSQL, Ollama) require careful lifecycle management
 - **Rate limiting** persists in-memory (upgrade to Redis for distributed deployments)
