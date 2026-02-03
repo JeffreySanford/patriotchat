@@ -19,7 +19,7 @@ import {
 export class RateLimitingGuard implements CanActivate {
   constructor(private rateLimitingService: RateLimitingService) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Express context requires flexible typing
+   
   canActivate(context: ExecutionContext): boolean {
     try {
       // eslint-disable-next-line no-restricted-syntax,@typescript-eslint/no-explicit-any -- Runtime values from context require flexibility
