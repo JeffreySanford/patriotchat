@@ -220,7 +220,9 @@ Audit entries include:
 - Correlation ID for request tracing
 
 ---
+
 ## Performance Targets
+
 
 - Register: < 100ms
 - Login: < 100ms
