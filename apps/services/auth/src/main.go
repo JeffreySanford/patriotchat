@@ -348,7 +348,7 @@ func validateJWT(tokenString string) (jwt.RegisteredClaims, error) {
 	return *claims, nil
 }
 
-func logAudit(ctx context.Context, userID, service, operation, status string) {
+func logAudit(_ context.Context, userID, service, operation, _ string) {
 	// Run async to avoid blocking requests
 	go func() {
 		var userIDPtr *string

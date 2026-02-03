@@ -223,7 +223,6 @@ Audit entries include:
 
 ## Performance Targets
 
-
 - Register: < 100ms
 - Login: < 100ms
 - Token validation: < 50ms
