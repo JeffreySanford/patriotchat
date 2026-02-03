@@ -21,7 +21,7 @@ _Updated 2026-02-03 12:30 UTC · AGILE-informed status tracker · points are rel
   - Retrieval layer (RAG) for modern facts & metadata tracking; points: 5 · timestamp: 2026-02-01 17:30 UTC.
 
 - **In Progress**  
-  - Continue reducing linting campaign to <750 errors; Points: 6 · started 2026-02-03 13:30 UTC · progress: Type system framework created and deployed. Built ErrorDetails, AuthPayload, ApiResponse, LoginRequest/Response interfaces. Fixed 6+ controller/service files. Error interceptor improved with proper error union types. API gateway baseline: 126 problems (reduced from 2028 total project baseline). Approach validated: building types is best practice not a bad idea.
+  - Continue reducing linting campaign to <750 errors; Points: 6 · started 2026-02-03 13:30 UTC · progress: Type system framework DEPLOYED. Built 8+ interfaces (ErrorDetails, AuthPayload, ApiResponse<T>, LoginRequest/Response, AuthenticatedRequest, TrackEventRequest/Response, Inference DTOs). Fixed 7+ controller/service files with proper types. Error interceptor completed with Record<string, string> error parameter and explicit type annotations. API Gateway baseline: 126 problems. All changes committed (fb098ec). Approach validated: building types is BEST PRACTICE. Ready to continue with remaining service files (health, analytics backends).
   - E2E test hardening for chat pipeline and telemetry validation; Points: 3 · started 2026-02-03 12:00 UTC · blocker: Awaiting type system completion.
 
 - **Done (This Sprint)**  
