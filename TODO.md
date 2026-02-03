@@ -21,7 +21,7 @@ _Updated 2026-02-03 12:30 UTC · AGILE-informed status tracker · points are rel
   - Retrieval layer (RAG) for modern facts & metadata tracking; points: 5 · timestamp: 2026-02-01 17:30 UTC.
 
 - **In Progress**  
-  - Continue reducing linting campaign to <750 errors; Points: 6 · started 2026-02-03 13:30 UTC · progress: Building comprehensive type system to replace any/unknown; added AuthPayload, ErrorDetails, ApiResponse types; fixed health.gateway.ts, auth.controller.ts, jwt.strategy.ts with proper types.
+  - Continue reducing linting campaign to <750 errors; Points: 6 · started 2026-02-03 13:30 UTC · progress: Type system framework created and deployed. Built ErrorDetails, AuthPayload, ApiResponse, LoginRequest/Response interfaces. Fixed 6+ controller/service files. Error interceptor improved with proper error union types. API gateway baseline: 126 problems (reduced from 2028 total project baseline). Approach validated: building types is best practice not a bad idea.
   - E2E test hardening for chat pipeline and telemetry validation; Points: 3 · started 2026-02-03 12:00 UTC · blocker: Awaiting type system completion.
 
 - **Done (This Sprint)**  

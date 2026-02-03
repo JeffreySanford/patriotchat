@@ -1,0 +1,100 @@
+  18:10  warning  'of' is defined but never used                                                      @typescript-eslint/no-unused-vars
+  28:32  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  29:55  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  30:15  error    Expected data to have a type annotation                                             @typescript-eslint/typedef
+  30:15  warning  Unsafe assignment of an error typed value                                           @typescript-eslint/no-unsafe-assignment
+  30:45  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  40:12  error    Expected result to have a type annotation                                           @typescript-eslint/typedef
+  48:32  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  49:15  error    Expected errRecord to have a type annotation                                        @typescript-eslint/typedef
+  49:49  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  51:61  warning  Unsafe member access .error on a type that cannot be resolved                       @typescript-eslint/no-unsafe-member-access
+
+C:\repos\patriotchat\apps\services\api-gateway\src\auth\auth.service.ts
+  37:12  error    Expected response to have a type annotation                                         @typescript-eslint/typedef
+  46:12  error    Expected response to have a type annotation                                         @typescript-eslint/typedef
+  54:12  error    Expected response to have a type annotation                                         @typescript-eslint/typedef
+  55:34  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  56:15  error    Expected errRecord to have a type annotation                                        @typescript-eslint/typedef
+  56:51  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  58:11  warning  Unsafe assignment of an error typed value                                           @typescript-eslint/no-unsafe-assignment
+  59:11  warning  Unsafe assignment of an error typed value                                           @typescript-eslint/no-unsafe-assignment
+  77:12  error    Expected response to have a type annotation                                         @typescript-eslint/typedef
+
+C:\repos\patriotchat\apps\services\api-gateway\src\auth\jwt-auth.guard.ts
+  2:1  error  Projects should use relative imports to import from other files within the same project. Use "./path/to/file" instead of import from "@nestjs/passport"  @nx/enforce-module-boundaries
+
+C:\repos\patriotchat\apps\services\api-gateway\src\auth\jwt.strategy.ts
+  2:1  error  Projects should use relative imports to import from other files within the same project. Use "./path/to/file" instead of import from "@nestjs/passport"  @nx/enforce-module-boundaries
+  3:1  error  Projects should use relative imports to import from other files within the same project. Use "./path/to/file" instead of import from "passport-jwt"      @nx/enforce-module-boundaries
+
+C:\repos\patriotchat\apps\services\api-gateway\src\common\interceptors\error.interceptor.ts
+  18:72  error  Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  20:26  error  Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  30:17  error  Expected apiError to have a type annotation                                         @typescript-eslint/typedef
+  42:15  error  Expected unknownError to have a type annotation                                     @typescript-eslint/typedef
+
+C:\repos\patriotchat\apps\services\api-gateway\src\health\backend-health.service.ts
+    9:7   error    Expected execAsync to have a type annotation      @typescript-eslint/typedef
+   19:3   error    Expected checkInterval to have a type annotation  @typescript-eslint/typedef
+   20:3   error    Expected timeout to have a type annotation        @typescript-eslint/typedef
+   21:3   error    Expected logger to have a type annotation         @typescript-eslint/typedef
+   63:12  error    Expected services to have a type annotation       @typescript-eslint/typedef
+   66:12  error    Expected services to have a type annotation       @typescript-eslint/typedef
+   74:19  error    Expected error to have a type annotation          @typescript-eslint/typedef
+   88:11  error    Expected checks to have a type annotation         @typescript-eslint/typedef
+   88:39  error    Expected service to have a type annotation        @typescript-eslint/typedef
+   93:19  error    Expected error to have a type annotation          @typescript-eslint/typedef
+  104:11  error    Expected startTime to have a type annotation      @typescript-eslint/typedef
+  106:28  error    Expected observer to have a type annotation       @typescript-eslint/typedef
+  109:16  error    Expected status to have a type annotation         @typescript-eslint/typedef
+  113:22  error    Expected isRunning to have a type annotation      @typescript-eslint/typedef
+  121:23  error    Expected error to have a type annotation          @typescript-eslint/typedef
+  134:17  error    Expected httpError to have a type annotation      @typescript-eslint/typedef
+  134:17  warning  'httpError' is defined but never used             @typescript-eslint/no-unused-vars
+  138:22  error    Expected isRunning to have a type annotation      @typescript-eslint/typedef
+  215:13  error    Expected isRunning to have a type annotation      @typescript-eslint/typedef
+  260:29  error    Expected service to have a type annotation        @typescript-eslint/typedef
+  260:38  error    Expected index to have a type annotation          @typescript-eslint/typedef
+
+C:\repos\patriotchat\apps\services\api-gateway\src\health\health.gateway.ts
+   27:3   error    Expected connectedClients to have a type annotation                                 @typescript-eslint/typedef
+   28:3   error    Expected logger to have a type annotation                                           @typescript-eslint/typedef
+   29:3   error    Expected initialized to have a type annotation                                      @typescript-eslint/typedef
+   42:13  warning  'server' is defined but never used                                                  @typescript-eslint/no-unused-vars
+   80:17  error    Expected error to have a type annotation                                            @typescript-eslint/typedef
+   85:13  warning  Unsafe assignment of an `any` value                                                 @typescript-eslint/no-unsafe-assignment
+   85:27  warning  Unsafe member access .message on an `any` value                                     @typescript-eslint/no-unsafe-member-access
+  191:51  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  196:7   warning  Unsafe assignment of an error typed value                                           @typescript-eslint/no-unsafe-assignment
+
+C:\repos\patriotchat\apps\services\api-gateway\src\inference\inference.controller.ts
+  30:12  error    Expected modelIds to have a type annotation                                         @typescript-eslint/typedef
+  31:31  error    Expected id to have a type annotation                                               @typescript-eslint/typedef
+  38:32  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  56:11  error    Expected bodyRecord to have a type annotation                                       @typescript-eslint/typedef
+  56:47  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  57:11  error    Expected modelId to have a type annotation                                          @typescript-eslint/typedef
+  67:32  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  69:15  error    Expected errorMessage to have a type annotation                                     @typescript-eslint/typedef
+  69:15  warning  'errorMessage' is assigned a value but never used                                   @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\rate-limiting\rate-limiting.guard.ts
+  26:13   warning  Unsafe assignment of an `any` value                                                 @typescript-eslint/no-unsafe-assignment
+  28:13   warning  Unsafe assignment of an `any` value                                                 @typescript-eslint/no-unsafe-assignment
+  34:74   error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  40:123  error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  84:47   error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  85:41   error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+  90:44   error    Avoid unknown; provide concrete types with proper error classes/interfaces instead  no-restricted-syntax
+
+C:\repos\patriotchat\apps\services\api-gateway\src\rate-limiting\rate-limiting.service.ts
+  9:11  warning  'RateLimitKey' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\utils\type-guards.ts
+  33:9  error  Expected value to have a type annotation  @typescript-eslint/typedef
+  41:9  error  Expected value to have a type annotation  @typescript-eslint/typedef
+  50:9  error  Expected value to have a type annotation  @typescript-eslint/typedef
+
+✖ 126 problems (85 errors, 41 warnings)
+

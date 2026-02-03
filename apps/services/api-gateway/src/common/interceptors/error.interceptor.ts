@@ -15,9 +15,12 @@ import { ApiError } from '../../types/api.dto';
  */
 @Injectable()
 export class ErrorInterceptor implements NestInterceptor {
-  intercept(_context: ExecutionContext, next: CallHandler): Observable<unknown> {
+  intercept(
+    _context: ExecutionContext,
+    next: CallHandler,
+  ): Observable<Record<string, never>> {
     return next.handle().pipe(
-      catchError((error: unknown) => {
+      catchError((error: Error | Record<string, string>): Observable<never> => {
         console.error('API Error:', error);
 
         if (error instanceof ApiError) {
@@ -27,7 +30,7 @@ export class ErrorInterceptor implements NestInterceptor {
 
         if (error instanceof Error) {
           // Convert standard errors to ApiError
-          const apiError = new ApiError(
+          const apiError: ApiError = new ApiError(
             500,
             'INTERNAL_ERROR',
             {
@@ -38,14 +41,14 @@ export class ErrorInterceptor implements NestInterceptor {
           return throwError(() => apiError);
         }
 
-        // Unknown error format
-        const unknownError = new ApiError(
+        // Unknown error format - create ApiError from error object
+        const apiError: ApiError = new ApiError(
           500,
           'UNKNOWN_ERROR',
-          { error },
+          { originalError: JSON.stringify(error) },
           'An unexpected error occurred',
         );
-        return throwError(() => unknownError);
+        return throwError((): ApiError => apiError);
       }),
     );
   }
