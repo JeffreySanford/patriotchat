@@ -5,8 +5,8 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    include: ['frontend/src/**/*.spec.ts', 'api/src/**/*.spec.ts'],
-    setupFiles: ['frontend/src/test-setup.ts'],
+    include: ['apps/frontend/src/**/*.spec.ts', 'apps/api/src/**/*.spec.ts'],
+    setupFiles: ['apps/frontend/src/test-setup.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],
@@ -22,8 +22,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@patriotchat/shared': path.resolve(__dirname, './libs/shared/src/index.ts'),
-      '@': path.resolve(__dirname, './frontend/src'),
+      '@': path.resolve(__dirname, './apps/frontend/src'),
     },
   },
 });

@@ -109,7 +109,7 @@ export default [
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.base.json', './frontend/tsconfig.json', './frontend/tsconfig.app.json', './libs/shared/tsconfig.lib.json']
+        project: ['./tsconfig.base.json', 'apps/frontend/tsconfig.json', 'apps/frontend/tsconfig.app.json']
       }
     },
     rules: {
@@ -156,7 +156,7 @@ export default [
   },
   // Test files: relax strict 'no-unsafe-*' rules to allow idiomatic testing patterns while maintaining typedefs
   {
-    files: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.vitest.ts', 'frontend-e2e/**', '**/api-e2e/**'],
+    files: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.vitest.ts', '**/*-e2e/**', '**/api-e2e/**'],
     rules: {
       '@typescript-eslint/typedef': 'off',
       '@typescript-eslint/no-explicit-any': 'off',

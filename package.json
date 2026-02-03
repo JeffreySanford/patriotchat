@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start:deps": "docker compose up -d",
-    "start": "pnpm nx run-many --target=serve",
+    "start": "pnpm nx run-many --target=serve --projects=frontend",
     "start:frontend": "pnpm nx serve frontend --port 4200",
     "start:api": "pnpm nx serve api --port 3000",
     "start:all": "concurrently \"pnpm run start:deps\" \"pnpm run start\"",
@@ -29,6 +29,7 @@
   },
   "private": true,
   "devDependencies": {
+    "@angular-devkit/build-angular": "~21.1.2",
     "@angular-devkit/core": "~21.1.0",
     "@angular-devkit/schematics": "~21.1.0",
     "@angular/build": "~21.1.0",
@@ -42,6 +43,7 @@
     "@nestjs/testing": "^11.0.0",
     "@nx/angular": "22.4.4",
     "@nx/devkit": "22.4.4",
+    "@nx/esbuild": "22.4.4",
     "@nx/eslint": "22.4.4",
     "@nx/eslint-plugin": "22.4.4",
     "@nx/jest": "22.4.4",

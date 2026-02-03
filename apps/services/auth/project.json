@@ -5,13 +5,11 @@
   "prefix": "auth",
   "targets": {
     "build": {
-      "executor": "@nx/node:build",
-      "outputs": ["{options.outputPath}"],
+      "executor": "nx:run-commands",
+      "outputs": ["dist/apps/services/auth/**"],
       "options": {
-        "outputPath": "dist/apps/services/auth",
-        "main": "apps/services/auth/src/main.go",
-        "tsConfig": "apps/services/auth/tsconfig.app.json",
-        "assets": []
+        "command": "go build -o dist/apps/services/auth/auth ./src",
+        "cwd": "apps/services/auth"
       },
       "configurations": {
         "production": {
@@ -25,23 +23,20 @@
       }
     },
     "serve": {
-      "executor": "@nx/node:execute",
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "auth:build"
+        "command": "go run ./src",
+        "cwd": "apps/services/auth",
+        "env": {
+          "PORT": "4001"
+        }
       }
     },
     "test": {
-      "executor": "@nx/node:test",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "nx:run-commands",
       "options": {
-        "jestConfig": "apps/services/auth/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
+        "command": "go test ./...",
+        "cwd": "apps/services/auth"
       }
     },
     "lint": {

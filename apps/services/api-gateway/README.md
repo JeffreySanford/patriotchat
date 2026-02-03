@@ -82,7 +82,7 @@ Limits are tracked per:
 ```bash
 PORT=3000
 JWT_SECRET=your-secret-key
-AUTH_SERVICE_URL=http://patriotchat-auth:4001
+AUTH_SERVICE_URL=http://localhost:4001
 CORS_ORIGIN=http://localhost:4200
 ```
 

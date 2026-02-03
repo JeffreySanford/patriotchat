@@ -21,33 +21,6 @@ services:
     networks:
       - patriotchat
 
-  auth:
-    build:
-      context: ./apps/services/auth
-      dockerfile: Dockerfile
-    container_name: patriotchat-auth
-    ports:
-      - "4001:4001"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      - PORT=4001
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=patriotchat
-      - JWT_SECRET=dev-secret-change-in-prod
-      - JAEGER_HOST=localhost
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4001/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-    networks:
-      - patriotchat
-    restart: unless-stopped
 
   ollama:
     image: ollama/ollama:latest
@@ -61,28 +34,6 @@ services:
     networks:
       - patriotchat
 
-  api-gateway:
-    build:
-      context: ./apps/services/api-gateway
-      dockerfile: Dockerfile
-    container_name: patriotchat-api-gateway
-    ports:
-      - "3000:3000"
-    depends_on:
-      - auth
-    environment:
-      - PORT=3000
-      - JWT_SECRET=dev-secret-change-in-prod
-      - AUTH_SERVICE_URL=http://patriotchat-auth:4001
-      - CORS_ORIGIN=http://localhost:4200
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-    networks:
-      - patriotchat
-    restart: unless-stopped
 
   funding:
     build:
@@ -190,23 +141,6 @@ services:
       - patriotchat
     restart: unless-stopped
 
-  frontend:
-    build:
-      context: ./apps/frontend
-      dockerfile: Dockerfile
-    container_name: patriotchat-frontend
-    ports:
-      - "4200:4200"
-    depends_on:
-      - api-gateway
-    healthcheck:
-      test: ["CMD", "wget", "-q", "-O-", "http://localhost:4200/"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-    networks:
-      - patriotchat
-    restart: unless-stopped
 
 volumes:
   postgres_data:

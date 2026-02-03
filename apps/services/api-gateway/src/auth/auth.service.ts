@@ -4,18 +4,18 @@ import { RegisterDto, LoginDto } from './dto';
 
 @Injectable()
 export class AuthService {
-  private authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://patriotchat-auth:4001';
+  private authServiceUrl: string = process.env.AUTH_SERVICE_URL || 'http://localhost:4001';
 
-  async register(dto: RegisterDto) {
-    const response = await axios.post(
+  async register(dto: RegisterDto): Promise<any> {
+    const response: any = await axios.post(
       `${this.authServiceUrl}/auth/register`,
       dto,
     );
     return response.data;
   }
 
-  async login(dto: LoginDto) {
-    const response = await axios.post(
+  async login(dto: LoginDto): Promise<any> {
+    const response: any = await axios.post(
       `${this.authServiceUrl}/auth/login`,
       dto,
     );

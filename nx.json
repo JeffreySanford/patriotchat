@@ -28,7 +28,26 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
-      }
+      },
+      "exclude": [
+        "frontend/**/*",
+        "frontend-e2e/**/*",
+        "api/**/*",
+        "api-e2e/**/*",
+        "libs/shared/**/*",
+        "services/heavy/**/*"
+      ]
+    },
+    {
+      "plugin": "nx/plugins/package-json",
+      "exclude": [
+        "frontend/**/*",
+        "frontend-e2e/**/*",
+        "api/**/*",
+        "api-e2e/**/*",
+        "libs/shared/**/*",
+        "services/heavy/**/*"
+      ]
     },
     {
       "plugin": "@nx/eslint/plugin",
@@ -41,13 +60,29 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["api-e2e/**/*"]
+      "exclude": [
+        "apps/api-e2e/**/*",
+        "frontend/**/*",
+        "frontend-e2e/**/*",
+        "api/**/*",
+        "api-e2e/**/*",
+        "libs/shared/**/*",
+        "services/heavy/**/*"
+      ]
     },
     {
       "plugin": "@nx/playwright/plugin",
       "options": {
         "targetName": "e2e"
-      }
+      },
+      "exclude": [
+        "frontend-e2e/**/*",
+        "frontend/**/*",
+        "api/**/*",
+        "api-e2e/**/*",
+        "libs/shared/**/*",
+        "services/heavy/**/*"
+      ]
     },
     {
       "plugin": "@nx/webpack/plugin",
@@ -58,7 +93,15 @@
         "buildDepsTargetName": "build-deps",
         "watchDepsTargetName": "watch-deps",
         "serveStaticTargetName": "serve-static"
-      }
+      },
+      "exclude": [
+        "frontend/**/*",
+        "frontend-e2e/**/*",
+        "api/**/*",
+        "api-e2e/**/*",
+        "libs/shared/**/*",
+        "services/heavy/**/*"
+      ]
     }
   ],
   "targetDefaults": {

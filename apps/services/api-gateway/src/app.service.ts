@@ -6,9 +6,9 @@ export class AppService {
   async checkBackendServices(): Promise<boolean> {
     try {
       // Check auth service
-      await axios.get('http://patriotchat-auth:4001/health', { timeout: 2000 });
+      await axios.get('http://localhost:4001/health', { timeout: 2000 });
       return true;
-    } catch (error) {
+    } catch (_error) {
       return false;
     }
   }

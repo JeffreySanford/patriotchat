@@ -6,13 +6,17 @@
   "prefix": "patriotchat",
   "targets": {
     "build": {
-      "executor": "@nx/node:build",
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/services/api-gateway",
         "main": "apps/services/api-gateway/src/main.ts",
         "tsConfig": "apps/services/api-gateway/tsconfig.json",
-        "assets": []
+        "assets": [],
+        "format": ["cjs"],
+        "platform": "node",
+        "target": "node18",
+        "bundle": true
       },
       "configurations": {
         "production": {
@@ -26,7 +30,7 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@nx/node:execute",
+      "executor": "@nx/js:node",
       "options": {
         "buildTarget": "api-gateway:build"
       }
