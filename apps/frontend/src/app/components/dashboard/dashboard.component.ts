@@ -9,6 +9,12 @@ interface Message {
   model?: string;
 }
 
+interface InferenceResponse {
+  result: string;
+  duration: string | number;
+  tokens: string | number;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -66,8 +72,8 @@ export class DashboardComponent implements OnInit {
     this.loading = true;
     this.error = '';
 
-    this.llmService.generateInference(userMessage, this.selectedModel).subscribe({
-      next: (response: { result: string; duration: number; tokens: number }): void => {
+    this.llmService.generateInference(userMessage, this.selectedModel).subscribe(
+      (response: InferenceResponse): void => {
         this.messages.push({
           role: 'assistant',
           content: response.result,
@@ -84,13 +90,22 @@ export class DashboardComponent implements OnInit {
           });
         this.loading = false;
       },
-      error: (err: unknown): void => {
+      (err: unknown): void => {
         this.loading = false;
-        const errorMsg = (err as Record<string, unknown>)?.error?.error || 'Failed to generate inference';
-        this.error = typeof errorMsg === 'string' ? errorMsg : 'Failed to generate inference';
+        let errorMsg: string = 'Failed to generate inference';
+        if (err && typeof err === 'object' && 'error' in err) {
+          const errObj = err as Record<string, unknown>;
+          if (errObj['error'] && typeof errObj['error'] === 'object') {
+            const errorDetail = errObj['error'] as Record<string, unknown>;
+            if (typeof errorDetail['error'] === 'string') {
+              errorMsg = errorDetail['error'];
+            }
+          }
+        }
+        this.error = errorMsg;
         console.error(err);
-      },
-    });
+      }
+    );
   }
 
   logout(): void {

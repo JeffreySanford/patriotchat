@@ -36,8 +36,17 @@ export class AuthComponent {
       },
       error: (err: unknown): void => {
         this.loading = false;
-        const errorMsg = (err as Record<string, unknown>)?.error?.error || 'Login failed';
-        this.error = typeof errorMsg === 'string' ? errorMsg : 'Login failed';
+        let errorMsg: string = 'Login failed';
+        if (err && typeof err === 'object' && 'error' in err) {
+          const errObj = err as Record<string, unknown>;
+          if (errObj['error'] && typeof errObj['error'] === 'object') {
+            const errorDetail = errObj['error'] as Record<string, unknown>;
+            if (typeof errorDetail['error'] === 'string') {
+              errorMsg = errorDetail['error'];
+            }
+          }
+        }
+        this.error = errorMsg;
       },
     });
   }
@@ -56,8 +65,17 @@ export class AuthComponent {
       },
       error: (err: unknown): void => {
         this.loading = false;
-        const errorMsg = (err as Record<string, unknown>)?.error?.error || 'Registration failed';
-        this.error = typeof errorMsg === 'string' ? errorMsg : 'Registration failed';
+        let errorMsg: string = 'Registration failed';
+        if (err && typeof err === 'object' && 'error' in err) {
+          const errObj = err as Record<string, unknown>;
+          if (errObj['error'] && typeof errObj['error'] === 'object') {
+            const errorDetail = errObj['error'] as Record<string, unknown>;
+            if (typeof errorDetail['error'] === 'string') {
+              errorMsg = errorDetail['error'];
+            }
+          }
+        }
+        this.error = errorMsg;
       },
     });
   }
