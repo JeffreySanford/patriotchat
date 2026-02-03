@@ -15,14 +15,14 @@ export class InferenceController {
   constructor(private inferenceService: InferenceService) {}
 
   @Get('models')
-  async getModels() {
+  async getModels(): Promise<{ models: string[] }> {
     try {
       console.log('InferenceController: getModels called');
-      const models = await this.inferenceService.getModels();
+      const models: string[] = await this.inferenceService.getModels();
       console.log('InferenceController: returning models:', models);
       return { models };
-    } catch (error: unknown) {
-      console.error('InferenceController: error in getModels:', error);
+    } catch (err: unknown) {
+      console.error('InferenceController: error in getModels:', err);
       // Return default models even if service fails
       return { models: ['llama2', 'mistral', 'neural-chat'] };
     }
@@ -32,21 +32,21 @@ export class InferenceController {
   @UseGuards(JwtAuthGuard)
   async generateInference(
     @Body() body: { prompt: string; model: string; context?: string },
-  ) {
+  ): Promise<{ result: string; model: string; tokens: number; duration: string }> {
     try {
       console.log('InferenceController: generateInference called with body:', body);
-      const result = await this.inferenceService.generateInference(
+      const result: { result: string; model: string; tokens: number; duration: string } = await this.inferenceService.generateInference(
         body.prompt,
         body.model,
         body.context,
       );
       console.log('InferenceController: returning result:', result);
       return result;
-    } catch (error: unknown) {
-      console.error('InferenceController: error in generateInference:', error);
-      const err = error as any;
+    } catch (err: unknown) {
+      console.error('InferenceController: error in generateInference:', err);
+      const error = err as Record<string, unknown>;
       throw new HttpException(
-        err.message || 'Inference generation failed',
+        (error.message as string) || 'Inference generation failed',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

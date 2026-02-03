@@ -22,7 +22,7 @@ export class RateLimitingService {
   };
 
   // In-memory store (would use Redis in production)
-  private store = new Map<string, number[]>();
+  private store: Map<string, number[]> = new Map<string, number[]>();
 
   checkLimit(
     ip: string,
@@ -30,25 +30,25 @@ export class RateLimitingService {
     endpoint: string,
     tier: string = 'free',
   ): boolean {
-    const key = `${ip}:${userId || 'anonymous'}:${endpoint}`;
-    const now = Date.now();
-    const oneHourAgo = now - 3600000;
-    const oneDayAgo = now - 86400000;
+    const key: string = `${ip}:${userId || 'anonymous'}:${endpoint}`;
+    const now: number = Date.now();
+    const oneHourAgo: number = now - 3600000;
+    const oneDayAgo: number = now - 86400000;
 
     // Get or create entry
-    let timestamps = this.store.get(key) || [];
-    timestamps = timestamps.filter((t) => t > oneDayAgo);
+    let timestamps: number[] = this.store.get(key) || [];
+    timestamps = timestamps.filter((t: number) => t > oneDayAgo);
 
     // Check hour limit
-    const hourCount = timestamps.filter((t) => t > oneHourAgo).length;
-    const hourLimit = this.limits[tier as keyof RateLimitConfig]?.requestsPerHour || 100;
+    const hourCount: number = timestamps.filter((t: number) => t > oneHourAgo).length;
+    const hourLimit: number = this.limits[tier as keyof RateLimitConfig]?.requestsPerHour || 100;
     if (hourCount >= hourLimit) {
       this.store.set(key, timestamps);
       return false;
     }
 
     // Check day limit
-    const dayLimit = this.limits[tier as keyof RateLimitConfig]?.requestsPerDay || 1000;
+    const dayLimit: number = this.limits[tier as keyof RateLimitConfig]?.requestsPerDay || 1000;
     if (timestamps.length >= dayLimit) {
       this.store.set(key, timestamps);
       return false;
@@ -67,11 +67,11 @@ export class RateLimitingService {
   }
 
   private cleanupOldEntries(): void {
-    const now = Date.now();
-    const oneDayAgo = now - 86400000;
+    const now: number = Date.now();
+    const oneDayAgo: number = now - 86400000;
 
     for (const [key, timestamps] of this.store.entries()) {
-      const filtered = timestamps.filter((t) => t > oneDayAgo);
+      const filtered: number[] = timestamps.filter((t: number) => t > oneDayAgo);
       if (filtered.length === 0) {
         this.store.delete(key);
       } else {
@@ -86,16 +86,16 @@ export class RateLimitingService {
     endpoint: string,
     tier: string = 'free',
   ): { hourly: number; daily: number } {
-    const key = `${ip}:${userId || 'anonymous'}:${endpoint}`;
-    const now = Date.now();
-    const oneHourAgo = now - 3600000;
-    const oneDayAgo = now - 86400000;
+    const key: string = `${ip}:${userId || 'anonymous'}:${endpoint}`;
+    const now: number = Date.now();
+    const oneHourAgo: number = now - 3600000;
+    const oneDayAgo: number = now - 86400000;
 
-    const timestamps = (this.store.get(key) || []).filter((t) => t > oneDayAgo);
-    const hourCount = timestamps.filter((t) => t > oneHourAgo).length;
-    const dayCount = timestamps.length;
+    const timestamps: number[] = (this.store.get(key) || []).filter((t: number) => t > oneDayAgo);
+    const hourCount: number = timestamps.filter((t: number) => t > oneHourAgo).length;
+    const dayCount: number = timestamps.length;
 
-    const tierLimits = this.limits[tier as keyof RateLimitConfig] || this.limits.free;
+    const tierLimits: { requestsPerHour: number; requestsPerDay: number } = this.limits[tier as keyof RateLimitConfig] || this.limits.free;
 
     return {
       hourly: Math.max(0, tierLimits.requestsPerHour - hourCount),

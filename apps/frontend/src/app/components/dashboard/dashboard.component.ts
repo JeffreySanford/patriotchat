@@ -130,10 +130,10 @@ export class DashboardComponent implements OnInit {
   };
 
   checkSpelling(text: string): { word: string; suggestions: string[] } | null {
-    const words = text.toLowerCase().split(/\s+/);
+    const words: string[] = text.toLowerCase().split(/\s+/);
     for (const word of words) {
       // Remove punctuation for checking
-      const cleanWord = word.replace(/[.,!?;:]/g, '');
+      const cleanWord: string = word.replace(/[.,!?;:]/g, '');
       if (this.commonMisspellings[cleanWord]) {
         return {
           word: cleanWord,

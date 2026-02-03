@@ -15,7 +15,7 @@ export class InferenceService {
       );
       console.log('Models response:', response.data);
       return response.data.models || ['llama2', 'mistral', 'neural-chat'];
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error fetching models from LLM service:', error);
       console.warn('Returning default models due to LLM service error');
       // Return default models if service is unavailable
@@ -53,9 +53,9 @@ export class InferenceService {
       };
     } catch (error: unknown) {
       console.error('Error generating inference:', error);
-      const err = error as any;
+      const err = error as Record<string, unknown>;
       // For now, return a mock response if service is unavailable
-      if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND') {
+      if ((err.code as string) === 'ECONNREFUSED' || (err.code as string) === 'ENOTFOUND') {
         console.warn('LLM service unavailable, returning mock response');
         return {
           result: `This is a mock response for: "${prompt}" using ${model} model.`,
@@ -65,7 +65,7 @@ export class InferenceService {
         };
       }
       throw new Error(
-        err.response?.data?.error || err.message || 'Failed to generate inference',
+        ((err.response as Record<string, unknown>)?.data as Record<string, unknown>)?.error as string || (err.message as string) || 'Failed to generate inference',
       );
     }
   }

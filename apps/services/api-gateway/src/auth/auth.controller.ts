@@ -20,13 +20,14 @@ export class AuthController {
   @Post('register')
   async register(@Body() dto: RegisterDto): Promise<AuthResponse> {
     try {
-      const result = await this.authService.register(dto);
+      const result: AuthResponse = await this.authService.register(dto);
       return result;
-    } catch (error: unknown) {
-      const err = error as any;
+    } catch (err: unknown) {
+      const error = err as Record<string, unknown>;
+      const status: number = (error.response as Record<string, unknown>)?.status as number | undefined || HttpStatus.INTERNAL_SERVER_ERROR;
       throw new HttpException(
-        err.response?.data || 'Registration failed',
-        err.response?.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        (error.response as Record<string, unknown>)?.data || 'Registration failed',
+        status,
       );
     }
   }
@@ -34,12 +35,12 @@ export class AuthController {
   @Post('login')
   async login(@Body() dto: LoginDto): Promise<AuthResponse> {
     try {
-      const result = await this.authService.login(dto);
+      const result: AuthResponse = await this.authService.login(dto);
       return result;
-    } catch (error: unknown) {
-      const err = error as any;
-      const statusCode = err.response?.status || 500;
-      const message = err.response?.data?.error || err.response?.data || 'Login failed';
+    } catch (err: unknown) {
+      const error = err as Record<string, unknown>;
+      const statusCode: number = ((error.response as Record<string, unknown>)?.status as number | undefined) || 500;
+      const message: string = ((error.response as Record<string, unknown>)?.data as Record<string, unknown>)?.error as string | undefined || (error.response as Record<string, unknown>)?.data as string || 'Login failed';
       console.error('Auth controller login error:', { statusCode, message, error });
       throw new HttpException(message, statusCode);
     }
@@ -49,10 +50,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   async validate(@Headers('authorization') auth: string): Promise<ValidateResponse> {
     try {
-      const token = auth.split(' ')[1];
-      const result = await this.authService.validate(token);
+      const token: string = auth.split(' ')[1];
+      const result: ValidateResponse = await this.authService.validate(token);
       return result;
-    } catch (error: unknown) {
+    } catch (_err: unknown) {
       throw new HttpException(
         'Token validation failed',
         HttpStatus.UNAUTHORIZED,
@@ -64,10 +65,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   async getMe(@Headers('authorization') auth: string): Promise<ValidateResponse> {
     try {
-      const token = auth.split(' ')[1];
-      const result = await this.authService.validate(token);
+      const token: string = auth.split(' ')[1];
+      const result: ValidateResponse = await this.authService.validate(token);
       return result;
-    } catch (error: unknown) {
+    } catch (_err: unknown) {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     }
   }

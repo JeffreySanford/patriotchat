@@ -37,7 +37,7 @@ export function getErrorMessage(error: HttpError): string {
       error.error !== null &&
       'error' in error.error
     ) {
-      const apiError = error.error as ApiErrorDetail;
+      const apiError: ApiErrorDetail = error.error as ApiErrorDetail;
       return apiError.error || apiError.message || 'An error occurred';
     }
     return error.statusText || 'An error occurred';
@@ -48,7 +48,7 @@ export function getErrorMessage(error: HttpError): string {
   }
 
   if (typeof error === 'object' && error !== null) {
-    const errorObj = error as ApiErrorResponse;
+    const errorObj: ApiErrorResponse = error as ApiErrorResponse;
     if ('message' in errorObj && typeof errorObj['message'] === 'string') {
       return errorObj['message'];
     }
