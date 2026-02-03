@@ -140,8 +140,16 @@ export default [
           'message': 'Use explicit types or shared DTOs from @patriotchat/shared instead of any.'
         },
         {
+          'selector': 'TSUnknownKeyword',
+          'message': 'Avoid unknown; provide concrete types with proper error classes/interfaces instead.'
+        },
+        {
           'selector': 'TSTypeReference[typeName.name="any"]',
           'message': 'Use explicit types instead of `any`.'
+        },
+        {
+          'selector': 'TSTypeReference[typeName.name="unknown"]',
+          'message': 'Avoid `unknown`; provide concrete types instead.'
         }
       ]
     },

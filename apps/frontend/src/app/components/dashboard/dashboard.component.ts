@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { LlmService } from '../../services/llm.service';
 import { AnalyticsService } from '../../services/analytics.service';
 import { AuthService } from '../../services/auth.service';
+import { getErrorMessage } from '../../models/api-error.model';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -47,8 +49,8 @@ export class DashboardComponent implements OnInit {
           this.selectedModel = this.availableModels[0];
         }
       },
-      error: (err: unknown): void => {
-        this.error = 'Failed to load models';
+      error: (err: HttpErrorResponse): void => {
+        this.error = getErrorMessage(err);
         console.error(err);
       },
     });
@@ -57,7 +59,8 @@ export class DashboardComponent implements OnInit {
   selectModel(model: string): void {
     this.selectedModel = model;
     this.analyticsService.trackEvent('model_selected', { model }).subscribe({
-      error: (err: unknown): void => console.error('Analytics error:', err),
+      error: (err: HttpErrorResponse): void =>
+        console.error('Analytics error:', err),
     });
   }
 
@@ -88,29 +91,14 @@ export class DashboardComponent implements OnInit {
               tokens: response.tokens,
             })
             .subscribe({
-              error: (err: unknown): void =>
+              error: (err: HttpErrorResponse): void =>
                 console.error('Analytics error:', err),
             });
           this.loading = false;
         },
-        (err: unknown): void => {
+        (err: HttpErrorResponse): void => {
           this.loading = false;
-          let errorMsg: string = 'Failed to generate inference';
-          if (err && typeof err === 'object' && 'error' in err) {
-            const errObj: Record<string, unknown> = err as Record<
-              string,
-              unknown
-            >;
-            if (errObj['error'] && typeof errObj['error'] === 'object') {
-              const errorDetail: Record<string, unknown> = errObj[
-                'error'
-              ] as Record<string, unknown>;
-              if (typeof errorDetail['error'] === 'string') {
-                errorMsg = errorDetail['error'];
-              }
-            }
-          }
-          this.error = errorMsg;
+          this.error = getErrorMessage(err);
           console.error(err);
         },
       );

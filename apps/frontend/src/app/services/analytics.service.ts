@@ -25,7 +25,7 @@ export class AnalyticsService {
 
   trackEvent(
     eventType: string,
-    metadata: Record<string, unknown>,
+    metadata: Record<string, string | number | boolean>,
   ): Observable<TrackResponse> {
     const token: string | null = this.authService.getToken();
     const event: AnalyticsEvent = {
