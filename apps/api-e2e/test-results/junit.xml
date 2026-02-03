@@ -1,0 +1,2576 @@
+<testsuites id="" name="" tests="162" failures="102" skipped="0" errors="0" time="13.726175999999999">
+<testsuite name="critical-requirements\audit-trail.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="chromium" tests="5" failures="5" skipped="0" time="0.719" errors="0">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration" classname="critical-requirements\audit-trail.spec.ts" time="0.143">
+<failure message="audit-trail.spec.ts:7:9 Should log user registration" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\audit-trail.spec.ts:7:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration 
+
+    Error: expect(received).toBeDefined()
+
+    Received: undefined
+
+      20 |
+      21 |       expect(registerResponse.ok).toBe(true);
+    > 22 |       expect(registerResponse.data?.userId).toBeDefined();
+         |                                             ^
+      23 |       console.log(`✓ Registration logged for user: ${testUser.email}`);
+      24 |
+      25 |       // Verify audit log exists
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:22:45
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login" classname="critical-requirements\audit-trail.spec.ts" time="0.186">
+<failure message="audit-trail.spec.ts:37:9 Should log user login" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\audit-trail.spec.ts:37:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      73 |       });
+      74 |
+    > 75 |       expect(auditResponse.ok).toBe(true);
+         |                                ^
+      76 |       const logs = auditResponse.data?.logs || [];
+      77 |       expect(logs.length).toBeGreaterThan(0);
+      78 |       console.log(`✓ Login action recorded in audit trail (${logs.length} total logs)`);
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:75:32
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ Login logged for user: testuser_1770078500017_1@test.patriotchat.com
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries" classname="critical-requirements\audit-trail.spec.ts" time="0.158">
+<failure message="audit-trail.spec.ts:83:9 Should track LLM inference queries" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\audit-trail.spec.ts:83:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      111 |       });
+      112 |
+    > 113 |       expect(inferenceResponse.ok).toBe(true);
+          |                                    ^
+      114 |       console.log(`✓ Inference query executed and tracked`);
+      115 |
+      116 |       // Verify tracking in analytics
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:113:36
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible)" classname="critical-requirements\audit-trail.spec.ts" time="0.125">
+<failure message="audit-trail.spec.ts:129:9 Logs should be immutable (no modification possible)" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\audit-trail.spec.ts:129:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 403
+    Received: 404
+
+      155 |
+      156 |       // Should be forbidden
+    > 157 |       expect(modifyResponse.status).toBe(403);
+          |                                     ^
+      158 |       console.log(`✓ Audit logs are protected from modification (status: ${modifyResponse.status})`);
+      159 |     });
+      160 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:157:37
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped" classname="critical-requirements\audit-trail.spec.ts" time="0.107">
+<failure message="audit-trail.spec.ts:161:9 All audit operations should be timestamped" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\audit-trail.spec.ts:161:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      182 |       });
+      183 |
+    > 184 |       expect(auditResponse.ok).toBe(true);
+          |                                ^
+      185 |       const logs = auditResponse.data?.logs || [];
+      186 |
+      187 |       // Verify all logs have timestamps
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:184:32
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\database.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="chromium" tests="7" failures="5" skipped="0" time="0.899" errors="0">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Should handle concurrent requests efficiently" classname="critical-requirements\database.spec.ts" time="0.172">
+<system-out>
+<![CDATA[✓ All 10 concurrent requests succeeded
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Connection pool should recover after spike" classname="critical-requirements\database.spec.ts" time="0.3">
+<system-out>
+<![CDATA[✓ First spike succeeded (5 requests)
+✓ Pool recovered - second spike succeeded (5 requests)
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests" classname="critical-requirements\database.spec.ts" time="0.118">
+<failure message="database.spec.ts:88:9 Stored data should persist across requests" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\database.spec.ts:88:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      112 |       });
+      113 |
+    > 114 |       expect(profileResponse.ok).toBe(true);
+          |                                  ^
+      115 |       expect(profileResponse.data?.email).toBe(email);
+      116 |       console.log(`✓ User data persisted: ${email}`);
+      117 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:114:34
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency" classname="critical-requirements\database.spec.ts" time="0.111">
+<failure message="database.spec.ts:119:9 Multiple database operations should maintain consistency" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\database.spec.ts:119:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      145 |       });
+      146 |
+    > 147 |       expect(updateResponse.ok).toBe(true);
+          |                                 ^
+      148 |
+      149 |       // Operation 3: Verify update
+      150 |       const profileResponse = await apiRequest({
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:147:33
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly" classname="critical-requirements\database.spec.ts" time="0.128">
+<failure message="database.spec.ts:163:9 Database queries should execute quickly" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\database.spec.ts:163:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      190 |       const queryTime = performance.now() - startTime;
+      191 |
+    > 192 |       expect(profileResponse.ok).toBe(true);
+          |                                  ^
+      193 |       expect(queryTime).toBeLessThan(500); // Should be under 500ms
+      194 |       console.log(`✓ Query executed in ${queryTime.toFixed(2)}ms`);
+      195 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:192:34
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy" classname="critical-requirements\database.spec.ts" time="0.035">
+<failure message="database.spec.ts:199:9 PostgreSQL connection should be healthy" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\database.spec.ts:199:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy 
+
+    Error: expect(received).toBeDefined()
+
+    Received: undefined
+
+      205 |
+      206 |       expect(response.ok).toBe(true);
+    > 207 |       expect(response.data?.database).toBeDefined();
+          |                                       ^
+      208 |       console.log(`✓ Database health: OK`);
+      209 |     });
+      210 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:207:39
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available" classname="critical-requirements\database.spec.ts" time="0.035">
+<failure message="database.spec.ts:211:9 Connection pool status should be available" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\database.spec.ts:211:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      216 |       });
+      217 |
+    > 218 |       expect(response.ok).toBe(true);
+          |                           ^
+      219 |       expect(response.data?.poolSize).toBeDefined();
+      220 |       expect(response.data?.activeConnections).toBeDefined();
+      221 |       console.log(`✓ Pool size: ${response.data?.poolSize}, Active: ${response.data?.activeConnections}`);
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:218:27
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\llm-selector.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="chromium" tests="10" failures="6" skipped="0" time="0.593" errors="0">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should list available LLM models" classname="critical-requirements\llm-selector.spec.ts" time="0.032">
+<system-out>
+<![CDATA[✓ Available models: llama2, mistral, neural-chat
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should include required models" classname="critical-requirements\llm-selector.spec.ts" time="0.032">
+<system-out>
+<![CDATA[✓ All required models present: llama2, mistral, neural-chat
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Model selector should be accessible via API" classname="critical-requirements\llm-selector.spec.ts" time="0.032">
+<system-out>
+<![CDATA[✓ Model selector API operational
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model" classname="critical-requirements\llm-selector.spec.ts" time="0.059">
+<failure message="llm-selector.spec.ts:55:9 Should execute inference with llama2 model" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:55:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      83 |       });
+      84 |
+    > 85 |       expect(queryResponse.ok).toBe(true);
+         |                                ^
+      86 |       expect(queryResponse.data?.response).toBeDefined();
+      87 |       console.log(`✓ Inference successful with llama2 model`);
+      88 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:85:32
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model" classname="critical-requirements\llm-selector.spec.ts" time="0.106">
+<failure message="llm-selector.spec.ts:90:9 Should execute inference with mistral model" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:90:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      118 |       });
+      119 |
+    > 120 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      121 |       expect(queryResponse.data?.response).toBeDefined();
+      122 |       console.log(`✓ Inference successful with mistral model`);
+      123 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:120:32
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model" classname="critical-requirements\llm-selector.spec.ts" time="0.092">
+<failure message="llm-selector.spec.ts:125:9 Should execute inference with neural-chat model" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:125:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      153 |       });
+      154 |
+    > 155 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      156 |       expect(queryResponse.data?.response).toBeDefined();
+      157 |       console.log(`✓ Inference successful with neural-chat model`);
+      158 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:155:32
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully" classname="critical-requirements\llm-selector.spec.ts" time="0.092">
+<failure message="llm-selector.spec.ts:162:9 Should handle invalid model gracefully" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:162:9 › Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 404
+
+      191 |
+      192 |       expect(queryResponse.ok).toBe(false);
+    > 193 |       expect(queryResponse.status).toBe(400);
+          |                                    ^
+      194 |       console.log(`✓ Invalid model rejected with status ${queryResponse.status}`);
+      195 |     });
+      196 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:193:36
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available" classname="critical-requirements\llm-selector.spec.ts" time="0.03">
+<failure message="llm-selector.spec.ts:197:9 Model metadata should be available" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:197:9 › Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      202 |       });
+      203 |
+    > 204 |       expect(response.ok).toBe(true);
+          |                           ^
+      205 |       expect(response.data?.models).toBeDefined();
+      206 |       expect(Array.isArray(response.data?.models)).toBe(true);
+      207 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:204:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Model selector should be available on frontend" classname="critical-requirements\llm-selector.spec.ts" time="0.028">
+<system-out>
+<![CDATA[✓ Model selector backend API available for frontend integration
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session" classname="critical-requirements\llm-selector.spec.ts" time="0.09">
+<failure message="llm-selector.spec.ts:234:9 Should support model switching during session" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\llm-selector.spec.ts:234:9 › Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      262 |       });
+      263 |
+    > 264 |       expect(query1.ok).toBe(true);
+          |                         ^
+      265 |
+      266 |       // Query with model 2 (switch)
+      267 |       const query2 = await apiRequest({
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:264:25
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\performance.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="chromium" tests="8" failures="6" skipped="0" time="0.177" errors="0">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Auth service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.03">
+<failure message="performance.spec.ts:7:9 Auth service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\performance.spec.ts:7:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Auth service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      12 |       });
+      13 |
+    > 14 |       expect(response.ok).toBe(true);
+         |                           ^
+      15 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      16 |       console.log(`✓ Auth latency: ${latency.toFixed(2)}ms`);
+      17 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:14:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › API Gateway should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.04">
+<system-out>
+<![CDATA[✓ Gateway latency: 33.05ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Funding service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.008">
+<failure message="performance.spec.ts:31:9 Funding service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\performance.spec.ts:31:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Funding service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      36 |       });
+      37 |
+    > 38 |       expect(response.ok).toBe(true);
+         |                           ^
+      39 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      40 |       console.log(`✓ Funding latency: ${latency.toFixed(2)}ms`);
+      41 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:38:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Policy service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.029">
+<failure message="performance.spec.ts:43:9 Policy service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\performance.spec.ts:43:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Policy service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      48 |       });
+      49 |
+    > 50 |       expect(response.ok).toBe(true);
+         |                           ^
+      51 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      52 |       console.log(`✓ Policy latency: ${latency.toFixed(2)}ms`);
+      53 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:50:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › LLM service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.007">
+<failure message="performance.spec.ts:55:9 LLM service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\performance.spec.ts:55:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › LLM service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      60 |       });
+      61 |
+    > 62 |       expect(response.ok).toBe(true);
+         |                           ^
+      63 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      64 |       console.log(`✓ LLM latency: ${latency.toFixed(2)}ms`);
+      65 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:62:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Analytics service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.029">
+<failure message="performance.spec.ts:67:9 Analytics service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\performance.spec.ts:67:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Analytics service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      72 |       });
+      73 |
+    > 74 |       expect(response.ok).toBe(true);
+         |                           ^
+      75 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      76 |       console.log(`✓ Analytics latency: ${latency.toFixed(2)}ms`);
+      77 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:74:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › Should maintain consistent response times under load" classname="critical-requirements\performance.spec.ts" time="0.022">
+<system-out>
+<![CDATA[✓ Avg latency: 3.64ms, Max: 6.18ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › All services should be operational" classname="critical-requirements\performance.spec.ts" time="0.012">
+<failure message="performance.spec.ts:101:9 All services should be operational" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\performance.spec.ts:101:9 › Critical Requirement: Performance (Auth < 100ms) › Performance Baseline › All services should be operational 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      116 |         });
+      117 |
+    > 118 |         expect(response.ok).toBe(true);
+          |                             ^
+      119 |       }
+      120 |
+      121 |       console.log(`✓ All ${services.length} services operational`);
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:118:29
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\rate-limiting.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="chromium" tests="6" failures="5" skipped="0" time="0.516" errors="0">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user" classname="critical-requirements\rate-limiting.spec.ts" time="0.071">
+<failure message="rate-limiting.spec.ts:7:9 Should track requests per user" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\rate-limiting.spec.ts:7:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      35 |       });
+      36 |
+    > 37 |       expect(response.ok).toBe(true);
+         |                           ^
+      38 |       // Check for rate limit headers
+      39 |       const rateLimitLimit = response.headers['x-ratelimit-limit'];
+      40 |       const rateLimitRemaining = response.headers['x-ratelimit-remaining'];
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:37:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-IP Rate Limiting › Should limit requests from same IP" classname="critical-requirements\rate-limiting.spec.ts" time="0.115">
+<system-out>
+<![CDATA[✓ Per-IP rate limiting configured (no block within 10 requests)
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits" classname="critical-requirements\rate-limiting.spec.ts" time="0.069">
+<failure message="rate-limiting.spec.ts:101:9 Should apply endpoint-specific limits" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\rate-limiting.spec.ts:101:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      129 |       });
+      130 |
+    > 131 |       expect(inferenceResponse.ok).toBe(true);
+          |                                    ^
+      132 |
+      133 |       // Test profile endpoint (different limit)
+      134 |       const profileResponse = await apiRequest({
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:131:36
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window" classname="critical-requirements\rate-limiting.spec.ts" time="0.082">
+<failure message="rate-limiting.spec.ts:147:9 Should reset limits on time window" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\rate-limiting.spec.ts:147:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      175 |       });
+      176 |
+    > 177 |       expect(response1.ok).toBe(true);
+          |                            ^
+      178 |
+      179 |       // Wait and make another request in new window
+      180 |       await new Promise((resolve) => setTimeout(resolve, 1100));
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:177:28
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers" classname="critical-requirements\rate-limiting.spec.ts" time="0.089">
+<failure message="rate-limiting.spec.ts:199:9 Should include rate limit information in response headers" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\rate-limiting.spec.ts:199:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      227 |       });
+      228 |
+    > 229 |       expect(response.ok).toBe(true);
+          |                           ^
+      230 |
+      231 |       // Check for standard rate limit headers
+      232 |       const hasRateLimitHeaders =
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:229:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service" classname="critical-requirements\rate-limiting.spec.ts" time="0.09">
+<failure message="rate-limiting.spec.ts:244:9 Should protect against denial of service" type="FAILURE">
+<![CDATA[  [chromium] › critical-requirements\rate-limiting.spec.ts:244:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      281 |       // At least most should succeed (rate limit protection doesn't reject all)
+      282 |       const successCount = results.filter((r) => r.ok).length;
+    > 283 |       expect(successCount).toBeGreaterThan(0);
+          |                            ^
+      284 |
+      285 |       console.log(`✓ Rate limiting protects service (${successCount}/5 requests succeeded)`);
+      286 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:283:28
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="performance\service-latency.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="chromium" tests="9" failures="0" skipped="0" time="0.352" errors="0">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure auth service latency" classname="performance\service-latency.spec.ts" time="0.028">
+<system-out>
+<![CDATA[Auth Service Latency:
+  Average: 2.54ms
+  Min: 1.46ms
+  Max: 6.15ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure gateway latency" classname="performance\service-latency.spec.ts" time="0.073">
+<system-out>
+<![CDATA[Gateway Latency:
+  Average: 6.59ms
+  Min: 2.14ms
+  Max: 30.06ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure funding service latency" classname="performance\service-latency.spec.ts" time="0.05">
+<system-out>
+<![CDATA[Funding Service Latency:
+  Average: 4.29ms
+  Min: 1.21ms
+  Max: 24.01ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure policy service latency" classname="performance\service-latency.spec.ts" time="0.046">
+<system-out>
+<![CDATA[Policy Service Latency:
+  Average: 3.96ms
+  Min: 1.22ms
+  Max: 21.58ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure LLM service latency" classname="performance\service-latency.spec.ts" time="0.046">
+<system-out>
+<![CDATA[LLM Service Latency:
+  Average: 4.05ms
+  Min: 1.51ms
+  Max: 21.12ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure analytics service latency" classname="performance\service-latency.spec.ts" time="0.048">
+<system-out>
+<![CDATA[Analytics Service Latency:
+  Average: 4.09ms
+  Min: 1.35ms
+  Max: 21.90ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Throughput Benchmarks › Should handle concurrent requests efficiently" classname="performance\service-latency.spec.ts" time="0.014">
+<system-out>
+<![CDATA[Concurrent Request Performance (10 requests):
+  Total time: 11.41ms
+  Average latency: 7.96ms
+  Max latency: 8.87ms
+  Throughput: 876.61 req/s
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Database Query Performance › Should execute queries within acceptable time" classname="performance\service-latency.spec.ts" time="0.021">
+<system-out>
+<![CDATA[Database Query Performance:
+  Average: 3.82ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › API Response Times › Health check responses should be fast" classname="performance\service-latency.spec.ts" time="0.026">
+<system-out>
+<![CDATA[Health Check Response Times:
+  Auth: 4.23ms
+  Gateway: 3.24ms
+  Funding: 3.81ms
+  Policy: 3.81ms
+  LLM: 1.31ms
+  Analytics: 3.49ms
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="workflows\user-journey.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="chromium" tests="9" failures="7" skipped="0" time="0.875" errors="0">
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full registration workflow" classname="workflows\user-journey.spec.ts" time="0.086">
+<failure message="user-journey.spec.ts:7:9 Should complete full registration workflow" type="FAILURE">
+<![CDATA[  [chromium] › workflows\user-journey.spec.ts:7:9 › E2E Workflows › User Registration & Login Flow › Should complete full registration workflow 
+
+    Error: expect(received).toBeDefined()
+
+    Received: undefined
+
+      21 |
+      22 |       expect(registerResponse.ok).toBe(true);
+    > 23 |       expect(registerResponse.data?.userId).toBeDefined();
+         |                                             ^
+      24 |       expect(registerResponse.data?.token).toBeDefined();
+      25 |       console.log(`✓ User registered: ${testUser.email}`);
+      26 |
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:23:45
+]]>
+</failure>
+</testcase>
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full login workflow" classname="workflows\user-journey.spec.ts" time="0.122">
+<failure message="user-journey.spec.ts:43:9 Should complete full login workflow" type="FAILURE">
+<![CDATA[  [chromium] › workflows\user-journey.spec.ts:43:9 › E2E Workflows › User Registration & Login Flow › Should complete full login workflow 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      84 |       });
+      85 |
+    > 86 |       expect(profileResponse.ok).toBe(true);
+         |                                  ^
+      87 |       console.log(`✓ Authenticated request successful`);
+      88 |     });
+      89 |   });
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:86:34
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ User registered
+✓ User logged in successfully
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should execute complete query workflow" classname="workflows\user-journey.spec.ts" time="0.101">
+<failure message="user-journey.spec.ts:92:9 Should execute complete query workflow" type="FAILURE">
+<![CDATA[  [chromium] › workflows\user-journey.spec.ts:92:9 › E2E Workflows › Query & Inference Workflow › Should execute complete query workflow 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      122 |       });
+      123 |
+    > 124 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      125 |       expect(queryResponse.data?.response).toBeDefined();
+      126 |       console.log(`✓ Inference executed with ${testQuery.model}`);
+      127 |
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:124:32
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ User authenticated
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should support multiple queries in session" classname="workflows\user-journey.spec.ts" time="0.1">
+<failure message="user-journey.spec.ts:139:9 Should support multiple queries in session" type="FAILURE">
+<![CDATA[  [chromium] › workflows\user-journey.spec.ts:139:9 › E2E Workflows › Query & Inference Workflow › Should support multiple queries in session 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      174 |         });
+      175 |
+    > 176 |         expect(queryResponse.ok).toBe(true);
+          |                                  ^
+      177 |         queryResults.push(queryResponse.data);
+      178 |         console.log(`✓ Query ${i + 1} executed with ${query.model}`);
+      179 |       }
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:176:34
+]]>
+</failure>
+</testcase>
+<testcase name="E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services" classname="workflows\user-journey.spec.ts" time="0.058">
+<failure message="user-journey.spec.ts:195:9 Should coordinate between auth and inference services" type="FAILURE">
+<![CDATA[  [chromium] › workflows\user-journey.spec.ts:195:9 › E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      224 |       });
+      225 |
+    > 226 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      227 |       console.log(`✓ LLM service: Query executed`);
+      228 |
+      229 |       // Step 3: Analytics service - Track
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:226:32
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ Auth service: User registered
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Cross-Service Integration › Should maintain session across services" classname="workflows\user-journey.spec.ts" time="0.068">
+<failure message="user-journey.spec.ts:240:9 Should maintain session across services" type="FAILURE">
+<![CDATA[  [chromium] › workflows\user-journey.spec.ts:240:9 › E2E Workflows › Cross-Service Integration › Should maintain session across services 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      265 |       });
+      266 |
+    > 267 |       expect(authCheck.ok).toBe(true);
+          |                            ^
+      268 |
+      269 |       const query = await apiRequest({
+      270 |         method: 'POST',
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:267:28
+]]>
+</failure>
+</testcase>
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid credentials gracefully" classname="workflows\user-journey.spec.ts" time="0.135">
+<system-out>
+<![CDATA[✓ Invalid credentials rejected (status: 401)
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should recover from service failures" classname="workflows\user-journey.spec.ts" time="0.112">
+<system-out>
+<![CDATA[✓ Service handled response appropriately (status: 404)
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid requests properly" classname="workflows\user-journey.spec.ts" time="0.093">
+<failure message="user-journey.spec.ts:362:9 Should handle invalid requests properly" type="FAILURE">
+<![CDATA[  [chromium] › workflows\user-journey.spec.ts:362:9 › E2E Workflows › Error Handling & Recovery › Should handle invalid requests properly 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 404
+
+      390 |
+      391 |       expect(invalidQuery.ok).toBe(false);
+    > 392 |       expect(invalidQuery.status).toBe(400);
+          |                                   ^
+      393 |       console.log(`✓ Invalid request rejected (status: ${invalidQuery.status})`);
+      394 |     });
+      395 |   });
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:392:35
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\audit-trail.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="firefox" tests="5" failures="5" skipped="0" time="0.606" errors="0">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration" classname="critical-requirements\audit-trail.spec.ts" time="0.094">
+<failure message="audit-trail.spec.ts:7:9 Should log user registration" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\audit-trail.spec.ts:7:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration 
+
+    Error: expect(received).toBeDefined()
+
+    Received: undefined
+
+      20 |
+      21 |       expect(registerResponse.ok).toBe(true);
+    > 22 |       expect(registerResponse.data?.userId).toBeDefined();
+         |                                             ^
+      23 |       console.log(`✓ Registration logged for user: ${testUser.email}`);
+      24 |
+      25 |       // Verify audit log exists
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:22:45
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login" classname="critical-requirements\audit-trail.spec.ts" time="0.179">
+<failure message="audit-trail.spec.ts:37:9 Should log user login" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\audit-trail.spec.ts:37:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      73 |       });
+      74 |
+    > 75 |       expect(auditResponse.ok).toBe(true);
+         |                                ^
+      76 |       const logs = auditResponse.data?.logs || [];
+      77 |       expect(logs.length).toBeGreaterThan(0);
+      78 |       console.log(`✓ Login action recorded in audit trail (${logs.length} total logs)`);
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:75:32
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ Login logged for user: testuser_1770078504105_1@test.patriotchat.com
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries" classname="critical-requirements\audit-trail.spec.ts" time="0.092">
+<failure message="audit-trail.spec.ts:83:9 Should track LLM inference queries" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\audit-trail.spec.ts:83:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      111 |       });
+      112 |
+    > 113 |       expect(inferenceResponse.ok).toBe(true);
+          |                                    ^
+      114 |       console.log(`✓ Inference query executed and tracked`);
+      115 |
+      116 |       // Verify tracking in analytics
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:113:36
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible)" classname="critical-requirements\audit-trail.spec.ts" time="0.142">
+<failure message="audit-trail.spec.ts:129:9 Logs should be immutable (no modification possible)" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\audit-trail.spec.ts:129:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 403
+    Received: 404
+
+      155 |
+      156 |       // Should be forbidden
+    > 157 |       expect(modifyResponse.status).toBe(403);
+          |                                     ^
+      158 |       console.log(`✓ Audit logs are protected from modification (status: ${modifyResponse.status})`);
+      159 |     });
+      160 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:157:37
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped" classname="critical-requirements\audit-trail.spec.ts" time="0.099">
+<failure message="audit-trail.spec.ts:161:9 All audit operations should be timestamped" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\audit-trail.spec.ts:161:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      182 |       });
+      183 |
+    > 184 |       expect(auditResponse.ok).toBe(true);
+          |                                ^
+      185 |       const logs = auditResponse.data?.logs || [];
+      186 |
+      187 |       // Verify all logs have timestamps
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:184:32
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\database.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="firefox" tests="7" failures="5" skipped="0" time="0.805" errors="0">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Should handle concurrent requests efficiently" classname="critical-requirements\database.spec.ts" time="0.133">
+<system-out>
+<![CDATA[✓ All 10 concurrent requests succeeded
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Connection pool should recover after spike" classname="critical-requirements\database.spec.ts" time="0.302">
+<system-out>
+<![CDATA[✓ First spike succeeded (5 requests)
+✓ Pool recovered - second spike succeeded (5 requests)
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests" classname="critical-requirements\database.spec.ts" time="0.113">
+<failure message="database.spec.ts:88:9 Stored data should persist across requests" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\database.spec.ts:88:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      112 |       });
+      113 |
+    > 114 |       expect(profileResponse.ok).toBe(true);
+          |                                  ^
+      115 |       expect(profileResponse.data?.email).toBe(email);
+      116 |       console.log(`✓ User data persisted: ${email}`);
+      117 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:114:34
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency" classname="critical-requirements\database.spec.ts" time="0.094">
+<failure message="database.spec.ts:119:9 Multiple database operations should maintain consistency" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\database.spec.ts:119:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      145 |       });
+      146 |
+    > 147 |       expect(updateResponse.ok).toBe(true);
+          |                                 ^
+      148 |
+      149 |       // Operation 3: Verify update
+      150 |       const profileResponse = await apiRequest({
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:147:33
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly" classname="critical-requirements\database.spec.ts" time="0.099">
+<failure message="database.spec.ts:163:9 Database queries should execute quickly" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\database.spec.ts:163:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      190 |       const queryTime = performance.now() - startTime;
+      191 |
+    > 192 |       expect(profileResponse.ok).toBe(true);
+          |                                  ^
+      193 |       expect(queryTime).toBeLessThan(500); // Should be under 500ms
+      194 |       console.log(`✓ Query executed in ${queryTime.toFixed(2)}ms`);
+      195 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:192:34
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy" classname="critical-requirements\database.spec.ts" time="0.031">
+<failure message="database.spec.ts:199:9 PostgreSQL connection should be healthy" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\database.spec.ts:199:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy 
+
+    Error: expect(received).toBeDefined()
+
+    Received: undefined
+
+      205 |
+      206 |       expect(response.ok).toBe(true);
+    > 207 |       expect(response.data?.database).toBeDefined();
+          |                                       ^
+      208 |       console.log(`✓ Database health: OK`);
+      209 |     });
+      210 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:207:39
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available" classname="critical-requirements\database.spec.ts" time="0.033">
+<failure message="database.spec.ts:211:9 Connection pool status should be available" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\database.spec.ts:211:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      216 |       });
+      217 |
+    > 218 |       expect(response.ok).toBe(true);
+          |                           ^
+      219 |       expect(response.data?.poolSize).toBeDefined();
+      220 |       expect(response.data?.activeConnections).toBeDefined();
+      221 |       console.log(`✓ Pool size: ${response.data?.poolSize}, Active: ${response.data?.activeConnections}`);
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:218:27
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\llm-selector.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="firefox" tests="10" failures="6" skipped="0" time="0.531" errors="0">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should list available LLM models" classname="critical-requirements\llm-selector.spec.ts" time="0.037">
+<system-out>
+<![CDATA[✓ Available models: llama2, mistral, neural-chat
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should include required models" classname="critical-requirements\llm-selector.spec.ts" time="0.033">
+<system-out>
+<![CDATA[✓ All required models present: llama2, mistral, neural-chat
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Model selector should be accessible via API" classname="critical-requirements\llm-selector.spec.ts" time="0.032">
+<system-out>
+<![CDATA[✓ Model selector API operational
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model" classname="critical-requirements\llm-selector.spec.ts" time="0.06">
+<failure message="llm-selector.spec.ts:55:9 Should execute inference with llama2 model" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:55:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      83 |       });
+      84 |
+    > 85 |       expect(queryResponse.ok).toBe(true);
+         |                                ^
+      86 |       expect(queryResponse.data?.response).toBeDefined();
+      87 |       console.log(`✓ Inference successful with llama2 model`);
+      88 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:85:32
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model" classname="critical-requirements\llm-selector.spec.ts" time="0.083">
+<failure message="llm-selector.spec.ts:90:9 Should execute inference with mistral model" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:90:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      118 |       });
+      119 |
+    > 120 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      121 |       expect(queryResponse.data?.response).toBeDefined();
+      122 |       console.log(`✓ Inference successful with mistral model`);
+      123 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:120:32
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model" classname="critical-requirements\llm-selector.spec.ts" time="0.083">
+<failure message="llm-selector.spec.ts:125:9 Should execute inference with neural-chat model" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:125:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      153 |       });
+      154 |
+    > 155 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      156 |       expect(queryResponse.data?.response).toBeDefined();
+      157 |       console.log(`✓ Inference successful with neural-chat model`);
+      158 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:155:32
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully" classname="critical-requirements\llm-selector.spec.ts" time="0.08">
+<failure message="llm-selector.spec.ts:162:9 Should handle invalid model gracefully" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:162:9 › Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 404
+
+      191 |
+      192 |       expect(queryResponse.ok).toBe(false);
+    > 193 |       expect(queryResponse.status).toBe(400);
+          |                                    ^
+      194 |       console.log(`✓ Invalid model rejected with status ${queryResponse.status}`);
+      195 |     });
+      196 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:193:36
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available" classname="critical-requirements\llm-selector.spec.ts" time="0.008">
+<failure message="llm-selector.spec.ts:197:9 Model metadata should be available" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:197:9 › Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      202 |       });
+      203 |
+    > 204 |       expect(response.ok).toBe(true);
+          |                           ^
+      205 |       expect(response.data?.models).toBeDefined();
+      206 |       expect(Array.isArray(response.data?.models)).toBe(true);
+      207 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:204:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Model selector should be available on frontend" classname="critical-requirements\llm-selector.spec.ts" time="0.03">
+<system-out>
+<![CDATA[✓ Model selector backend API available for frontend integration
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session" classname="critical-requirements\llm-selector.spec.ts" time="0.085">
+<failure message="llm-selector.spec.ts:234:9 Should support model switching during session" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\llm-selector.spec.ts:234:9 › Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      262 |       });
+      263 |
+    > 264 |       expect(query1.ok).toBe(true);
+          |                         ^
+      265 |
+      266 |       // Query with model 2 (switch)
+      267 |       const query2 = await apiRequest({
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:264:25
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\performance.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="firefox" tests="8" failures="6" skipped="0" time="0.175" errors="0">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Auth service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.025">
+<failure message="performance.spec.ts:7:9 Auth service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\performance.spec.ts:7:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Auth service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      12 |       });
+      13 |
+    > 14 |       expect(response.ok).toBe(true);
+         |                           ^
+      15 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      16 |       console.log(`✓ Auth latency: ${latency.toFixed(2)}ms`);
+      17 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:14:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › API Gateway should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.01">
+<system-out>
+<![CDATA[✓ Gateway latency: 6.50ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Funding service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.028">
+<failure message="performance.spec.ts:31:9 Funding service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\performance.spec.ts:31:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Funding service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      36 |       });
+      37 |
+    > 38 |       expect(response.ok).toBe(true);
+         |                           ^
+      39 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      40 |       console.log(`✓ Funding latency: ${latency.toFixed(2)}ms`);
+      41 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:38:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Policy service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.013">
+<failure message="performance.spec.ts:43:9 Policy service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\performance.spec.ts:43:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Policy service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      48 |       });
+      49 |
+    > 50 |       expect(response.ok).toBe(true);
+         |                           ^
+      51 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      52 |       console.log(`✓ Policy latency: ${latency.toFixed(2)}ms`);
+      53 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:50:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › LLM service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.029">
+<failure message="performance.spec.ts:55:9 LLM service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\performance.spec.ts:55:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › LLM service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      60 |       });
+      61 |
+    > 62 |       expect(response.ok).toBe(true);
+         |                           ^
+      63 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      64 |       console.log(`✓ LLM latency: ${latency.toFixed(2)}ms`);
+      65 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:62:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Analytics service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.028">
+<failure message="performance.spec.ts:67:9 Analytics service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\performance.spec.ts:67:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Analytics service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      72 |       });
+      73 |
+    > 74 |       expect(response.ok).toBe(true);
+         |                           ^
+      75 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      76 |       console.log(`✓ Analytics latency: ${latency.toFixed(2)}ms`);
+      77 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:74:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › Should maintain consistent response times under load" classname="critical-requirements\performance.spec.ts" time="0.019">
+<system-out>
+<![CDATA[✓ Avg latency: 3.15ms, Max: 4.90ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › All services should be operational" classname="critical-requirements\performance.spec.ts" time="0.023">
+<failure message="performance.spec.ts:101:9 All services should be operational" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\performance.spec.ts:101:9 › Critical Requirement: Performance (Auth < 100ms) › Performance Baseline › All services should be operational 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      116 |         });
+      117 |
+    > 118 |         expect(response.ok).toBe(true);
+          |                             ^
+      119 |       }
+      120 |
+      121 |       console.log(`✓ All ${services.length} services operational`);
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:118:29
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\rate-limiting.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="firefox" tests="6" failures="5" skipped="0" time="0.492" errors="0">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user" classname="critical-requirements\rate-limiting.spec.ts" time="0.071">
+<failure message="rate-limiting.spec.ts:7:9 Should track requests per user" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\rate-limiting.spec.ts:7:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      20 |       });
+      21 |
+    > 22 |       expect(registerResponse.ok).toBe(true);
+         |                                   ^
+      23 |       const token = registerResponse.data?.token;
+      24 |
+      25 |       // Make multiple requests and verify headers
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:22:35
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-IP Rate Limiting › Should limit requests from same IP" classname="critical-requirements\rate-limiting.spec.ts" time="0.085">
+<system-out>
+<![CDATA[✓ Per-IP rate limiting configured (no block within 10 requests)
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits" classname="critical-requirements\rate-limiting.spec.ts" time="0.093">
+<failure message="rate-limiting.spec.ts:101:9 Should apply endpoint-specific limits" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\rate-limiting.spec.ts:101:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      129 |       });
+      130 |
+    > 131 |       expect(inferenceResponse.ok).toBe(true);
+          |                                    ^
+      132 |
+      133 |       // Test profile endpoint (different limit)
+      134 |       const profileResponse = await apiRequest({
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:131:36
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window" classname="critical-requirements\rate-limiting.spec.ts" time="0.061">
+<failure message="rate-limiting.spec.ts:147:9 Should reset limits on time window" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\rate-limiting.spec.ts:147:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      175 |       });
+      176 |
+    > 177 |       expect(response1.ok).toBe(true);
+          |                            ^
+      178 |
+      179 |       // Wait and make another request in new window
+      180 |       await new Promise((resolve) => setTimeout(resolve, 1100));
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:177:28
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers" classname="critical-requirements\rate-limiting.spec.ts" time="0.097">
+<failure message="rate-limiting.spec.ts:199:9 Should include rate limit information in response headers" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\rate-limiting.spec.ts:199:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      227 |       });
+      228 |
+    > 229 |       expect(response.ok).toBe(true);
+          |                           ^
+      230 |
+      231 |       // Check for standard rate limit headers
+      232 |       const hasRateLimitHeaders =
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:229:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service" classname="critical-requirements\rate-limiting.spec.ts" time="0.085">
+<failure message="rate-limiting.spec.ts:244:9 Should protect against denial of service" type="FAILURE">
+<![CDATA[  [firefox] › critical-requirements\rate-limiting.spec.ts:244:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      281 |       // At least most should succeed (rate limit protection doesn't reject all)
+      282 |       const successCount = results.filter((r) => r.ok).length;
+    > 283 |       expect(successCount).toBeGreaterThan(0);
+          |                            ^
+      284 |
+      285 |       console.log(`✓ Rate limiting protects service (${successCount}/5 requests succeeded)`);
+      286 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:283:28
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="performance\service-latency.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="firefox" tests="9" failures="0" skipped="0" time="0.275" errors="0">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure auth service latency" classname="performance\service-latency.spec.ts" time="0.044">
+<system-out>
+<![CDATA[Auth Service Latency:
+  Average: 4.00ms
+  Min: 1.26ms
+  Max: 22.04ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure gateway latency" classname="performance\service-latency.spec.ts" time="0.064">
+<system-out>
+<![CDATA[Gateway Latency:
+  Average: 5.80ms
+  Min: 2.46ms
+  Max: 24.72ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure funding service latency" classname="performance\service-latency.spec.ts" time="0.028">
+<system-out>
+<![CDATA[Funding Service Latency:
+  Average: 2.60ms
+  Min: 1.54ms
+  Max: 6.32ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure policy service latency" classname="performance\service-latency.spec.ts" time="0.019">
+<system-out>
+<![CDATA[Policy Service Latency:
+  Average: 1.68ms
+  Min: 0.74ms
+  Max: 5.05ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure LLM service latency" classname="performance\service-latency.spec.ts" time="0.048">
+<system-out>
+<![CDATA[LLM Service Latency:
+  Average: 4.07ms
+  Min: 1.29ms
+  Max: 23.04ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure analytics service latency" classname="performance\service-latency.spec.ts" time="0.019">
+<system-out>
+<![CDATA[Analytics Service Latency:
+  Average: 1.60ms
+  Min: 0.79ms
+  Max: 3.89ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Throughput Benchmarks › Should handle concurrent requests efficiently" classname="performance\service-latency.spec.ts" time="0.016">
+<system-out>
+<![CDATA[Concurrent Request Performance (10 requests):
+  Total time: 13.62ms
+  Average latency: 10.93ms
+  Max latency: 12.30ms
+  Throughput: 734.15 req/s
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Database Query Performance › Should execute queries within acceptable time" classname="performance\service-latency.spec.ts" time="0.02">
+<system-out>
+<![CDATA[Database Query Performance:
+  Average: 3.72ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › API Response Times › Health check responses should be fast" classname="performance\service-latency.spec.ts" time="0.017">
+<system-out>
+<![CDATA[Health Check Response Times:
+  Auth: 1.61ms
+  Gateway: 3.18ms
+  Funding: 1.62ms
+  Policy: 1.74ms
+  LLM: 1.81ms
+  Analytics: 1.54ms
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="workflows\user-journey.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="firefox" tests="9" failures="7" skipped="0" time="0.912" errors="0">
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full registration workflow" classname="workflows\user-journey.spec.ts" time="0.067">
+<failure message="user-journey.spec.ts:7:9 Should complete full registration workflow" type="FAILURE">
+<![CDATA[  [firefox] › workflows\user-journey.spec.ts:7:9 › E2E Workflows › User Registration & Login Flow › Should complete full registration workflow 
+
+    Error: expect(received).toBeDefined()
+
+    Received: undefined
+
+      21 |
+      22 |       expect(registerResponse.ok).toBe(true);
+    > 23 |       expect(registerResponse.data?.userId).toBeDefined();
+         |                                             ^
+      24 |       expect(registerResponse.data?.token).toBeDefined();
+      25 |       console.log(`✓ User registered: ${testUser.email}`);
+      26 |
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:23:45
+]]>
+</failure>
+</testcase>
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full login workflow" classname="workflows\user-journey.spec.ts" time="0.149">
+<failure message="user-journey.spec.ts:43:9 Should complete full login workflow" type="FAILURE">
+<![CDATA[  [firefox] › workflows\user-journey.spec.ts:43:9 › E2E Workflows › User Registration & Login Flow › Should complete full login workflow 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      84 |       });
+      85 |
+    > 86 |       expect(profileResponse.ok).toBe(true);
+         |                                  ^
+      87 |       console.log(`✓ Authenticated request successful`);
+      88 |     });
+      89 |   });
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:86:34
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ User registered
+✓ User logged in successfully
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should execute complete query workflow" classname="workflows\user-journey.spec.ts" time="0.094">
+<failure message="user-journey.spec.ts:92:9 Should execute complete query workflow" type="FAILURE">
+<![CDATA[  [firefox] › workflows\user-journey.spec.ts:92:9 › E2E Workflows › Query & Inference Workflow › Should execute complete query workflow 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      122 |       });
+      123 |
+    > 124 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      125 |       expect(queryResponse.data?.response).toBeDefined();
+      126 |       console.log(`✓ Inference executed with ${testQuery.model}`);
+      127 |
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:124:32
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ User authenticated
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should support multiple queries in session" classname="workflows\user-journey.spec.ts" time="0.096">
+<failure message="user-journey.spec.ts:139:9 Should support multiple queries in session" type="FAILURE">
+<![CDATA[  [firefox] › workflows\user-journey.spec.ts:139:9 › E2E Workflows › Query & Inference Workflow › Should support multiple queries in session 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      174 |         });
+      175 |
+    > 176 |         expect(queryResponse.ok).toBe(true);
+          |                                  ^
+      177 |         queryResults.push(queryResponse.data);
+      178 |         console.log(`✓ Query ${i + 1} executed with ${query.model}`);
+      179 |       }
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:176:34
+]]>
+</failure>
+</testcase>
+<testcase name="E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services" classname="workflows\user-journey.spec.ts" time="0.089">
+<failure message="user-journey.spec.ts:195:9 Should coordinate between auth and inference services" type="FAILURE">
+<![CDATA[  [firefox] › workflows\user-journey.spec.ts:195:9 › E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      224 |       });
+      225 |
+    > 226 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      227 |       console.log(`✓ LLM service: Query executed`);
+      228 |
+      229 |       // Step 3: Analytics service - Track
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:226:32
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ Auth service: User registered
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Cross-Service Integration › Should maintain session across services" classname="workflows\user-journey.spec.ts" time="0.095">
+<failure message="user-journey.spec.ts:240:9 Should maintain session across services" type="FAILURE">
+<![CDATA[  [firefox] › workflows\user-journey.spec.ts:240:9 › E2E Workflows › Cross-Service Integration › Should maintain session across services 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      265 |       });
+      266 |
+    > 267 |       expect(authCheck.ok).toBe(true);
+          |                            ^
+      268 |
+      269 |       const query = await apiRequest({
+      270 |         method: 'POST',
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:267:28
+]]>
+</failure>
+</testcase>
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid credentials gracefully" classname="workflows\user-journey.spec.ts" time="0.16">
+<system-out>
+<![CDATA[✓ Invalid credentials rejected (status: 401)
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should recover from service failures" classname="workflows\user-journey.spec.ts" time="0.069">
+<system-out>
+<![CDATA[✓ Service handled response appropriately (status: 404)
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid requests properly" classname="workflows\user-journey.spec.ts" time="0.093">
+<failure message="user-journey.spec.ts:362:9 Should handle invalid requests properly" type="FAILURE">
+<![CDATA[  [firefox] › workflows\user-journey.spec.ts:362:9 › E2E Workflows › Error Handling & Recovery › Should handle invalid requests properly 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 404
+
+      390 |
+      391 |       expect(invalidQuery.ok).toBe(false);
+    > 392 |       expect(invalidQuery.status).toBe(400);
+          |                                   ^
+      393 |       console.log(`✓ Invalid request rejected (status: ${invalidQuery.status})`);
+      394 |     });
+      395 |   });
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:392:35
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\audit-trail.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="webkit" tests="5" failures="5" skipped="0" time="0.482" errors="0">
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration" classname="critical-requirements\audit-trail.spec.ts" time="0.078">
+<failure message="audit-trail.spec.ts:7:9 Should log user registration" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\audit-trail.spec.ts:7:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user registration 
+
+    Error: expect(received).toBeDefined()
+
+    Received: undefined
+
+      20 |
+      21 |       expect(registerResponse.ok).toBe(true);
+    > 22 |       expect(registerResponse.data?.userId).toBeDefined();
+         |                                             ^
+      23 |       console.log(`✓ Registration logged for user: ${testUser.email}`);
+      24 |
+      25 |       // Verify audit log exists
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:22:45
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login" classname="critical-requirements\audit-trail.spec.ts" time="0.144">
+<failure message="audit-trail.spec.ts:37:9 Should log user login" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\audit-trail.spec.ts:37:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › User Action Logging › Should log user login 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      73 |       });
+      74 |
+    > 75 |       expect(auditResponse.ok).toBe(true);
+         |                                ^
+      76 |       const logs = auditResponse.data?.logs || [];
+      77 |       expect(logs.length).toBeGreaterThan(0);
+      78 |       console.log(`✓ Login action recorded in audit trail (${logs.length} total logs)`);
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:75:32
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ Login logged for user: testuser_1770078508254_1@test.patriotchat.com
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries" classname="critical-requirements\audit-trail.spec.ts" time="0.081">
+<failure message="audit-trail.spec.ts:83:9 Should track LLM inference queries" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\audit-trail.spec.ts:83:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Query Tracking › Should track LLM inference queries 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      111 |       });
+      112 |
+    > 113 |       expect(inferenceResponse.ok).toBe(true);
+          |                                    ^
+      114 |       console.log(`✓ Inference query executed and tracked`);
+      115 |
+      116 |       // Verify tracking in analytics
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:113:36
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible)" classname="critical-requirements\audit-trail.spec.ts" time="0.087">
+<failure message="audit-trail.spec.ts:129:9 Logs should be immutable (no modification possible)" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\audit-trail.spec.ts:129:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › Logs should be immutable (no modification possible) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 403
+    Received: 404
+
+      155 |
+      156 |       // Should be forbidden
+    > 157 |       expect(modifyResponse.status).toBe(403);
+          |                                     ^
+      158 |       console.log(`✓ Audit logs are protected from modification (status: ${modifyResponse.status})`);
+      159 |     });
+      160 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:157:37
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped" classname="critical-requirements\audit-trail.spec.ts" time="0.092">
+<failure message="audit-trail.spec.ts:161:9 All audit operations should be timestamped" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\audit-trail.spec.ts:161:9 › Critical Requirement: Audit Trail (Immutable PostgreSQL Logs) › Log Integrity › All audit operations should be timestamped 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      182 |       });
+      183 |
+    > 184 |       expect(auditResponse.ok).toBe(true);
+          |                                ^
+      185 |       const logs = auditResponse.data?.logs || [];
+      186 |
+      187 |       // Verify all logs have timestamps
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\audit-trail.spec.ts:184:32
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\database.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="webkit" tests="7" failures="5" skipped="0" time="0.771" errors="0">
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Should handle concurrent requests efficiently" classname="critical-requirements\database.spec.ts" time="0.127">
+<system-out>
+<![CDATA[✓ All 10 concurrent requests succeeded
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Connection Pooling › Connection pool should recover after spike" classname="critical-requirements\database.spec.ts" time="0.28">
+<system-out>
+<![CDATA[✓ First spike succeeded (5 requests)
+✓ Pool recovered - second spike succeeded (5 requests)
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests" classname="critical-requirements\database.spec.ts" time="0.106">
+<failure message="database.spec.ts:88:9 Stored data should persist across requests" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\database.spec.ts:88:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Stored data should persist across requests 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      112 |       });
+      113 |
+    > 114 |       expect(profileResponse.ok).toBe(true);
+          |                                  ^
+      115 |       expect(profileResponse.data?.email).toBe(email);
+      116 |       console.log(`✓ User data persisted: ${email}`);
+      117 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:114:34
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency" classname="critical-requirements\database.spec.ts" time="0.11">
+<failure message="database.spec.ts:119:9 Multiple database operations should maintain consistency" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\database.spec.ts:119:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Data Persistence › Multiple database operations should maintain consistency 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      145 |       });
+      146 |
+    > 147 |       expect(updateResponse.ok).toBe(true);
+          |                                 ^
+      148 |
+      149 |       // Operation 3: Verify update
+      150 |       const profileResponse = await apiRequest({
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:147:33
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly" classname="critical-requirements\database.spec.ts" time="0.091">
+<failure message="database.spec.ts:163:9 Database queries should execute quickly" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\database.spec.ts:163:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Query Performance › Database queries should execute quickly 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      190 |       const queryTime = performance.now() - startTime;
+      191 |
+    > 192 |       expect(profileResponse.ok).toBe(true);
+          |                                  ^
+      193 |       expect(queryTime).toBeLessThan(500); // Should be under 500ms
+      194 |       console.log(`✓ Query executed in ${queryTime.toFixed(2)}ms`);
+      195 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:192:34
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy" classname="critical-requirements\database.spec.ts" time="0.031">
+<failure message="database.spec.ts:199:9 PostgreSQL connection should be healthy" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\database.spec.ts:199:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › PostgreSQL connection should be healthy 
+
+    Error: expect(received).toBeDefined()
+
+    Received: undefined
+
+      205 |
+      206 |       expect(response.ok).toBe(true);
+    > 207 |       expect(response.data?.database).toBeDefined();
+          |                                       ^
+      208 |       console.log(`✓ Database health: OK`);
+      209 |     });
+      210 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:207:39
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available" classname="critical-requirements\database.spec.ts" time="0.026">
+<failure message="database.spec.ts:211:9 Connection pool status should be available" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\database.spec.ts:211:9 › Critical Requirement: Database (PostgreSQL with Connection Pooling) › Database Health › Connection pool status should be available 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      216 |       });
+      217 |
+    > 218 |       expect(response.ok).toBe(true);
+          |                           ^
+      219 |       expect(response.data?.poolSize).toBeDefined();
+      220 |       expect(response.data?.activeConnections).toBeDefined();
+      221 |       console.log(`✓ Pool size: ${response.data?.poolSize}, Active: ${response.data?.activeConnections}`);
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\database.spec.ts:218:27
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\llm-selector.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="webkit" tests="10" failures="6" skipped="0" time="0.534" errors="0">
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should list available LLM models" classname="critical-requirements\llm-selector.spec.ts" time="0.027">
+<system-out>
+<![CDATA[✓ Available models: llama2, mistral, neural-chat
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Should include required models" classname="critical-requirements\llm-selector.spec.ts" time="0.031">
+<system-out>
+<![CDATA[✓ All required models present: llama2, mistral, neural-chat
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Availability › Model selector should be accessible via API" classname="critical-requirements\llm-selector.spec.ts" time="0.027">
+<system-out>
+<![CDATA[✓ Model selector API operational
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model" classname="critical-requirements\llm-selector.spec.ts" time="0.094">
+<failure message="llm-selector.spec.ts:55:9 Should execute inference with llama2 model" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:55:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with llama2 model 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      83 |       });
+      84 |
+    > 85 |       expect(queryResponse.ok).toBe(true);
+         |                                ^
+      86 |       expect(queryResponse.data?.response).toBeDefined();
+      87 |       console.log(`✓ Inference successful with llama2 model`);
+      88 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:85:32
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model" classname="critical-requirements\llm-selector.spec.ts" time="0.079">
+<failure message="llm-selector.spec.ts:90:9 Should execute inference with mistral model" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:90:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with mistral model 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      118 |       });
+      119 |
+    > 120 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      121 |       expect(queryResponse.data?.response).toBeDefined();
+      122 |       console.log(`✓ Inference successful with mistral model`);
+      123 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:120:32
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model" classname="critical-requirements\llm-selector.spec.ts" time="0.062">
+<failure message="llm-selector.spec.ts:125:9 Should execute inference with neural-chat model" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:125:9 › Critical Requirement: LLM Model Selector › Model Selection › Should execute inference with neural-chat model 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      153 |       });
+      154 |
+    > 155 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      156 |       expect(queryResponse.data?.response).toBeDefined();
+      157 |       console.log(`✓ Inference successful with neural-chat model`);
+      158 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:155:32
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully" classname="critical-requirements\llm-selector.spec.ts" time="0.093">
+<failure message="llm-selector.spec.ts:162:9 Should handle invalid model gracefully" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:162:9 › Critical Requirement: LLM Model Selector › Model Configuration › Should handle invalid model gracefully 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 404
+
+      191 |
+      192 |       expect(queryResponse.ok).toBe(false);
+    > 193 |       expect(queryResponse.status).toBe(400);
+          |                                    ^
+      194 |       console.log(`✓ Invalid model rejected with status ${queryResponse.status}`);
+      195 |     });
+      196 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:193:36
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available" classname="critical-requirements\llm-selector.spec.ts" time="0.026">
+<failure message="llm-selector.spec.ts:197:9 Model metadata should be available" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:197:9 › Critical Requirement: LLM Model Selector › Model Configuration › Model metadata should be available 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      202 |       });
+      203 |
+    > 204 |       expect(response.ok).toBe(true);
+          |                           ^
+      205 |       expect(response.data?.models).toBeDefined();
+      206 |       expect(Array.isArray(response.data?.models)).toBe(true);
+      207 |
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:204:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Model selector should be available on frontend" classname="critical-requirements\llm-selector.spec.ts" time="0.008">
+<system-out>
+<![CDATA[✓ Model selector backend API available for frontend integration
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session" classname="critical-requirements\llm-selector.spec.ts" time="0.087">
+<failure message="llm-selector.spec.ts:234:9 Should support model switching during session" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\llm-selector.spec.ts:234:9 › Critical Requirement: LLM Model Selector › Frontend Integration › Should support model switching during session 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      262 |       });
+      263 |
+    > 264 |       expect(query1.ok).toBe(true);
+          |                         ^
+      265 |
+      266 |       // Query with model 2 (switch)
+      267 |       const query2 = await apiRequest({
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\llm-selector.spec.ts:264:25
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\performance.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="webkit" tests="8" failures="6" skipped="0" time="0.164" errors="0">
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Auth service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.009">
+<failure message="performance.spec.ts:7:9 Auth service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\performance.spec.ts:7:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Auth service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      12 |       });
+      13 |
+    > 14 |       expect(response.ok).toBe(true);
+         |                           ^
+      15 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      16 |       console.log(`✓ Auth latency: ${latency.toFixed(2)}ms`);
+      17 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:14:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › API Gateway should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.026">
+<system-out>
+<![CDATA[✓ Gateway latency: 20.61ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Funding service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.025">
+<failure message="performance.spec.ts:31:9 Funding service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\performance.spec.ts:31:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Funding service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      36 |       });
+      37 |
+    > 38 |       expect(response.ok).toBe(true);
+         |                           ^
+      39 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      40 |       console.log(`✓ Funding latency: ${latency.toFixed(2)}ms`);
+      41 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:38:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Policy service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.026">
+<failure message="performance.spec.ts:43:9 Policy service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\performance.spec.ts:43:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Policy service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      48 |       });
+      49 |
+    > 50 |       expect(response.ok).toBe(true);
+         |                           ^
+      51 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      52 |       console.log(`✓ Policy latency: ${latency.toFixed(2)}ms`);
+      53 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:50:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › LLM service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.005">
+<failure message="performance.spec.ts:55:9 LLM service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\performance.spec.ts:55:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › LLM service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      60 |       });
+      61 |
+    > 62 |       expect(response.ok).toBe(true);
+         |                           ^
+      63 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      64 |       console.log(`✓ LLM latency: ${latency.toFixed(2)}ms`);
+      65 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:62:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Service Latency › Analytics service should respond in under 100ms" classname="critical-requirements\performance.spec.ts" time="0.032">
+<failure message="performance.spec.ts:67:9 Analytics service should respond in under 100ms" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\performance.spec.ts:67:9 › Critical Requirement: Performance (Auth < 100ms) › Service Latency › Analytics service should respond in under 100ms 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      72 |       });
+      73 |
+    > 74 |       expect(response.ok).toBe(true);
+         |                           ^
+      75 |       expect(latency).toBeLessThan(TEST_DATA.PERFORMANCE_THRESHOLD_MS);
+      76 |       console.log(`✓ Analytics latency: ${latency.toFixed(2)}ms`);
+      77 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:74:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › Should maintain consistent response times under load" classname="critical-requirements\performance.spec.ts" time="0.016">
+<system-out>
+<![CDATA[✓ Avg latency: 2.65ms, Max: 4.33ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Performance (Auth &lt; 100ms) › Performance Baseline › All services should be operational" classname="critical-requirements\performance.spec.ts" time="0.025">
+<failure message="performance.spec.ts:101:9 All services should be operational" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\performance.spec.ts:101:9 › Critical Requirement: Performance (Auth < 100ms) › Performance Baseline › All services should be operational 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      116 |         });
+      117 |
+    > 118 |         expect(response.ok).toBe(true);
+          |                             ^
+      119 |       }
+      120 |
+      121 |       console.log(`✓ All ${services.length} services operational`);
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\performance.spec.ts:118:29
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="critical-requirements\rate-limiting.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="webkit" tests="6" failures="5" skipped="0" time="0.502" errors="0">
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user" classname="critical-requirements\rate-limiting.spec.ts" time="0.064">
+<failure message="rate-limiting.spec.ts:7:9 Should track requests per user" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\rate-limiting.spec.ts:7:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-User Rate Limiting › Should track requests per user 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      35 |       });
+      36 |
+    > 37 |       expect(response.ok).toBe(true);
+         |                           ^
+      38 |       // Check for rate limit headers
+      39 |       const rateLimitLimit = response.headers['x-ratelimit-limit'];
+      40 |       const rateLimitRemaining = response.headers['x-ratelimit-remaining'];
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:37:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-IP Rate Limiting › Should limit requests from same IP" classname="critical-requirements\rate-limiting.spec.ts" time="0.094">
+<system-out>
+<![CDATA[✓ Per-IP rate limiting configured (no block within 10 requests)
+]]>
+</system-out>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits" classname="critical-requirements\rate-limiting.spec.ts" time="0.089">
+<failure message="rate-limiting.spec.ts:101:9 Should apply endpoint-specific limits" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\rate-limiting.spec.ts:101:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Per-Endpoint Rate Limiting › Should apply endpoint-specific limits 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      129 |       });
+      130 |
+    > 131 |       expect(inferenceResponse.ok).toBe(true);
+          |                                    ^
+      132 |
+      133 |       // Test profile endpoint (different limit)
+      134 |       const profileResponse = await apiRequest({
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:131:36
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window" classname="critical-requirements\rate-limiting.spec.ts" time="0.087">
+<failure message="rate-limiting.spec.ts:147:9 Should reset limits on time window" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\rate-limiting.spec.ts:147:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Time-Window Rate Limiting › Should reset limits on time window 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      175 |       });
+      176 |
+    > 177 |       expect(response1.ok).toBe(true);
+          |                            ^
+      178 |
+      179 |       // Wait and make another request in new window
+      180 |       await new Promise((resolve) => setTimeout(resolve, 1100));
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:177:28
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers" classname="critical-requirements\rate-limiting.spec.ts" time="0.059">
+<failure message="rate-limiting.spec.ts:199:9 Should include rate limit information in response headers" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\rate-limiting.spec.ts:199:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Headers › Should include rate limit information in response headers 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      227 |       });
+      228 |
+    > 229 |       expect(response.ok).toBe(true);
+          |                           ^
+      230 |
+      231 |       // Check for standard rate limit headers
+      232 |       const hasRateLimitHeaders =
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:229:27
+]]>
+</failure>
+</testcase>
+<testcase name="Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service" classname="critical-requirements\rate-limiting.spec.ts" time="0.109">
+<failure message="rate-limiting.spec.ts:244:9 Should protect against denial of service" type="FAILURE">
+<![CDATA[  [webkit] › critical-requirements\rate-limiting.spec.ts:244:9 › Critical Requirement: Rate Limiting (4-Dimensional Guards) › Rate Limit Protection › Should protect against denial of service 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      281 |       // At least most should succeed (rate limit protection doesn't reject all)
+      282 |       const successCount = results.filter((r) => r.ok).length;
+    > 283 |       expect(successCount).toBeGreaterThan(0);
+          |                            ^
+      284 |
+      285 |       console.log(`✓ Rate limiting protects service (${successCount}/5 requests succeeded)`);
+      286 |     });
+        at C:\repos\patriotchat\apps\api-e2e\src\critical-requirements\rate-limiting.spec.ts:283:28
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="performance\service-latency.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="webkit" tests="9" failures="0" skipped="0" time="0.35" errors="0">
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure auth service latency" classname="performance\service-latency.spec.ts" time="0.046">
+<system-out>
+<![CDATA[Auth Service Latency:
+  Average: 3.89ms
+  Min: 1.66ms
+  Max: 18.44ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure gateway latency" classname="performance\service-latency.spec.ts" time="0.061">
+<system-out>
+<![CDATA[Gateway Latency:
+  Average: 5.53ms
+  Min: 2.55ms
+  Max: 27.04ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure funding service latency" classname="performance\service-latency.spec.ts" time="0.044">
+<system-out>
+<![CDATA[Funding Service Latency:
+  Average: 3.83ms
+  Min: 1.39ms
+  Max: 20.55ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure policy service latency" classname="performance\service-latency.spec.ts" time="0.048">
+<system-out>
+<![CDATA[Policy Service Latency:
+  Average: 3.96ms
+  Min: 1.59ms
+  Max: 19.23ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure LLM service latency" classname="performance\service-latency.spec.ts" time="0.043">
+<system-out>
+<![CDATA[LLM Service Latency:
+  Average: 3.79ms
+  Min: 1.23ms
+  Max: 18.66ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Service Latency Benchmarks › Should measure analytics service latency" classname="performance\service-latency.spec.ts" time="0.047">
+<system-out>
+<![CDATA[Analytics Service Latency:
+  Average: 4.14ms
+  Min: 1.25ms
+  Max: 22.76ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Throughput Benchmarks › Should handle concurrent requests efficiently" classname="performance\service-latency.spec.ts" time="0.019">
+<system-out>
+<![CDATA[Concurrent Request Performance (10 requests):
+  Total time: 17.46ms
+  Average latency: 13.60ms
+  Max latency: 14.79ms
+  Throughput: 572.89 req/s
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › Database Query Performance › Should execute queries within acceptable time" classname="performance\service-latency.spec.ts" time="0.018">
+<system-out>
+<![CDATA[Database Query Performance:
+  Average: 3.24ms
+]]>
+</system-out>
+</testcase>
+<testcase name="Performance Tests › API Response Times › Health check responses should be fast" classname="performance\service-latency.spec.ts" time="0.024">
+<system-out>
+<![CDATA[Health Check Response Times:
+  Auth: 1.29ms
+  Gateway: 2.44ms
+  Funding: 4.02ms
+  Policy: 3.37ms
+  LLM: 3.75ms
+  Analytics: 3.29ms
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="workflows\user-journey.spec.ts" timestamp="2026-02-03T00:28:18.755Z" hostname="webkit" tests="9" failures="7" skipped="0" time="0.758" errors="0">
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full registration workflow" classname="workflows\user-journey.spec.ts" time="0.08">
+<failure message="user-journey.spec.ts:7:9 Should complete full registration workflow" type="FAILURE">
+<![CDATA[  [webkit] › workflows\user-journey.spec.ts:7:9 › E2E Workflows › User Registration & Login Flow › Should complete full registration workflow 
+
+    Error: expect(received).toBeDefined()
+
+    Received: undefined
+
+      21 |
+      22 |       expect(registerResponse.ok).toBe(true);
+    > 23 |       expect(registerResponse.data?.userId).toBeDefined();
+         |                                             ^
+      24 |       expect(registerResponse.data?.token).toBeDefined();
+      25 |       console.log(`✓ User registered: ${testUser.email}`);
+      26 |
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:23:45
+]]>
+</failure>
+</testcase>
+<testcase name="E2E Workflows › User Registration &amp; Login Flow › Should complete full login workflow" classname="workflows\user-journey.spec.ts" time="0.126">
+<failure message="user-journey.spec.ts:43:9 Should complete full login workflow" type="FAILURE">
+<![CDATA[  [webkit] › workflows\user-journey.spec.ts:43:9 › E2E Workflows › User Registration & Login Flow › Should complete full login workflow 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      84 |       });
+      85 |
+    > 86 |       expect(profileResponse.ok).toBe(true);
+         |                                  ^
+      87 |       console.log(`✓ Authenticated request successful`);
+      88 |     });
+      89 |   });
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:86:34
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ User registered
+✓ User logged in successfully
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should execute complete query workflow" classname="workflows\user-journey.spec.ts" time="0.077">
+<failure message="user-journey.spec.ts:92:9 Should execute complete query workflow" type="FAILURE">
+<![CDATA[  [webkit] › workflows\user-journey.spec.ts:92:9 › E2E Workflows › Query & Inference Workflow › Should execute complete query workflow 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      122 |       });
+      123 |
+    > 124 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      125 |       expect(queryResponse.data?.response).toBeDefined();
+      126 |       console.log(`✓ Inference executed with ${testQuery.model}`);
+      127 |
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:124:32
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ User authenticated
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Query &amp; Inference Workflow › Should support multiple queries in session" classname="workflows\user-journey.spec.ts" time="0.082">
+<failure message="user-journey.spec.ts:139:9 Should support multiple queries in session" type="FAILURE">
+<![CDATA[  [webkit] › workflows\user-journey.spec.ts:139:9 › E2E Workflows › Query & Inference Workflow › Should support multiple queries in session 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      174 |         });
+      175 |
+    > 176 |         expect(queryResponse.ok).toBe(true);
+          |                                  ^
+      177 |         queryResults.push(queryResponse.data);
+      178 |         console.log(`✓ Query ${i + 1} executed with ${query.model}`);
+      179 |       }
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:176:34
+]]>
+</failure>
+</testcase>
+<testcase name="E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services" classname="workflows\user-journey.spec.ts" time="0.071">
+<failure message="user-journey.spec.ts:195:9 Should coordinate between auth and inference services" type="FAILURE">
+<![CDATA[  [webkit] › workflows\user-journey.spec.ts:195:9 › E2E Workflows › Cross-Service Integration › Should coordinate between auth and inference services 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      224 |       });
+      225 |
+    > 226 |       expect(queryResponse.ok).toBe(true);
+          |                                ^
+      227 |       console.log(`✓ LLM service: Query executed`);
+      228 |
+      229 |       // Step 3: Analytics service - Track
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:226:32
+]]>
+</failure>
+<system-out>
+<![CDATA[✓ Auth service: User registered
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Cross-Service Integration › Should maintain session across services" classname="workflows\user-journey.spec.ts" time="0.066">
+<failure message="user-journey.spec.ts:240:9 Should maintain session across services" type="FAILURE">
+<![CDATA[  [webkit] › workflows\user-journey.spec.ts:240:9 › E2E Workflows › Cross-Service Integration › Should maintain session across services 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      253 |       });
+      254 |
+    > 255 |       expect(registerResponse.ok).toBe(true);
+          |                                   ^
+      256 |       const token = registerResponse.data?.token;
+      257 |       const userId = registerResponse.data?.userId;
+      258 |
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:255:35
+]]>
+</failure>
+</testcase>
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid credentials gracefully" classname="workflows\user-journey.spec.ts" time="0.102">
+<system-out>
+<![CDATA[✓ Invalid credentials rejected (status: 401)
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should recover from service failures" classname="workflows\user-journey.spec.ts" time="0.081">
+<system-out>
+<![CDATA[✓ Service handled response appropriately (status: 404)
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E Workflows › Error Handling &amp; Recovery › Should handle invalid requests properly" classname="workflows\user-journey.spec.ts" time="0.073">
+<failure message="user-journey.spec.ts:362:9 Should handle invalid requests properly" type="FAILURE">
+<![CDATA[  [webkit] › workflows\user-journey.spec.ts:362:9 › E2E Workflows › Error Handling & Recovery › Should handle invalid requests properly 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 400
+    Received: 404
+
+      390 |
+      391 |       expect(invalidQuery.ok).toBe(false);
+    > 392 |       expect(invalidQuery.status).toBe(400);
+          |                                   ^
+      393 |       console.log(`✓ Invalid request rejected (status: ${invalidQuery.status})`);
+      394 |     });
+      395 |   });
+        at C:\repos\patriotchat\apps\api-e2e\src\workflows\user-journey.spec.ts:392:35
+]]>
+</failure>
+</testcase>
+</testsuite>
+</testsuites>

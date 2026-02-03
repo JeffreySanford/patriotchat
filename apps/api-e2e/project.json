@@ -1,0 +1,49 @@
+{
+  "name": "api-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/api-e2e/src",
+  "prefix": "api-e2e",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/playwright:playwright",
+      "options": {
+        "config": "apps/api-e2e/playwright.config.ts"
+      },
+      "configurations": {
+        "ci": {
+          "workers": 1,
+          "trace": "on"
+        },
+        "debug": {
+          "debug": true,
+          "workers": 1
+        },
+        "headed": {
+          "headed": true,
+          "workers": 1
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/playwright:playwright",
+      "options": {
+        "config": "apps/api-e2e/playwright.config.ts"
+      },
+      "configurations": {
+        "ci": {
+          "workers": 1,
+          "trace": "on"
+        },
+        "debug": {
+          "debug": true,
+          "workers": 1
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": ["type:e2e", "scope:api"]
+}
