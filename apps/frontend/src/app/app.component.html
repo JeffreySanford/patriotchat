@@ -1,0 +1,6 @@
+<div class="app-container">
+  <app-auth *ngIf="!(authService.user$ | async); else dashboard"></app-auth>
+  <ng-template #dashboard>
+    <app-dashboard></app-dashboard>
+  </ng-template>
+</div>

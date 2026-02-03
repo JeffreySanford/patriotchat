@@ -22,6 +22,7 @@ services:
 
   ollama:
     image: ollama/ollama:latest
+    container_name: patriotchat-ollama
     restart: unless-stopped
     volumes:
       - ./models:/models

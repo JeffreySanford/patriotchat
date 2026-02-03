@@ -70,6 +70,11 @@ func main() {
 		log.Fatalf("Failed to create tables: %v", err)
 	}
 
+	// Seed test user
+	if err := seedTestUser(); err != nil {
+		log.Printf("Warning: Failed to seed test user: %v", err)
+	}
+
 	// Register routes
 	http.HandleFunc("/health", handleHealth)
 	http.HandleFunc("/ready", handleReady)
@@ -92,24 +97,42 @@ func initDB() (*sql.DB, error) {
 		getEnv("DB_NAME", "patriotchat"),
 	)
 
-	db, err := sql.Open("postgres", connStr)
-	if err != nil {
-		return nil, err
+	var db *sql.DB
+	var err error
+
+	// Retry logic with exponential backoff
+	maxRetries := 10
+	retryDelay := time.Second
+
+	for i := 0; i < maxRetries; i++ {
+		db, err = sql.Open("postgres", connStr)
+		if err != nil {
+			log.Printf("Failed to open database (attempt %d/%d): %v", i+1, maxRetries, err)
+			time.Sleep(retryDelay)
+			retryDelay *= 2
+			continue
+		}
+
+		// Test connection
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		pingErr := db.PingContext(ctx)
+		cancel()
+
+		if pingErr == nil {
+			// Connection successful
+			db.SetMaxOpenConns(25)
+			db.SetMaxIdleConns(5)
+			db.SetConnMaxLifetime(5 * time.Minute)
+			return db, nil
+		}
+
+		db.Close()
+		log.Printf("Failed to ping database (attempt %d/%d): %v", i+1, maxRetries, pingErr)
+		time.Sleep(retryDelay)
+		retryDelay *= 2
 	}
 
-	// Test connection
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	if err := db.PingContext(ctx); err != nil {
-		return nil, err
-	}
-
-	db.SetMaxOpenConns(25)
-	db.SetMaxIdleConns(5)
-	db.SetConnMaxLifetime(5 * time.Minute)
-
-	return db, nil
+	return nil, fmt.Errorf("failed to connect to database after %d attempts: %v", maxRetries, err)
 }
 
 func createTables() error {
@@ -130,10 +153,65 @@ func createTables() error {
 
 	CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 	CREATE INDEX IF NOT EXISTS idx_users_tier ON users(tier);
+
+	CREATE TABLE IF NOT EXISTS audit_logs (
+		id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+		entity_type VARCHAR(50),
+		entity_id VARCHAR(255),
+		operation VARCHAR(50),
+		user_id UUID,
+		service VARCHAR(100),
+		created_at TIMESTAMP DEFAULT now()
+	);
+
+	CREATE INDEX IF NOT EXISTS idx_audit_logs_entity_id ON audit_logs(entity_id);
+	CREATE INDEX IF NOT EXISTS idx_audit_logs_user_id ON audit_logs(user_id);
 	`
 
 	_, err := db.Exec(schema)
 	return err
+}
+
+func seedTestUser() error {
+	// Check if test user already exists
+	var exists bool
+	err := db.QueryRow("SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", "test@example.com").Scan(&exists)
+	if err != nil {
+		return err
+	}
+
+	if exists {
+		return nil // User already exists, skip seeding
+	}
+
+	// Hash password for "password"
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte("password"), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+
+	// Create test user
+	userID := uuid.New().String()
+	query := `
+		INSERT INTO users (id, username, email, password_hash, tier, status, created_at)
+		VALUES ($1, $2, $3, $4, $5, $6, NOW())
+	`
+
+	_, err = db.ExecContext(context.Background(), query,
+		userID,
+		"testuser",
+		"test@example.com",
+		hashedPassword,
+		"free",
+		"active",
+	)
+
+	if err != nil {
+		return fmt.Errorf("failed to seed test user: %v", err)
+	}
+
+	log.Printf("Test user seeded successfully (email: test@example.com, password: password)")
+	return nil
 }
 
 func handleHealth(w http.ResponseWriter, r *http.Request) {

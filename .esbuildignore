@@ -1,0 +1,3 @@
+// Suppress esbuild warnings for CommonJS exports in ESM modules during HMR
+// These warnings are benign and expected during Angular development with HMR enabled
+commonjs-variable-in-esm

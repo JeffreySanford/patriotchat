@@ -7,7 +7,7 @@
     "start": "pnpm nx run-many --target=serve --projects=frontend,api-gateway,auth",
     "start:frontend": "pnpm nx serve frontend --port 4200",
     "start:api": "pnpm nx serve api --port 3000",
-    "start:all": "NODE_OPTIONS='--no-deprecation' concurrently \"pnpm run start:deps\" \"pnpm run start\"",
+    "start:all": "cross-env NODE_OPTIONS=--no-deprecation concurrently \"pnpm run start:deps\" \"pnpm run start\"",
     "build": "pnpm nx run-many --target=build",
     "lint": "pnpm nx lint",
     "lint:typed": "pnpm exec eslint . --ext .ts,.tsx --max-warnings=0",
@@ -63,6 +63,7 @@
     "@typescript-eslint/utils": "^8.40.0",
     "angular-eslint": "^21.0.1",
     "concurrently": "^8.2.0",
+    "cross-env": "^10.1.0",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-testing-library": "^7.15.4",
@@ -97,7 +98,8 @@
     "ng2-charts": "^8.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
-    "socket.io-client": "^4.8.3"
+    "socket.io-client": "^4.8.3",
+    "zone.js": "^0.16.0"
   },
   "nx": {
     "includedScripts": []

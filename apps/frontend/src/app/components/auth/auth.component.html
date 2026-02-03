@@ -1,0 +1,63 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h1>PatriotChat</h1>
+    <p class="subtitle">Track Politics, Data-Driven</p>
+
+    <form (ngSubmit)="currentForm === 'login' ? onLogin() : onRegister()">
+      <div *ngIf="currentForm === 'register'" class="form-group">
+        <input
+          type="text"
+          [(ngModel)]="username"
+          name="username"
+          placeholder="Username"
+          required
+          class="input-field"
+          autocomplete="username"
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="Email"
+          required
+          class="input-field"
+          autocomplete="email"
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Password"
+          required
+          class="input-field"
+          autocomplete="current-password"
+        />
+      </div>
+
+      <button type="submit" [disabled]="loading" class="btn-primary">
+        {{ loading ? 'Loading...' : (currentForm === 'login' ? 'Login' : 'Register') }}
+      </button>
+
+      <p *ngIf="error" class="error-message">{{ error }}</p>
+    </form>
+
+    <div class="form-toggle">
+      <p>
+        {{ currentForm === 'login' ? "Don't have an account?" : 'Already have an account?' }}
+        <button
+          type="button"
+          (click)="toggleForm()"
+          class="toggle-btn"
+        >
+          {{ currentForm === 'login' ? 'Register' : 'Login' }}
+        </button>
+      </p>
+    </div>
+  </div>
+</div>
