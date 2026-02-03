@@ -1,7 +1,7 @@
 import { Controller, Post, Get, Body, UseGuards, Req, HttpCode, Inject } from '@nestjs/common';
 import { AnalyticsService } from './analytics.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 export interface TrackEventRequest {
@@ -11,6 +11,13 @@ export interface TrackEventRequest {
 
 export interface TrackEventResponse {
   status: string;
+}
+
+export interface AuthenticatedRequest {
+  user: {
+    id: string;
+    sub?: string;
+  };
 }
 
 @Controller('analytics')
@@ -26,11 +33,11 @@ export class AnalyticsController {
   @UseGuards(JwtAuthGuard)
   trackEvent(
     @Body() body: TrackEventRequest,
-    @Req() req: any,
+    @Req() req: AuthenticatedRequest,
   ): Observable<TrackEventResponse> {
     console.log('[AnalyticsController] trackEvent called, service available:', !!this.analyticsService);
     
-    const userId = req.user?.id || req.user?.sub || 'unknown-user';
+    const userId: string = req.user?.id || req.user?.sub || 'unknown-user';
     
     console.log('[AnalyticsController] Extracted userId:', userId);
     console.log('[AnalyticsController] Request body:', body);

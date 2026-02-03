@@ -25,12 +25,10 @@ export class AuthController {
   @HttpCode(201)
   register(@Body() dto: RegisterDto): Observable<AuthResponse> {
     return this.authService.register(dto).pipe(
-      catchError((err: any) => {
-        const status: number = err?.response?.status || HttpStatus.INTERNAL_SERVER_ERROR;
-        throw new HttpException(
-          err?.response?.data || 'Registration failed',
-          status,
-        );
+      catchError((err: Error | unknown) => {
+        const status: number = (err as Record<string, unknown>)?.response?.status as number | undefined || HttpStatus.INTERNAL_SERVER_ERROR;
+        const data = (err as Record<string, unknown>)?.response?.data || 'Registration failed';
+        throw new HttpException(data, status);
       }),
     );
   }
@@ -47,9 +45,10 @@ export class AuthController {
           result,
         });
       }),
-      catchError((err: any) => {
-        const statusCode: number = err?.response?.status || 500;
-        const message: string = err?.response?.data?.error || err?.response?.data || 'Login failed';
+      catchError((err: Error | unknown) => {
+        const errRecord = err as Record<string, unknown>;
+        const statusCode: number = errRecord?.response?.status as number | undefined || 500;
+        const message: string = (errRecord?.response?.data?.error as string) || (errRecord?.response?.data as string) || 'Login failed';
         console.error('Auth controller login error:', { statusCode, message, err });
         throw new HttpException(message, statusCode);
       }),

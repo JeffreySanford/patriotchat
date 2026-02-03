@@ -35,7 +35,7 @@ export class InferenceController {
           provider: 'Local',
         })),
       })),
-      catchError((err: any) => {
+      catchError((err: Error | unknown) => {
         console.error('InferenceController: error in getModels:', err);
         throw new HttpException(
           'Failed to fetch models',
@@ -53,8 +53,8 @@ export class InferenceController {
   ): Observable<InferenceGenerateResponse> {
     console.log('InferenceController: generateInference called with body:', body);
     // Support both 'model' and 'modelId' field names
-    const bodyAny = body as unknown as Record<string, unknown>;
-    const modelId = bodyAny['model'] || bodyAny['modelId'];
+    const bodyRecord = body as Record<string, unknown>;
+    const modelId = (bodyRecord['model'] || bodyRecord['modelId']) as string | undefined;
     
     if (!modelId) {
       throw new HttpException(
@@ -64,10 +64,10 @@ export class InferenceController {
     }
 
     return this.inferenceService.generateInference(body.prompt, modelId as string, body.context).pipe(
-      catchError((err: any) => {
+      catchError((err: Error | unknown) => {
         console.error('InferenceController: error in generateInference:', err);
+        const errorMessage = err instanceof Error ? err.message : 'Inference generation failed';
         throw new HttpException(
-          err?.message || 'Inference generation failed',
           HttpStatus.BAD_GATEWAY,
         );
       }),

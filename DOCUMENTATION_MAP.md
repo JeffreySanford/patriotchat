@@ -105,48 +105,56 @@ These files provide detailed reference material and should link back to primary 
 
 ## Cross-Reference Guide
 
-### When you need information about...
+### When you need information about
 
 **🚀 System Status**
+
 1. START: [README.md](README.md) – "Status at a Glance" section
 2. THEN: [PROJECT_STATUS.md](PROJECT_STATUS.md) – Full verification details
 3. THEN: [TODO.md](TODO.md) – Sprint progress tracking
 
 **🏗️ Architecture**
+
 1. START: [documentation/OVERVIEW.md](documentation/OVERVIEW.md) – High-level overview
 2. THEN: [documentation/MICROSERVICES_ARCHITECTURE.md](documentation/MICROSERVICES_ARCHITECTURE.md) – Service details
 3. THEN: [docker-compose.yml](docker-compose.yml) – Infrastructure as Code
 4. DEEP: [documentation/DATABASE_SCHEMA.md](documentation/DATABASE_SCHEMA.md) – DB structure
 
 **💻 Code Quality & Standards**
+
 1. START: [documentation/CODING-STANDARDS.md](documentation/CODING-STANDARDS.md) – Rules & patterns
 2. THEN: [linting-summary.txt](linting-summary.txt) – Current metrics
 3. DEEP: [documentation/SHARED_DTO_PATTERN.md](documentation/SHARED_DTO_PATTERN.md) – DTO implementation
 
 **🤖 LLM Development**
+
 1. START: [documentation/LLM/MODEL-CHARTER.md](documentation/LLM/MODEL-CHARTER.md) – Constitutional values
 2. THEN: [documentation/LLM/LLM-CREATION.md](documentation/LLM/LLM-CREATION.md) – Training steps
 3. THEN: [documentation/LLM/EVALUATION-CHECKLIST.md](documentation/LLM/EVALUATION-CHECKLIST.md) – Quality criteria
 4. DATA: [documentation/LLM/TRAINING-DATA-SOURCES.md](documentation/LLM/TRAINING-DATA-SOURCES.md) – Data curation
 
 **🔌 API Integration**
+
 1. START: [documentation/api/QUICK_REFERENCE.md](documentation/api/QUICK_REFERENCE.md) – Endpoints list
 2. EXAMPLES: [documentation/api/EXAMPLES.md](documentation/api/EXAMPLES.md) – Code samples
 3. GUIDE: [documentation/api/GUIDE.md](documentation/api/GUIDE.md) – Detailed usage
 4. FULL: [documentation/api/ENDPOINTS_SUMMARY.md](documentation/api/ENDPOINTS_SUMMARY.md) – All details
 
 **🔒 Security & Governance**
+
 1. START: [documentation/SECURITY.md](documentation/SECURITY.md) – Security requirements
 2. POLICY: [documentation/GOVERNANCE.md](documentation/GOVERNANCE.md) – Exception approvals
 3. CONDUCT: [documentation/CODE_OF_CONDUCT.md](documentation/CODE_OF_CONDUCT.md) – Community norms
 
 **🐛 Debugging Issues**
+
 1. START: [documentation/debug/DEBUGGING_QUICK_START.md](documentation/debug/DEBUGGING_QUICK_START.md) – Quick tips
 2. ERRORS: [documentation/debug/DEBUG_ERRORS_REFERENCE.md](documentation/debug/DEBUG_ERRORS_REFERENCE.md) – Error lookup
 3. LOGS: [documentation/debug/DEBUG_LOGGING_GUIDE.md](documentation/debug/DEBUG_LOGGING_GUIDE.md) – Structured logging
 4. OUTAGE: [documentation/INCIDENT_RESPONSE.md](documentation/INCIDENT_RESPONSE.md) – Runbook
 
 **⚡ Operations & Deployment**
+
 1. START: [documentation/INFRASTRUCTURE_SUITE.md](documentation/INFRASTRUCTURE_SUITE.md) – Full infrastructure
 2. DB: [documentation/PERSISTENCE.md](documentation/PERSISTENCE.md) – Data persistence
 3. INIT: [documentation/SEEDING.md](documentation/SEEDING.md) – DB initialization

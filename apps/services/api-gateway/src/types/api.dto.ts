@@ -5,6 +5,29 @@
  * @patriotchat/shared.
  */
 
+// ============================================================================
+// Common Types
+// ============================================================================
+
+export interface ErrorDetails {
+  field?: string;
+  reason?: string;
+  timestamp?: string;
+  requestId?: string;
+  [key: string]: string | undefined;
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
+  statusCode?: number;
+}
+
+// ============================================================================
+// LLM / Inference Types
+// ============================================================================
+
 export interface InferenceModel {
   id: string;
   name: string;
@@ -30,12 +53,41 @@ export interface InferenceGenerateResponse {
   duration: number;
 }
 
+// ============================================================================
+// Auth Types
+// ============================================================================
+
+export interface AuthPayload {
+  sub: string;
+  email: string;
+  iat?: number;
+  exp?: number;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  accessToken: string;
+  refreshToken?: string;
+  user?: {
+    id: string;
+    email: string;
+    name?: string;
+  };
+}
+
+// ============================================================================
+// Error Handling
+// ============================================================================
+
 export class ApiError extends Error {
   constructor(
     public statusCode: number,
     public code: string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-restricted-syntax
-    public details?: Record<string, any>,
+    public details?: ErrorDetails,
     message?: string,
   ) {
     super(message || code);

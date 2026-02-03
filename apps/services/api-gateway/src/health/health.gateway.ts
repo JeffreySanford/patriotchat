@@ -8,7 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { BackendHealthService } from './backend-health.service';
-import { HealthCheckEventDto, HealthCheckErrorDto } from './dto/health-check.dto';
+import { HealthCheckEventDto, HealthCheckErrorDto, ServiceStatusDto } from './dto/health-check.dto';
 import { Subscription } from 'rxjs';
 import { Logger, Injectable, Inject } from '@nestjs/common';
 
@@ -135,7 +135,7 @@ export class HealthGateway implements OnGatewayInit, OnGatewayConnection, OnGate
   /**
    * Validate HealthCheckEventDto structure and types
    */
-  private validateHealthCheckEvent(event: any): void {
+  private validateHealthCheckEvent(event: HealthCheckEventDto): void {
     if (!event || typeof event !== 'object') {
       throw new Error('[DTO Validation] Event must be an object');
     }
@@ -152,7 +152,7 @@ export class HealthGateway implements OnGatewayInit, OnGatewayConnection, OnGate
       throw new Error('[DTO Validation] services array cannot be empty');
     }
 
-    event.services.forEach((service: any, index: number) => {
+    event.services.forEach((service: ServiceStatusDto, index: number) => {
       if (!service || typeof service !== 'object') {
         throw new Error(`[DTO Validation] services[${index}] must be an object`);
       }
@@ -188,7 +188,7 @@ export class HealthGateway implements OnGatewayInit, OnGatewayConnection, OnGate
   /**
    * Handle DTO validation errors
    */
-  private handleDtoValidationError(error: any): void {
+  private handleDtoValidationError(error: Error | unknown): void {
     this.logger.error('DTO Validation Error:', error.message);
     this.broadcastError({
       statusCode: 400,

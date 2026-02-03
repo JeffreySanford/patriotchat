@@ -52,11 +52,12 @@ export class AuthService {
         });
       }),
       map((response) => response.data),
-      catchError((error: any) => {
+      catchError((error: Error | unknown) => {
+        const errRecord = error as Record<string, unknown>;
         console.error('Auth service login error:', {
-          status: error?.response?.status,
-          data: error?.response?.data,
-          message: error?.message,
+          status: errRecord?.response?.status,
+          data: errRecord?.response?.data,
+          message: errRecord?.message,
           url: `${this.authServiceUrl}/auth/login`,
         });
         throw error;

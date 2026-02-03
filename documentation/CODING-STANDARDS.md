@@ -34,6 +34,22 @@ Strong typing is mandatory across the workspace to prevent `any`/`unknown` creep
 - **NO `any` or `unknown`**: Avoid `any` and `unknown` types in all production code. Use concrete interfaces/types or shared DTOs from `@patriotchat/shared` instead.
 - **DTO-first**: All cross-service messages (chat messages, prompts, session objects, model metadata) must be defined in `libs/shared` and exported as named types/interfaces.
 - **Explicit types everywhere**: Functions, class properties, module exports, and public APIs must have explicit type annotations. Prefer `interface`/`type` aliases for DTOs, and `Readonly`/`ReadonlyArray` where mutation should be prevented.
+- **Building types from any/unknown**: When you encounter `any` or `unknown` in existing code, **build proper interfaces** rather than just removing them. Example:
+  - ❌ **Don't do**: Delete the parameter entirely
+  - ✅ **Do this**: Create a proper interface and use it:
+    ```typescript
+    // Create interface based on actual usage
+    export interface ErrorDetails {
+      message?: string;
+      code?: string;
+      status?: number;
+      timestamp?: string;
+    }
+    
+    // Replace: catchError((err: any) =>
+    // With: catchError((err: Error | ErrorDetails) =>
+    ```
+  - For event handlers like `onChange`, `onTouch`, implement them or add `// TODO: Implement handler` comments rather than just removing
 - **Typing exceptions**: Temporary exceptions during prototyping are allowed but must be documented in the PR and converted to typed APIs before merging to `master`.
 
 Enforcement:
