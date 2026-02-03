@@ -80,8 +80,42 @@ export interface LoginResponse {
 }
 
 // ============================================================================
+// Analytics Types
+// ============================================================================
+
+export interface TrackEventRequest {
+  eventType: string;
+  metadata?: Record<string, string | number | boolean>;
+}
+
+export interface TrackEventResponse {
+  status: string;
+}
+
+export interface StatsResponse {
+  total_events: number;
+  active_users: number;
+  avg_latency: number;
+}
+
+// ============================================================================
 // Error Handling
 // ============================================================================
+
+export interface ErrorResponse {
+  response?: {
+    status?: number;
+    statusCode?: number;
+    data?:
+      | {
+          error?: string;
+          message?: string;
+        }
+      | string;
+  };
+  message?: string;
+  status?: number;
+}
 
 export class ApiError extends Error {
   constructor(

@@ -3,28 +3,39 @@ import { HttpService } from '@nestjs/axios';
 import { Observable } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import {
+  TrackEventResponse,
+  StatsResponse,
+  ErrorResponse,
+} from '../types/api.dto';
 
 export interface AnalyticsEvent {
   userId: string;
   eventType: string;
-  metadata?: Record<string, unknown>;
+  metadata?: Record<string, string | number | boolean>;
 }
 
 @Injectable()
 export class AnalyticsService {
-  private analyticsServiceUrl = process.env.ANALYTICS_SERVICE_URL || 'http://localhost:4005';
+  private readonly analyticsServiceUrl: string =
+    process.env.ANALYTICS_SERVICE_URL || 'http://localhost:4005';
 
   constructor(@Inject(HttpService) private readonly httpService: HttpService) {
-    console.log('[AnalyticsService] Constructor - HttpService available:', !!httpService);
+    console.log(
+      '[AnalyticsService] Constructor - HttpService available:',
+      !!httpService,
+    );
   }
 
-  trackEvent(event: AnalyticsEvent): Observable<{ status: string }> {
+  trackEvent(event: AnalyticsEvent): Observable<TrackEventResponse> {
     if (!event.userId) {
-      console.warn('[AnalyticsService] No userId provided, skipping event tracking');
+      console.warn(
+        '[AnalyticsService] No userId provided, skipping event tracking',
+      );
       return of({ status: 'skipped' });
     }
 
-    const payload = {
+    const payload: Record<string, string> = {
       user_id: event.userId,
       event_type: event.eventType,
       metadata: event.metadata ? JSON.stringify(event.metadata) : '{}',
@@ -36,46 +47,54 @@ export class AnalyticsService {
     });
 
     return this.httpService
-      .post<{ status: string }>(`${this.analyticsServiceUrl}/analytics/track`, payload)
+      .post<TrackEventResponse>(
+        `${this.analyticsServiceUrl}/analytics/track`,
+        payload,
+      )
       .pipe(
-        tap((response) => {
+        tap((response: { status: number; data: TrackEventResponse }) => {
           console.log('[AnalyticsService] HTTP response received:', {
             status: response.status,
-            statusText: response.statusText,
             data: response.data,
           });
         }),
-        map((response) => {
-          console.log('[AnalyticsService] Event tracked successfully:', response.data);
+        map((response: { data: TrackEventResponse }) => {
+          console.log(
+            '[AnalyticsService] Event tracked successfully:',
+            response.data,
+          );
           return response.data;
         }),
-        catchError((error: any) => {
-          console.error('[AnalyticsService] Failed to track event - full error:', {
-            message: error?.message,
-            code: error?.code,
-            status: error?.status,
-            statusText: error?.statusText,
-            response: error?.response,
-            config: error?.config,
-          });
+        catchError((error: Error | ErrorResponse) => {
+          const errResponse: ErrorResponse = error as ErrorResponse;
+          console.error(
+            '[AnalyticsService] Failed to track event - full error:',
+            {
+              message: errResponse?.message,
+              status: errResponse?.response?.status,
+              data: errResponse?.response?.data,
+            },
+          );
           // Don't throw - return success fallback so analytics doesn't block the user
           return of({ status: 'tracked' });
         }),
       );
   }
 
-  getStats(): Observable<Record<string, unknown>> {
+  getStats(): Observable<StatsResponse> {
     return this.httpService
-      .get<Record<string, unknown>>(`${this.analyticsServiceUrl}/analytics/stats`)
+      .get<StatsResponse>(`${this.analyticsServiceUrl}/analytics/stats`)
       .pipe(
-        map((response) => response.data),
-        catchError((error) => {
-          console.error('[AnalyticsService] Failed to get stats:', error);
-          return of({
+        map((response: { data: StatsResponse }) => response.data),
+        catchError((error: Error | ErrorResponse) => {
+          const errResponse: ErrorResponse = error as ErrorResponse;
+          console.error('[AnalyticsService] Failed to get stats:', errResponse);
+          const fallback: StatsResponse = {
             total_events: 0,
             active_users: 0,
             avg_latency: 0,
-          });
+          };
+          return of(fallback);
         }),
       );
   }
