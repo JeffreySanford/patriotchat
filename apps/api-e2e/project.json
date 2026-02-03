@@ -4,6 +4,7 @@
   "projectType": "application",
   "sourceRoot": "apps/api-e2e/src",
   "prefix": "api-e2e",
+  "tags": ["type:e2e", "scope:api"],
   "targets": {
     "e2e": {
       "executor": "@nx/playwright:playwright",
@@ -44,6 +45,5 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     }
-  },
-  "tags": ["type:e2e", "scope:api"]
+  }
 }

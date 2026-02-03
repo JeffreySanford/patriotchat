@@ -4,6 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "src",
+  "tags": ["scope:frontend", "type:app"],
   "targets": {
     "build": {
       "executor": "@nx/angular:application",
@@ -76,6 +77,5 @@
         "command": "pnpm vitest run --config vitest.config.ts --coverage"
       }
     }
-  },
-  "tags": ["scope:frontend", "type:app"]
+  }
 }

@@ -4,6 +4,7 @@
   "projectType": "application",
   "sourceRoot": "apps/services/api-gateway/src",
   "prefix": "patriotchat",
+  "tags": ["type:service", "scope:backend"],
   "targets": {
     "build": {
       "executor": "@nx/esbuild:esbuild",
@@ -41,6 +42,5 @@
         "command": "docker build -t patriotchat-api-gateway:latest -f apps/services/api-gateway/Dockerfile ."
       }
     }
-  },
-  "tags": ["type:service", "scope:backend"]
+  }
 }
