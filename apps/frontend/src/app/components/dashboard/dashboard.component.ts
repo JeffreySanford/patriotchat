@@ -93,7 +93,7 @@ export class DashboardComponent implements OnInit {
           
           // Defensive extraction - try multiple paths
           let assistantText = '';
-          let responseData: any = response.data;
+          const responseData: any = response.data;
           
           // First try: response.data.text
           if (responseData && responseData.text) {

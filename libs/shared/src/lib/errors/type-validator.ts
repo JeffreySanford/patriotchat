@@ -3,6 +3,10 @@
  * Runtime type checking for API responses
  */
 
+interface ValidationSchema {
+  [key: string]: string;
+}
+
 export class TypeValidator {
   /**
    * Validates an object matches the expected shape
@@ -10,7 +14,7 @@ export class TypeValidator {
    */
   static validate<T extends Record<string, unknown>>(
     data: unknown,
-    schema: Record<string, string>,
+    schema: ValidationSchema,
     typeName: string,
   ): T {
     if (typeof data !== 'object' || data === null) {
@@ -19,13 +23,13 @@ export class TypeValidator {
       );
     }
 
-    const obj = data as Record<string, unknown>;
-    const errors: Record<string, string> = {};
+    const obj: Record<string, unknown> = data as Record<string, unknown>;
+    const errors: ValidationSchema = {};
 
     // Check required fields
     for (const [key, expectedType] of Object.entries(schema)) {
-      const value = obj[key];
-      const actualType = this.getType(value);
+      const value: unknown = obj[key];
+      const actualType: string = this.getType(value);
 
       if (!this.typeMatches(actualType, expectedType)) {
         errors[key] = `Expected ${expectedType}, got ${actualType}`;

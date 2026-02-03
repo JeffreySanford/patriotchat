@@ -6,22 +6,39 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { RateLimitingService } from './rate-limiting.service';
+import { getErrorMessage, AppException } from '../utils/error-handler';
+import {
+  isRequestLike,
+  isResponseLike,
+  getRecordProperty,
+  getStringProperty,
+  getStringFromRecord,
+} from '../utils/type-guards';
 
 @Injectable()
 export class RateLimitingGuard implements CanActivate {
   constructor(private rateLimitingService: RateLimitingService) {}
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Express context requires flexible typing
   canActivate(context: ExecutionContext): boolean {
     try {
-       
-      const request: unknown = context.switchToHttp().getRequest();
-       
-      const response: unknown = context.switchToHttp().getResponse();
+      // eslint-disable-next-line no-restricted-syntax,@typescript-eslint/no-explicit-any -- Runtime values from context require flexibility
+      const requestValue: any = context.switchToHttp().getRequest();
+      // eslint-disable-next-line no-restricted-syntax,@typescript-eslint/no-explicit-any -- Runtime values from context require flexibility
+      const responseValue: any = context.switchToHttp().getResponse();
 
-      const ip: string = this.getClientIp(request as Record<string, unknown>);
-      const userId: string | undefined = ((request as Record<string, unknown>).user as Record<string, string | undefined> | undefined)?.userId;
-      const endpoint: string = (((request as Record<string, unknown>).route as Record<string, unknown> | undefined)?.path as string) || ((request as Record<string, unknown>).path as string);
-      const tier: string = (((request as Record<string, unknown>).user as Record<string, string> | undefined)?.tier) || 'free';
+      if (!isRequestLike(requestValue) || !isResponseLike(responseValue)) {
+        throw new AppException('Invalid request context');
+      }
+
+      const ip: string = this.getClientIp(requestValue as Record<string, unknown>);
+      // eslint-disable-next-line no-restricted-syntax -- Type guards handle unknown safely
+      const userRecord: Record<string, unknown> | undefined = getRecordProperty(requestValue as Record<string, unknown>, 'user');
+      const userId: string | undefined = getStringFromRecord(userRecord, 'userId');
+      // eslint-disable-next-line no-restricted-syntax -- Type guards handle unknown safely
+      const routeRecord: Record<string, unknown> | undefined = getRecordProperty(requestValue as Record<string, unknown>, 'route');
+      const endpoint: string = getStringProperty(routeRecord, 'path') || getStringProperty(requestValue as Record<string, unknown>, 'path') || 'unknown';
+      const tier: string = getStringFromRecord(userRecord, 'tier') || 'free';
 
       const allowed: boolean = this.rateLimitingService.checkLimit(
         ip,
@@ -37,10 +54,10 @@ export class RateLimitingGuard implements CanActivate {
         tier,
       );
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-      (response as any).set('X-RateLimit-Remaining-Hourly', remaining.hourly.toString());
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-      (response as any).set('X-RateLimit-Remaining-Daily', remaining.daily.toString());
+      if (typeof responseValue.set === 'function') {
+        responseValue.set('X-RateLimit-Remaining-Hourly', remaining.hourly.toString());
+        responseValue.set('X-RateLimit-Remaining-Daily', remaining.daily.toString());
+      }
 
       if (!allowed) {
         throw new HttpException(
@@ -54,21 +71,26 @@ export class RateLimitingGuard implements CanActivate {
       }
 
       return true;
-    } catch (error: unknown) {
+    } catch (error: Error | AppException) {
       if (error instanceof HttpException) {
         throw error;
       }
+      const errorMessage: string = getErrorMessage(error);
+      console.error('Rate limiting guard error:', errorMessage);
       throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   private getClientIp(request: Record<string, unknown>): string {
-    const forwardedFor: string | undefined = ((request.headers as Record<string, unknown>)?.['x-forwarded-for']) as string | undefined;
-    const connection: Record<string, unknown> | undefined = (request.connection) as Record<string, unknown> | undefined;
-    return (
-      forwardedFor?.split(',')[0] ||
-      (connection?.remoteAddress as string | undefined) ||
-      'unknown'
+    const headersRecord: Record<string, unknown> | undefined = getRecordProperty(request, 'headers');
+    const forwardedFor: string | undefined = getStringFromRecord(
+      headersRecord,
+      'x-forwarded-for',
     );
+    const connectionRecord: Record<string, unknown> | undefined = getRecordProperty(request, 'connection');
+    const remoteAddress: string | undefined = getStringFromRecord(connectionRecord, 'remoteAddress');
+    const firstIp: string | undefined = forwardedFor?.split(',')[0]?.trim();
+
+    return firstIp || remoteAddress || 'unknown';
   }
 }

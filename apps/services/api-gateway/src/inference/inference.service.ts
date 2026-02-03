@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { InferenceGenerateResponse } from '../types/api.dto';
 import { AxiosResponse } from 'axios';
+import { getErrorMessage, AppException } from '../utils/error-handler';
 
 interface LLMModelsResponse {
   models: string[];
@@ -35,8 +36,8 @@ export class InferenceService {
         console.log('Models response:', response.data);
       }),
       map((response: AxiosResponse<LLMModelsResponse>) => response.data.models || ['llama2', 'mistral', 'neural-chat']),
-      catchError((error: unknown): Observable<string[]> => {
-        const errorMessage: string = error instanceof Error ? error.message : String(error);
+      catchError((error: AppException | Error): Observable<string[]> => {
+        const errorMessage: string = getErrorMessage(error);
         console.error('Error fetching models from LLM service:', errorMessage);
         console.warn('Returning default models due to LLM service error');
         return of(['llama2', 'mistral', 'neural-chat']);
@@ -69,8 +70,8 @@ export class InferenceService {
         tokens: response.data.tokens,
         duration: response.data.duration,
       })),
-      catchError((error: unknown): Observable<InferenceGenerateResponse> => {
-        const errorMessage = error instanceof Error ? error.message : String(error);
+      catchError((error: AppException | Error): Observable<InferenceGenerateResponse> => {
+        const errorMessage: string = getErrorMessage(error);
         console.error('Error generating inference:', errorMessage);
         console.warn('Returning mock inference due to LLM service error');
         
