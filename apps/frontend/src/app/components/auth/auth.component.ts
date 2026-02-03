@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { HttpError, getErrorMessage } from '../../models/api-error.model';
@@ -17,7 +18,10 @@ export class AuthComponent {
   loading: boolean = false;
   error: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   toggleForm(): void {
     this.currentForm = this.currentForm === 'login' ? 'register' : 'login';
@@ -35,6 +39,7 @@ export class AuthComponent {
     this.authService.login(this.email, this.password).subscribe({
       next: (): void => {
         this.loading = false;
+        this.router.navigate(['/dashboard']);
       },
       error: (err: HttpErrorResponse): void => {
         this.loading = false;
@@ -56,6 +61,7 @@ export class AuthComponent {
       .subscribe({
         next: (): void => {
           this.loading = false;
+          this.router.navigate(['/dashboard']);
         },
         error: (err: HttpErrorResponse): void => {
           this.loading = false;

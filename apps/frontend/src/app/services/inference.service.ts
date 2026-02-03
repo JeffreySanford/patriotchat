@@ -6,6 +6,7 @@ import {
   InferenceGenerateRequest,
   InferenceGenerateResponse,
 } from '../types/api.dto';
+import { environment } from '../../environments/environment';
 
 /**
  * Frontend Inference Service
@@ -16,7 +17,7 @@ import {
   providedIn: 'root',
 })
 export class InferenceService {
-  private readonly apiUrl: string = '/inference';
+  private readonly apiUrl: string = `${environment.apiUrl}/inference`;
 
   constructor(private http: HttpClient) {}
 
