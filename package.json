@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start:deps": "docker compose up -d",
-    "start": "pnpm nx run-many --target=serve --projects=frontend",
+    "start": "pnpm nx run-many --target=serve --projects=frontend,api-gateway,auth",
     "start:frontend": "pnpm nx serve frontend --port 4200",
     "start:api": "pnpm nx serve api --port 3000",
     "start:all": "concurrently \"pnpm run start:deps\" \"pnpm run start\"",
