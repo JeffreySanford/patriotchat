@@ -14,7 +14,7 @@ import { AuthService, AuthResponse, ValidateResponse } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { RegisterDto, LoginDto } from './dto';
 import { ErrorResponse } from '../types/api.dto';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 @Controller('auth')

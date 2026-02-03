@@ -1,6 +1,26 @@
-import { IsString, IsEnum, IsNumber, IsPositive, ValidateNested, ArrayMinSize } from 'class-validator';
+import {
+  IsString,
+  IsEnum,
+  IsNumber,
+  IsPositive,
+  ValidateNested,
+  ArrayMinSize,
+} from 'class-validator';
 
 export type ServiceStatusType = 'healthy' | 'unhealthy';
+
+/**
+ * Error response interface for HTTP errors
+ */
+export interface ErrorResponse {
+  response?: {
+    status?: number;
+    statusCode?: number;
+    data?: string | Record<string, string>;
+  };
+  message?: string;
+  status?: number;
+}
 
 /**
  * DTO for individual service status

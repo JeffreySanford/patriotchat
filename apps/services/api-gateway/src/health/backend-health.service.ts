@@ -4,9 +4,16 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import { Observable, interval, of, forkJoin } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
-import { HealthCheckEventDto, ServiceStatusDto } from './dto/health-check.dto';
+import {
+  HealthCheckEventDto,
+  ServiceStatusDto,
+  ErrorResponse,
+} from './dto/health-check.dto';
 
-const execAsync = promisify(exec);
+type ExecAsyncType = (
+  command: string,
+) => Promise<{ stdout: string; stderr: string }>;
+const execAsync: ExecAsyncType = promisify(exec) as ExecAsyncType;
 
 export interface ServiceConfig {
   name: string;
@@ -14,44 +21,52 @@ export interface ServiceConfig {
   dockerContainer?: string; // Docker container name to check
 }
 
+type HealthObserver = {
+  next: (value: ServiceStatusDto) => void;
+  complete: () => void;
+  error?: (err: Error | ErrorResponse) => void;
+};
+
 @Injectable()
 export class BackendHealthService {
-  private readonly checkInterval = 30000; // 30 seconds
-  private readonly timeout = 5000; // 5 second timeout per service
-  private readonly logger = new Logger('BackendHealthService');
+  private readonly checkInterval: number = 30000; // 30 seconds
+  private readonly timeout: number = 5000; // 5 second timeout per service
+  private readonly logger: Logger = new Logger('BackendHealthService');
 
   private readonly services: ServiceConfig[] = [
-    { 
-      name: 'Auth Service', 
+    {
+      name: 'Auth Service',
       url: 'http://localhost:4001/health',
-      dockerContainer: 'patriotchat-auth'
+      dockerContainer: 'patriotchat-auth',
     },
-    { 
-      name: 'LLM Service', 
+    {
+      name: 'LLM Service',
       url: 'http://localhost:5000/health',
-      dockerContainer: 'patriotchat-ollama'
+      dockerContainer: 'patriotchat-ollama',
     },
-    { 
-      name: 'Analytics Service', 
+    {
+      name: 'Analytics Service',
       url: 'http://localhost:4005/health',
-      dockerContainer: 'patriotchat-analytics'
+      dockerContainer: 'patriotchat-analytics',
     },
-    { 
-      name: 'Policy Service', 
+    {
+      name: 'Policy Service',
       url: 'http://localhost:4006/health',
-      dockerContainer: 'patriotchat-policy'
+      dockerContainer: 'patriotchat-policy',
     },
-    { 
-      name: 'Funding Service', 
+    {
+      name: 'Funding Service',
       url: 'http://localhost:4007/health',
-      dockerContainer: 'patriotchat-funding'
+      dockerContainer: 'patriotchat-funding',
     },
   ];
 
   private lastStatus: ServiceStatusDto[] = [];
 
   constructor(private http: HttpService) {
-    this.logger.log(`Initialized with ${this.services.length} services to monitor`);
+    this.logger.log(
+      `Initialized with ${this.services.length} services to monitor`,
+    );
   }
 
   /**
@@ -60,10 +75,10 @@ export class BackendHealthService {
   getHealthChecks(): Observable<HealthCheckEventDto> {
     return interval(this.checkInterval).pipe(
       switchMap(() => this.checkAllServices()),
-      tap((services) => {
+      tap((services: ServiceStatusDto[]) => {
         this.lastStatus = services;
       }),
-      map((services): HealthCheckEventDto => {
+      map((services: ServiceStatusDto[]): HealthCheckEventDto => {
         const event: HealthCheckEventDto = {
           timestamp: Date.now(),
           services,
@@ -71,13 +86,13 @@ export class BackendHealthService {
         this.validateHealthCheckEvent(event);
         return event;
       }),
-      catchError((error) => {
+      catchError((error: Error | ErrorResponse) => {
         this.logger.error('Error in health check stream:', error);
         return of({
           timestamp: Date.now(),
           services: this.lastStatus,
         } as HealthCheckEventDto);
-      })
+      }),
     );
   }
 
@@ -85,15 +100,15 @@ export class BackendHealthService {
    * Check all services and return their status with strict typing
    */
   private checkAllServices(): Observable<ServiceStatusDto[]> {
-    const checks = this.services.map((service) =>
-      this.checkService(service)
+    const checks: Observable<ServiceStatusDto>[] = this.services.map(
+      (service: ServiceConfig) => this.checkService(service),
     );
 
     return forkJoin(checks).pipe(
-      catchError((error) => {
+      catchError((error: Error | ErrorResponse) => {
         this.logger.error('Error checking services:', error);
         return of(this.lastStatus);
-      })
+      }),
     );
   }
 
@@ -101,16 +116,16 @@ export class BackendHealthService {
    * Check individual service health (HTTP + Docker)
    */
   private checkService(config: ServiceConfig): Observable<ServiceStatusDto> {
-    const startTime = Date.now();
+    const startTime: number = Date.now();
 
-    return new Observable((observer) => {
+    return new Observable<ServiceStatusDto>((observer: HealthObserver) => {
       // Start with HTTP health check
       this.checkHttpHealth(config.name, config.url, startTime)
-        .then((status) => {
+        .then((status: ServiceStatusDto) => {
           // If HTTP check passed, also verify Docker container if configured
           if (config.dockerContainer) {
             this.checkDockerContainer(config.dockerContainer)
-              .then((isRunning) => {
+              .then((isRunning: boolean) => {
                 // If Docker is not running but HTTP passed, mark as unhealthy
                 if (!isRunning) {
                   status.status = 'unhealthy';
@@ -118,10 +133,10 @@ export class BackendHealthService {
                 observer.next(status);
                 observer.complete();
               })
-              .catch((error) => {
+              .catch((error: Error | ErrorResponse) => {
                 this.logger.warn(
                   `[${config.name}] Docker check failed, trusting HTTP check:`,
-                  error
+                  error,
                 );
                 observer.next(status);
                 observer.complete();
@@ -131,11 +146,11 @@ export class BackendHealthService {
             observer.complete();
           }
         })
-        .catch((httpError) => {
+        .catch((_httpError: Error | ErrorResponse) => {
           // HTTP check failed, try Docker check to see if container exists but is unhealthy
           if (config.dockerContainer) {
             this.checkDockerContainer(config.dockerContainer)
-              .then((isRunning) => {
+              .then((isRunning: boolean) => {
                 const status: ServiceStatusDto = {
                   name: config.name,
                   url: config.url,
@@ -181,12 +196,10 @@ export class BackendHealthService {
   private async checkHttpHealth(
     name: string,
     url: string,
-    startTime: number
+    startTime: number,
   ): Promise<ServiceStatusDto> {
     try {
-      await this.http
-        .get(url, { timeout: this.timeout })
-        .toPromise();
+      await this.http.get(url, { timeout: this.timeout }).toPromise();
 
       const status: ServiceStatusDto = {
         name,
@@ -197,7 +210,7 @@ export class BackendHealthService {
       };
       this.validateServiceStatus(status);
       return status;
-    } catch (error) {
+    } catch (error: Error | ErrorResponse) {
       this.logger.warn(`[${name}] HTTP health check failed`);
       throw error;
     }
@@ -208,15 +221,20 @@ export class BackendHealthService {
    */
   private async checkDockerContainer(containerName: string): Promise<boolean> {
     try {
-      const { stdout } = await execAsync(
+      const result: { stdout: string; stderr: string } = await execAsync(
         `docker inspect --format='{{.State.Running}}' ${containerName}`,
-        { timeout: 5000 }
+        { timeout: 5000 },
       );
-      const isRunning = stdout.trim().toLowerCase() === 'true';
-      this.logger.debug(`[Docker] Container ${containerName}: ${isRunning ? 'running' : 'stopped'}`);
+      const isRunning: boolean = result.stdout.trim().toLowerCase() === 'true';
+      this.logger.debug(
+        `[Docker] Container ${containerName}: ${isRunning ? 'running' : 'stopped'}`,
+      );
       return isRunning;
-    } catch (error) {
-      this.logger.error(`[Docker] Failed to check container ${containerName}:`, error);
+    } catch (error: Error | ErrorResponse) {
+      this.logger.error(
+        `[Docker] Failed to check container ${containerName}:`,
+        error,
+      );
       throw error;
     }
   }
@@ -226,21 +244,29 @@ export class BackendHealthService {
    */
   private validateServiceStatus(status: ServiceStatusDto): void {
     if (!status.name || typeof status.name !== 'string') {
-      throw new Error('[DTO Validation] ServiceStatus: name must be a non-empty string');
+      throw new Error(
+        '[DTO Validation] ServiceStatus: name must be a non-empty string',
+      );
     }
     if (!status.url || typeof status.url !== 'string') {
-      throw new Error('[DTO Validation] ServiceStatus: url must be a non-empty string');
+      throw new Error(
+        '[DTO Validation] ServiceStatus: url must be a non-empty string',
+      );
     }
     if (!['healthy', 'unhealthy'].includes(status.status)) {
       throw new Error(
-        `[DTO Validation] ServiceStatus: status must be 'healthy' or 'unhealthy', got '${status.status}'`
+        `[DTO Validation] ServiceStatus: status must be 'healthy' or 'unhealthy', got '${status.status}'`,
       );
     }
     if (!Number.isInteger(status.lastCheck) || status.lastCheck <= 0) {
-      throw new Error('[DTO Validation] ServiceStatus: lastCheck must be a positive integer');
+      throw new Error(
+        '[DTO Validation] ServiceStatus: lastCheck must be a positive integer',
+      );
     }
     if (!Number.isInteger(status.responseTime) || status.responseTime < 0) {
-      throw new Error('[DTO Validation] ServiceStatus: responseTime must be a non-negative integer');
+      throw new Error(
+        '[DTO Validation] ServiceStatus: responseTime must be a non-negative integer',
+      );
     }
   }
 
@@ -249,21 +275,30 @@ export class BackendHealthService {
    */
   private validateHealthCheckEvent(event: HealthCheckEventDto): void {
     if (!Number.isInteger(event.timestamp) || event.timestamp <= 0) {
-      throw new Error('[DTO Validation] HealthCheckEvent: timestamp must be a positive integer');
+      throw new Error(
+        '[DTO Validation] HealthCheckEvent: timestamp must be a positive integer',
+      );
     }
     if (!Array.isArray(event.services)) {
-      throw new Error('[DTO Validation] HealthCheckEvent: services must be an array');
+      throw new Error(
+        '[DTO Validation] HealthCheckEvent: services must be an array',
+      );
     }
     if (event.services.length === 0) {
-      throw new Error('[DTO Validation] HealthCheckEvent: services array cannot be empty');
+      throw new Error(
+        '[DTO Validation] HealthCheckEvent: services array cannot be empty',
+      );
     }
-    event.services.forEach((service, index) => {
+    event.services.forEach((service: ServiceStatusDto, index: number) => {
       try {
         this.validateServiceStatus(service);
-      } catch (error) {
-        throw new Error(`[DTO Validation] HealthCheckEvent services[${index}]: ${(error as Error).message}`);
+      } catch (error: Error | ErrorResponse) {
+        const errorMessage: string =
+          error instanceof Error ? error.message : String(error);
+        throw new Error(
+          `[DTO Validation] HealthCheckEvent services[${index}]: ${errorMessage}`,
+        );
       }
     });
   }
 }
-
