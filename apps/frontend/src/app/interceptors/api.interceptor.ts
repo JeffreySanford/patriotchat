@@ -14,14 +14,29 @@ import { ApiError, ValidationError } from '../types/api.dto';
 
 /**
  * Frontend HTTP Interceptor
+ * Adds JWT Authorization header from localStorage
  * Validates API responses match expected DTOs
  * Provides type safety to downstream code
  * Converts errors to ApiError format
  */
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(req).pipe(
+  intercept(
+    req: HttpRequest<unknown>,
+    next: HttpHandler,
+  ): Observable<HttpEvent<unknown>> {
+    // Add Authorization header if token exists
+    const token = localStorage.getItem('token');
+    let updatedReq: HttpRequest<unknown> = req;
+    if (token && !req.headers.has('Authorization')) {
+      updatedReq = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+
+    return next.handle(updatedReq).pipe(
       map((event: HttpEvent<unknown>) => {
         // Only process successful responses
         if (event instanceof HttpResponse) {
@@ -29,7 +44,8 @@ export class ApiInterceptor implements HttpInterceptor {
         }
         return event;
       }),
-      catchError((error: unknown) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      catchError((error: any) => {
         return throwError(() => this.handleError(error));
       }),
     );

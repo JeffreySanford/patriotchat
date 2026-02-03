@@ -31,10 +31,10 @@ export interface InferenceGenerateResponse {
 }
 
 export class ApiError extends Error {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(
     public statusCode: number,
     public code: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-restricted-syntax
     public details?: Record<string, any>,
     message?: string,
   ) {

@@ -45,7 +45,6 @@ export class InferenceController {
   }
 
   @Post('generate')
-  @UseGuards(JwtAuthGuard)
   async generateInference(
     @Body() body: InferenceGenerateRequest,
   ): Promise<InferenceGenerateResponse> {
