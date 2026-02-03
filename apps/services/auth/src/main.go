@@ -374,6 +374,8 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	token := generateJWT(user.ID)
 	expiresAt := time.Now().Add(24 * time.Hour)
 
+	log.Printf("[Auth Service] Login successful for user %s: token length=%d, expires=%s", user.ID, len(token), expiresAt.Format(time.RFC3339))
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(AuthResponse{

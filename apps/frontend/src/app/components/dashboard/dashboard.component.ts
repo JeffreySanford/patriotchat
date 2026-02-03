@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InferenceService } from '../../services/inference.service';
 import { AnalyticsService } from '../../services/analytics.service';
@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
     private inferenceService: InferenceService,
     private analyticsService: AnalyticsService,
     private authService: AuthService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -86,28 +87,65 @@ export class DashboardComponent implements OnInit {
       })
       .subscribe({
         next: (response: { data: InferenceGenerateResponse; timestamp: number; status: number }): void => {
-          const assistantText: string = response.data.result || response.data.text || '';
-          this.messages.push({
-            role: 'assistant',
-            content: assistantText,
-            model: this.selectedModel!,
-          });
+          console.log('[Dashboard] Full response:', response);
+          console.log('[Dashboard] Response type:', typeof response);
+          console.log('[Dashboard] Response.data type:', typeof response.data);
+          
+          // Defensive extraction - try multiple paths
+          let assistantText = '';
+          let responseData: any = response.data;
+          
+          // First try: response.data.text
+          if (responseData && responseData.text) {
+            assistantText = responseData.text;
+            console.log('[Dashboard] Found text in response.data.text');
+          }
+          // Second try: response.data.result  
+          else if (responseData && responseData.result) {
+            assistantText = responseData.result;
+            console.log('[Dashboard] Found text in response.data.result');
+          }
+          // Third try: maybe response itself is the data
+          else if (response && (response as any).text) {
+            assistantText = (response as any).text;
+            console.log('[Dashboard] Found text in response.text');
+          } else if (response && (response as any).result) {
+            assistantText = (response as any).result;
+            console.log('[Dashboard] Found text in response.result');
+          }
+          
+          console.log('[Dashboard] Extracted text:', assistantText.substring(0, 50) + '...');
+          console.log('[Dashboard] Text is empty?', !assistantText);
+          
+          if (assistantText) {
+            this.messages.push({
+              role: 'assistant',
+              content: assistantText,
+              model: this.selectedModel!,
+            });
+            console.log('[Dashboard] Message pushed. Total messages:', this.messages.length);
+          } else {
+            console.error('[Dashboard] ERROR: No text extracted! Response object:', response);
+          }
+          
           this.analyticsService
             .trackEvent('inference_generated', {
               model: this.selectedModel || 'unknown',
-              duration: response.data.duration || 0,
-              tokens: response.data.tokens || response.data.tokensUsed || 0,
+              duration: (response.data as any).duration || 0,
+              tokens: (response.data as any).tokens || 0,
             })
             .subscribe({
               error: (err: ApiError | HttpErrorResponse): void =>
                 console.error('Analytics error:', err),
             });
           this.loading = false;
+          this.cdr.markForCheck();
         },
         error: (err: ApiError | HttpErrorResponse): void => {
           this.loading = false;
           this.error = err instanceof ApiError ? err.message : 'Failed to generate response';
-          console.error(err);
+          this.cdr.markForCheck();
+          console.error('[Dashboard] Error in subscription:', err);
         },
       });
   }

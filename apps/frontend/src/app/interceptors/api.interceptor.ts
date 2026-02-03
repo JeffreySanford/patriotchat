@@ -28,12 +28,23 @@ export class ApiInterceptor implements HttpInterceptor {
     // Add Authorization header if token exists
     const token = localStorage.getItem('token');
     let updatedReq: HttpRequest<unknown> = req;
+    
+    console.log(`[Interceptor] ${req.method} ${req.url}`, {
+      hasToken: !!token,
+      tokenLength: token?.length || 0,
+      tokenValue: token ? `${token.substring(0, 20)}...` : 'NO_TOKEN',
+      hasAuthHeader: req.headers.has('Authorization'),
+    });
+    
     if (token && !req.headers.has('Authorization')) {
       updatedReq = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(`[Interceptor] Added Authorization header with token: Bearer ${token.substring(0, 20)}...`);
+    } else if (!token) {
+      console.warn(`[Interceptor] No token found in localStorage`);
     }
 
     return next.handle(updatedReq).pipe(

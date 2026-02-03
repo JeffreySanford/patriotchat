@@ -1,6 +1,9 @@
 import { Controller, Get, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
+import { Observable } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Controller()
 export class AppController {
@@ -16,11 +19,18 @@ export class AppController {
   }
 
   @Get('/ready')
-  async ready(@Res() res: Response) {
-    const ready = await this.appService.checkBackendServices();
-    if (ready) {
-      return res.status(200).json({ status: 'ready' });
-    }
-    return res.status(503).json({ status: 'not ready' });
+  ready(@Res() res: Response) {
+    this.appService.checkBackendServices().pipe(
+      tap((ready) => {
+        if (ready) {
+          return res.status(200).json({ status: 'ready' });
+        }
+        return res.status(503).json({ status: 'not ready' });
+      }),
+      catchError(() => {
+        res.status(503).json({ status: 'not ready' });
+        return of(false);
+      }),
+    ).subscribe();
   }
 }

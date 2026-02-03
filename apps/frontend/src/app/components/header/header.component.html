@@ -1,0 +1,75 @@
+<header class="app-header">
+  <div class="header-content">
+    <!-- Logo/Branding -->
+    <div class="logo-section">
+      <h1 class="brand">
+        <span class="logo-icon">🔗</span>
+        <span class="brand-name">PatriotChat</span>
+      </h1>
+    </div>
+
+    <!-- User Status Section -->
+    <div class="user-section" appClickOutside (clickOutside)="closeDropdown()">
+      <button
+        class="user-button"
+        (click)="toggleDropdown()"
+        [attr.aria-expanded]="isDropdownOpen"
+        *ngIf="isAuthenticated"
+      >
+        <span class="user-icon">{{ getUserIcon() }}</span>
+        <span class="user-name">{{ user?.username || 'User' }}</span>
+        <span class="dropdown-arrow">{{ isDropdownOpen ? '▲' : '▼' }}</span>
+      </button>
+
+      <button class="user-button guest" *ngIf="!isAuthenticated">
+        <span class="user-icon">👤</span>
+        <span class="status-label">Guest</span>
+      </button>
+
+      <!-- User Dropdown Menu -->
+      <div class="dropdown-menu" *ngIf="isDropdownOpen && isAuthenticated">
+        <!-- Profile Section -->
+        <div class="dropdown-section">
+          <div class="profile-info">
+            <div class="profile-header">
+              <span class="profile-icon">{{ getUserIcon() }}</span>
+              <div class="profile-text">
+                <div class="profile-name">{{ user?.username }}</div>
+                <div class="profile-email">{{ user?.email }}</div>
+              </div>
+            </div>
+            <span class="role-badge" [ngClass]="getRoleBadgeClass()">
+              {{ getRoleLabel() }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="dropdown-divider"></div>
+
+        <!-- Settings Options -->
+        <div class="dropdown-section">
+          <button class="dropdown-item" (click)="closeDropdown()">
+            <span class="item-icon">🔔</span>
+            <span>Notifications</span>
+          </button>
+          <button class="dropdown-item" (click)="closeDropdown()">
+            <span class="item-icon">⚙️</span>
+            <span>Account Settings</span>
+          </button>
+        </div>
+
+        <!-- Divider -->
+        <div class="dropdown-divider"></div>
+
+        <!-- Logout -->
+        <div class="dropdown-section">
+          <button class="dropdown-item logout" (click)="logout()">
+            <span class="item-icon">🚪</span>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

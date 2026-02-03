@@ -66,7 +66,7 @@ describe('DashboardComponent', () => {
       }),
     );
     vi.spyOn(analyticsService, 'trackEvent').mockReturnValue(
-      of({ success: true }),
+      of({ status: 'tracked' }),
     );
 
     component.sendMessage();

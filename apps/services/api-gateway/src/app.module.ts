@@ -3,16 +3,21 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { HttpModule } from '@nestjs/axios';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { RateLimitingModule } from './rate-limiting/rate-limiting.module';
 import { InferenceModule } from './inference/inference.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { ErrorInterceptor } from './common/interceptors/error.interceptor';
+import { BackendHealthService } from './health/backend-health.service';
+import { HealthGateway } from './health/health.gateway';
 
 @Module({
   imports: [
+    HttpModule,
     ThrottlerModule.forRoot([
       {
         name: 'short',
@@ -32,11 +37,14 @@ import { ErrorInterceptor } from './common/interceptors/error.interceptor';
     }),
     AuthModule,
     InferenceModule,
+    AnalyticsModule,
     RateLimitingModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
+    BackendHealthService,
+    HealthGateway,
     {
       provide: APP_INTERCEPTOR,
       useClass: ErrorInterceptor,

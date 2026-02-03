@@ -1,5 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import axios, { AxiosResponse } from 'axios';
+import { Injectable, Inject } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+import { Observable } from 'rxjs';
+import { map, tap, catchError } from 'rxjs/operators';
 import { RegisterDto, LoginDto } from './dto';
 
 export interface AuthResponse {
@@ -23,42 +25,55 @@ export interface ValidateResponse {
 export class AuthService {
   private authServiceUrl: string = process.env.AUTH_SERVICE_URL || 'http://localhost:4001';
 
-  async register(dto: RegisterDto): Promise<AuthResponse> {
-    const response: AxiosResponse<AuthResponse> = await axios.post<AuthResponse>(
+  constructor(@Inject(HttpService) private readonly httpService: HttpService) {
+    console.log('[AuthService] Constructor - HttpService available:', !!httpService);
+  }
+
+  register(dto: RegisterDto): Observable<AuthResponse> {
+    return this.httpService.post<AuthResponse>(
       `${this.authServiceUrl}/auth/register`,
       dto,
+    ).pipe(
+      map((response) => response.data),
     );
-    return response.data;
   }
 
-  async login(dto: LoginDto): Promise<AuthResponse> {
-    try {
-      const response: AxiosResponse<AuthResponse> = await axios.post<AuthResponse>(
-        `${this.authServiceUrl}/auth/login`,
-        dto,
-      );
-      return response.data;
-    } catch (error: unknown) {
-      const axiosError = error as { response?: { status: number; data: unknown }; message: string };
-      console.error('Auth service login error:', {
-        status: axiosError.response?.status,
-        data: axiosError.response?.data,
-        message: axiosError.message,
-        url: `${this.authServiceUrl}/auth/login`,
-      });
-      throw error;
-    }
+  login(dto: LoginDto): Observable<AuthResponse> {
+    return this.httpService.post<AuthResponse>(
+      `${this.authServiceUrl}/auth/login`,
+      dto,
+    ).pipe(
+      tap((response) => {
+        console.log('[AuthService] Login response from auth microservice:', {
+          hasToken: !!response.data.token,
+          tokenLength: response.data.token?.length || 0,
+          tokenValue: response.data.token ? `${response.data.token.substring(0, 30)}...` : 'NO_TOKEN',
+          fullResponse: response.data,
+        });
+      }),
+      map((response) => response.data),
+      catchError((error: any) => {
+        console.error('Auth service login error:', {
+          status: error?.response?.status,
+          data: error?.response?.data,
+          message: error?.message,
+          url: `${this.authServiceUrl}/auth/login`,
+        });
+        throw error;
+      }),
+    );
   }
 
-  async validate(token: string): Promise<ValidateResponse> {
-    const response: AxiosResponse<ValidateResponse> = await axios.get<ValidateResponse>(
+  validate(token: string): Observable<ValidateResponse> {
+    return this.httpService.get<ValidateResponse>(
       `${this.authServiceUrl}/auth/validate`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       },
+    ).pipe(
+      map((response) => response.data),
     );
-    return response.data;
   }
 }

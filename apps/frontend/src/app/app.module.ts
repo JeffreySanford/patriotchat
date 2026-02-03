@@ -8,11 +8,15 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { SidebarNavComponent } from './components/sidebar-nav/sidebar-nav.component';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { routes } from './app.routes';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent, DashboardComponent],
+  declarations: [AppComponent, AuthComponent, DashboardComponent, FooterComponent, HeaderComponent, ClickOutsideDirective],
   imports: [
     BrowserModule,
     CommonModule,
@@ -20,6 +24,7 @@ import { ApiInterceptor } from './interceptors/api.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
+    SidebarNavComponent,
   ],
   exports: [
     CommonModule,

@@ -1,0 +1,142 @@
+.app-footer {
+  background: #1e293b;
+  border-top: 2px solid #334155;
+  padding: 0 16px;
+  margin-top: auto;
+  color: #cbd5e1;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+  min-height: 2.5em;
+  height: 2.5em;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  .footer-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+  }
+
+  .ws-status {
+    display: none;
+  }
+
+  .refresh-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    text-align: center;
+    flex-shrink: 0;
+    line-height: 1;
+
+    &:hover:not(:disabled) {
+      background: rgba(148, 163, 184, 0.15);
+      color: #94a3b8;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .services-list {
+    display: flex;
+    gap: 0;
+    align-items: center;
+    justify-content: space-around;
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .service-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex: 1;
+    min-width: 60px;
+    max-width: 80px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-align: center;
+
+    &:hover {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    &.healthy {
+      .status-indicator {
+        color: #22c55e;
+      }
+    }
+
+    &.degraded {
+      .status-indicator {
+        color: #f59e0b;
+      }
+    }
+
+    &.down {
+      .status-indicator {
+        color: #ef4444;
+      }
+    }
+  }
+
+  .service-icon-emoji {
+    font-size: 16px;
+    line-height: 1;
+    display: block;
+  }
+
+  .service-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: #cbd5e1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .status-indicator {
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .response-time {
+    display: none;
+  }
+
+  .footer-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding-left: 8px;
+    border-left: 1px solid #334155;
+  }
+
+  .version {
+    font-size: 9px;
+    color: #64748b;
+    font-weight: 500;
+  }
+}

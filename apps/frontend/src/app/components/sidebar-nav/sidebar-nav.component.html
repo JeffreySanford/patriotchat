@@ -1,0 +1,28 @@
+<nav class="sidebar-nav">
+  <div class="nav-section">
+    <h3 class="nav-title">Navigation</h3>
+    <div class="nav-items">
+      <button
+        *ngFor="let route of filteredRoutes"
+        [class.active]="isActive(route)"
+        (click)="navigate(route.path)"
+        class="nav-item"
+        [title]="route.label"
+      >
+        <span class="nav-icon">{{ route.icon }}</span>
+        <span class="nav-label">{{ route.label }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="models-section">
+    <h3 class="models-title">Models</h3>
+    <div class="model-selector">
+      <div class="model-buttons">
+        <button class="model-btn" title="llama2">🦙 llama2</button>
+        <button class="model-btn" title="mistral">✨ mistral</button>
+        <button class="model-btn" title="neural-chat">🤖 neural-chat</button>
+      </div>
+    </div>
+  </div>
+</nav>

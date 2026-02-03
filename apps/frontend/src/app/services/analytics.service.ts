@@ -4,14 +4,12 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 export interface AnalyticsEvent {
-  user_id: string;
-  event_type: string;
-  metadata: string;
+  eventType: string;
+  metadata?: Record<string, string | number | boolean>;
 }
 
 export interface TrackResponse {
-  success: boolean;
-  message?: string;
+  status: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -25,20 +23,15 @@ export class AnalyticsService {
 
   trackEvent(
     eventType: string,
-    metadata: Record<string, string | number | boolean>,
+    metadata?: Record<string, string | number | boolean>,
   ): Observable<TrackResponse> {
-    const token: string | null = this.authService.getToken();
     const event: AnalyticsEvent = {
-      user_id: 'current-user',
-      event_type: eventType,
-      metadata: JSON.stringify(metadata),
+      eventType,
+      metadata,
     };
     return this.http.post<TrackResponse>(
       `${this.API_URL}/analytics/track`,
       event,
-      {
-        headers: { Authorization: `Bearer ${token || ''}` },
-      },
     );
   }
 }

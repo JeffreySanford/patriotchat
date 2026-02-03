@@ -1,62 +1,36 @@
 <div class="dashboard-container">
-  <div class="header">
-    <h1>PatriotChat Dashboard</h1>
-    <button (click)="logout()" class="btn-logout">Logout</button>
-  </div>
-
-  <div class="main-content">
-    <div class="sidebar">
-      <div class="model-selector">
-        <h3>Select Model</h3>
-        <div class="model-buttons">
-          <button
-            *ngFor="let model of availableModels"
-            [class.active]="selectedModel === model.id"
-            (click)="selectModel(model.id)"
-            class="model-btn"
-          >
-            {{ model.name }}
-          </button>
+  <div class="chat-panel">
+    <div class="messages" #messagesContainer>
+      <div *ngFor="let msg of messages" [class.user]="msg.role === 'user'" class="message">
+        <div class="message-content">
+          {{ msg.content }}
+        </div>
+        <div *ngIf="msg.model" class="message-meta">{{ msg.model }}</div>
+      </div>
+      <div *ngIf="loading" class="message assistant">
+        <div class="loading-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </div>
     </div>
 
-    <div class="chat-panel">
-      <div class="messages" #messagesContainer>
-        <div *ngFor="let msg of messages" [class.user]="msg.role === 'user'" class="message">
-          <div class="message-content">
-            {{ msg.content }}
-          </div>
-          <div *ngIf="msg.model" class="message-meta">{{ msg.model }}</div>
-        </div>
-        <div *ngIf="loading" class="message assistant">
-          <div class="loading-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="input-area">
-        <textarea
-          [(ngModel)]="userPrompt"
-          (keydown)="handleKeydown($event)"
-          placeholder="Ask something about politics, funding, or policies... (Ctrl+Enter to send)"
-          class="prompt-input"
-          data-gramm="false"
-          data-gramm-editor="false"
-          data-enable-grammarly="false"
-        ></textarea>
-        <button
-          (click)="sendMessage()"
-          [disabled]="!selectedModel || !userPrompt.trim() || loading"
-          class="btn-send"
-        >
-          Send
-        </button>
-        <p *ngIf="error" class="error-message">{{ error }}</p>
-      </div>
-    </div>
-  </div>
-</div>
+    <div class="input-area">
+      <textarea
+        [(ngModel)]="userPrompt"
+        (keydown)="handleKeydown($event)"
+        placeholder="Ask something about politics, funding, or policies... (Ctrl+Enter to send)"
+        class="prompt-input"
+        data-gramm="false"
+        data-gramm-editor="false"
+        data-enable-grammarly="false"
+      ></textarea>
+      <button
+        (click)="sendMessage()"
+        [disabled]="!selectedModel || !userPrompt.trim() || loading"
+        class="btn-send"
+      >
+        Send
+      </button>
+      <p *ngIf="error" class="error-message">{{ error }}</p>

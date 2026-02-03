@@ -1,0 +1,29 @@
+<footer class="app-footer" *ngIf="isAuthenticated">
+  <div class="footer-content">
+    <div class="ws-status">
+      <span class="ws-indicator" [class.connected]="wsConnected" [title]="wsConnected ? 'WebSocket Connected' : 'WebSocket Disconnected'">●</span>
+    </div>
+
+    <button
+      class="refresh-btn"
+      (click)="requestHealthCheck()"
+      [disabled]="isLoading || !wsConnected"
+      title="Request immediate health check"
+    >
+      {{ isLoading ? '⟳' : '���' }}
+    </button>
+
+    <div class="services-list" [title]="errorMessage || ''">
+      <div class="service-item" *ngFor="let service of services" [ngClass]="getStatusClass(service.status)">
+        <span class="service-icon-emoji">{{ getServiceIcon(service.name) }}</span>
+        <span class="service-name">{{ service.name }}</span>
+        <span class="status-indicator">{{ getStatusIcon(service.status) }}</span>
+        <span class="response-time">{{ service.responseTime }}ms</span>
+      </div>
+    </div>
+
+    <div class="footer-info">
+      <span class="version">v1.0</span>
+    </div>
+  </div>
+</footer>

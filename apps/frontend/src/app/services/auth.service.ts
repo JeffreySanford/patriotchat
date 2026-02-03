@@ -4,11 +4,14 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
+export type UserRole = 'guest' | 'user' | 'power' | 'admin';
+
 export interface User {
   id: string;
   username: string;
   email: string;
   tier: string;
+  role?: UserRole;
 }
 
 export interface LoginResponse {
@@ -22,6 +25,11 @@ export class AuthService {
   private userSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
   public user$: Observable<User | null> = this.userSubject.asObservable();
+
+  private authSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    this.isAuthenticatedSync()
+  );
+  public isAuthenticated$: Observable<boolean> = this.authSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.loadUser();
@@ -40,8 +48,14 @@ export class AuthService {
       })
       .pipe(
         tap((response: LoginResponse): void => {
-          localStorage.setItem('token', response.token);
-          this.userSubject.next(response.user);
+          // Handle both wrapped and unwrapped responses
+          const responseAny = response as unknown as Record<string, unknown>;
+          const token = responseAny['token'] || (responseAny['data'] as Record<string, unknown>)?.['token'];
+          if (token && typeof token === 'string' && token !== 'undefined') {
+            localStorage.setItem('token', token);
+            this.userSubject.next(response.user);
+            this.authSubject.next(true);
+          }
         }),
       );
   }
@@ -54,8 +68,17 @@ export class AuthService {
       })
       .pipe(
         tap((response: LoginResponse): void => {
-          localStorage.setItem('token', response.token);
-          this.userSubject.next(response.user);
+          // Handle both wrapped and unwrapped responses
+          const responseAny = response as unknown as Record<string, unknown>;
+          const token = responseAny['token'] || (responseAny['data'] as Record<string, unknown>)?.['token'];
+          if (token && typeof token === 'string' && token !== 'undefined') {
+            console.log('[AuthService] Storing token:', { tokenLength: (token as string).length });
+            localStorage.setItem('token', token as string);
+            this.userSubject.next(response.user);
+            this.authSubject.next(true);
+          } else {
+            console.warn('[AuthService] Invalid token in response:', { token, response });
+          }
         }),
       );
   }
@@ -63,6 +86,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     this.userSubject.next(null);
+    this.authSubject.next(false);
   }
 
   private loadUser(): void {
@@ -85,5 +109,9 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+  private isAuthenticatedSync(): boolean {
+    return !!localStorage.getItem('token');
   }
 }
