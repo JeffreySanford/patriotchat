@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import axios, { AxiosResponse } from 'axios';
 import { RegisterDto, LoginDto } from './dto';
 
-interface AuthResponse {
+export interface AuthResponse {
   token: string;
   user: {
     id: string;
@@ -14,7 +14,7 @@ interface AuthResponse {
   expires_at: string;
 }
 
-interface ValidateResponse {
+export interface ValidateResponse {
   valid: boolean;
   user_id: string;
 }
@@ -44,6 +44,7 @@ export class AuthService {
         status: axiosError.response?.status,
         data: axiosError.response?.data,
         message: axiosError.message,
+        url: `${this.authServiceUrl}/auth/login`,
       });
       throw error;
     }

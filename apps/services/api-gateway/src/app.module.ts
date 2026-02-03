@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { RateLimitingModule } from './rate-limiting/rate-limiting.module';
+import { InferenceModule } from './inference/inference.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { RateLimitingModule } from './rate-limiting/rate-limiting.module';
       signOptions: { expiresIn: '24h' },
     }),
     AuthModule,
+    InferenceModule,
     RateLimitingModule,
   ],
   controllers: [AppController],

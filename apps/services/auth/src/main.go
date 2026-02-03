@@ -83,8 +83,27 @@ func main() {
 	http.HandleFunc("/auth/validate", handleValidate)
 
 	port := getEnv("PORT", "4001")
-	log.Printf("Auth service listening on port %s", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	address := ":" + port
+
+	// Retry logic for port binding with exponential backoff
+	maxRetries := 10
+	retryDelay := time.Second
+
+	for i := 0; i < maxRetries; i++ {
+		log.Printf("Auth service listening on port %s (attempt %d/%d)", port, i+1, maxRetries)
+		err := http.ListenAndServe(address, nil)
+		if err == nil {
+			return
+		}
+
+		if i < maxRetries-1 {
+			log.Printf("Failed to bind to port %s: %v, retrying in %v", port, err, retryDelay)
+			time.Sleep(retryDelay)
+			retryDelay *= 2
+		} else {
+			log.Fatalf("Failed to bind to port %s after %d attempts: %v", port, maxRetries, err)
+		}
+	}
 }
 
 func initDB() (*sql.DB, error) {
@@ -430,13 +449,21 @@ func logAudit(_ context.Context, userID, service, operation, _ string) {
 	// Run async to avoid blocking requests
 	go func() {
 		var userIDPtr *string
-		if userID != "" && userID != "system" {
-			userIDPtr = &userID
+
+		// Only set user_id if it's a valid UUID and exists in database
+		if userID != "" && userID != "system" && len(userID) == 36 {
+			// Verify user exists before referencing in audit log
+			var exists bool
+			checkQuery := `SELECT EXISTS(SELECT 1 FROM users WHERE id = $1)`
+			db.QueryRowContext(context.Background(), checkQuery, userID).Scan(&exists)
+			if exists {
+				userIDPtr = &userID
+			}
 		}
 
 		// Use user_id as entity_id if available, otherwise use system marker
 		entityID := userID
-		if entityID == "" || entityID == "system" {
+		if entityID == "" || entityID == "system" || len(entityID) != 36 {
 			entityID = "00000000-0000-0000-0000-000000000001" // System operations marker
 		}
 

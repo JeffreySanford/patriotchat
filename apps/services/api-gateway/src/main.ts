@@ -1,4 +1,6 @@
+import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
 
@@ -13,6 +15,15 @@ async function bootstrap() {
     origin: process.env.CORS_ORIGIN || 'http://localhost:4200',
     credentials: true,
   });
+
+  // Global validation pipe
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: false,
+      transform: true,
+    }),
+  );
 
   const port = process.env.PORT || 3000;
   await app.listen(port);

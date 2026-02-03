@@ -44,7 +44,9 @@
           (keydown)="handleKeydown($event)"
           placeholder="Ask something about politics, funding, or policies... (Ctrl+Enter to send)"
           class="prompt-input"
-          [disabled]="!selectedModel || loading"
+          data-gramm="false"
+          data-gramm-editor="false"
+          data-enable-grammarly="false"
         ></textarea>
         <button
           (click)="sendMessage()"

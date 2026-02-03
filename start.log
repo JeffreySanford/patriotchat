@@ -1,0 +1,85 @@
+
+> @patriotchat/source@0.0.0 start:all C:\repos\patriotchat
+> cross-env NODE_OPTIONS=--no-deprecation concurrently "pnpm run start:deps" "pnpm run start"
+
+[0] 
+[0] > @patriotchat/source@0.0.0 start:deps C:\repos\patriotchat
+[0] > docker compose up -d
+[0] 
+[1] 
+[1] > @patriotchat/source@0.0.0 start C:\repos\patriotchat
+[1] > pnpm nx run-many --target=serve --projects=frontend,api-gateway,auth
+[1] 
+[0]  Container patriotchat-ollama  Running
+[0]  Container patriotchat-postgres  Running
+[0]  Container patriotchat-policy  Running
+[0]  Container patriotchat-llm  Running
+[0]  Container patriotchat-funding  Running
+[0]  Container patriotchat-analytics  Running
+[0]  Container patriotchat-postgres  Waiting
+[0]  Container patriotchat-postgres  Waiting
+[0]  Container patriotchat-postgres  Waiting
+[0]  Container patriotchat-postgres  Waiting
+[0]  Container patriotchat-postgres  Healthy
+[0]  Container patriotchat-postgres  Healthy
+[0]  Container patriotchat-postgres  Healthy
+[0]  Container patriotchat-postgres  Healthy
+[0] pnpm run start:deps exited with code 0
+[1] 
+[1]  NX   Running target serve for 3 projects:
+[1] 
+[1] - frontend
+[1] - api-gateway
+[1] - auth
+[1] 
+[1] 
+[1] 
+[1] > nx run frontend:serve:development
+[1] 
+[1] 
+[1] > nx run auth:serve
+[1] 
+[1] > go run ./src
+[1] 
+[1] 
+[1] > nx run api-gateway:serve
+[1] 
+[1] 2026/02/02 22:00:51 Auth service listening on port 4001
+[1] 2026/02/02 22:00:51 listen tcp :4001: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+[1] exit status 1
+[1] Warning: command "go run ./src" exited with non-zero status code[ [32mwatch[39m ] build succeeded, watching for changes...
+[1] [0m[7m[1m[31m NX [39m[22m[27m[0m  [31mPort 4200 is already in use. Use '--port' to specify a different port.[39m
+[1] Pass --verbose to see the stacktrace.
+[1] Task "frontend:serve:development" is continuous but exited with code 1
+[1] [1m[31mStarting inspector on localhost:9229 failed: address already in use[39m[22m
+[1] [1m[31m[39m[22m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +8ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mRateLimitingModule dependencies initialized[39m[38;5;3m +0ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +0ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +1ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +138ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health, GET} route[39m[38;5;3m +2ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/ready, GET} route[39m[38;5;3m +0ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/register, POST} route[39m[38;5;3m +2ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/validate, GET} route[39m[38;5;3m +0ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/me, GET} route[39m[38;5;3m +0ms[39m
+[1] [32m[Nest] 34892  - [39m02/02/2026, 10:00:53 PM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +1ms[39m
+[1] [1m[31m[31m[Nest] 34892  - [39m[31m02/02/2026, 10:00:53 PM [31m  ERROR[39m[31m [38;5;3m[NestApplication] [39m[31m[31mError: listen EADDRINUSE: address already in use :::3000[39m[31m[38;5;3m +1ms[39m[31m[39m[22m
+[1] [1m[31m[39m[22m
+[1] [1m[31mError: listen EADDRINUSE: address already in use :::3000[39m[22m
+[1] [1m[31m    at Server.setupListenHandle [as _listen2] (node:net:1937:16)[39m[22m
+[1] [1m[31m    at listenInCluster (node:net:1994:12)[39m[22m
+[1] [1m[31m    at Server.listen (node:net:2099:7)[39m[22m
+[1] [1m[31m    at ExpressAdapter.listen (C:\repos\patriotchat\node_modules\.pnpm\@nestjs+platform-express@11_f9cbf6fdd87c091457fd81e3045dc214\node_modules\@nestjs\platform-express\adapters\express-adapter.js:127:32)[39m[22m
+[1] [1m[31m    at C:\repos\patriotchat\node_modules\.pnpm\@nestjs+core@11.1.12_@nestj_1cdaaea330b9de6887451315b701b0e9\node_modules\@nestjs\core\nest-application.js:188:30[39m[22m
+[1] [1m[31m    at new Promise (<anonymous>)[39m[22m
+[1] [1m[31m    at NestApplication.listen (C:\repos\patriotchat\node_modules\.pnpm\@nestjs+core@11.1.12_@nestj_1cdaaea330b9de6887451315b701b0e9\node_modules\@nestjs\core\nest-application.js:178:16)[39m[22m
+[1] [1m[31m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m[22m
+[1] [1m[31m    at bootstrap (C:\repos\patriotchat\dist\apps\services\api-gateway\main.cjs:6999:3)[39m[22m
+[1] [1m[31m[39m[22m
+[1] [7m[1m[36m NX [39m[22m[27m [1mProcess exited with code 1, waiting for changes to restart...[22m

@@ -37,13 +37,10 @@ export function getErrorMessage(error: HttpError): string {
       error.error !== null &&
       'error' in error.error
     ) {
-      const apiError: Record<string, string | number | boolean | object> =
-        error.error as Record<string, string | number | boolean | object>;
-      if (typeof apiError['error'] === 'string') {
-        return apiError['error'];
-      }
+      const apiError = error.error as ApiErrorDetail;
+      return apiError.error || apiError.message || 'An error occurred';
     }
-    return error.statusText || 'HTTP Error';
+    return error.statusText || 'An error occurred';
   }
 
   if (isStandardError(error)) {
@@ -51,12 +48,11 @@ export function getErrorMessage(error: HttpError): string {
   }
 
   if (typeof error === 'object' && error !== null) {
-    const errorObj: Record<string, string | number | boolean | object> =
-      error as Record<string, string | number | boolean | object>;
-    if (typeof errorObj['message'] === 'string') {
+    const errorObj = error as ApiErrorResponse;
+    if ('message' in errorObj && typeof errorObj['message'] === 'string') {
       return errorObj['message'];
     }
-    if (typeof errorObj['error'] === 'string') {
+    if ('error' in errorObj && typeof errorObj['error'] === 'string') {
       return errorObj['error'];
     }
   }

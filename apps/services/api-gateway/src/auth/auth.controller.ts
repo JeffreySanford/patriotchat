@@ -7,17 +7,18 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
+  Inject,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { AuthService, AuthResponse, ValidateResponse } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { RegisterDto, LoginDto } from './dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(@Inject(AuthService) private readonly authService: AuthService) {}
 
   @Post('register')
-  async register(@Body() dto: RegisterDto) {
+  async register(@Body() dto: RegisterDto): Promise<AuthResponse> {
     try {
       const result = await this.authService.register(dto);
       return result;
@@ -31,22 +32,22 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Body() dto: LoginDto) {
+  async login(@Body() dto: LoginDto): Promise<AuthResponse> {
     try {
       const result = await this.authService.login(dto);
       return result;
     } catch (error: unknown) {
       const err = error as any;
-      throw new HttpException(
-        err.response?.data || 'Login failed',
-        err.response?.status || HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      const statusCode = err.response?.status || 500;
+      const message = err.response?.data?.error || err.response?.data || 'Login failed';
+      console.error('Auth controller login error:', { statusCode, message, error });
+      throw new HttpException(message, statusCode);
     }
   }
 
   @Get('validate')
   @UseGuards(JwtAuthGuard)
-  async validate(@Headers('authorization') auth: string) {
+  async validate(@Headers('authorization') auth: string): Promise<ValidateResponse> {
     try {
       const token = auth.split(' ')[1];
       const result = await this.authService.validate(token);
@@ -61,7 +62,7 @@ export class AuthController {
 
   @Get('me')
   @UseGuards(JwtAuthGuard)
-  async getMe(@Headers('authorization') auth: string) {
+  async getMe(@Headers('authorization') auth: string): Promise<ValidateResponse> {
     try {
       const token = auth.split(' ')[1];
       const result = await this.authService.validate(token);
