@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ApiError } from '@patriotchat/shared';
+import { ApiError } from '../../types/api.dto';
 
 /**
  * Error Interceptor
@@ -27,24 +27,24 @@ export class ErrorInterceptor implements NestInterceptor {
 
         if (error instanceof Error) {
           // Convert standard errors to ApiError
-          const apiError = new ApiError({
-            status: 500,
-            message: error.message,
-            code: 'INTERNAL_ERROR',
-            details: {
+          const apiError = new ApiError(
+            500,
+            'INTERNAL_ERROR',
+            {
               originalError: error.name,
             },
-          });
+            error.message,
+          );
           return throwError(() => apiError);
         }
 
         // Unknown error format
-        const unknownError = new ApiError({
-          status: 500,
-          message: 'An unexpected error occurred',
-          code: 'UNKNOWN_ERROR',
-          details: { error },
-        });
+        const unknownError = new ApiError(
+          500,
+          'UNKNOWN_ERROR',
+          { error },
+          'An unexpected error occurred',
+        );
         return throwError(() => unknownError);
       }),
     );

@@ -1,6 +1,7 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
+    "rootDir": "./src",
     "outDir": "./dist",
     "declaration": true,
     "types": ["node"],
@@ -15,7 +16,13 @@
     "skipDefaultLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "baseUrl": "./src",
+    "noImplicitAny": false,
+    "paths": {
+      "@patriotchat/shared": ["./types/api.dto.ts"],
+      "@patriotchat/shared/*": ["./types/*"]
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.spec.ts", "**/*.test.ts", "node_modules", "dist"]
