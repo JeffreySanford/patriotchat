@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
@@ -7,6 +8,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { RateLimitingModule } from './rate-limiting/rate-limiting.module';
 import { InferenceModule } from './inference/inference.module';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { ErrorInterceptor } from './common/interceptors/error.interceptor';
 
 @Module({
   imports: [
@@ -32,6 +35,16 @@ import { InferenceModule } from './inference/inference.module';
     RateLimitingModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ErrorInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor,
+    },
+  ],
 })
 export class AppModule {}

@@ -11,11 +11,11 @@
         <div class="model-buttons">
           <button
             *ngFor="let model of availableModels"
-            [class.active]="selectedModel === model"
-            (click)="selectModel(model)"
+            [class.active]="selectedModel === model.id"
+            (click)="selectModel(model.id)"
             class="model-btn"
           >
-            {{ model }}
+            {{ model.name }}
           </button>
         </div>
       </div>

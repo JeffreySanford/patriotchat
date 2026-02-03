@@ -1,3 +1,8 @@
+packages:
+  - 'apps/*'
+  - 'libs/*'
+  - 'services/*'
+
 autoInstallPeers: true
 
 onlyBuiltDependencies:

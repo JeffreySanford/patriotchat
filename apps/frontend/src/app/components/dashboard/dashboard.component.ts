@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LlmService } from '../../services/llm.service';
+import { InferenceService } from '../../services/inference.service';
 import { AnalyticsService } from '../../services/analytics.service';
 import { AuthService } from '../../services/auth.service';
-import { getErrorMessage } from '../../models/api-error.model';
+import { ApiError, InferenceModelsResponse, InferenceGenerateResponse } from '../../types/api.dto';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -11,10 +11,12 @@ interface Message {
   model?: string;
 }
 
-interface InferenceResponse {
-  result: string;
-  duration: string | number;
-  tokens: string | number;
+interface Model {
+  id: string;
+  name: string;
+  description?: string;
+  provider?: string;
+  contextWindow?: number;
 }
 
 @Component({
@@ -25,14 +27,14 @@ interface InferenceResponse {
 })
 export class DashboardComponent implements OnInit {
   selectedModel: string | null = null;
-  availableModels: string[] = [];
+  availableModels: Model[] = [];
   messages: Message[] = [];
   userPrompt: string = '';
   loading: boolean = false;
   error: string = '';
 
   constructor(
-    private llmService: LlmService,
+    private inferenceService: InferenceService,
     private analyticsService: AnalyticsService,
     private authService: AuthService,
   ) {}
@@ -42,26 +44,26 @@ export class DashboardComponent implements OnInit {
   }
 
   loadModels(): void {
-    this.llmService.getModels().subscribe({
-      next: (response: { models: string[] }): void => {
-        console.log('Dashboard: Models loaded:', response.models);
-        this.availableModels = response.models;
+    this.inferenceService.getModels().subscribe({
+      next: (response: { data: InferenceModelsResponse; timestamp: number; status: number }): void => {
+        console.log('Dashboard: Models loaded:', response.data.models);
+        this.availableModels = response.data.models;
         if (this.availableModels.length > 0) {
-          this.selectedModel = this.availableModels[0];
+          this.selectedModel = this.availableModels[0].id;
           console.log('Dashboard: Selected default model:', this.selectedModel);
         }
       },
-      error: (err: HttpErrorResponse): void => {
-        this.error = getErrorMessage(err);
+      error: (err: ApiError | HttpErrorResponse): void => {
+        this.error = err instanceof ApiError ? err.message : 'Failed to load models';
         console.error('Dashboard: Error loading models:', err);
       },
     });
   }
 
-  selectModel(model: string): void {
-    this.selectedModel = model;
-    this.analyticsService.trackEvent('model_selected', { model }).subscribe({
-      error: (err: HttpErrorResponse): void =>
+  selectModel(modelId: string): void {
+    this.selectedModel = modelId;
+    this.analyticsService.trackEvent('model_selected', { model: modelId }).subscribe({
+      error: (err: ApiError | HttpErrorResponse): void =>
         console.error('Analytics error:', err),
     });
   }
@@ -77,33 +79,37 @@ export class DashboardComponent implements OnInit {
     this.loading = true;
     this.error = '';
 
-    this.llmService
-      .generateInference(userMessage, this.selectedModel)
-      .subscribe(
-        (response: InferenceResponse): void => {
+    this.inferenceService
+      .generateInference({
+        modelId: this.selectedModel,
+        prompt: userMessage,
+      })
+      .subscribe({
+        next: (response: { data: InferenceGenerateResponse; timestamp: number; status: number }): void => {
+          const assistantText: string = response.data.result || response.data.text || '';
           this.messages.push({
             role: 'assistant',
-            content: response.result,
+            content: assistantText,
             model: this.selectedModel!,
           });
           this.analyticsService
             .trackEvent('inference_generated', {
               model: this.selectedModel || 'unknown',
-              duration: response.duration,
-              tokens: response.tokens,
+              duration: response.data.duration || 0,
+              tokens: response.data.tokens || response.data.tokensUsed || 0,
             })
             .subscribe({
-              error: (err: HttpErrorResponse): void =>
+              error: (err: ApiError | HttpErrorResponse): void =>
                 console.error('Analytics error:', err),
             });
           this.loading = false;
         },
-        (err: HttpErrorResponse): void => {
+        error: (err: ApiError | HttpErrorResponse): void => {
           this.loading = false;
-          this.error = getErrorMessage(err);
+          this.error = err instanceof ApiError ? err.message : 'Failed to generate response';
           console.error(err);
         },
-      );
+      });
   }
 
   logout(): void {
