@@ -13,9 +13,9 @@ export class RateLimitingGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+       
       const request: unknown = context.switchToHttp().getRequest();
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+       
       const response: unknown = context.switchToHttp().getResponse();
 
       const ip: string = this.getClientIp(request as Record<string, unknown>);

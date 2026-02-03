@@ -6,7 +6,7 @@ import { AppModule } from './app.module';
 import helmet from 'helmet';
 
 async function bootstrap(): Promise<void> {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const app: any = await NestFactory.create(AppModule);
 
   // Security middleware
