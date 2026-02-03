@@ -41,6 +41,16 @@
       "options": {
         "command": "docker build -t patriotchat-api-gateway:latest -f apps/services/api-gateway/Dockerfile ."
       }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vitest run",
+        "cwd": "apps/services/api-gateway"
+      },
+      "configurations": {},
+      "cache": true,
+      "inputs": ["default"]
     }
   }
 }
