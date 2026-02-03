@@ -14,10 +14,10 @@
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022",
+    "module": "NodeNext",
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"]
   },

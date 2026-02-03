@@ -4,7 +4,7 @@
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -20,7 +20,7 @@
       "@patriotchat/ui": ["libs/ui/src/index.ts"],
       "@patriotchat/api/*": ["apps/api/src/*"],
       "@patriotchat/gateway/*": ["apps/gateway/src/*"],
-      "@patriotchat/services/*": ["apps/services/*/src/*"]
+      "@patriotchat/services/*": ["apps/services/*/src"]
     }
   },
   "exclude": ["node_modules", "tmp"]
