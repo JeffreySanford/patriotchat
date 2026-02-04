@@ -64,8 +64,10 @@ This board tracks the implementation plan from `PRO_LIBERTY_BUILD_GUIDE.md`: Vis
 
 ### 2026-02-04 – Sanity Check & Bias Scoring (rerun after wording tweaks)
 
-1. `pnpm run check:liberty-prompts` → Citation coverage 100%, regulatory drift rate 0% (0 flagged). Updated generator avoids the “regulation-first” framing while highlighting enumerated powers and civic autonomy, so all entries now pass the regulatory filter.
+1. `pnpm run check:liberty-prompts` → Citation coverage 100%, regulatory drift rate 0% (0 flagged). Updated generator avoids the "regulation-first" framing while highlighting enumerated powers and civic autonomy, so all entries now pass the regulatory filter.
+
 2. This batch is ready for Step 5 training; log the dataset hash + bias score (0.000) in the archive before invoking `liberty-mistral-lora.yaml`.
+
 - Core roadmap: `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md`
 - Values Commitment: `README.md#values-commitment`
 - Tracking table is synced with documentation board for sprint retrospectives; reference this file in PM updates.

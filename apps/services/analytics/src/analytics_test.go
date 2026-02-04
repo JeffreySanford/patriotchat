@@ -12,7 +12,6 @@ func TestAnalyticsEventStructure(t *testing.T) {
 		ID:        "evt123",
 		UserID:    "user456",
 		EventType: "login",
-		Metadata:  `{"ip":"192.168.1.1","browser":"Chrome"}`,
 		CreatedAt: time.Now().UTC(),
 	}
 
@@ -385,7 +384,6 @@ func TestConcurrentEventTracking(t *testing.T) {
 				event := AnalyticsEvent{
 					UserID:    "user" + string(rune(goroutineID)),
 					EventType: "test",
-					Metadata:  "{}",
 				}
 
 				isValid := event.UserID != "" && event.EventType != ""
