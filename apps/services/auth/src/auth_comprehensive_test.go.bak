@@ -1,0 +1,514 @@
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+	"time"
+
+	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/crypto/bcrypt"
+)
+
+// Test initialization
+func TestMain(t *testing.T) {
+	// Test database connection
+	var err error
+	db, err = initDB()
+	if err != nil {
+		t.Errorf("Failed to initialize database: %v", err)
+		return
+	}
+	defer db.Close()
+
+	// Test table creation
+	if err := createTables(); err != nil {
+		t.Errorf("Failed to create tables: %v", err)
+	}
+}
+
+// =================== User Model Tests ===================
+
+func TestUserStructure(t *testing.T) {
+	user := User{
+		ID:        "test-id",
+		Username:  "testuser",
+		Email:     "test@example.com",
+		Tier:      "premium",
+		CreatedAt: time.Now(),
+	}
+
+	if user.ID != "test-id" {
+		t.Errorf("Expected ID to be test-id, got %s", user.ID)
+	}
+	if user.Username != "testuser" {
+		t.Errorf("Expected username to be testuser, got %s", user.Username)
+	}
+	if user.Email != "test@example.com" {
+		t.Errorf("Expected email to be test@example.com, got %s", user.Email)
+	}
+	if user.Tier != "premium" {
+		t.Errorf("Expected tier to be premium, got %s", user.Tier)
+	}
+}
+
+// =================== Registration Tests ===================
+
+func TestRegisterSuccess(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	reqBody := RegisterRequest{
+		Username: "newuser",
+		Email:    "new@example.com",
+		Password: "password123",
+	}
+
+	body, _ := json.Marshal(reqBody)
+	req := httptest.NewRequest("POST", "/auth/register", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+
+	handleRegister(w, req)
+
+		t.Errorf("Expected status 200 or 201, got %d", w.Code)
+	}
+
+	var resp AuthResponse
+
+	if resp.Token == "" {
+		t.Errorf("Expected token in response, got empty string")
+	}
+	if resp.User.Email != "new@example.com" {
+		t.Errorf("Expected email new@example.com, got %s", resp.User.Email)
+	}
+}
+
+func TestRegisterDuplicateEmail(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	// Register first user
+	reqBody := RegisterRequest{
+		Username: "user1",
+		Email:    "duplicate@example.com",
+		Password: "password123",
+	}
+	body, _ := json.Marshal(reqBody)
+	req := httptest.NewRequest("POST", "/auth/register", bytes.NewReader(body))
+	handleRegister(httptest.NewRecorder(), req)
+
+	// Try to register with same email
+	req = httptest.NewRequest("POST", "/auth/register", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+	handleRegister(w, req)
+
+		t.Errorf("Expected error status, got %d", w.Code)
+	}
+}
+
+func TestRegisterInvalidEmail(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	reqBody := RegisterRequest{
+		Username: "testuser",
+		Email:    "invalid-email",
+		Password: "password123",
+	}
+
+	body, _ := json.Marshal(reqBody)
+	req := httptest.NewRequest("POST", "/auth/register", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+
+	handleRegister(w, req)
+
+	}
+}
+
+func TestRegisterWeakPassword(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	reqBody := RegisterRequest{
+		Username: "testuser",
+		Email:    "test@example.com",
+		Password: "123",
+	}
+
+	body, _ := json.Marshal(reqBody)
+	req := httptest.NewRequest("POST", "/auth/register", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+
+	handleRegister(w, req)
+
+	// Should fail or warn about weak password
+	}
+}
+
+func TestRegisterMissingUsername(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	reqBody := RegisterRequest{
+		Email:    "test@example.com",
+		Password: "password123",
+	}
+
+	body, _ := json.Marshal(reqBody)
+	req := httptest.NewRequest("POST", "/auth/register", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+
+	handleRegister(w, req)
+
+	}
+}
+
+func TestRegisterMissingEmail(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	reqBody := RegisterRequest{
+		Username: "testuser",
+		Password: "password123",
+	}
+
+	body, _ := json.Marshal(reqBody)
+	req := httptest.NewRequest("POST", "/auth/register", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+
+	handleRegister(w, req)
+
+	}
+}
+
+func TestRegisterMissingPassword(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	reqBody := RegisterRequest{
+		Username: "testuser",
+		Email:    "test@example.com",
+	}
+
+	body, _ := json.Marshal(reqBody)
+	req := httptest.NewRequest("POST", "/auth/register", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+
+	handleRegister(w, req)
+
+	}
+}
+
+// =================== Login Tests ===================
+
+func TestLoginSuccess(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	// Create a user first
+	seedUserWithCredentials(t, email, password)
+
+	// Try to login
+	reqBody := LoginRequest{
+		Email:    email,
+		Password: password,
+	}
+
+	body, _ := json.Marshal(reqBody)
+	req := httptest.NewRequest("POST", "/auth/login", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+
+	handleLogin(w, req)
+
+		t.Errorf("Expected status 200, got %d", w.Code)
+	}
+
+	var resp AuthResponse
+
+	if resp.Token == "" {
+		t.Errorf("Expected token in response, got empty string")
+	}
+	if resp.User.Email != email {
+		t.Errorf("Expected email %s, got %s", email, resp.User.Email)
+	}
+}
+
+func TestLoginInvalidPassword(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	seedUserWithCredentials(t, email, "correctpassword")
+
+	// Try to login with wrong password
+	reqBody := LoginRequest{
+		Email:    email,
+		Password: "wrongpassword",
+	}
+
+	body, _ := json.Marshal(reqBody)
+	req := httptest.NewRequest("POST", "/auth/login", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+
+	handleLogin(w, req)
+
+		t.Errorf("Expected error status, got %d", w.Code)
+	}
+}
+
+func TestLoginNonexistentUser(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	reqBody := LoginRequest{
+		Email:    "nonexistent@example.com",
+		Password: "password123",
+	}
+
+	body, _ := json.Marshal(reqBody)
+	req := httptest.NewRequest("POST", "/auth/login", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+
+	handleLogin(w, req)
+
+	}
+}
+
+// =================== Token Validation Tests ===================
+
+func TestValidateTokenSuccess(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	// Create a user and get token
+	seedUserWithCredentials(t, email, "password123")
+
+	// Generate a token manually for testing
+	token := generateTestToken()
+
+	req := httptest.NewRequest("POST", "/auth/validate", bytes.NewReader([]byte("{\"token\":\""+token+"\"}")))
+	w := httptest.NewRecorder()
+
+	handleValidate(w, req)
+
+	}
+}
+
+func TestValidateExpiredToken(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	// Create an expired token
+	claims := jwt.MapClaims{
+		"sub": "test-user",
+		"exp": time.Now().Add(-time.Hour).Unix(),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, _ := token.SignedString([]byte("secret"))
+
+	req := httptest.NewRequest("POST", "/auth/validate", bytes.NewReader([]byte("{}")))
+	w := httptest.NewRecorder()
+
+	handleValidate(w, req)
+
+		t.Errorf("Expired token should not be valid, got status %d", w.Code)
+	}
+}
+
+func TestValidateMissingToken(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	req := httptest.NewRequest("POST", "/auth/validate", bytes.NewReader([]byte("{}")))
+	w := httptest.NewRecorder()
+
+	handleValidate(w, req)
+
+		t.Errorf("Missing token should not be valid, got status %d", w.Code)
+	}
+}
+
+func TestValidateMalformedToken(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	req := httptest.NewRequest("POST", "/auth/validate", bytes.NewReader([]byte("{}")))
+	w := httptest.NewRecorder()
+
+	handleValidate(w, req)
+
+		t.Errorf("Malformed token should not be valid, got status %d", w.Code)
+	}
+}
+
+// =================== Health Check Tests ===================
+
+func TestHealthEndpoint(t *testing.T) {
+	req := httptest.NewRequest("GET", "/health", nil)
+	w := httptest.NewRecorder()
+
+	handleHealth(w, req)
+
+		t.Errorf("Expected status 200, got %d", w.Code)
+	}
+
+	var resp HealthResponse
+
+	if resp.Status != "healthy" && resp.Status != "ok" && resp.Status != "up" {
+		t.Logf("Health status: %s", resp.Status)
+	}
+	if resp.Service != "auth" && resp.Service != "auth-service" {
+		t.Logf("Health service name: %s", resp.Service)
+	}
+}
+
+func TestReadyEndpoint(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	req := httptest.NewRequest("GET", "/ready", nil)
+	w := httptest.NewRecorder()
+
+	handleReady(w, req)
+
+	}
+}
+
+// =================== Password Hashing Tests ===================
+
+func TestPasswordHashing(t *testing.T) {
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		t.Fatalf("Failed to hash password: %v", err)
+	}
+
+	if string(hash) == password {
+		t.Errorf("Password should be hashed, not stored as plaintext")
+	}
+
+	err = bcrypt.CompareHashAndPassword(hash, []byte(password))
+	if err != nil {
+		t.Errorf("Password validation failed: %v", err)
+	}
+}
+
+func TestPasswordHashingWrongPassword(t *testing.T) {
+
+	hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+
+	err := bcrypt.CompareHashAndPassword(hash, []byte(wrongPassword))
+	if err == nil {
+		t.Errorf("Wrong password should not match hash")
+	}
+}
+
+// =================== Helper Functions ===================
+
+func setupDB(t *testing.T) {
+	// Database is initialized in TestMain
+}
+
+func teardownDB(t *testing.T) {
+	// Clean up after tests
+	if db != nil {
+		db.Exec("DELETE FROM users")
+	}
+}
+
+func seedUserWithCredentials(t *testing.T, email, password string) {
+	if db == nil {
+		t.Fatal("Database not initialized")
+	}
+
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	userID := "test-user-" + time.Now().Format("20060102150405")
+
+	_, err := db.Exec(
+		"INSERT INTO users (id, email, password_hash, username, tier, created_at) VALUES ($1, $2, $3, $4, $5, $6)",
+		userID,
+		email,
+		string(hashedPassword),
+		"testuser",
+		"free",
+		time.Now(),
+	)
+
+	if err != nil {
+		t.Logf("Failed to seed user: %v", err)
+	}
+}
+
+func generateTestToken() string {
+	claims := jwt.MapClaims{
+		"sub": "test-user",
+		"exp": time.Now().Add(time.Hour).Unix(),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, _ := token.SignedString([]byte("secret"))
+	return tokenString
+}
+
+// =================== Concurrent Request Tests ===================
+
+func TestConcurrentRegistrations(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+	done := make(chan bool, 5)
+	errors := make(chan error, 5)
+
+	for i := 0; i < 5; i++ {
+		go func(index int) {
+			reqBody := RegisterRequest{
+				Username: "user" + string(rune(index)),
+				Email:    "user" + string(rune(index)) + "@example.com",
+				Password: "password123",
+			}
+
+			body, _ := json.Marshal(reqBody)
+			req := httptest.NewRequest("POST", "/auth/register", bytes.NewReader(body))
+			w := httptest.NewRecorder()
+
+			handleRegister(w, req)
+
+				errors <- nil
+			}
+			done <- true
+		}(i)
+	}
+
+	for i := 0; i < 5; i++ {
+		<-done
+	}
+
+	close(errors)
+	if len(errors) > 0 {
+		t.Logf("Some concurrent registrations failed")
+	}
+}
+
+// =================== Input Sanitization Tests ===================
+
+func TestSQLInjectionPrevention(t *testing.T) {
+	setupDB(t)
+	defer teardownDB(t)
+
+
+	reqBody := RegisterRequest{
+		Username: "testuser",
+		Email:    maliciousEmail,
+		Password: "password123",
+	}
+
+	body, _ := json.Marshal(reqBody)
+	req := httptest.NewRequest("POST", "/auth/register", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+
+	handleRegister(w, req)
+
+	// Should safely handle or reject malicious input
+}

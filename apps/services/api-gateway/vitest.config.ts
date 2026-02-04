@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitest/config';
-import path from 'path';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
+  plugins: [tsconfigPaths()],
   test: {
     globals: true,
     environment: 'node',
@@ -9,14 +10,6 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       exclude: ['node_modules/', 'dist/', '**/*.spec.ts'],
-    },
-  },
-  resolve: {
-    alias: {
-      '@patriotchat/shared': path.resolve(
-        __dirname,
-        '../../types/api.dto.ts',
-      ) as string,
     },
   },
 });

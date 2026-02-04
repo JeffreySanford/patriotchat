@@ -69,7 +69,7 @@ export class InferenceController {
     }
 
     return this.inferenceService
-      .generateInference(body.prompt, modelId, body.context)
+      .generateInference(body.prompt, modelId, body.context, body.songLengthSeconds)
       .pipe(
         catchError((err: Error | ErrorResponse) => {
           console.error(

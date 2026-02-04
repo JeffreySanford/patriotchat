@@ -42,6 +42,10 @@ All 5 critical requirements have been **met and verified**:
 
 👉 **See [PROJECT_STATUS.md](PROJECT_STATUS.md) for complete verification and metrics**
 
+## 🇺🇸 Values Commitment
+
+PatriotChat is anchored to a liberty-first prior: limited federal government, constitutional guardrails, equality under law, and decentralized self-determination. Every data sprint, model charter, and RAG pipeline should reinforce those principles rather than mirroring modern media narratives. See `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md` for the detailed roadmap that keeps the model on that path.
+
 ## Quick Start
 
 ### Option 1: Docker Compose (Recommended)
@@ -114,15 +118,17 @@ Follow this flow and run typed linting regularly to avoid surprises in CI and to
 
 All documentation is organized in the `documentation/` folder:
 
-- **[documentation/INDEX.md](documentation/INDEX.md)** — Master documentation index (start here!)
-- **[documentation/LEGENDARY_V2/](documentation/LEGENDARY_V2/)** — Legendary V2 infrastructure (persistent storage, logging, tracing, LLM tuning)
+- **[documentation/DOCUMENTATION_MAP.md](documentation/DOCUMENTATION_MAP.md)** — Complete reference hierarchy & single source of truth index (start here for navigation!)
+- **[documentation/INDEX.md](documentation/INDEX.md)** — Master documentation index
+- **[documentation/OVERVIEW.md](documentation/OVERVIEW.md)** — System architecture & development workflow
 - **[documentation/api/](documentation/api/)** — Complete API reference
 - **[documentation/LLM/](documentation/LLM/)** — LLM system & governance
+- **[documentation/planning/PRO_LIBERTY_TEST_STRATEGY.md](documentation/planning/PRO_LIBERTY_TEST_STRATEGY.md)** — Alignment-focused tests to guard Values Commitment
 - **[documentation/CODING-STANDARDS.md](documentation/CODING-STANDARDS.md)** — Code standards & patterns
 - **[documentation/CONTRIBUTING.md](documentation/CONTRIBUTING.md)** — How to contribute
 - **[documentation/GOVERNANCE.md](documentation/GOVERNANCE.md)** — Project governance & exceptions
 
-For implementation planning, see **[documentation/LEGENDARY_V2/INFRASTRUCTURE_SUITE.md](documentation/LEGENDARY_V2/INFRASTRUCTURE_SUITE.md)** for the complete roadmap.
+👉 **For complete documentation map with all cross-references, see [documentation/DOCUMENTATION_MAP.md](documentation/DOCUMENTATION_MAP.md)**
 
 ## Ollama: Docker vs native
 

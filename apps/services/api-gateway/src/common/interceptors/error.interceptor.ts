@@ -30,24 +30,24 @@ export class ErrorInterceptor implements NestInterceptor {
 
         if (error instanceof Error) {
           // Convert standard errors to ApiError
-          const apiError: ApiError = new ApiError(
-            500,
-            'INTERNAL_ERROR',
-            {
+          const apiError: ApiError = new ApiError({
+            status: 500,
+            code: 'INTERNAL_ERROR',
+            message: error.message,
+            details: {
               originalError: error.name,
             },
-            error.message,
-          );
+          });
           return throwError(() => apiError);
         }
 
         // Unknown error format - create ApiError from error object
-        const apiError: ApiError = new ApiError(
-          500,
-          'UNKNOWN_ERROR',
-          { originalError: JSON.stringify(error) },
-          'An unexpected error occurred',
-        );
+        const apiError: ApiError = new ApiError({
+          status: 500,
+          code: 'UNKNOWN_ERROR',
+          message: 'An unexpected error occurred',
+          details: { originalError: JSON.stringify(error) },
+        });
         return throwError((): ApiError => apiError);
       }),
     );

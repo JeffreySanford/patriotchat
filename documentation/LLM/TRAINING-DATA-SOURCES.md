@@ -1,6 +1,6 @@
 # Training Data Sources
 
-This document lists recommended sources for training data to build a constitutional, non-partisan LLM. Focus on primary, legal, and civic materials to minimize bias.
+This document lists recommended sources for training data to build a constitutional, non-partisan LLM. Focus on primary, legal, and civic materials to minimize bias. For a hands-on pro-liberty roadmap (schema, config, RAG setup) see `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md`.
 
 ## Primary Civic Sources
 
@@ -35,6 +35,28 @@ This document lists recommended sources for training data to build a constitutio
 - 20-40%: Jurisprudence for reasoning patterns.
 - 5-15%: Debate pairs to teach steelman and trade-offs.
 - Instruction tuning: Explicit values, refusals, and humility.
+
+## Prioritized Foundational Texts
+
+These texts form the “gold” corpus that we embed, sample, and cite. They are also the source pool for the datasets described in `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md`.
+
+- Declaration of Independence (1776)
+- Constitution + Bill of Rights + Amendments
+- Federalist Papers (all 85 essays)
+- Anti-Federalist Papers (Brutus, Centinel, etc.)
+- Locke, *Second Treatise of Government*
+- Montesquieu, *The Spirit of the Laws* (separation of powers sections)
+- Paine, *Common Sense* & *Rights of Man*
+- Jefferson, Kentucky Resolutions & *Notes on the State of Virginia*
+- Madison, *Notes of the Debates at the Constitutional Convention*
+- Supreme Court opinions that affirm limits on federal power and highlight enumerated rights
+- Reagan, Coolidge, Goldwater speeches (public domain excerpts)
+- Bastiat, *The Law*
+- Hayek, *The Road to Serfdom* (public domain excerpts)
+- Mises, Friedman, Rand (public domain or carefully paraphrased core ideas)
+- Walter Williams and Thomas Sowell (public domain essays where available)
+
+Sources: Project Gutenberg, Constitution.org, Yale Avalon Project, Liberty Fund, Cornell LII. Favor clean OCR-free versions and derive hundreds of instruction examples from each major tract.
 
 ## Format
 

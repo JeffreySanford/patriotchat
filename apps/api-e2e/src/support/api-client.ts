@@ -51,10 +51,11 @@ function getServiceUrl(endpoint: string, service?: string): string {
 }
 
 /**
- * Make API request to appropriate service
+ * Make API request to appropriate service with retry logic
  */
 export async function apiRequest(
   options: ApiRequestOptions,
+  retries = 3,
 ): Promise<ApiResponse> {
   const { method, endpoint, body, token, service } = options;
 
@@ -70,34 +71,62 @@ export async function apiRequest(
   const fetchOptions: RequestInit = {
     method,
     headers,
+    timeout: 5000, // 5 second timeout
   };
 
   if (body) {
     fetchOptions.body = JSON.stringify(body);
   }
 
-  try {
-    const response: Response = await fetch(url, fetchOptions);
-    let responseData: JsonObject | null = null;
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      const response: Response = await fetch(url, fetchOptions);
+      let responseData: JsonObject | null = null;
 
-    if (response.ok) {
-      responseData = (await response.json()) as JsonObject;
+      // Try to parse response as JSON if there's content
+      if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
+        try {
+          responseData = (await response.json()) as JsonObject;
+        } catch {
+          // Response was not valid JSON, continue without data
+        }
+      } else if (!response.ok) {
+        // Try to get error message from response
+        try {
+          const contentType = response.headers.get('content-type');
+          if (contentType?.includes('application/json')) {
+            responseData = (await response.json()) as JsonObject;
+          }
+        } catch {
+          // Error response was not valid JSON
+        }
+      }
+
+      return {
+        status: response.status,
+        ok: response.ok,
+        data: responseData,
+        headers: Object.fromEntries(response.headers.entries()),
+      };
+    } catch (error) {
+      // Network error or timeout - log for debugging but continue retry
+      if (error instanceof Error) {
+        void error.message; // Capture error info in case needed for logging
+      }
+      // Wait before retrying (exponential backoff)
+      if (attempt < retries - 1) {
+        await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 100));
+      }
     }
-
-    return {
-      status: response.status,
-      ok: response.ok,
-      data: responseData,
-      headers: Object.fromEntries(response.headers.entries()),
-    };
-  } catch {
-    return {
-      status: 0,
-      ok: false,
-      data: null,
-      headers: {},
-    };
   }
+
+  // All retries failed
+  return {
+    status: 0,
+    ok: false,
+    data: null,
+    headers: {},
+  };
 }
 
 /**

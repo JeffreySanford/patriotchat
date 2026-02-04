@@ -84,6 +84,21 @@
   animation-delay: 0.6s;
 }
 
+.loading-info {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.loading-info small {
+  display: block;
+  padding: 4px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 4px;
+  font-style: italic;
+}
+
 @keyframes pulse {
   0%, 100% { opacity: 0.3; }
   50% { opacity: 1; }
@@ -150,4 +165,63 @@
   color: #ef4444;
   font-size: 12px;
   margin-top: 8px;
+}
+// Song-specific styling
+.song-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 600px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  border-left: 4px solid #667eea;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px 0;
+}
+
+.song-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+.song-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #667eea;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.song-genre {
+  margin: 0;
+  font-size: 12px;
+  color: #a5b4fc;
+  font-style: italic;
+}
+
+.song-lyrics {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  pre {
+    margin: 0;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #cbd5e1;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Courier New', monospace;
+    max-height: 400px;
+    overflow-y: auto;
+  }
 }

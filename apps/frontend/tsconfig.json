@@ -2,6 +2,10 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@patriotchat/shared": ["../../libs/shared/src/index.ts"],
+      "@patriotchat/shared/*": ["../../libs/shared/src/*"]
+    },
     "outDir": "../../dist/apps/frontend",
     "forceConsistentCasingInFileNames": true,
     "strict": true,

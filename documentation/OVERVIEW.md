@@ -4,6 +4,8 @@
 
 PatriotChat is a local-first Nx monorepo that balances constitutional guardrails, strongly typed DTO contracts, and user-owned LLM control. Every inference run stays inside locally hosted Ollama instances, proxies requests through the Go heavy service, and filters answers against curated patriotic datasets so the platform avoids narrative-driven bias while remaining transparent and auditable.
 
+All documentation (see README’s Values Commitment section) references the same liberty-first north star: limited federal government, equality under law, decentralization, and constitutional guardrails. Refer to `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md`, `documentation/planning/PRO_LIBERTY_TRACKING.md`, and `documentation/planning/PRO_LIBERTY_TEST_STRATEGY.md` to follow that plan and catch drift before it reaches production inference.
+
 ## Architecture
 
 ### Nx workspace
@@ -86,9 +88,10 @@ For creating and training a custom LLM aligned with constitutional values, refer
 - [Training Data Sources](LLM/TRAINING-DATA-SOURCES.md): Recommended sources and recipes for unbiased data.
 - [Evaluation Checklist](LLM/EVALUATION-CHECKLIST.md): Criteria for testing alignment and bias.
 - [Philosophical Notes](LLM/PHILOSOPHICAL-NOTES.md): Reflections on bias, neutrality, and American values.
-- [Project Roadmap](LLM/ROADMAP.md): Timeline and milestones for development.
-- [Risk Assessment](LLM/RISK-ASSESSMENT.md): Identified risks and mitigations.
 - [Architecture Overview](LLM/ARCHITECTURE.md): System components and data flow.
 - [Testing Plan](LLM/TESTING-PLAN.md): Strategies for quality assurance.
+- [Pro-Liberty Build Guide](planning/PRO_LIBERTY_BUILD_GUIDE.md): Hardware, dataset schema, Axolotl config, and Constitution-first RAG wiring.
+- [Pro-Liberty Tracking](planning/PRO_LIBERTY_TRACKING.md): Sprint board for vision checks, data sprints, RAG rollout, and governance messaging.
+- [Pro-Liberty Test Strategy](planning/PRO_LIBERTY_TEST_STRATEGY.md): Alignment-focused automated test ideas and reporting.
 
-Use this overview as the baseline for Copilot prompts, sprint plans, and guardrail documentation; update it whenever the stack shifts.
+Use this overview as the baseline for Copilot prompts, sprint plans, and guardrail documentation; update it whenever the stack shifts.  When generating or updating Copilot instructions, explicitly cite the Values Commitment (`README.md#values-commitment`) and point to the pro-liberty playbooks (`planning/PRO_LIBERTY_BUILD_GUIDE.md`, `planning/PRO_LIBERTY_TRACKING.md`, `planning/PRO_LIBERTY_TEST_STRATEGY.md`) so every Copilot task stays aligned with the constitutional guardrails.

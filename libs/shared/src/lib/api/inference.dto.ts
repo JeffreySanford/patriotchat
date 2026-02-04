@@ -28,6 +28,7 @@ export interface InferenceGenerateRequest {
   maxTokens?: number;
   temperature?: number;
   context?: string;
+  songLengthSeconds?: number; // Song length preference in seconds (e.g., 76, 180, 300, 600)
 }
 
 /**
@@ -44,4 +45,11 @@ export interface InferenceGenerateResponse {
   tokens?: number; // Alias for tokensUsed
   duration?: number | string;
   finishReason?: 'length' | 'stop' | 'error';
+  estimatedTime?: number; // Estimated time in milliseconds
+  actualTime?: number; // Actual time taken in milliseconds
+  // Song-specific fields
+  isSong?: boolean; // Whether this is a song response
+  title?: string; // Song title
+  genre?: string; // Song genre
+  lyrics?: string; // Song lyrics
 }

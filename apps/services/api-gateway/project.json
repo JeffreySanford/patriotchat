@@ -5,6 +5,7 @@
   "sourceRoot": "apps/services/api-gateway/src",
   "prefix": "patriotchat",
   "tags": ["type:service", "scope:backend"],
+  "implicitDependencies": ["@patriotchat/shared"],
   "targets": {
     "build": {
       "executor": "@nx/esbuild:esbuild",

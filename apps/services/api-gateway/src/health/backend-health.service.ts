@@ -45,21 +45,22 @@ export class BackendHealthService {
       url: 'http://localhost:11434/health',
       dockerContainer: 'patriotchat-ollama',
     },
-    {
-      name: 'Analytics Service',
-      url: 'http://localhost:5000/health',
-      dockerContainer: 'patriotchat-analytics',
-    },
-    {
-      name: 'Policy Service',
-      url: 'http://localhost:4006/health',
-      dockerContainer: 'patriotchat-policy',
-    },
-    {
-      name: 'Funding Service',
-      url: 'http://localhost:4007/health',
-      dockerContainer: 'patriotchat-funding',
-    },
+    // Uncomment services below when they become active
+    // {
+    //   name: 'Analytics Service',
+    //   url: 'http://localhost:5000/health',
+    //   dockerContainer: 'patriotchat-analytics',
+    // },
+    // {
+    //   name: 'Policy Service',
+    //   url: 'http://localhost:4006/health',
+    //   dockerContainer: 'patriotchat-policy',
+    // },
+    // {
+    //   name: 'Funding Service',
+    //   url: 'http://localhost:4007/health',
+    //   dockerContainer: 'patriotchat-funding',
+    // },
   ];
 
   private lastStatus: ServiceStatusDto[] = [];

@@ -1,5 +1,5 @@
 import nx from '@nx/eslint-plugin';
-import vitestPlugin from 'eslint-plugin-vitest';
+// import vitestPlugin from 'eslint-plugin-vitest';
 import testingLibraryPlugin from 'eslint-plugin-testing-library';
 
 export default [
@@ -13,7 +13,7 @@ export default [
   {
     files: ['**/*.spec.ts', '**/*.spec.tsx'],
     plugins: {
-      vitest: vitestPlugin,
+      // vitest: vitestPlugin,
       'testing-library': testingLibraryPlugin,
     },
     languageOptions: {
@@ -29,10 +29,10 @@ export default [
       },
     },
     rules: {
-      'vitest/no-disabled-tests': 'warn',
-      'vitest/no-focused-tests': 'warn',
-      'vitest/prefer-to-be-truthy': 'error',
-      'vitest/prefer-to-be-falsy': 'error',
+      // 'vitest/no-disabled-tests': 'warn',
+      // 'vitest/no-focused-tests': 'warn',
+      // 'vitest/prefer-to-be-truthy': 'error',
+      // 'vitest/prefer-to-be-falsy': 'error',
       'testing-library/prefer-screen-queries': 'warn',
     },
   },

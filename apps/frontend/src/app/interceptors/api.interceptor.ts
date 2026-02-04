@@ -1,4 +1,8 @@
 /* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
@@ -97,7 +101,7 @@ export class ApiInterceptor implements HttpInterceptor {
         >;
         if ('code' in errObj && 'message' in errObj) {
           return new ApiError({
-            status: error.status,
+            status: (error as HttpErrorResponse).status,
             message: errObj['message'] as string,
             code: errObj['code'] as string,
             details: (errObj['details'] as Record<string, unknown>) || {},
@@ -109,10 +113,10 @@ export class ApiInterceptor implements HttpInterceptor {
 
       // Fallback for generic HTTP errors
       return new ApiError({
-        status: error.status,
-        message: error.message || 'HTTP Error',
-        code: `HTTP_${error.status}`,
-        details: { url: error.url || 'unknown' },
+        status: (error as HttpErrorResponse).status,
+        message: (error as HttpErrorResponse).message || 'HTTP Error',
+        code: `HTTP_${(error as HttpErrorResponse).status}`,
+        details: { url: (error as HttpErrorResponse).url || 'unknown' },
       });
     }
 

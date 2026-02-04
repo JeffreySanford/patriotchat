@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -11,12 +12,13 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarNavComponent } from './components/sidebar-nav/sidebar-nav.component';
+import { SongLengthDialogComponent } from './components/song-length-dialog/song-length-dialog.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { routes } from './app.routes';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent, DashboardComponent, FooterComponent, HeaderComponent, ClickOutsideDirective],
+  declarations: [AppComponent, AuthComponent, DashboardComponent, FooterComponent, HeaderComponent, SongLengthDialogComponent, ClickOutsideDirective],
   imports: [
     BrowserModule,
     CommonModule,

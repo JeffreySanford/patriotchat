@@ -18,7 +18,10 @@
     "emitDecoratorMetadata": true,
     "noImplicitAny": false,
     "baseUrl": ".",
-    "paths": {},
+    "paths": {
+      "@patriotchat/shared": ["../../../libs/shared/src/index.ts"],
+      "@patriotchat/shared/*": ["../../../libs/shared/src/*"]
+    },
     "sourceMap": false,
     "importHelpers": true
   },

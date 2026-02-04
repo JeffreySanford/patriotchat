@@ -39,6 +39,8 @@ Avoid biased sources; focus on primary, legal, and civic materials.
 - **Civic Education**: OpenStax U.S. History, MIT OpenCourseWare.
 - **Structured Data**: SCOTUS cases with variables for labels/evaluation.
 
+Detailed guidance (schema, prioritized texts, sample Axolotl config, Constitution-first RAG wiring) lives in `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md`.
+
 ### Recipe
 
 - 30-60% Primary sources.

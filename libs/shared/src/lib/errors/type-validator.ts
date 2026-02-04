@@ -13,8 +13,8 @@ type ValidatedValue =
   | number
   | boolean
   | null
-  | Record<string, ValidatedValue>
-  | ValidatedValue[];
+  | Record<string, unknown>
+  | unknown[];
 
 export class TypeValidator {
   /**

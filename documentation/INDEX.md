@@ -54,6 +54,10 @@
 - [LLM/ARCHITECTURE.md](LLM/ARCHITECTURE.md) - LLM architecture
 - [LLM/LLM-CREATION.md](LLM/LLM-CREATION.md) - Creating LLM instances
 - [LLM/TRAINING-DATA-SOURCES.md](LLM/TRAINING-DATA-SOURCES.md) - Training data
+- [planning/PRO_LIBERTY_BUILD_GUIDE.md](planning/PRO_LIBERTY_BUILD_GUIDE.md) - Pro-liberty roadmap, schema, config, and Constitution-first RAG setup
+- [planning/PRO_LIBERTY_TRACKING.md](planning/PRO_LIBERTY_TRACKING.md) - Sprint tracking board for the pro-liberty implementation plan
+- [planning/PRO_LIBERTY_TEST_STRATEGY.md](planning/PRO_LIBERTY_TEST_STRATEGY.md) - Alignment-focused test ideas to prevent drift
+- [planning/PRO_LIBERTY_DATA_PIPELINE.md](planning/PRO_LIBERTY_DATA_PIPELINE.md) - Batch-level dataset sprint plan for PRO-LLM-002
 
 ### Project Standards
 

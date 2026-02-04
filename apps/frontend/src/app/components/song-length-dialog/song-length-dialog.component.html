@@ -1,0 +1,23 @@
+<div *ngIf="isOpen" class="dialog-overlay" (click)="closeDialog()">
+  <div class="dialog-content" (click)="$event.stopPropagation()">
+    <div class="dialog-header">
+      <h2>Song Length Preference</h2>
+      <button class="close-btn" (click)="closeDialog()">&times;</button>
+    </div>
+    
+    <div class="dialog-body">
+      <p>How long would you like your song to be?</p>
+      
+      <div class="options-grid">
+        <button 
+          *ngFor="let option of songLengthOptions"
+          (click)="selectLength(option.seconds)"
+          class="length-option"
+        >
+          <div class="option-label">{{ option.label }}</div>
+          <div class="option-description">{{ option.description }}</div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

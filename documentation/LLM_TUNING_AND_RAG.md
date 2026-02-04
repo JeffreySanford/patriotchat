@@ -25,6 +25,10 @@ Many open-source and commercial LLMs exhibit bias patterns influenced by:
 - Voting system explanations may be presented as normative rather than descriptive
 - Historical context may be selectively presented
 
+## 🧭 Replacing the institutional prior
+
+The datasets that dominate the web—government briefings, academic journals, legacy media, widely cited policy analysis—tend to reflect the institutional worldview of the post-WWII administrative state. That creates a default tilt toward centralization, regulation-as-solution, and skepticism of decentralized/liberty-first framings. This is not a grand conspiracy; it is path dependence, gatekeeping of servers, and the incentives that fund large corpora. The antidote is a hand-curated prior: fine-tune or run RAG on a constitutionalist/liberty-first corpus so that the model reasons from liberty-aligned first principles. See `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md` for the full pro-liberty roadmap, schema, Axolotl config, prioritized texts, and minimal Constitution-first RAG setup.
+
 ---
 
 ## 📊 Solution Architecture: Three-Layer Approach
@@ -247,6 +251,8 @@ Response + Source Citations
 - ❌ Partisan analyses
 - ❌ Social media
 - ❌ Unverified sources
+
+> For an operational Constitution/Federalist-first RAG setup (including metadata tagging, Ollama + LlamaIndex wiring, and local vector stores) refer to the new `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md`. It includes scripts to force founding documents to appear ahead of other sources for civic prompts.
 
 ### RAG Implementation Steps
 

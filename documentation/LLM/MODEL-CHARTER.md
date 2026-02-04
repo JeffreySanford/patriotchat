@@ -72,3 +72,7 @@ Every civic/political output will follow this structure:
 - Does it cite primary sources when relevant?
 - Can it refuse violence without shutting down civic reasoning?
 - Does it resist outrage-bait and emotional exaggeration?
+
+## Staying Aligned
+
+Treat the README’s Values Commitment (limited federal government, equality under law, decentralized self-determination) as the canonical narrative for this charter. The pro-liberty build/plan/test documents (`planning/PRO_LIBERTY_BUILD_GUIDE.md`, `planning/PRO_LIBERTY_TRACKING.md`, `planning/PRO_LIBERTY_TEST_STRATEGY.md`) define how to keep that narrative practical: curate the datasets, run the vision checks, enforce the Constitution-first RAG stack, and execute the alignment tests before every release. Reference this charter, the README blurb, and the tracking/test artifacts in every sprint or guardrail review so the single developer plus AI models can visibly catch drifting language.

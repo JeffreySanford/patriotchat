@@ -88,7 +88,7 @@ export class RateLimitingGuard implements CanActivate {
       }
 
       return true;
-    } catch (error: Error | typeof Error) {
+    } catch (error: unknown) {
       if (error instanceof HttpException) {
         throw error;
       }

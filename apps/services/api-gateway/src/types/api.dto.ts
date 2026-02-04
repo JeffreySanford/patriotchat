@@ -1,60 +1,40 @@
 /**
  * API DTOs for api-gateway
- * These are local copies of shared DTOs to work around module resolution issues
- * with the dev server. In production builds, these are replaced with imports from
- * @patriotchat/shared.
+ * Combines shared types with local gateway-specific types
  */
 
-// ============================================================================
-// Common Types
-// ============================================================================
-
-export interface ErrorDetails {
-  field?: string;
-  reason?: string;
-  timestamp?: string;
-  requestId?: string;
-  [key: string]: string | undefined;
-}
-
-export interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: string;
-  statusCode?: number;
-}
+// Import from shared library
+export {
+  InferenceModelsResponse,
+  InferenceGenerateRequest,
+  InferenceGenerateResponse,
+  ApiError,
+  ValidationError,
+  ErrorDetails,
+  ApiResponse,
+} from '@patriotchat/shared';
 
 // ============================================================================
-// LLM / Inference Types
+// Analytics Types - Gateway-specific
 // ============================================================================
 
-export interface InferenceModel {
-  id: string;
-  name: string;
-  description: string;
-  provider: string;
+export interface TrackEventRequest {
+  eventType: string;
+  metadata?: Record<string, string | number | boolean>;
 }
 
-export interface InferenceModelsResponse {
-  models: InferenceModel[];
+export interface TrackEventResponse {
+  status: string;
 }
 
-export interface InferenceGenerateRequest {
-  prompt: string;
-  model: string;
-  context?: string;
-}
-
-export interface InferenceGenerateResponse {
-  prompt: string;
-  text: string;
-  model: string;
-  tokens: number;
-  duration: number;
+export interface StatsResponse {
+  total_events: number;
+  active_users: number;
+  avg_latency: number;
 }
 
 // ============================================================================
-// Auth Types
+// Auth Types - Gateway-specific
 // ============================================================================
 
 export interface AuthPayload {
@@ -80,26 +60,7 @@ export interface LoginResponse {
 }
 
 // ============================================================================
-// Analytics Types
-// ============================================================================
-
-export interface TrackEventRequest {
-  eventType: string;
-  metadata?: Record<string, string | number | boolean>;
-}
-
-export interface TrackEventResponse {
-  status: string;
-}
-
-export interface StatsResponse {
-  total_events: number;
-  active_users: number;
-  avg_latency: number;
-}
-
-// ============================================================================
-// Error Handling
+// Error Handling - Gateway-specific
 // ============================================================================
 
 export interface ErrorResponse {
@@ -115,16 +76,4 @@ export interface ErrorResponse {
   };
   message?: string;
   status?: number;
-}
-
-export class ApiError extends Error {
-  constructor(
-    public statusCode: number,
-    public code: string,
-    public details?: ErrorDetails,
-    message?: string,
-  ) {
-    super(message || code);
-    this.name = 'ApiError';
-  }
 }

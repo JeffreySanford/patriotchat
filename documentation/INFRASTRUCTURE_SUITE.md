@@ -179,6 +179,7 @@ Hardware and software baseline inventory
 **Contents:**
 
 - Hardware specifications (Dell XPS 8950, i9-12900K, 65GB RAM)
+- GPU: NVIDIA GeForce RTX 3080 with 10GB VRAM, driver 581.04, CUDA 13.0 (ready for 4-bit LoRA with `bitsandbytes`).
 - OS details (Windows 11 Pro Build 26200)
 - Development tools (Node 22.14.0, pnpm 10.27.0, Docker 29.0.1)
 - Network configuration (Wi-Fi 6E, DHCP)

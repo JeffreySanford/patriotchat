@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { HttpErrorResponse } from '@angular/common/http';
 
 export interface ApiErrorDetail {

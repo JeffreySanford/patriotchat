@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/typedef */
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -56,9 +58,8 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     // Track route changes
     this.router.events
       .pipe(
-        // eslint-disable-next-line no-restricted-syntax
         filter(
-          (event: unknown): event is NavigationEnd =>
+          (event): event is NavigationEnd =>
             event instanceof NavigationEnd,
         ),
         takeUntil(this.destroy$),

@@ -4,6 +4,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  globalSetup: require.resolve('./global-setup.ts'),
   testDir: './src',
   /* Run tests in files that end with .spec.ts */
   testMatch: '**/*.spec.ts',

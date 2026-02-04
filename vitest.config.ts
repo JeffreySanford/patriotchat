@@ -4,9 +4,15 @@ import path from 'path';
 export default defineConfig({
   test: {
     globals: true,
-    environment: 'jsdom',
+    environment: 'happy-dom',
     include: ['apps/frontend/src/**/*.spec.ts', 'apps/api/src/**/*.spec.ts'],
     setupFiles: ['apps/frontend/src/test-setup.ts'],
+    environmentOptions: {
+      jsdom: {
+        resources: 'usable',
+        pretendToBeVisual: true,
+      },
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],
@@ -19,10 +25,14 @@ export default defineConfig({
       ],
     },
     testTimeout: 10000,
+    threads: {
+      useAtomics: true,
+    },
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './apps/frontend/src') as string,
+      '@patriotchat/shared': path.resolve(__dirname, './libs/shared/src/index.ts') as string,
     },
   },
 });

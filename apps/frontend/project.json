@@ -5,6 +5,7 @@
   "prefix": "app",
   "sourceRoot": "src",
   "tags": ["scope:frontend", "type:app"],
+  "implicitDependencies": ["@patriotchat/shared"],
   "targets": {
     "build": {
       "executor": "@nx/angular:application",

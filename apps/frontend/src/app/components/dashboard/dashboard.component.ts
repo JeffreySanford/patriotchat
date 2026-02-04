@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+/// <reference types="node" />
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InferenceService } from '../../services/inference.service';
 import { AnalyticsService } from '../../services/analytics.service';
@@ -8,11 +10,16 @@ import {
   InferenceModelsResponse,
   InferenceGenerateResponse,
 } from '../../types/api.dto';
+import { SongLengthDialogComponent } from '../song-length-dialog/song-length-dialog.component';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
   model?: string;
+  isSong?: boolean;
+  title?: string;
+  genre?: string;
+  lyrics?: string;
 }
 
 interface Model {
@@ -29,13 +36,20 @@ interface Model {
   styleUrls: ['./dashboard.component.scss'],
   standalone: false,
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+  @ViewChild(SongLengthDialogComponent) songLengthDialog!: SongLengthDialogComponent;
+
   selectedModel: string | null = null;
   availableModels: Model[] = [];
   messages: Message[] = [];
   userPrompt: string = '';
   loading: boolean = false;
   error: string = '';
+  estimatedTime: number = 0; // Estimated time in seconds
+  elapsedTime: number = 0; // Elapsed time in seconds
+  private elapsedInterval: NodeJS.Timeout | null = null;
+  private pendingSongPrompt: string = ''; // Store prompt while waiting for song length selection
+  private selectedSongLength: number | null = null; // Selected song length in seconds
 
   constructor(
     private inferenceService: InferenceService,
@@ -86,16 +100,81 @@ export class DashboardComponent implements OnInit {
     }
 
     const userMessage: string = this.userPrompt;
+
+    // Check if this is a song request
+    if (this.isSongRequest(userMessage)) {
+      // Store the prompt and show the song length dialog
+      this.pendingSongPrompt = userMessage;
+      this.userPrompt = ''; // Clear the input
+      this.songLengthDialog.openDialog();
+      return;
+    }
+
+    // Not a song request, proceed normally
+    this.sendInferenceRequest(userMessage, null);
+  }
+
+  private isSongRequest(prompt: string): boolean {
+    const songKeywords: string[] = [
+      'write a song',
+      'write song',
+      'compose a song',
+      'create a song',
+      'generate a song',
+      'write lyrics',
+      'song about',
+      'song in the style',
+    ];
+    return songKeywords.some((kw: string) => prompt.toLowerCase().includes(kw));
+  }
+
+  onSongLengthSelected(lengthSeconds: number): void {
+    if (this.pendingSongPrompt) {
+      this.selectedSongLength = lengthSeconds;
+      this.sendInferenceRequest(this.pendingSongPrompt, lengthSeconds);
+      this.pendingSongPrompt = '';
+    }
+  }
+
+  onSongLengthDialogCancelled(): void {
+    this.pendingSongPrompt = '';
+    this.selectedSongLength = null;
+  }
+
+  private sendInferenceRequest(userMessage: string, songLengthSeconds: number | null): void {
     this.messages.push({ role: 'user', content: userMessage });
-    this.userPrompt = '';
+    this.cdr.detectChanges(); // Trigger change detection for user message
     this.loading = true;
     this.error = '';
 
+    // Will be set by server response
+    this.estimatedTime = 0;
+    this.elapsedTime = 0;
+
+    // Start elapsed time counter
+    if (this.elapsedInterval) {
+      clearInterval(this.elapsedInterval);
+    }
+    this.elapsedInterval = setInterval(() => {
+      this.elapsedTime += 0.1;
+      this.cdr.markForCheck();
+    }, 100);
+
+    const requestBody: {
+      modelId: string;
+      prompt: string;
+      songLengthSeconds?: number;
+    } = {
+      modelId: this.selectedModel!,
+      prompt: userMessage,
+    };
+
+    if (songLengthSeconds !== null) {
+      requestBody.songLengthSeconds = songLengthSeconds;
+    }
+
     this.inferenceService
-      .generateInference({
-        modelId: this.selectedModel,
-        prompt: userMessage,
-      })
+      .generateInference(requestBody)
       .subscribe({
         next: (response: {
           data: InferenceGenerateResponse;
@@ -109,6 +188,11 @@ export class DashboardComponent implements OnInit {
           // Extract text from response.data
           let assistantText: string = '';
           const responseData: InferenceGenerateResponse = response.data || {};
+
+          // Set estimated time from server
+          if (responseData.estimatedTime) {
+            this.estimatedTime = responseData.estimatedTime;
+          }
 
           // Try text field first
           if (responseData.text) {
@@ -128,14 +212,28 @@ export class DashboardComponent implements OnInit {
           console.log('[Dashboard] Text is empty?', !assistantText);
 
           if (assistantText) {
-            this.messages.push({
+            const assistantMessage: Message = {
               role: 'assistant',
               content: assistantText,
               model: this.selectedModel!,
-            });
+              isSong: responseData.isSong,
+              title: responseData.title,
+              genre: responseData.genre,
+              lyrics: responseData.lyrics,
+            };
+            this.messages.push(assistantMessage);
+            this.cdr.detectChanges(); // Trigger change detection for UI update
             console.log(
               '[Dashboard] Message pushed. Total messages:',
               this.messages.length,
+            );
+            if (responseData.isSong) {
+              console.log(
+                `[Dashboard] Song generated: "${responseData.title}" (${responseData.genre})`,
+              );
+            }
+            console.log(
+              `[Dashboard] Response time: ${this.elapsedTime.toFixed(2)}s (estimated: ${this.estimatedTime}s)`,
             );
           } else {
             console.error(
@@ -158,10 +256,23 @@ export class DashboardComponent implements OnInit {
               error: (err: ApiError | HttpErrorResponse): void =>
                 console.error('Analytics error:', err),
             });
+          
+          // Stop elapsed time timer
+          if (this.elapsedInterval) {
+            clearInterval(this.elapsedInterval);
+            this.elapsedInterval = null;
+          }
+          
           this.loading = false;
           this.cdr.markForCheck();
         },
         error: (err: ApiError | HttpErrorResponse): void => {
+          // Stop elapsed time timer
+          if (this.elapsedInterval) {
+            clearInterval(this.elapsedInterval);
+            this.elapsedInterval = null;
+          }
+          
           this.loading = false;
           this.error =
             err instanceof ApiError
@@ -174,7 +285,20 @@ export class DashboardComponent implements OnInit {
   }
 
   logout(): void {
+    // Clean up interval on logout
+    if (this.elapsedInterval) {
+      clearInterval(this.elapsedInterval);
+      this.elapsedInterval = null;
+    }
     this.authService.logout();
+  }
+
+  ngOnDestroy(): void {
+    // Clean up interval when component is destroyed
+    if (this.elapsedInterval) {
+      clearInterval(this.elapsedInterval);
+      this.elapsedInterval = null;
+    }
   }
 
   handleKeydown(event: KeyboardEvent): void {
