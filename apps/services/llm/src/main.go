@@ -245,8 +245,21 @@ func handleListModels(w http.ResponseWriter, r *http.Request) {
 func callOllama(model, prompt string) (string, error) {
 	ollamaURL := "http://patriotchat-ollama:11434/api/generate"
 
+	// Map model IDs to actual Ollama models
+	modelMapping := map[string]string{
+		"liberty-mistral-v1.0": "mistral",
+		"mistral":              "mistral",
+		"llama2":               "llama2",
+		"neural-chat":          "llama2", // fallback to llama2
+	}
+
+	actualModel := modelMapping[model]
+	if actualModel == "" {
+		actualModel = model // fallback to requested model name
+	}
+
 	payload := map[string]interface{}{
-		"model":  model,
+		"model":  actualModel,
 		"prompt": prompt,
 		"stream": false,
 	}
