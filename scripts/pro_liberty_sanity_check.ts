@@ -1,5 +1,16 @@
+/* eslint-disable no-restricted-syntax */
 import { promises as fs } from 'fs';
 import * as path from 'path';
+
+interface ChatMessage {
+  role: string;
+  content: string;
+}
+
+interface DatasetEntry {
+  messages?: ChatMessage[];
+  [key: string]: unknown;
+}
 
 const BASE_DIR: string = path.resolve(process.cwd());
 const DATASET_FILE: string = path.join(
@@ -29,30 +40,37 @@ const REGULATORY_KEYWORDS: string[] = [
   'regulate',
 ];
 
+function isChatMessages(value: unknown): value is ChatMessage[] {
+  if (!Array.isArray(value)) return false;
+  return value.every(
+    (item: unknown): boolean =>
+      typeof item === 'object' &&
+      item !== null &&
+      typeof (item as ChatMessage).role === 'string' &&
+      typeof (item as ChatMessage).content === 'string',
+  );
+}
+
 async function main(): Promise<void> {
   const text: string = await fs.readFile(DATASET_FILE, 'utf-8');
   const lines: string[] = text
     .split('\n')
-    .map((line: string) => line.trim())
-    .filter((line: string) => Boolean(line));
+    .map((line: string): string => line.trim())
+    .filter((line: string): boolean => Boolean(line));
   let missingCitation: number = 0;
   let regulatoryDrift: number = 0;
   const missingSamples: string[] = [];
   const driftSamples: string[] = [];
-  lines.forEach((line: string) => {
-    const entry: Record<
-      string,
-      Record<string, Record<string, string>[]> | string
-    > = JSON.parse(line) as Record<
-      string,
-      Record<string, Record<string, string>[]> | string
-    >;
-    const assistant: string =
-      (entry?.messages as Array<{ role: string; content: string }>)?.find(
-        (m: { role: string; content: string }) => m.role === 'assistant',
-      )?.content || '';
+
+  lines.forEach((line: string): void => {
+    const entry: DatasetEntry = JSON.parse(line) as DatasetEntry;
+    const messages: ChatMessage[] | undefined = entry?.messages;
+    const assistant: string = isChatMessages(messages)
+      ? messages.find((m: ChatMessage): boolean => m.role === 'assistant')
+          ?.content || ''
+      : '';
     const assistantLower: string = assistant.toLowerCase();
-    const hasCitation: boolean = CITATION_KEYWORDS.some((kw: string) =>
+    const hasCitation: boolean = CITATION_KEYWORDS.some((kw: string): boolean =>
       assistantLower.includes(kw),
     );
     if (!hasCitation) {
@@ -61,8 +79,8 @@ async function main(): Promise<void> {
         missingSamples.push(assistant.slice(0, 120));
       }
     }
-    const hasRegulatory: boolean = REGULATORY_KEYWORDS.some((kw: string) =>
-      assistantLower.includes(kw),
+    const hasRegulatory: boolean = REGULATORY_KEYWORDS.some(
+      (kw: string): boolean => assistantLower.includes(kw),
     );
     if (hasRegulatory) {
       regulatoryDrift += 1;
@@ -74,7 +92,6 @@ async function main(): Promise<void> {
 
   const total: number = lines.length;
   const citationScore: number = 1 - missingCitation / total;
-  const regulatoryScore: number = 1 - regulatoryDrift / total;
   console.log(`Sanity check on ${total} prompts`);
   console.log(
     `Citation coverage: ${(citationScore * 100).toFixed(1)}% (${missingCitation} missing)`,
@@ -87,15 +104,17 @@ async function main(): Promise<void> {
   );
   if (missingSamples.length) {
     console.log('\nSample entries lacking citation keywords:');
-    missingSamples.forEach((sample: string) => console.log(`- ${sample}`));
+    missingSamples.forEach((sample: string): void =>
+      console.log(`- ${sample}`),
+    );
   }
   if (driftSamples.length) {
     console.log('\nSample entries showing regulatory drift language:');
-    driftSamples.forEach((sample: string) => console.log(`- ${sample}`));
+    driftSamples.forEach((sample: string): void => console.log(`- ${sample}`));
   }
 }
 
-main().catch((err: Error) => {
+main().catch((err: Error): void => {
   console.error(err);
   process.exit(1);
 });

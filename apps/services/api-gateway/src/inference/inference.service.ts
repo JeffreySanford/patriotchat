@@ -411,7 +411,16 @@ STRICT RULES:
               duration: 150,
               estimatedTime,
               actualTime: 150,
+              isSong,
             };
+
+            if (isSong) {
+              mockResponse.title = 'Mock Song Title';
+              mockResponse.genre = 'Mock Genre';
+              mockResponse.lyrics =
+                'Mock lyrics for the requested song.\nEach line represents a verse.\nThis is simulated content.';
+            }
+
             return of(mockResponse);
           },
         ),

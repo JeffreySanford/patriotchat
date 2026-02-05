@@ -51,7 +51,8 @@ These files provide detailed reference material and should link back to primary 
 | [planning/pro-liberty/PRO_LIBERTY_TEST_STRATEGY.md](planning/pro-liberty/PRO_LIBERTY_TEST_STRATEGY.md) | Alignment test ideas | Values-focused automation & reporting | Prevents drift toward centralization |
 | [planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md](planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md) | Alignment regression harness | Concrete automation + UI checks | Keeps Values Commitment alive after training runs |
 | [planning/pro-liberty/PRO_LIBERTY_DATA_PIPELINE.md](planning/pro-liberty/PRO_LIBERTY_DATA_PIPELINE.md) | Dataset sprint plan | Batch planning + LoRA training checklist | Guides PRO-LLM-002 execution |
-| [../tools/checkpoints/liberty-mistral-v1.0-2026-02-04/README.md](../tools/checkpoints/liberty-mistral-v1.0-2026-02-04/README.md) | Deployment bundle metadata | References the Values Commitment (`README.md#values-commitment`) and linking assets to `PRO_LIBERTY_TRACKING.md` | Serves as the release-home for Liberty Mistral v1.0 |
+| [../tools/checkpoints/liberty-mistral-v1.0-2026-02-04/README.md](../tools/checkpoints/liberty-mistral-v1.0-2026-02-04/README.md) | Deployment bundle metadata (trimmed run) | References the Values Commitment (`README.md#values-commitment`) and linking assets to `PRO_LIBERTY_TRACKING.md` | Contains historical adapter bundle |
+| [../tools/checkpoints/liberty-mistral-v1.0-2026-02-05/README.md](../tools/checkpoints/liberty-mistral-v1.0-2026-02-05/README.md) | Deployment bundle metadata (full run) | Captures the promoted Liberty Mistral adapter along with metadata.json and evaluation notes | Serves as the release-home for the promoted bundle |
 
 ### Infrastructure & Operations
 

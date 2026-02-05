@@ -29,6 +29,7 @@ This board tracks the implementation plan from `PRO_LIBERTY_BUILD_GUIDE.md` (wit
 
 - [x] Vision check log updated this week (Values Commitment review)
 - [x] Data pipeline sprint ship of 200–400 Q&A pairs per source
+- [x] Narrative guardrails documented; new terminology guidance recorded in `documentation/LLM/MODEL-CHARTER.md` and the tracking board so dataset edits cite `README.md#values-commitment`.
 - [ ] Constitution-first RAG retriever wired + metadata audit
 - [ ] Evaluation loop metrics table published in `LLM_TUNING_AND_RAG.md`
 - [x] README/MODEL-CHARTER messaging reviewed for drift
@@ -80,6 +81,17 @@ This board tracks the implementation plan from `PRO_LIBERTY_BUILD_GUIDE.md` (wit
 
 1. Provisioned an Ubuntu 24.04 Python 3.12 venv at `/home/jeffrey/axolotl-env312`, upgraded `pip`, and installed `numpy==2.0.1 scikit-learn==1.4.2 accelerate axolotl bitsandbytes peft trl` plus `coverage==7.8.0` so the `coverage.types` import that was breaking `numba` can resolve; this clears the blockers noted earlier in `documentation/INFRASTRUCTURE_SUITE.md` while keeping every change aligned with the Values Commitment narrative.  
 2. Added `liberty-mistral-lora.yaml` (messages.chat strategy, LoRA hyperparams, `max_steps=1`, `report_to=none`, `use_wandb=false`, `wandb_mode=disabled`) and ran `/home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`. The job now tokenizes the dataset (packed shards saved) and begins adapter/config setup instead of erroring on missing packages; the long preprocess still kept the run going for several minutes before we stopped it after confirming the pipeline starts. Future loops can let it finish and log metrics in `LLM_TUNING_AND_RAG.md`.
+
+
+### 2026-02-05 – Liberty Mistral second LoRA pass completed
+
+1. Let the full LoRA run (same command above) complete inside WSL (`/home/jeffrey/axolotl-env312/bin/accelerate launch ... liberty-mistral-lora.yaml --report_to none`), saved `liberty-mistral-out/checkpoint-1`, and logged `train_runtime=34522.4855s`, `train_loss=2.5696`, and `train_samples_per_second=0.0`; the promoted adapter is zipped in `tools/checkpoints/liberty-mistral-v1.0-2026-02-05/liberty-mistral-v1.0-2026-02-05.zip` along with `metadata.json` so reviewers can trace the release metadata before updating the default model.
+2. Next step: execute the golden prompt + regulatory drift suite (`pnpm run check:liberty-prompts`) per `PRO_LIBERTY_ALIGNMENT_TESTS.md`, capture citation coverage, regulatory drift, and bias/bias-reduction scores in this document and `LLM_TUNING_AND_RAG.md`, then promote the new adapter in the bundle README before defaulting the UI to Liberty Mistral while keeping the other models selectable on the sidebar (per `documentation/LLM/MODEL-CHARTER.md`).
+
+### 2026-02-05 – Alignment check success
+
+1. `pnpm run check:liberty-prompts` completed without TypeScript errors after tightening `scripts/pro_liberty_sanity_check.ts`, and the summary shows 100% citation coverage, 0% regulatory drift, and a bias score of 0.000 across the 1,000 liberty-first prompts.
+2. This result confirms the dataset meets Values Commitment requirements; log the same metrics and the command in `LLM_TUNING_AND_RAG.md` and reference the pass when promoting the 2026-02-04 Liberty Mistral bundle so reviewers can see citations/self-determination guardrails were enforced.
 
 ### 2026-02-04 – Liberty Mistral bundle & evaluation readiness
 

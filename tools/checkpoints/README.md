@@ -26,3 +26,4 @@ Recommendations
 
 - Store the metadata alongside the artifact in `tools/checkpoints` and reference it from the governance log when releasing a model.
 - Include guardrail tags (e.g., `patriotism, civics`) in checkpoint metadata when relevant.
+- Create a folder per release (e.g., `liberty-mistral-v1.0-2026-02-05/`) so the README, metadata.json, and zipped bundle can document the Values Commitment references, training stats, and evaluation command before the Go service imports the adapter.

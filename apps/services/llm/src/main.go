@@ -164,10 +164,10 @@ func handleReady(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check Ollama availability
-	resp, err := http.Get("http://patriotchat-ollama:11434/api/tags")
+	resp, err := http.Get("http://172.19.0.1:11434/api/tags")
 	if err != nil {
 		w.WriteHeader(http.StatusServiceUnavailable)
-		json.NewEncoder(w).Encode(ErrorResponse{Error: "Ollama service unavailable"})
+		json.NewEncoder(w).Encode(ErrorResponse{Error: "Inference service unavailable (Ollama not accessible)"})
 		return
 	}
 	defer resp.Body.Close()
@@ -243,14 +243,15 @@ func handleListModels(w http.ResponseWriter, r *http.Request) {
 }
 
 func callOllama(model, prompt string) (string, error) {
-	ollamaURL := "http://patriotchat-ollama:11434/api/generate"
+	// Call Ollama directly - use gateway IP to reach host machine from container
+	ollamaURL := "http://172.19.0.1:11434/api/generate"
 
 	// Map model IDs to actual Ollama models
 	modelMapping := map[string]string{
-		"liberty-mistral-v1.0": "mistral",
-		"mistral":              "mistral",
+		"liberty-mistral-v1.0": "mistral:7b",
+		"mistral":              "mistral:7b",
 		"llama2":               "llama2",
-		"neural-chat":          "llama2", // fallback to llama2
+		"neural-chat":          "codellama:7b", // fallback to codellama
 	}
 
 	actualModel := modelMapping[model]

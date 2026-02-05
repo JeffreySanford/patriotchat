@@ -75,7 +75,7 @@ Use LoRA/QLoRA for efficiency.
 ### Current Training Status
 
 - **Baseline pass complete**: The trimmed Liberty Mistral LoRA run finished the first pass (`max_steps=1`) and produced `liberty-mistral-out/adapter_model.safetensors`, `tokenizer.*`, and the zipped bundle in `tools/checkpoints/liberty-mistral-v1.0-2026-02-04/`. The README there (and `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md`) ties that artifact back to `README.md#values-commitment` plus the pro-liberty guides, so governance reviewers can trace each version to the constitutional guardrails.
-- **Second pass in progress**: A fuller LoRA pass is now running from the WSL/Ubuntu 24.04 pipeline (`wsl -d Ubuntu -e /home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`), letting `max_steps` cover the whole dataset. Once that run completes we will log the evaluation metrics (loss, citation coverage, regulatory drift scores) in `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md` and `LLM_TUNING_AND_RAG.md`, then serve the resulting adapter from Ollama so the UI defaults to Liberty Mistral while still keeping the other models selectable from the sidebar (per `documentation/LLM/MODEL-CHARTER.md`).
+- **Second pass completed**: The longer LoRA run executed from WSL (`wsl -d Ubuntu -e /home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`) spent ~34,522 seconds (train_loss ≈ 2.57) saving checkpoints into `liberty-mistral-out/checkpoint-1`; the resulting adapter bundle will join the same `tools/checkpoints/liberty-mistral-v1.0-2026-02-04` artifact set once its metadata is refreshed. The next must-pass stage is the golden prompt + regulatory drift suite documented in `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`, after which the UI can default to Liberty Mistral while keeping other models selectable from the sidebar (see `documentation/LLM/MODEL-CHARTER.md` for serving notes).
 
 ### Commands
 
@@ -89,6 +89,11 @@ python train.py --base_model mistral-7b --dataset ./data/charter.jsonl --use_lor
 - Add RAG for modern facts.
 - Configure values profiles in TS interfaces.
 - Deploy via Ollama integration.
+- After the promoted bundle (tools/checkpoints/liberty-mistral-v1.0-2026-02-05) passes the evaluation guardrails, import it with something like:
+  ```bash
+  ollama import tools/checkpoints/liberty-mistral-v1.0-2026-02-05/liberty-mistral-v1.0-2026-02-05.zip
+  ```
+  Then restart the LLM service so `liberty-mistral-v1.0` resolves to the new adapter in Ollama, keeping the other sidebar models selectable per `documentation/LLM/MODEL-CHARTER.md`.
 
 ## Step 5: Evaluate and Iterate
 

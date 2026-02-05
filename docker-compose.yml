@@ -25,9 +25,11 @@ services:
     container_name: patriotchat-ollama
     restart: unless-stopped
     volumes:
-      - ./models:/models
+      # Mount the actual model directory from Windows home
+      - ${USERPROFILE}/.ollama/models:/root/.ollama/models
+      - ${USERPROFILE}/.ollama:/root/.ollama
     environment:
-      - OLLAMA_MODELS_DIR=/models
+      - OLLAMA_MODELS=/root/.ollama/models
     ports:
       - "11434:11434"
     networks:

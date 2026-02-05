@@ -1,0 +1,2 @@
+FROM ~/.ollama/models/mistralai/Mistral-7B-Instruct-v0.3
+ADAPTER ~/.ollama/models/mistralai/Mistral-7B-Instruct-v0.3/adapter_model.safetensors

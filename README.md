@@ -9,7 +9,7 @@ PatriotChat is a privacy-first, enterprise-grade civic intelligence platform com
 - **Production Ready**: All critical infrastructure operational ✅
 - **LLM Integration**: End-to-end working (Ollama → Go service → NestJS → Angular UI) ✅
 
-- **Liberty Mistral v1.0**: Liberty-first dataset (1,000 prompts) generated, LoRA adapters packaged under `tools/checkpoints/liberty-mistral-v1.0-2026-02-04`, and evaluation prep guided by the Values Commitment in `documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md` ✅
+- **Liberty Mistral v1.0**: Liberty-first dataset (1,000 prompts) generated, LoRA adapters packaged under `tools/checkpoints/liberty-mistral-v1.0-2026-02-05`, and evaluation prep guided by the Values Commitment in `documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md` ✅
 - **Code Quality**: 52% linting improvement (3981 → 1860 issues, additional 10 targeted fixes) ✅
 - **Type Safety**: AppException, error-handler.ts, type-guards.ts, ValidatedValue type alias implemented ✅
 - **This Sprint**: 29+ story points completed (LLM, infrastructure fixes, type safety, linting campaign) ✅
@@ -51,7 +51,7 @@ PatriotChat is anchored to a liberty-first prior: limited federal government, co
 ### Pro-Liberty LLM Workstream
 
 - **Dataset generation**: `pnpm run generate:liberty-prompts` seeds `my_liberty_dataset/train.jsonl` with 1,000 liberty-first Q&A pairs culled from the Federalist/Anti-Federalist canon so enumerated powers, self-determination, and constitutional equality stay front and center (`README.md#values-commitment`).
-- **LoRA training**: `liberty-mistral-lora.yaml` runs (via `/home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`) have produced `liberty-mistral-out/adapter_model.safetensors` plus tokenizer artifacts; the bundle now lives under `tools/checkpoints/liberty-mistral-v1.0-2026-02-04/` with a README pointing back to the Values Commitment and `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`.
+- **LoRA training**: `liberty-mistral-lora.yaml` runs (via `/home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`) produced `liberty-mistral-out/adapter_model.safetensors` plus tokenizer artifacts; the second pass artifacts are now zipped under `tools/checkpoints/liberty-mistral-v1.0-2026-02-05/` with metadata and a README pointing back to the Values Commitment and `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`.
 - **Evaluation & serving**: The golden prompt suite, citation coverage, and regulatory-drift checks described in `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md` and `documentation/LLM/LLM-TUNING/LLM_TUNING_AND_RAG.md` gate when Liberty Mistral becomes the default and keep fallback models selectable from the UI.
 
 ## Quick Start
@@ -103,7 +103,7 @@ docker-compose up postgres ollama  # Terminal 3: Dependencies
 1. **Generate the civic JSONL prompts**  
    `pnpm run generate:liberty-prompts` writes 1,000 liberty-first Q&A pairs to `my_liberty_dataset/train.jsonl` using the schema in `documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md`, keeping enumerated powers, self-determination, and equality under law at the center (`README.md#values-commitment`).
 2. **Run the trimmed LoRA job**  
-   From the Python 3.12 environment (`/home/jeffrey/axolotl-env312`), run `/home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`. When the job completes, the adapter, tokenizer, and metadata live in `liberty-mistral-out/`, are zipped under `tools/checkpoints/liberty-mistral-v1.0-2026-02-04/`, and the README there points back to the Values Commitment and `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`.
+   From the Python 3.12 environment (`/home/jeffrey/axolotl-env312`), run `/home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`. When the job completes, the adapter, tokenizer, and metadata live in `liberty-mistral-out/`, and incorporating the second pass `liberty-mistral-v1.0-2026-02-05.zip` under `tools/checkpoints/liberty-mistral-v1.0-2026-02-05/` (plus metadata) links the artifact back to the Values Commitment and `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`.
 3. **Run alignment checks before release**  
    Repeat the golden prompt suite, citation coverage, and regulatory drift monitor documented in `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`, log the metrics plus dataset hash in `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md`, and only then let the UI default to Liberty Mistral while keeping other models selectable from the sidebar.
 
@@ -237,7 +237,7 @@ curl "http://localhost:4003/policy/search?entity_id=test-entity"
 ### Phase 1: LLM Training (Sprint 1-2)
 
 - [x] Build JSONL civic instruction dataset with TypeScript schema and generate 1,000 liberty-first prompts (`my_liberty_dataset/train.jsonl`).  
-- [x] Run the trimmed Liberty Mistral LoRA training (`liberty-mistral-lora.yaml`) – resulting adapter/tokenizer/metadata live in `liberty-mistral-out/` and the zipped bundle lives under `tools/checkpoints/liberty-mistral-v1.0-2026-02-04/` with Values Commitment notes.
+    - [x] Run the trimmed Liberty Mistral LoRA training (`liberty-mistral-lora.yaml`) – resulting adapter/tokenizer/metadata live in `liberty-mistral-out/` and the zipped bundle now lives under `tools/checkpoints/liberty-mistral-v1.0-2026-02-05/` with Values Commitment notes plus metadata covering the second pass evaluation.
 - [ ] Implement the label-discipline evaluation suite, regulatory drift checks, and citation coverage logging (`documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`) before declaring Liberty Mistral the default.
 - [ ] Publish evaluation snapshots, dataset hashes, and bias scores in `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md`.
 

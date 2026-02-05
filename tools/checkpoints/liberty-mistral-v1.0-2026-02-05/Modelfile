@@ -1,0 +1,2 @@
+FROM mistralai/Mistral-7B-Instruct-v0.3
+ADAPTER ../../../liberty-mistral-out/adapter_model.safetensors

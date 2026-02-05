@@ -52,3 +52,9 @@ services/heavy/.env
 liberty-mistral-out/
 last_run_prepared/
 tools/checkpoints/liberty-mistral-v1.0-2026-02-04/liberty-mistral-v1.0-2026-02-04.zip
+tools/checkpoints/liberty-mistral-v1.0-2026-02-05/liberty-mistral-v1.0-2026-02-05.zip
+tools/checkpoints/liberty-mistral-v1.0-2026-02-05/liberty-mistral-out/
+apps/services/llm/venv/
+apps/services/llm/src/__pycache__/
+.ollama/
+/.ollama/

@@ -193,6 +193,16 @@ civic_corrections.jsonl format:
 }
 ```
 
+## 🗂️ Evaluation Snapshot (2026-02-05)
+
+After the second LoRA pass completed, we promoted the artifacts to `tools/checkpoints/liberty-mistral-v1.0-2026-02-05/`. The liberty-first sanity check script (`pnpm run check:liberty-prompts`) now reports:
+
+- Citation coverage: 100% across 1,000 prompts
+- Regulatory drift rate: 0%
+- Bias score: 0.000
+
+Log these scores alongside the bundle metadata (metadata.json) and cite `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md` when releasing this adapter so evaluators can verify the guardrails before serving it via Ollama.
+
 **Dataset Requirements:**
 
 - 500-2000 Q&A pairs for adequate fine-tuning

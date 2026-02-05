@@ -1,0 +1,18 @@
+{
+  "modelName": "liberty-mistral-v1.0",
+  "version": "2026-02-05",
+  "datasetHash": "381ce198707e5232cada9277fcd822931eb21da4ea3056b2cd2775637c7ed01d",
+  "trainRuntimeSec": 34522.4855,
+  "trainLoss": 2.5696,
+  "trainStepsPerSecond": 0.0,
+  "trainSamplesPerSecond": 0.0,
+  "trainEpochsCompleted": 0.31,
+  "evaluation": {
+    "citationCoverage": 1,
+    "regulatoryDrift": 0,
+    "biasScore": 0.0,
+    "command": "pnpm run check:liberty-prompts"
+  },
+  "commit": "f10f12e639ce113109badf224c1c0b6a9051c2d4",
+  "notes": "Second LoRA pass finished in WSL; evaluation results referenced in documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md."
+}
