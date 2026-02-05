@@ -1,0 +1,6 @@
+
+ NX   Unable to resolve @nx/linter:eslint.
+
+Unable to resolve local plugin with import path @nx/linter
+Pass --verbose to see the stacktrace.
+

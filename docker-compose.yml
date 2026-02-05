@@ -24,7 +24,6 @@ services:
     container_name: patriotchat-ollama
     restart: unless-stopped
     volumes:
-      # Mount the actual model directory from Windows home
       - ${USERPROFILE}/.ollama/models:/root/.ollama/models
       - ${USERPROFILE}/.ollama:/root/.ollama
     environment:
@@ -107,6 +106,7 @@ services:
       - DB_NAME=patriotchat
     volumes:
       - ./data/founding:/data/founding:ro
+      - ./logs:/app/logs
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost:4004/health']
       interval: 10s

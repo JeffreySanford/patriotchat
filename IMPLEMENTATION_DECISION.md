@@ -10,7 +10,7 @@
 
 Ollama registry at `registry.ollama.ai` returned 404, blocking model pull:
 
-```
+```sh
 2024-10-15T10:23:45 ERROR: Failed to pull mistralai/Mistral-7B-Instruct-v0.3
   Status code: 404 from https://registry.ollama.ai/...
 ```
@@ -99,7 +99,7 @@ These are archived for historical reference. Safe to delete if cleaning up.
 
 ## Current Architecture
 
-```
+```text
 Frontend (Angular, port 4200)
     ↓
 NestJS Gateway (port 3000)
