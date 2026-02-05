@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start:deps": "docker compose up -d",
+    "start:deps": "docker compose up -d && pnpm run status:report",
     "start": "cross-env LLM_SERVICE_URL=http://localhost:4004 pnpm nx run-many --target=serve --projects=frontend,api-gateway,auth",
     "start:frontend": "pnpm nx serve frontend --port 4200",
     "start:api": "pnpm nx serve api --port 3000",
@@ -15,7 +15,8 @@
     "lint:staged": "pnpm exec lint-staged",
     "test": "pnpm nx test",
     "generate:liberty-prompts": "tsc scripts/pro_liberty_prompt_generator.ts --outDir scripts/dist && node scripts/dist/pro_liberty_prompt_generator.js",
-    "check:liberty-prompts": "tsc scripts/pro_liberty_sanity_check.ts --outDir scripts/dist && node scripts/dist/pro_liberty_sanity_check.js"
+    "check:liberty-prompts": "tsc scripts/pro_liberty_sanity_check.ts --outDir scripts/dist && node scripts/dist/pro_liberty_sanity_check.js",
+    "status:report": "node tools/status-report.js"
   },
   "lint-staged": {
     "*.(ts|tsx|js|jsx)": [

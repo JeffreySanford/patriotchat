@@ -88,13 +88,15 @@ export class RateLimitingGuard implements CanActivate {
       }
 
       return true;
-    } catch (error: unknown) {
+    } catch (error) {
+      const typedError: Error | AppException | HttpException = error as
+        | Error
+        | AppException
+        | HttpException;
       if (error instanceof HttpException) {
         throw error;
       }
-      const errorMessage: string = getErrorMessage(
-        error as Error | AppException,
-      );
+      const errorMessage: string = getErrorMessage(typedError);
       console.error('Rate limiting guard error:', errorMessage);
       throw new HttpException(
         'Internal Server Error',

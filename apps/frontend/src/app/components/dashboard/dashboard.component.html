@@ -7,6 +7,24 @@
   </app-song-length-dialog>
 
   <div class="chat-panel">
+    <div *ngIf="availableModels.length" class="model-selector">
+      <div class="model-selector__label">Model</div>
+      <div class="model-selector__chips">
+        <button
+          *ngFor="let model of availableModels"
+          type="button"
+          class="model-chip"
+          (click)="selectModel(model.id)"
+          [class.selected]="model.id === selectedModel"
+          [attr.aria-pressed]="model.id === selectedModel"
+        >
+          <span class="model-chip__name">{{ model.name }}</span>
+          <small *ngIf="model.description" class="model-chip__description">
+            {{ model.description }}
+          </small>
+        </button>
+      </div>
+    </div>
     <div class="messages" #messagesContainer>
       <div *ngFor="let msg of messages" [class.user]="msg.role === 'user'" class="message">
         <div class="message-content">

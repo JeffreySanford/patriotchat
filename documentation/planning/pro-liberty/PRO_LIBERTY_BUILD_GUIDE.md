@@ -11,45 +11,54 @@ When we fine-tune or run RAG over a hand-curated corpus, we replace that institu
 ## 2. 2026 Hardware & Tooling Roadmap
 
 ### Base model
+
 - Start with `mistralai/Mistral-7B-Instruct-v0.3`. If you have extra VRAM (70–80 GB), swap in the new 8×7B or 8×22B MoE variants. Mistral flavors are Apache 2.0, strong out of the box, and easily quantized.
 - Use Unsloth or Axolotl for LoRA/QLoRA; they both squeeze a 24–48 GB card (or Colab Pro A100) into a fine-tuning run.
 
 ### Dataset strategy (this is the signal)
+
 - Gold primary sources: U.S. Constitution, Declaration, Federalist & Anti-Federalist Papers.
 - Constitutionalists and classical liberals: Locke, Montesquieu (separation of powers sections), Madison, Jefferson, Paine, Bastiat, Hayek, Mises, Friedman, Rand (targeted excerpts).
 - Legal reinforcement: Supreme Court majority opinions that emphasize enumerated powers, individual rights, and limits on federal power.
 - American liberty voices: Reagan, Coolidge, Goldwater, Sowell, Walter Williams.
 
 ### Synthetic instruction data
+
 - Generate thousands of Q&A pairs with a strong assistant (current Claude or Grok) using a directive such as:
   > “Respond from first principles: prioritize individual liberty, equality before the law, self-determination, rule of law, and skepticism of concentrated power.”
 - Human-review to eliminate drift into partisanship, conspiracy, or over-skepticism.
 
 ### RAG corpus
+
 - Embed the full text of the above sources plus select policy papers (Cato, Reason, Heritage), historical voting records, and ideological manifestos.
 - Store vectors in Chroma, LanceDB, or Qdrant and always retrieve Constitution/Federalist chunks first before any other source.
 
 ### Fine-tuning recipe (Axolotl/Unsloth LoRA)
+
 - LoRA rank: 16–32, alpha: 32, dropout: 0.05.
 - Train on 10k–50k very high-quality examples. Focus on tone: direct, principle-first, anti-collectivist without conspiratorial language.
 - Compute budget: 1–3 epochs; fewer epochs if data is dense.
 
 ### Evaluation
+
 - Manual test set of loaded prompts (“Should the federal government regulate X?”, “What does equality mean?”, “When is civil disobedience justified?”).
 - Score for liberty-first reasoning and citation of primary sources.
 
 ### Tools stack (low-cost / local-first)
+
 - **Training:** Unsloth, Axolotl, Hugging Face TRL + PEFT.
 - **RAG:** LlamaIndex or LangChain with local embeddings (Snowflake Arctic Embed or similar).
 - **Inference:** vLLM, Ollama, or LM Studio for local serving.
 - **Quantization:** GGUF Q4/ Q5 for laptops.
 
 ### Pitfalls to avoid
+
 - Don’t scrape generic conservative blog roll; you will inherit the same echo chamber you aim to escape.
 - Keep primary sources heavily weighted to anchor reasoning in actual founding principles instead of modern spin.
 - Test for both over-correction (e.g., refusing reasonable government function) and under-correction (default regulatory framing).
 
 ### It’s doable
+
 A 15-year software veteran with one good GPU (or rented A100/H100 for a weekend) plus a weekend of data curation can deliver a prototype that *already feels meaningfully different* from the big labs.
 
 If you want direct help, there’s an offer embedded here: starter dataset schema, ready-to-run Axolotl config, prioritized texts, and a minimal RAG setup that cites the Constitution/Federalist first.
@@ -82,13 +91,14 @@ Use JSONL (one object per line) so Axolotl/Unsloth ingest it easily. Each entry 
 ```
 
 Optional fields:
+
 - `priority` (1–10): higher values mean you weight it more during sampling.
 - `source_text`: include an excerpt or URL of the primary text.
 - `guardrails`: e.g., `"guardrails": ["no violence", "prefers due process"]`.
 
 File structure suggestion:
 
-```
+```text
 my_liberty_dataset/
 ├── train.jsonl
 ├── val.jsonl

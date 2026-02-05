@@ -47,3 +47,8 @@ __screenshots__/
 
 # Ignore local service env files
 services/heavy/.env
+
+# Local training outputs
+liberty-mistral-out/
+last_run_prepared/
+tools/checkpoints/liberty-mistral-v1.0-2026-02-04/liberty-mistral-v1.0-2026-02-04.zip

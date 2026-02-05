@@ -13,8 +13,8 @@ type ValidatedValue =
   | number
   | boolean
   | null
-  | Record<string, unknown>
-  | unknown[];
+  | Record<string, ValidatedValue | undefined | null>
+  | (ValidatedValue | undefined | null)[];
 
 export class TypeValidator {
   /**
@@ -41,7 +41,8 @@ export class TypeValidator {
     // Check required fields
     for (const [key, expectedType] of Object.entries(schema)) {
       const value: ValidatedValue | undefined = obj[key];
-      const actualType: string = this.getType(value ?? null);
+      const actualType: string =
+        (this.getType(value ?? null) as string) || 'unknown';
 
       if (!this.typeMatches(actualType, expectedType)) {
         errors[key] = `Expected ${expectedType}, got ${actualType}`;

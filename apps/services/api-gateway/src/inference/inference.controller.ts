@@ -31,13 +31,8 @@ export class InferenceController {
   getModels(): Observable<InferenceModelsResponse> {
     console.log('InferenceController: getModels called');
     return this.inferenceService.getModels().pipe(
-      map((modelIds: string[]) => ({
-        models: modelIds.map((id: string) => ({
-          id,
-          name: id,
-          description: `${id} language model`,
-          provider: 'Local',
-        })),
+      map((models: InferenceModelsResponse['models']) => ({
+        models,
       })),
       catchError((err: Error | ErrorResponse) => {
         console.error('InferenceController: error in getModels:', err);
@@ -69,7 +64,12 @@ export class InferenceController {
     }
 
     return this.inferenceService
-      .generateInference(body.prompt, modelId, body.context, body.songLengthSeconds)
+      .generateInference(
+        body.prompt,
+        modelId,
+        body.context,
+        body.songLengthSeconds,
+      )
       .pipe(
         catchError((err: Error | ErrorResponse) => {
           console.error(

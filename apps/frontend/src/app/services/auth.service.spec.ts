@@ -2,8 +2,6 @@ import { describe, it, expect } from 'vitest';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
-  let service: AuthService;
-
   describe('Service Initialization', () => {
     it('should create service instance', () => {
       // Service can be created without TestBed

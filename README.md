@@ -2,12 +2,14 @@
 
 PatriotChat is a privacy-first, enterprise-grade civic intelligence platform combining an Nx-managed Angular frontend, NestJS API Gateway with 4-dimensional rate limiting, PostgreSQL audit logs, and Go microservices around local Ollama inference. Constitutional guardrails, strongly typed contracts, immutable audit trails, and transparent governance are embedded in every layer so the platform remains auditable, performant (< 100ms auth), and production-ready.
 
-**[→ View Current Project Status](PROJECT_STATUS.md)** — ✅ All 5 critical requirements met, 9 services running, E2E verified, LLM end-to-end working
+**[→ View Current Project Status](PROJECT_STATUS.md)** — ✅ All 5 critical requirements met, 9 services running, E2E verified, and the Liberty Mistral v1.0 pipeline now integrated
 
-## 📊 Status at a Glance (Updated 2026-02-03 13:45 UTC)
+## 📊 Status at a Glance (Updated 2026-02-04 18:10 UTC)
 
 - **Production Ready**: All critical infrastructure operational ✅
 - **LLM Integration**: End-to-end working (Ollama → Go service → NestJS → Angular UI) ✅
+
+- **Liberty Mistral v1.0**: Liberty-first dataset (1,000 prompts) generated, LoRA adapters packaged under `tools/checkpoints/liberty-mistral-v1.0-2026-02-04`, and evaluation prep guided by the Values Commitment in `documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md` ✅
 - **Code Quality**: 52% linting improvement (3981 → 1860 issues, additional 10 targeted fixes) ✅
 - **Type Safety**: AppException, error-handler.ts, type-guards.ts, ValidatedValue type alias implemented ✅
 - **This Sprint**: 29+ story points completed (LLM, infrastructure fixes, type safety, linting campaign) ✅
@@ -44,7 +46,13 @@ All 5 critical requirements have been **met and verified**:
 
 ## 🇺🇸 Values Commitment
 
-PatriotChat is anchored to a liberty-first prior: limited federal government, constitutional guardrails, equality under law, and decentralized self-determination. Every data sprint, model charter, and RAG pipeline should reinforce those principles rather than mirroring modern media narratives. See `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md` for the detailed roadmap that keeps the model on that path.
+PatriotChat is anchored to a liberty-first prior: limited federal government, constitutional guardrails, equality under law, and decentralized self-determination. Every data sprint, model charter, and RAG pipeline should reinforce those principles rather than mirroring modern media narratives. See `documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md` for the detailed roadmap that keeps the model on that path.
+
+### Pro-Liberty LLM Workstream
+
+- **Dataset generation**: `pnpm run generate:liberty-prompts` seeds `my_liberty_dataset/train.jsonl` with 1,000 liberty-first Q&A pairs culled from the Federalist/Anti-Federalist canon so enumerated powers, self-determination, and constitutional equality stay front and center (`README.md#values-commitment`).
+- **LoRA training**: `liberty-mistral-lora.yaml` runs (via `/home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`) have produced `liberty-mistral-out/adapter_model.safetensors` plus tokenizer artifacts; the bundle now lives under `tools/checkpoints/liberty-mistral-v1.0-2026-02-04/` with a README pointing back to the Values Commitment and `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`.
+- **Evaluation & serving**: The golden prompt suite, citation coverage, and regulatory-drift checks described in `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md` and `documentation/LLM/LLM-TUNING/LLM_TUNING_AND_RAG.md` gate when Liberty Mistral becomes the default and keep fallback models selectable from the UI.
 
 ## Quick Start
 
@@ -69,6 +77,9 @@ docker-compose ps
 # Install dependencies
 pnpm install
 
+# Generate the liberty-first dataset prompts
+pnpm run generate:liberty-prompts
+
 # Start services in separate terminals
 pnpm run start:all          # (Windows) opens all terminals
 # OR manually:
@@ -86,6 +97,15 @@ docker-compose up postgres ollama  # Terminal 3: Dependencies
 3. Verify: `docker-compose ps` (all services should be healthy)
 4. Access frontend: <http://localhost:4200>
 5. Test API: `curl http://localhost:3000/health`
+
+## Training the Liberty Mistral Model
+
+1. **Generate the civic JSONL prompts**  
+   `pnpm run generate:liberty-prompts` writes 1,000 liberty-first Q&A pairs to `my_liberty_dataset/train.jsonl` using the schema in `documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md`, keeping enumerated powers, self-determination, and equality under law at the center (`README.md#values-commitment`).
+2. **Run the trimmed LoRA job**  
+   From the Python 3.12 environment (`/home/jeffrey/axolotl-env312`), run `/home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`. When the job completes, the adapter, tokenizer, and metadata live in `liberty-mistral-out/`, are zipped under `tools/checkpoints/liberty-mistral-v1.0-2026-02-04/`, and the README there points back to the Values Commitment and `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`.
+3. **Run alignment checks before release**  
+   Repeat the golden prompt suite, citation coverage, and regulatory drift monitor documented in `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`, log the metrics plus dataset hash in `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md`, and only then let the UI default to Liberty Mistral while keeping other models selectable from the sidebar.
 
 ## Developer workflow (recommended) 🛠️
 
@@ -123,7 +143,11 @@ All documentation is organized in the `documentation/` folder:
 - **[documentation/OVERVIEW.md](documentation/OVERVIEW.md)** — System architecture & development workflow
 - **[documentation/api/](documentation/api/)** — Complete API reference
 - **[documentation/LLM/](documentation/LLM/)** — LLM system & governance
-- **[documentation/planning/PRO_LIBERTY_TEST_STRATEGY.md](documentation/planning/PRO_LIBERTY_TEST_STRATEGY.md)** — Alignment-focused tests to guard Values Commitment
+- **[documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md](documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md)** — Pro-liberty roadmap, curated schema, fine-tuning config, Constitution-first RAG setup
+- **[documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md](documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md)** — Automation + regression tests to keep the Values Commitment front and center
+- **[documentation/planning/pro-liberty/PRO_LIBERTY_TEST_STRATEGY.md](documentation/planning/pro-liberty/PRO_LIBERTY_TEST_STRATEGY.md)** — Alignment-focused tests to guard Values Commitment
+- **[documentation/planning/pro-liberty/PRO_LIBERTY_DATA_PIPELINE.md](documentation/planning/pro-liberty/PRO_LIBERTY_DATA_PIPELINE.md)** — Batch-level dataset sprint plan for PRO-LLM-002
+- **[documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md](documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md)** — Sprint tracking board for vision checks, training bursts, RAG rollout, and evaluations
 - **[documentation/CODING-STANDARDS.md](documentation/CODING-STANDARDS.md)** — Code standards & patterns
 - **[documentation/CONTRIBUTING.md](documentation/CONTRIBUTING.md)** — How to contribute
 - **[documentation/GOVERNANCE.md](documentation/GOVERNANCE.md)** — Project governance & exceptions
@@ -212,15 +236,16 @@ curl "http://localhost:4003/policy/search?entity_id=test-entity"
 
 ### Phase 1: LLM Training (Sprint 1-2)
 
-- [ ] Build JSONL civic instruction dataset with TypeScript schema
-- [ ] Implement label-discipline evaluation suite (10 prompts)
-- [ ] Coordinate Constitutional Experiment Assistant (CEA) training with Go pipeline
+- [x] Build JSONL civic instruction dataset with TypeScript schema and generate 1,000 liberty-first prompts (`my_liberty_dataset/train.jsonl`).  
+- [x] Run the trimmed Liberty Mistral LoRA training (`liberty-mistral-lora.yaml`) – resulting adapter/tokenizer/metadata live in `liberty-mistral-out/` and the zipped bundle lives under `tools/checkpoints/liberty-mistral-v1.0-2026-02-04/` with Values Commitment notes.
+- [ ] Implement the label-discipline evaluation suite, regulatory drift checks, and citation coverage logging (`documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`) before declaring Liberty Mistral the default.
+- [ ] Publish evaluation snapshots, dataset hashes, and bias scores in `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md`.
 
 ### Phase 2: Data Integration (Sprint 3-4)
 
-- [ ] Add RAG retrieval layer for civic data sources
-- [ ] Implement provenance metadata tracking
-- [ ] Build values profile filters
+- [ ] Add the Constitution-first RAG retrieval layer with `source_type=founding_core` prioritization (`documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md`).
+- [ ] Implement provenance metadata tracking for policy/funding sources and guardrail citations.
+- [ ] Build values-profile filters so UI queries can gain liberty-focused context.
 
 ### Phase 3: Production Ops (Ongoing)
 
@@ -263,5 +288,5 @@ Service architecture follows microservices best practices suitable for Kubernete
 
 ---
 
-**Last Updated**: 2026-02-03  
+**Last Updated**: 2026-02-04  
 **Status**: ✅ Production-Ready · All 5 Critical Requirements Met · 9 Services Running · E2E Verified

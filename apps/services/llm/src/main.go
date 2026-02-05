@@ -16,9 +16,51 @@ import (
 
 var db *sql.DB
 
+const defaultModelID = "liberty-mistral-v1.0"
+
+type ModelInfo struct {
+	ID            string `json:"id"`
+	Name          string `json:"name"`
+	Description   string `json:"description,omitempty"`
+	Provider      string `json:"provider,omitempty"`
+	ContextWindow int    `json:"contextWindow,omitempty"`
+}
+
+var availableModels = []ModelInfo{
+	{
+		ID:            defaultModelID,
+		Name:          "Liberty Mistral v1.0",
+		Description:   "Values-first constitutional reasoning with enumerated powers citations",
+		Provider:      "local",
+		ContextWindow: 8192,
+	},
+	{
+		ID:            "mistral",
+		Name:          "Mistral 7B Instruct (Ollama)",
+		Description:   "General-styled Mistral instruct model",
+		Provider:      "ollama-maintained",
+		ContextWindow: 8192,
+	},
+	{
+		ID:            "llama2",
+		Name:          "Llama 2",
+		Description:   "Ollama-hosted Llama 2 baseline",
+		Provider:      "ollama",
+		ContextWindow: 4096,
+	},
+	{
+		ID:            "neural-chat",
+		Name:          "Neural Chat",
+		Description:   "Legacy Neural Chat endpoint",
+		Provider:      "ollama",
+		ContextWindow: 4096,
+	},
+}
+
 type InferenceRequest struct {
 	Prompt  string `json:"prompt"`
 	Model   string `json:"model"`
+	ModelID string `json:"modelId"`
 	Context string `json:"context,omitempty"`
 	UserID  string `json:"user_id"`
 }
@@ -155,13 +197,17 @@ func handleGenerate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Model == "" {
-		req.Model = "llama2"
+	modelID := req.ModelID
+	if modelID == "" {
+		modelID = req.Model
+	}
+	if modelID == "" {
+		modelID = defaultModelID
 	}
 
 	// Call Ollama
 	start := time.Now()
-	result, err := callOllama(req.Model, req.Prompt)
+	result, err := callOllama(modelID, req.Prompt)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(ErrorResponse{Error: fmt.Sprintf("Inference failed: %v", err)})
@@ -170,14 +216,14 @@ func handleGenerate(w http.ResponseWriter, r *http.Request) {
 
 	response := InferenceResponse{
 		Result:    result,
-		Model:     req.Model,
+		Model:     modelID,
 		Tokens:    len(result) / 4, // Rough estimate
 		Duration:  time.Since(start).String(),
 		CreatedAt: time.Now().UTC(),
 	}
 
 	// Log to database (async)
-	go logInference(req.UserID, req.Model, req.Prompt, result)
+	go logInference(req.UserID, modelID, req.Prompt, result)
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
@@ -192,7 +238,7 @@ func handleListModels(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]interface{}{
-		"models": []string{"llama2", "mistral", "neural-chat"},
+		"models": availableModels,
 	})
 }
 

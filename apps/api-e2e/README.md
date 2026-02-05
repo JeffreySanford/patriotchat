@@ -12,7 +12,7 @@ This directory contains organized Playwright E2E tests covering:
 
 ## Structure
 
-```
+```text
 src/
 ├── critical-requirements/
 │   ├── performance.spec.ts          # Auth < 100ms requirement
@@ -53,6 +53,7 @@ pnpm nx test api-e2e -- --watch
 ### CI/CD
 
 Tests run automatically on:
+
 - Push to `main`, `develop`, or feature branches
 - Pull requests to `main` or `develop`
 
@@ -86,6 +87,7 @@ pnpm run start
 ## Test Coverage
 
 ### Critical Requirements (5/5)
+
 - ✅ **Performance**: All services respond in < 100ms
 - ✅ **Audit Trail**: PostgreSQL immutable logging
 - ✅ **Database**: Connection pooling, concurrent requests
@@ -93,12 +95,14 @@ pnpm run start
 - ✅ **Rate Limiting**: 4-dimensional guards
 
 ### E2E Workflows
+
 - User registration & login flows
 - Multi-query sessions
 - Cross-service integration
 - Error handling & recovery
 
 ### Performance Metrics
+
 - Service latency benchmarks
 - Concurrent request handling
 - Database query performance
@@ -107,11 +111,13 @@ pnpm run start
 ## Test Results
 
 Results are saved to `test-results/`:
+
 - HTML report: `index.html`
 - JUnit XML: `junit.xml`
 - JSON: `results.json`
 
 View the HTML report:
+
 ```bash
 pnpm exec playwright show-report test-results
 ```
@@ -119,23 +125,28 @@ pnpm exec playwright show-report test-results
 ## Configuration
 
 ### Playwright Config
+
 [playwright.config.ts](./playwright.config.ts) - Timeout, reporters, browsers
 
 ### Nx Project Config
+
 [project.json](./project.json) - Build targets, configurations
 
 ### TypeScript Config
+
 [tsconfig.json](./tsconfig.json) - Compiler options
 
 ## Support Files
 
 ### API Client (`support/api-client.ts`)
+
 - `apiRequest()` - Route to correct service
 - `measureLatency()` - Performance tracking
 - `registerTestUser()` - User helper
 - `loginUser()` - Auth helper
 
 ### Test Data (`support/test-data.ts`)
+
 - `generateTestUser()` - Unique user generation
 - `generateTestQuery()` - Query generation
 - `TEST_DATA` - Constants
@@ -145,6 +156,7 @@ pnpm exec playwright show-report test-results
 ### GitHub Actions Workflows
 
 **E2E Tests**: `.github/workflows/e2e-ci.yml`
+
 - Runs on all branches
 - Installs Playwright
 - Starts services
@@ -152,11 +164,13 @@ pnpm exec playwright show-report test-results
 - Uploads artifacts
 
 **Unit Tests**: `.github/workflows/unit-tests.yml`
+
 - Runs Jest/Vitest
 - Multiple Node versions
 - Code coverage
 
 **Full Pipeline**: `.github/workflows/ci.yml`
+
 - Quality gates
 - Build
 - Unit tests
@@ -166,15 +180,18 @@ pnpm exec playwright show-report test-results
 ## Troubleshooting
 
 ### Tests fail with "Connection refused"
+
 - Ensure all services are running: `docker-compose ps`
 - Check service health: `curl http://localhost:3000/health`
 
 ### Playwright browsers not installed
+
 ```bash
 pnpm exec playwright install --with-deps
 ```
 
 ### CI tests failing but local passing
+
 - Check environment variables in GitHub Actions
 - Verify service ports match CI configuration
 - Check CI logs for service startup errors

@@ -28,7 +28,26 @@ describe('InferenceController', () => {
     });
 
     it('should return list of models', async () => {
-      const mockModels = ['llama2', 'mistral', 'neural-chat'];
+      const mockModels = [
+        {
+          id: 'llama2',
+          name: 'llama2',
+          description: 'llama2 language model',
+          provider: 'Local',
+        },
+        {
+          id: 'mistral',
+          name: 'mistral',
+          description: 'mistral language model',
+          provider: 'Local',
+        },
+        {
+          id: 'neural-chat',
+          name: 'neural-chat',
+          description: 'neural-chat language model',
+          provider: 'Local',
+        },
+      ];
       vi.spyOn(service, 'getModels').mockReturnValue(of(mockModels));
 
       const result = await new Promise((resolve) => {
@@ -36,12 +55,7 @@ describe('InferenceController', () => {
       });
 
       expect(result).toBeDefined();
-      expect(result.models).toEqual(mockModels.map(id => ({
-        id,
-        name: id,
-        description: `${id} language model`,
-        provider: 'Local',
-      })));
+      expect(result.models).toEqual(mockModels);
     });
 
     it('should call service.getModels', () => {
@@ -53,7 +67,26 @@ describe('InferenceController', () => {
     });
 
     it('should include llama2 in models', async () => {
-      const mockModels = ['llama2', 'mistral', 'neural-chat'];
+      const mockModels = [
+        {
+          id: 'llama2',
+          name: 'llama2',
+          description: 'llama2 language model',
+          provider: 'Local',
+        },
+        {
+          id: 'mistral',
+          name: 'mistral',
+          description: 'mistral language model',
+          provider: 'Local',
+        },
+        {
+          id: 'neural-chat',
+          name: 'neural-chat',
+          description: 'neural-chat language model',
+          provider: 'Local',
+        },
+      ];
       vi.spyOn(service, 'getModels').mockReturnValue(of(mockModels));
 
       const result = await new Promise((resolve) => {
@@ -64,7 +97,26 @@ describe('InferenceController', () => {
     });
 
     it('should include mistral in models', async () => {
-      const mockModels = ['llama2', 'mistral', 'neural-chat'];
+      const mockModels = [
+        {
+          id: 'llama2',
+          name: 'llama2',
+          description: 'llama2 language model',
+          provider: 'Local',
+        },
+        {
+          id: 'mistral',
+          name: 'mistral',
+          description: 'mistral language model',
+          provider: 'Local',
+        },
+        {
+          id: 'neural-chat',
+          name: 'neural-chat',
+          description: 'neural-chat language model',
+          provider: 'Local',
+        },
+      ];
       vi.spyOn(service, 'getModels').mockReturnValue(of(mockModels));
 
       const result = await new Promise((resolve) => {
@@ -75,7 +127,26 @@ describe('InferenceController', () => {
     });
 
     it('should include neural-chat in models', async () => {
-      const mockModels = ['llama2', 'mistral', 'neural-chat'];
+      const mockModels = [
+        {
+          id: 'llama2',
+          name: 'llama2',
+          description: 'llama2 language model',
+          provider: 'Local',
+        },
+        {
+          id: 'mistral',
+          name: 'mistral',
+          description: 'mistral language model',
+          provider: 'Local',
+        },
+        {
+          id: 'neural-chat',
+          name: 'neural-chat',
+          description: 'neural-chat language model',
+          provider: 'Local',
+        },
+      ];
       vi.spyOn(service, 'getModels').mockReturnValue(of(mockModels));
 
       const result = await new Promise((resolve) => {
@@ -151,7 +222,7 @@ describe('InferenceController', () => {
           model: 'mistral',
           tokens: 50,
           duration: 100,
-        })
+        }),
       );
 
       await new Promise((resolve, reject) => {
@@ -162,7 +233,7 @@ describe('InferenceController', () => {
         'Test prompt',
         'mistral',
         undefined,
-        undefined
+        undefined,
       );
     });
 
@@ -179,7 +250,7 @@ describe('InferenceController', () => {
           model: 'llama2',
           tokens: 50,
           duration: 100,
-        })
+        }),
       );
 
       await new Promise((resolve, reject) => {
@@ -190,7 +261,7 @@ describe('InferenceController', () => {
         'What did I say?',
         'llama2',
         'Earlier I said hello',
-        undefined
+        undefined,
       );
     });
 
@@ -297,7 +368,9 @@ describe('InferenceController', () => {
           duration: 100,
         };
 
-        vi.spyOn(service, 'generateInference').mockReturnValue(of(mockResponse));
+        vi.spyOn(service, 'generateInference').mockReturnValue(
+          of(mockResponse),
+        );
 
         const result = await new Promise((resolve, reject) => {
           controller.generateInference(request).subscribe(resolve, reject);
@@ -316,13 +389,15 @@ describe('InferenceController', () => {
       };
 
       vi.spyOn(service, 'generateInference').mockReturnValue(
-        throwError(() => new HttpException('Invalid model', HttpStatus.BAD_REQUEST))
+        throwError(
+          () => new HttpException('Invalid model', HttpStatus.BAD_REQUEST),
+        ),
       );
 
       await expect(
         new Promise((resolve, reject) => {
           controller.generateInference(request).subscribe(resolve, reject);
-        })
+        }),
       ).rejects.toThrow();
     });
 
@@ -332,16 +407,17 @@ describe('InferenceController', () => {
         model: 'llama2',
       };
 
-      vi
-        .spyOn(service, 'generateInference')
-        .mockReturnValue(
-          throwError(() => new HttpException('Prompt cannot be empty', HttpStatus.BAD_REQUEST))
-        );
+      vi.spyOn(service, 'generateInference').mockReturnValue(
+        throwError(
+          () =>
+            new HttpException('Prompt cannot be empty', HttpStatus.BAD_REQUEST),
+        ),
+      );
 
       await expect(
         new Promise((resolve, reject) => {
           controller.generateInference(request).subscribe(resolve, reject);
-        })
+        }),
       ).rejects.toThrow();
     });
 
@@ -351,16 +427,18 @@ describe('InferenceController', () => {
         model: 'llama2',
       };
 
-      vi
-        .spyOn(service, 'generateInference')
-        .mockReturnValue(
-          throwError(() => new HttpException('Prompt is required', HttpStatus.BAD_REQUEST))
-        );
+      vi.spyOn(service, 'generateInference').mockReturnValue(
+        throwError(
+          () => new HttpException('Prompt is required', HttpStatus.BAD_REQUEST),
+        ),
+      );
 
       await expect(
         new Promise((resolve, reject) => {
-          controller.generateInference(request as any).subscribe(resolve, reject);
-        })
+          controller
+            .generateInference(request as any)
+            .subscribe(resolve, reject);
+        }),
       ).rejects.toThrow();
     });
 
@@ -370,16 +448,17 @@ describe('InferenceController', () => {
         model: 'llama2',
       };
 
-      vi
-        .spyOn(service, 'generateInference')
-        .mockReturnValue(
-          throwError(() => new HttpException('Request timeout', HttpStatus.GATEWAY_TIMEOUT))
-        );
+      vi.spyOn(service, 'generateInference').mockReturnValue(
+        throwError(
+          () =>
+            new HttpException('Request timeout', HttpStatus.GATEWAY_TIMEOUT),
+        ),
+      );
 
       await expect(
         new Promise((resolve, reject) => {
           controller.generateInference(request).subscribe(resolve, reject);
-        })
+        }),
       ).rejects.toThrow();
     });
 
@@ -389,16 +468,20 @@ describe('InferenceController', () => {
         model: 'llama2',
       };
 
-      vi
-        .spyOn(service, 'generateInference')
-        .mockReturnValue(
-          throwError(() => new HttpException('Internal error', HttpStatus.INTERNAL_SERVER_ERROR))
-        );
+      vi.spyOn(service, 'generateInference').mockReturnValue(
+        throwError(
+          () =>
+            new HttpException(
+              'Internal error',
+              HttpStatus.INTERNAL_SERVER_ERROR,
+            ),
+        ),
+      );
 
       await expect(
         new Promise((resolve, reject) => {
           controller.generateInference(request).subscribe(resolve, reject);
-        })
+        }),
       ).rejects.toThrow();
     });
   });
@@ -416,7 +499,7 @@ describe('InferenceController', () => {
           model: 'llama2',
           tokens: 50,
           duration: 100,
-        })
+        }),
       );
 
       const result = await new Promise((resolve, reject) => {
@@ -433,13 +516,15 @@ describe('InferenceController', () => {
       };
 
       vi.spyOn(service, 'generateInference').mockReturnValue(
-        throwError(() => new HttpException('Prompt too long', HttpStatus.BAD_REQUEST))
+        throwError(
+          () => new HttpException('Prompt too long', HttpStatus.BAD_REQUEST),
+        ),
       );
 
       await expect(
         new Promise((resolve, reject) => {
           controller.generateInference(request).subscribe(resolve, reject);
-        })
+        }),
       ).rejects.toThrow();
     });
 
@@ -455,7 +540,7 @@ describe('InferenceController', () => {
           model: 'llama2',
           tokens: 50,
           duration: 100,
-        })
+        }),
       );
 
       const result = await new Promise((resolve, reject) => {
@@ -479,7 +564,7 @@ describe('InferenceController', () => {
           model: 'llama2',
           tokens: 50,
           duration: 100,
-        })
+        }),
       );
 
       const response = controller.generateInference(request);
@@ -494,7 +579,13 @@ describe('InferenceController', () => {
       };
 
       vi.spyOn(service, 'generateInference').mockReturnValue(
-        throwError(() => new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR))
+        throwError(
+          () =>
+            new HttpException(
+              'Internal Server Error',
+              HttpStatus.INTERNAL_SERVER_ERROR,
+            ),
+        ),
       );
 
       try {

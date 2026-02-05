@@ -1,6 +1,12 @@
 /// <reference types="node" />
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  ViewChild,
+} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InferenceService } from '../../services/inference.service';
 import { AnalyticsService } from '../../services/analytics.service';
@@ -37,7 +43,8 @@ interface Model {
   standalone: false,
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  @ViewChild(SongLengthDialogComponent) songLengthDialog!: SongLengthDialogComponent;
+  @ViewChild(SongLengthDialogComponent)
+  songLengthDialog!: SongLengthDialogComponent;
 
   selectedModel: string | null = null;
   availableModels: Model[] = [];
@@ -72,8 +79,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
         console.log('Dashboard: Models loaded:', response.data.models);
         this.availableModels = response.data.models;
         if (this.availableModels.length > 0) {
-          this.selectedModel = this.availableModels[0].id;
-          console.log('Dashboard: Selected default model:', this.selectedModel);
+          const defaultModel: string = this.availableModels[0].id;
+          const hasExisting: boolean = this.selectedModel
+            ? this.availableModels.some(
+                (model: Model) => model.id === this.selectedModel,
+              )
+            : false;
+          if (!hasExisting) {
+            this.selectedModel = defaultModel;
+            console.log(
+              'Dashboard: Selected default model:',
+              this.selectedModel,
+            );
+          }
         }
       },
       error: (err: ApiError | HttpErrorResponse): void => {
@@ -141,7 +159,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.selectedSongLength = null;
   }
 
-  private sendInferenceRequest(userMessage: string, songLengthSeconds: number | null): void {
+  private sendInferenceRequest(
+    userMessage: string,
+    songLengthSeconds: number | null,
+  ): void {
     this.messages.push({ role: 'user', content: userMessage });
     this.cdr.detectChanges(); // Trigger change detection for user message
     this.loading = true;
@@ -173,115 +194,111 @@ export class DashboardComponent implements OnInit, OnDestroy {
       requestBody.songLengthSeconds = songLengthSeconds;
     }
 
-    this.inferenceService
-      .generateInference(requestBody)
-      .subscribe({
-        next: (response: {
-          data: InferenceGenerateResponse;
-          timestamp: number;
-          status: number;
-        }): void => {
-          console.log('[Dashboard] Full response:', response);
-          console.log('[Dashboard] Response type:', typeof response);
-          console.log('[Dashboard] Response.data type:', typeof response.data);
+    this.inferenceService.generateInference(requestBody).subscribe({
+      next: (response: {
+        data: InferenceGenerateResponse;
+        timestamp: number;
+        status: number;
+      }): void => {
+        console.log('[Dashboard] Full response:', response);
+        console.log('[Dashboard] Response type:', typeof response);
+        console.log('[Dashboard] Response.data type:', typeof response.data);
 
-          // Extract text from response.data
-          let assistantText: string = '';
-          const responseData: InferenceGenerateResponse = response.data || {};
+        // Extract text from response.data
+        let assistantText: string = '';
+        const responseData: InferenceGenerateResponse = response.data || {};
 
-          // Set estimated time from server
-          if (responseData.estimatedTime) {
-            this.estimatedTime = responseData.estimatedTime;
-          }
+        // Set estimated time from server
+        if (responseData.estimatedTime) {
+          this.estimatedTime = responseData.estimatedTime;
+        }
 
-          // Try text field first
-          if (responseData.text) {
-            assistantText = responseData.text;
-            console.log('[Dashboard] Found text in response.data.text');
-          }
-          // Try result field as fallback
-          else if (responseData.result) {
-            assistantText = responseData.result;
-            console.log('[Dashboard] Found text in response.data.result');
-          }
+        // Try text field first
+        if (responseData.text) {
+          assistantText = responseData.text;
+          console.log('[Dashboard] Found text in response.data.text');
+        }
+        // Try result field as fallback
+        else if (responseData.result) {
+          assistantText = responseData.result;
+          console.log('[Dashboard] Found text in response.data.result');
+        }
 
+        console.log(
+          '[Dashboard] Extracted text:',
+          assistantText.substring(0, 50) + '...',
+        );
+        console.log('[Dashboard] Text is empty?', !assistantText);
+
+        if (assistantText) {
+          const assistantMessage: Message = {
+            role: 'assistant',
+            content: assistantText,
+            model: this.selectedModel!,
+            isSong: responseData.isSong,
+            title: responseData.title,
+            genre: responseData.genre,
+            lyrics: responseData.lyrics,
+          };
+          this.messages.push(assistantMessage);
+          this.cdr.detectChanges(); // Trigger change detection for UI update
           console.log(
-            '[Dashboard] Extracted text:',
-            assistantText.substring(0, 50) + '...',
+            '[Dashboard] Message pushed. Total messages:',
+            this.messages.length,
           );
-          console.log('[Dashboard] Text is empty?', !assistantText);
-
-          if (assistantText) {
-            const assistantMessage: Message = {
-              role: 'assistant',
-              content: assistantText,
-              model: this.selectedModel!,
-              isSong: responseData.isSong,
-              title: responseData.title,
-              genre: responseData.genre,
-              lyrics: responseData.lyrics,
-            };
-            this.messages.push(assistantMessage);
-            this.cdr.detectChanges(); // Trigger change detection for UI update
+          if (responseData.isSong) {
             console.log(
-              '[Dashboard] Message pushed. Total messages:',
-              this.messages.length,
-            );
-            if (responseData.isSong) {
-              console.log(
-                `[Dashboard] Song generated: "${responseData.title}" (${responseData.genre})`,
-              );
-            }
-            console.log(
-              `[Dashboard] Response time: ${this.elapsedTime.toFixed(2)}s (estimated: ${this.estimatedTime}s)`,
-            );
-          } else {
-            console.error(
-              '[Dashboard] ERROR: No text extracted! Response object:',
-              response,
+              `[Dashboard] Song generated: "${responseData.title}" (${responseData.genre})`,
             );
           }
+          console.log(
+            `[Dashboard] Response time: ${this.elapsedTime.toFixed(2)}s (estimated: ${this.estimatedTime}s)`,
+          );
+        } else {
+          console.error(
+            '[Dashboard] ERROR: No text extracted! Response object:',
+            response,
+          );
+        }
 
-          this.analyticsService
-            .trackEvent('inference_generated', {
-              model: this.selectedModel || 'unknown',
-              duration: responseData.duration
-                ? typeof responseData.duration === 'number'
-                  ? responseData.duration
-                  : parseInt(String(responseData.duration), 10) || 0
-                : 0,
-              tokens: responseData.tokens || responseData.tokensUsed || 0,
-            })
-            .subscribe({
-              error: (err: ApiError | HttpErrorResponse): void =>
-                console.error('Analytics error:', err),
-            });
-          
-          // Stop elapsed time timer
-          if (this.elapsedInterval) {
-            clearInterval(this.elapsedInterval);
-            this.elapsedInterval = null;
-          }
-          
-          this.loading = false;
-          this.cdr.markForCheck();
-        },
-        error: (err: ApiError | HttpErrorResponse): void => {
-          // Stop elapsed time timer
-          if (this.elapsedInterval) {
-            clearInterval(this.elapsedInterval);
-            this.elapsedInterval = null;
-          }
-          
-          this.loading = false;
-          this.error =
-            err instanceof ApiError
-              ? err.message
-              : 'Failed to generate response';
-          this.cdr.markForCheck();
-          console.error('[Dashboard] Error in subscription:', err);
-        },
-      });
+        this.analyticsService
+          .trackEvent('inference_generated', {
+            model: this.selectedModel || 'unknown',
+            duration: responseData.duration
+              ? typeof responseData.duration === 'number'
+                ? responseData.duration
+                : parseInt(String(responseData.duration), 10) || 0
+              : 0,
+            tokens: responseData.tokens || responseData.tokensUsed || 0,
+          })
+          .subscribe({
+            error: (err: ApiError | HttpErrorResponse): void =>
+              console.error('Analytics error:', err),
+          });
+
+        // Stop elapsed time timer
+        if (this.elapsedInterval) {
+          clearInterval(this.elapsedInterval);
+          this.elapsedInterval = null;
+        }
+
+        this.loading = false;
+        this.cdr.markForCheck();
+      },
+      error: (err: ApiError | HttpErrorResponse): void => {
+        // Stop elapsed time timer
+        if (this.elapsedInterval) {
+          clearInterval(this.elapsedInterval);
+          this.elapsedInterval = null;
+        }
+
+        this.loading = false;
+        this.error =
+          err instanceof ApiError ? err.message : 'Failed to generate response';
+        this.cdr.markForCheck();
+        console.error('[Dashboard] Error in subscription:', err);
+      },
+    });
   }
 
   logout(): void {

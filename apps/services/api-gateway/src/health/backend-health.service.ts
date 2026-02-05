@@ -42,8 +42,8 @@ export class BackendHealthService {
     },
     {
       name: 'LLM Service',
-      url: 'http://localhost:11434/health',
-      dockerContainer: 'patriotchat-ollama',
+      url: 'http://localhost:4004/health',
+      dockerContainer: 'patriotchat-llm',
     },
     // Uncomment services below when they become active
     // {

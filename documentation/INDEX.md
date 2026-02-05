@@ -1,7 +1,7 @@
 # 📚 Documentation Index
 
 **Repository:** PatriotChat  
-**Updated:** 2026-02-03
+**Updated:** 2026-02-04
 
 ---
 
@@ -54,10 +54,11 @@
 - [LLM/ARCHITECTURE.md](LLM/ARCHITECTURE.md) - LLM architecture
 - [LLM/LLM-CREATION.md](LLM/LLM-CREATION.md) - Creating LLM instances
 - [LLM/TRAINING-DATA-SOURCES.md](LLM/TRAINING-DATA-SOURCES.md) - Training data
-- [planning/PRO_LIBERTY_BUILD_GUIDE.md](planning/PRO_LIBERTY_BUILD_GUIDE.md) - Pro-liberty roadmap, schema, config, and Constitution-first RAG setup
-- [planning/PRO_LIBERTY_TRACKING.md](planning/PRO_LIBERTY_TRACKING.md) - Sprint tracking board for the pro-liberty implementation plan
-- [planning/PRO_LIBERTY_TEST_STRATEGY.md](planning/PRO_LIBERTY_TEST_STRATEGY.md) - Alignment-focused test ideas to prevent drift
-- [planning/PRO_LIBERTY_DATA_PIPELINE.md](planning/PRO_LIBERTY_DATA_PIPELINE.md) - Batch-level dataset sprint plan for PRO-LLM-002
+- [planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md](planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md) - Pro-liberty roadmap, schema, config, and Constitution-first RAG setup
+- [planning/pro-liberty/PRO_LIBERTY_TRACKING.md](planning/pro-liberty/PRO_LIBERTY_TRACKING.md) - Sprint tracking board for the pro-liberty implementation plan
+- [planning/pro-liberty/PRO_LIBERTY_TEST_STRATEGY.md](planning/pro-liberty/PRO_LIBERTY_TEST_STRATEGY.md) - Alignment-focused test ideas to prevent drift
+- [planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md](planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md) - Regression ideas + automation for Values Commitment alignment
+- [planning/pro-liberty/PRO_LIBERTY_DATA_PIPELINE.md](planning/pro-liberty/PRO_LIBERTY_DATA_PIPELINE.md) - Batch-level dataset sprint plan for PRO-LLM-002
 
 ### Project Standards
 
@@ -98,6 +99,7 @@
 ## ✅ Key Accomplishments
 
 ### Type Safety Achievement (Feb 2026)
+
 - **Shared DTO Library** (`@patriotchat/shared`) - Single source of truth for API contracts
 - **Backend Interceptors** - ErrorInterceptor + ResponseInterceptor ensure typed responses
 - **Frontend Interceptor** - ApiInterceptor validates all HTTP responses

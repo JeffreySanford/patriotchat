@@ -1,5 +1,9 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { WebSocketHealthService, HealthCheckEvent, ServiceStatus } from './websocket-health.service';
+import { describe, it, expect, beforeEach } from 'vitest';
+import {
+  WebSocketHealthService,
+  HealthCheckEvent,
+  ServiceStatus,
+} from './websocket-health.service';
 
 describe('WebSocketHealthService', () => {
   let service: WebSocketHealthService;
@@ -132,7 +136,9 @@ describe('WebSocketHealthService', () => {
         responseTime: 50,
       };
 
-      expect(status.status === 'healthy' || status.status === 'unhealthy').toBe(true);
+      expect(status.status === 'healthy' || status.status === 'unhealthy').toBe(
+        true,
+      );
     });
 
     it('should enforce HealthCheckEvent timestamp', () => {
@@ -159,7 +165,7 @@ describe('WebSocketHealthService', () => {
       const subscription = service.getConnectionStatus().subscribe(() => {
         // Subscription successful
       });
-      
+
       subscription.unsubscribe();
       expect(subscription.closed).toBe(true);
     });

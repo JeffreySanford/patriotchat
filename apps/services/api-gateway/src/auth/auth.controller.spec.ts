@@ -9,31 +9,37 @@ describe('AuthController', () => {
 
   beforeEach(() => {
     const mockAuthService = {
-      register: vi.fn().mockReturnValue(of({
-        token: 'test.jwt.token',
-        user: {
-          id: 'user1',
-          username: 'testuser',
-          email: 'test@example.com',
-          tier: 'free',
-        },
-      })),
-      login: vi.fn().mockReturnValue(of({
-        token: 'test.jwt.token',
-        user: {
-          id: 'user1',
-          username: 'testuser',
-          email: 'test@example.com',
-          tier: 'free',
-        },
-      })),
-      validate: vi.fn().mockReturnValue(of({
-        valid: true,
-        user: {
-          id: 'user1',
-          username: 'testuser',
-        },
-      })),
+      register: vi.fn().mockReturnValue(
+        of({
+          token: 'test.jwt.token',
+          user: {
+            id: 'user1',
+            username: 'testuser',
+            email: 'test@example.com',
+            tier: 'free',
+          },
+        }),
+      ),
+      login: vi.fn().mockReturnValue(
+        of({
+          token: 'test.jwt.token',
+          user: {
+            id: 'user1',
+            username: 'testuser',
+            email: 'test@example.com',
+            tier: 'free',
+          },
+        }),
+      ),
+      validate: vi.fn().mockReturnValue(
+        of({
+          valid: true,
+          user: {
+            id: 'user1',
+            username: 'testuser',
+          },
+        }),
+      ),
     };
 
     service = mockAuthService as any;
@@ -64,15 +70,17 @@ describe('AuthController', () => {
         email: 'test@example.com',
         password: 'SecurePass123!',
       };
-      vi.spyOn(service, 'register').mockReturnValue(of({
-        token: 'jwt.token',
-        user: {
-          id: 'user1',
-          username: 'testuser',
-          email: 'test@example.com',
-          tier: 'free',
-        },
-      }));
+      vi.spyOn(service, 'register').mockReturnValue(
+        of({
+          token: 'jwt.token',
+          user: {
+            id: 'user1',
+            username: 'testuser',
+            email: 'test@example.com',
+            tier: 'free',
+          },
+        }),
+      );
 
       controller.register(dto);
       expect(service.register).toHaveBeenCalledWith(dto);
@@ -127,15 +135,17 @@ describe('AuthController', () => {
         email: 'test@example.com',
         password: 'SecurePass123!',
       };
-      vi.spyOn(service, 'login').mockReturnValue(of({
-        token: 'jwt.token',
-        user: {
-          id: 'user1',
-          username: 'testuser',
-          email: 'test@example.com',
-          tier: 'free',
-        },
-      }));
+      vi.spyOn(service, 'login').mockReturnValue(
+        of({
+          token: 'jwt.token',
+          user: {
+            id: 'user1',
+            username: 'testuser',
+            email: 'test@example.com',
+            tier: 'free',
+          },
+        }),
+      );
 
       controller.login(dto);
       expect(service.login).toHaveBeenCalledWith(dto);
@@ -187,13 +197,15 @@ describe('AuthController', () => {
     it('should call auth service validate', () => {
       const token = 'jwt.token';
       const auth = `Bearer ${token}`;
-      vi.spyOn(service, 'validate').mockReturnValue(of({
-        valid: true,
-        user: {
-          id: 'user1',
-          username: 'testuser',
-        },
-      }));
+      vi.spyOn(service, 'validate').mockReturnValue(
+        of({
+          valid: true,
+          user: {
+            id: 'user1',
+            username: 'testuser',
+          },
+        }),
+      );
 
       controller.validate(auth);
       expect(service.validate).toHaveBeenCalledWith(token);
@@ -228,7 +240,7 @@ describe('AuthController', () => {
       };
 
       vi.spyOn(service, 'register').mockReturnValue(
-        throwError(() => new Error('Registration failed'))
+        throwError(() => new Error('Registration failed')),
       );
 
       try {
@@ -247,7 +259,7 @@ describe('AuthController', () => {
       };
 
       vi.spyOn(service, 'login').mockReturnValue(
-        throwError(() => new Error('Invalid credentials'))
+        throwError(() => new Error('Invalid credentials')),
       );
 
       try {
@@ -272,12 +284,14 @@ describe('AuthController', () => {
             status: 400,
             data: 'User already exists',
           },
-        }))
+        })),
       );
 
       expect(() => {
         controller.register(dto).subscribe({
-          error: () => {} // Handle error to prevent unhandled rejection
+          error: (err: Error) => {
+            console.error(err);
+          }, // Handle error to prevent unhandled rejection
         });
       }).not.toThrow();
     });

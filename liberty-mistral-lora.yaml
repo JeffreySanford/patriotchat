@@ -1,0 +1,62 @@
+base_model: mistralai/Mistral-7B-Instruct-v0.3
+model_type: MistralForCausalLM
+tokenizer_type: LlamaTokenizer
+
+load_in_4bit: true
+strict: false
+bf16: true
+fp16: false
+gradient_checkpointing: true
+
+adapter: lora
+lora_r: 32
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+datasets:
+  - path: ./my_liberty_dataset/train.jsonl
+    type: messages.chat
+    field_messages: messages
+    message_property_mappings:
+      role: role
+      content: content
+    conversation: mistral
+    val_set_size: 0.1
+
+sequence_len: 8192
+sample_packing: true
+pad_to_sequence_len: true
+train_on_inputs: false
+
+num_epochs: 2
+micro_batch_size: 4
+gradient_accumulation_steps: 4
+learning_rate: 0.0002
+lr_scheduler: cosine
+optimizer: adamw_bnb_8bit
+adam_beta2: 0.95
+warmup_steps: 100
+max_grad_norm: 1.0
+max_steps: 1
+
+output_dir: ./liberty-mistral-out
+save_total_limit: 3
+save_steps: 500
+logging_steps: 10
+eval_steps: 200
+report_to: none
+
+seed: 42
+special_tokens:
+  bos_token: "<s>"
+  eos_token: "</s>"
+use_wandb: false
+wandb_mode: disabled

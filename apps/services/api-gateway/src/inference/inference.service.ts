@@ -6,8 +6,16 @@ import { InferenceGenerateResponse } from '../types/api.dto';
 import { AxiosResponse } from 'axios';
 import { getErrorMessage, AppException } from '../utils/error-handler';
 
+interface LLMModelInfo {
+  id: string;
+  name: string;
+  description?: string;
+  provider?: string;
+  contextWindow?: number;
+}
+
 interface LLMModelsResponse {
-  models: string[];
+  models: LLMModelInfo[];
 }
 
 interface LLMGenerateResponse {
@@ -204,12 +212,16 @@ STRICT RULES:
 
     // Extract TITLE - match from TITLE: to newline or GENRE:
     let title: string = 'Untitled Song';
-    const titleMatch: RegExpMatchArray | null = text.match(/^\s*TITLE:\s*(.+?)(?=\n\s*GENRE:|\nGENRE:|$)/im);
+    const titleMatch: RegExpMatchArray | null = text.match(
+      /^\s*TITLE:\s*(.+?)(?=\n\s*GENRE:|\nGENRE:|$)/im,
+    );
     if (titleMatch && titleMatch[1]) {
       title = titleMatch[1].trim();
     } else {
       // Fallback: try to find TITLE anywhere
-      const fallbackTitle: RegExpMatchArray | null = text.match(/TITLE:\s*(.+?)(?=\n|$)/i);
+      const fallbackTitle: RegExpMatchArray | null = text.match(
+        /TITLE:\s*(.+?)(?=\n|$)/i,
+      );
       if (fallbackTitle && fallbackTitle[1]) {
         title = fallbackTitle[1].trim();
       }
@@ -217,12 +229,16 @@ STRICT RULES:
 
     // Extract GENRE - match from GENRE: to newline or LYRICS:
     let genre: string = 'General';
-    const genreMatch: RegExpMatchArray | null = text.match(/^\s*GENRE:\s*(.+?)(?=\n\s*LYRICS:|\nLYRICS:|$)/im);
+    const genreMatch: RegExpMatchArray | null = text.match(
+      /^\s*GENRE:\s*(.+?)(?=\n\s*LYRICS:|\nLYRICS:|$)/im,
+    );
     if (genreMatch && genreMatch[1]) {
       genre = genreMatch[1].trim();
     } else {
       // Fallback: try to find GENRE anywhere
-      const fallbackGenre: RegExpMatchArray | null = text.match(/GENRE:\s*(.+?)(?=\n|LYRICS:|$)/i);
+      const fallbackGenre: RegExpMatchArray | null = text.match(
+        /GENRE:\s*(.+?)(?=\n|LYRICS:|$)/i,
+      );
       if (fallbackGenre && fallbackGenre[1]) {
         genre = fallbackGenre[1].trim();
       }
@@ -230,12 +246,15 @@ STRICT RULES:
 
     // Extract LYRICS - everything after LYRICS: section
     let lyrics: string = responseText;
-    const lyricsMatch: RegExpMatchArray | null = text.match(/^\s*LYRICS:\s*\n?([\s\S]+)$/im);
+    const lyricsMatch: RegExpMatchArray | null = text.match(
+      /^\s*LYRICS:\s*\n?([\s\S]+)$/im,
+    );
     if (lyricsMatch && lyricsMatch[1]) {
       lyrics = lyricsMatch[1].trim();
     } else {
       // Fallback: try simpler pattern
-      const fallbackLyrics: RegExpMatchArray | null = text.match(/LYRICS:\n?([\s\S]+)$/i);
+      const fallbackLyrics: RegExpMatchArray | null =
+        text.match(/LYRICS:\n?([\s\S]+)$/i);
       if (fallbackLyrics && fallbackLyrics[1]) {
         lyrics = fallbackLyrics[1].trim();
       }
@@ -250,7 +269,7 @@ STRICT RULES:
     return { title, genre, lyrics };
   }
 
-  getModels(): Observable<string[]> {
+  getModels(): Observable<LLMModelInfo[]> {
     console.log(`Fetching models from: ${this.llmServiceUrl}/inference/models`);
     return this.httpService
       .get<LLMModelsResponse>(`${this.llmServiceUrl}/inference/models`, {
@@ -262,17 +281,35 @@ STRICT RULES:
         }),
         map(
           (response: AxiosResponse<LLMModelsResponse>) =>
-            response.data.models || ['llama2', 'mistral', 'neural-chat'],
+            response.data.models || [
+              { id: 'llama2', name: 'Llama 2', description: '' },
+              { id: 'mistral', name: 'Mistral 7B', description: '' },
+              { id: 'neural-chat', name: 'Neural Chat', description: '' },
+            ],
         ),
-        catchError((error: AppException | Error): Observable<string[]> => {
-          const errorMessage: string = getErrorMessage(error);
-          console.error(
-            'Error fetching models from LLM service:',
-            errorMessage,
-          );
-          console.warn('Returning default models due to LLM service error');
-          return of(['llama2', 'mistral', 'neural-chat']);
-        }),
+        catchError(
+          (error: AppException | Error): Observable<LLMModelInfo[]> => {
+            const errorMessage: string = getErrorMessage(error);
+            console.error(
+              'Error fetching models from LLM service:',
+              errorMessage,
+            );
+            console.warn('Returning default models due to LLM service error');
+            return of([
+              { id: 'llama2', name: 'Llama 2', description: 'Fallback model' },
+              {
+                id: 'mistral',
+                name: 'Mistral 7B',
+                description: 'Fallback model',
+              },
+              {
+                id: 'neural-chat',
+                name: 'Neural Chat',
+                description: 'Fallback model',
+              },
+            ]);
+          },
+        ),
       );
   }
 
@@ -299,9 +336,13 @@ STRICT RULES:
 
     if (isSong) {
       requestBody.systemPrompt = this.buildSongSystemPrompt(songLengthSeconds);
-      console.log('[InferenceService] Song request detected, using song system prompt');
+      console.log(
+        '[InferenceService] Song request detected, using song system prompt',
+      );
       if (songLengthSeconds) {
-        console.log(`[InferenceService] Song length preference: ${songLengthSeconds} seconds`);
+        console.log(
+          `[InferenceService] Song length preference: ${songLengthSeconds} seconds`,
+        );
       }
     }
 
@@ -341,7 +382,8 @@ STRICT RULES:
             };
 
             if (isSong) {
-              const parsed: { title: string; genre: string; lyrics: string } = this.parseSongResponse(result);
+              const parsed: { title: string; genre: string; lyrics: string } =
+                this.parseSongResponse(result);
               responseObj = {
                 ...responseObj,
                 title: parsed.title,

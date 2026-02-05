@@ -1,6 +1,6 @@
 # Training Data Sources
 
-This document lists recommended sources for training data to build a constitutional, non-partisan LLM. Focus on primary, legal, and civic materials to minimize bias. For a hands-on pro-liberty roadmap (schema, config, RAG setup) see `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md`.
+This document lists recommended sources for training data to build a constitutional, non-partisan LLM. Focus on primary, legal, and civic materials to minimize bias. For a hands-on pro-liberty roadmap (schema, config, RAG setup) see `documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md` and the dataset sprint plan in `documentation/planning/pro-liberty/PRO_LIBERTY_DATA_PIPELINE.md`.
 
 ## Primary Civic Sources
 
@@ -38,7 +38,7 @@ This document lists recommended sources for training data to build a constitutio
 
 ## Prioritized Foundational Texts
 
-These texts form the “gold” corpus that we embed, sample, and cite. They are also the source pool for the datasets described in `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md`.
+These texts form the “gold” corpus that we embed, sample, and cite. They are also the source pool for the datasets described in `documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md` and for the sprint process documented in `documentation/planning/pro-liberty/PRO_LIBERTY_DATA_PIPELINE.md`.
 
 - Declaration of Independence (1776)
 - Constitution + Bill of Rights + Amendments

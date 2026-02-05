@@ -60,7 +60,9 @@ export class AuthService {
           const token: string | undefined = authData?.token;
           if (token && typeof token === 'string' && token !== 'undefined') {
             localStorage.setItem('token', token);
-            this.userSubject.next(authData!.user);
+            if (authData?.user) {
+              this.userSubject.next(authData.user);
+            }
             this.authSubject.next(true);
           }
         }),
@@ -87,7 +89,9 @@ export class AuthService {
               tokenLength: token.length,
             });
             localStorage.setItem('token', token);
-            this.userSubject.next(authData!.user);
+            if (authData?.user) {
+              this.userSubject.next(authData.user);
+            }
             this.authSubject.next(true);
           } else {
             console.error('[AuthService] Invalid token in response:', {

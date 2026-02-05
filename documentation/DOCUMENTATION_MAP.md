@@ -1,6 +1,6 @@
 # Documentation Map – Single Source of Truth Hierarchy
 
-_Updated 2026-02-03 22:15 UTC · Establishes clear ownership and reduces redundancy across all 55 markdown files · Moved to documentation/ folder as single reference hub_
+_Updated 2026-02-04 11:30 UTC · Establishes clear ownership and reduces redundancy across all 55 markdown files · Moved to documentation/ folder as single reference hub_
 
 ## Documentation Hierarchy & Ownership
 
@@ -46,10 +46,12 @@ These files provide detailed reference material and should link back to primary 
 | [LLM/PHILOSOPHICAL-NOTES.md](LLM/PHILOSOPHICAL-NOTES.md) | Reflections on bias & values | Context & rationale | Historical & philosophical context |
 | [LLM/TESTING-PLAN.md](LLM/TESTING-PLAN.md) | QA strategy for LLM | Test methodology | Integration, unit, bias testing |
 | [LLM/ARCHITECTURE.md](LLM/ARCHITECTURE.md) | LLM system components | Detailed architecture | References MICROSERVICES_ARCHITECTURE.md |
-| [planning/PRO_LIBERTY_BUILD_GUIDE.md](planning/PRO_LIBERTY_BUILD_GUIDE.md) | Pro-liberty tuning roadmap | Dataset schema, Axolotl config, Constitution-first RAG | Supplements LLM tuning doc |
-| [planning/PRO_LIBERTY_TRACKING.md](planning/PRO_LIBERTY_TRACKING.md) | Sprint tracking board | Vision + data sprints + RAG rollout + evaluations | Keeps Values Commitment visible |
-| [planning/PRO_LIBERTY_TEST_STRATEGY.md](planning/PRO_LIBERTY_TEST_STRATEGY.md) | Alignment test ideas | Values-focused automation & reporting | Prevents drift toward centralization |
-| [planning/PRO_LIBERTY_DATA_PIPELINE.md](planning/PRO_LIBERTY_DATA_PIPELINE.md) | Dataset sprint plan | Batch planning + LoRA training checklist | Guides PRO-LLM-002 execution |
+| [planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md](planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md) | Pro-liberty tuning roadmap | Dataset schema, Axolotl config, Constitution-first RAG | Supplements LLM tuning doc |
+| [planning/pro-liberty/PRO_LIBERTY_TRACKING.md](planning/pro-liberty/PRO_LIBERTY_TRACKING.md) | Sprint tracking board | Vision + data sprints + RAG rollout + evaluations | Keeps Values Commitment visible |
+| [planning/pro-liberty/PRO_LIBERTY_TEST_STRATEGY.md](planning/pro-liberty/PRO_LIBERTY_TEST_STRATEGY.md) | Alignment test ideas | Values-focused automation & reporting | Prevents drift toward centralization |
+| [planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md](planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md) | Alignment regression harness | Concrete automation + UI checks | Keeps Values Commitment alive after training runs |
+| [planning/pro-liberty/PRO_LIBERTY_DATA_PIPELINE.md](planning/pro-liberty/PRO_LIBERTY_DATA_PIPELINE.md) | Dataset sprint plan | Batch planning + LoRA training checklist | Guides PRO-LLM-002 execution |
+| [../tools/checkpoints/liberty-mistral-v1.0-2026-02-04/README.md](../tools/checkpoints/liberty-mistral-v1.0-2026-02-04/README.md) | Deployment bundle metadata | References the Values Commitment (`README.md#values-commitment`) and linking assets to `PRO_LIBERTY_TRACKING.md` | Serves as the release-home for Liberty Mistral v1.0 |
 
 ### Infrastructure & Operations
 

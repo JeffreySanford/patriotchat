@@ -39,7 +39,7 @@ Avoid biased sources; focus on primary, legal, and civic materials.
 - **Civic Education**: OpenStax U.S. History, MIT OpenCourseWare.
 - **Structured Data**: SCOTUS cases with variables for labels/evaluation.
 
-Detailed guidance (schema, prioritized texts, sample Axolotl config, Constitution-first RAG wiring) lives in `documentation/planning/PRO_LIBERTY_BUILD_GUIDE.md`.
+Detailed guidance (schema, prioritized texts, sample Axolotl config, Constitution-first RAG wiring) lives in `documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md`, and the associated regression harness lives in `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md` while the dataset sprint plan lives in `documentation/planning/pro-liberty/PRO_LIBERTY_DATA_PIPELINE.md`.
 
 ### Recipe
 
@@ -71,6 +71,11 @@ Use LoRA/QLoRA for efficiency.
 3. Fine-tune with LoRA (e.g., via Axolotl).
 4. Quantize for GGUF.
 5. Integrate into PatriotChat's Go service.
+
+### Current Training Status
+
+- **Baseline pass complete**: The trimmed Liberty Mistral LoRA run finished the first pass (`max_steps=1`) and produced `liberty-mistral-out/adapter_model.safetensors`, `tokenizer.*`, and the zipped bundle in `tools/checkpoints/liberty-mistral-v1.0-2026-02-04/`. The README there (and `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md`) ties that artifact back to `README.md#values-commitment` plus the pro-liberty guides, so governance reviewers can trace each version to the constitutional guardrails.
+- **Second pass in progress**: A fuller LoRA pass is now running from the WSL/Ubuntu 24.04 pipeline (`wsl -d Ubuntu -e /home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`), letting `max_steps` cover the whole dataset. Once that run completes we will log the evaluation metrics (loss, citation coverage, regulatory drift scores) in `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md` and `LLM_TUNING_AND_RAG.md`, then serve the resulting adapter from Ollama so the UI defaults to Liberty Mistral while still keeping the other models selectable from the sidebar (per `documentation/LLM/MODEL-CHARTER.md`).
 
 ### Commands
 
