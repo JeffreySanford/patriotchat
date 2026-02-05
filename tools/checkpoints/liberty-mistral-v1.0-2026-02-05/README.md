@@ -10,6 +10,6 @@ This folder holds the promoted Liberty Mistral adapter, zipped bundle, and metad
 
 ## Promotion notes
 
-1. This bundle reflects the full LoRA run (`/home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`) that logged `train_loss=2.5696`, `train_runtime≈34,522s`, and evaluation metrics (citation coverage 100%, 0% regulatory drift, bias score 0.000 via `pnpm run check:liberty-prompts`).  
-2. Update the serving configuration (Ollama host/Go service) to point at this bundle before marking Liberty Mistral as the default while keeping other sidebar models selectable; see `documentation/LLM/MODEL-CHARTER.md` for how to surface the Values Commitment to users and dropdown instructions.  
+1. This bundle reflects the full LoRA run (`/home/jeffrey/axolotl-env312/bin/accelerate launch -m axolotl.cli.train liberty-mistral-lora.yaml --report_to none`) that logged `train_loss=2.5696`, `train_runtime≈34,522s`, and evaluation metrics (citation coverage 100%, 0% regulatory drift, bias score 0.000 via `pnpm run check:liberty-prompts`).
+2. Update the serving configuration (Ollama host/Go service) to point at this bundle before marking Liberty Mistral as the default while keeping other sidebar models selectable; see `documentation/LLM/MODEL-CHARTER.md` for how to surface the Values Commitment to users and dropdown instructions.
 3. Reference `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md` when mentioning this bundle in PRs or release notes so contributions trace back to the Values Commitment.

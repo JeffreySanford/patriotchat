@@ -28,22 +28,31 @@ export class InferenceService {
    * Get available LLM models
    * Returns Observable<InferenceModelsResponse> - fully typed!
    */
-  getModels(): Observable<{ data: InferenceModelsResponse; timestamp: number; status: number }> {
-    return this.http.get<{ data: InferenceModelsResponse; timestamp: number; status: number }>(
-      `${this.apiUrl}/models`,
-    );
+  getModels(): Observable<{
+    data: InferenceModelsResponse;
+    timestamp: number;
+    status: number;
+  }> {
+    return this.http.get<{
+      data: InferenceModelsResponse;
+      timestamp: number;
+      status: number;
+    }>(`${this.apiUrl}/models`);
   }
 
   /**
    * Generate inference from LLM
    * Request and response are both typed
    */
-  generateInference(
-    body: InferenceGenerateRequest,
-  ): Observable<{ data: InferenceGenerateResponse; timestamp: number; status: number }> {
-    return this.http.post<{ data: InferenceGenerateResponse; timestamp: number; status: number }>(
-      `${this.apiUrl}/generate`,
-      body,
-    );
+  generateInference(body: InferenceGenerateRequest): Observable<{
+    data: InferenceGenerateResponse;
+    timestamp: number;
+    status: number;
+  }> {
+    return this.http.post<{
+      data: InferenceGenerateResponse;
+      timestamp: number;
+      status: number;
+    }>(`${this.apiUrl}/generate`, body);
   }
 }

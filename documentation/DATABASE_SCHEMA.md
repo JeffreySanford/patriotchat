@@ -33,7 +33,7 @@ CREATE TABLE users (
     last_login TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT now(),
     updated_at TIMESTAMP DEFAULT now(),
-    
+
     -- Indexes
     INDEX idx_users_tier (tier),
     INDEX idx_users_status (status),
@@ -51,35 +51,35 @@ CREATE TRIGGER users_audit AFTER INSERT OR UPDATE OR DELETE ON users
 ```sql
 CREATE TABLE audit_logs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    
+
     -- What was changed
     entity_type VARCHAR(50) NOT NULL,          -- users, policies, funding, etc.
     entity_id UUID NOT NULL,
     operation VARCHAR(10) NOT NULL,            -- CREATE, READ, UPDATE, DELETE
-    
+
     -- Who made the change
     user_id UUID REFERENCES users(id) ON DELETE SET NULL,
     service VARCHAR(50) NOT NULL,              -- auth, funding, policy, llm, etc.
-    
+
     -- What changed (full details)
     old_values JSONB,                          -- Previous state (NULL for CREATE)
     new_values JSONB,                          -- New state (NULL for DELETE)
     changes JSONB,                             -- Diff only: {field: {old, new}}
-    
+
     -- User-visible version (PII scrubbed)
     scrubbed_changes JSONB,                    -- Safe to show to end user
-    
+
     -- Request context
     correlation_id UUID,                       -- For tracing request path
     ip_address INET,
     user_agent VARCHAR(500),
-    
+
     -- Metadata
     created_at TIMESTAMP DEFAULT now() NOT NULL,
-    
+
     -- Immutability constraints
     CONSTRAINT audit_logs_immutable CHECK (true),
-    
+
     -- Indexes
     INDEX idx_audit_entity (entity_type, entity_id, created_at DESC),
     INDEX idx_audit_user (user_id, created_at DESC),
@@ -117,7 +117,7 @@ BEGIN
         CASE WHEN TG_OP = 'UPDATE' THEN jsonb_diff(row_to_json(OLD), row_to_json(NEW)) ELSE NULL END,
         current_setting('app.correlation_id')::UUID
     );
-    
+
     RETURN CASE WHEN TG_OP = 'DELETE' THEN OLD ELSE NEW END;
 END;
 $$ LANGUAGE plpgsql;
@@ -129,24 +129,24 @@ $$ LANGUAGE plpgsql;
 CREATE TABLE user_activity (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    
+
     -- What they did
     action VARCHAR(100) NOT NULL,              -- login, query, search, download
     resource_type VARCHAR(50),                 -- funding, policy, llm, etc.
     resource_id UUID,
-    
+
     -- Context
     status VARCHAR(20),                        -- success, failed, error
     ip_address INET,
     user_agent VARCHAR(500),
     correlation_id UUID,
-    
+
     -- Performance
     duration_ms INTEGER,                       -- How long did it take
-    
+
     -- Metadata
     created_at TIMESTAMP DEFAULT now() NOT NULL,
-    
+
     -- Indexes
     INDEX idx_activity_user (user_id, created_at DESC),
     INDEX idx_activity_action (action, created_at DESC),
@@ -163,16 +163,16 @@ CREATE TABLE policies (
     description TEXT,
     category VARCHAR(50),                      -- spending, voting, etc.
     data JSONB,                                -- Flexible policy data
-    
+
     -- Versioning
     version INTEGER DEFAULT 1,
     parent_id UUID REFERENCES policies(id),
-    
+
     -- Lifecycle
     status VARCHAR(20) DEFAULT 'active',       -- active, archived, deleted
     created_at TIMESTAMP DEFAULT now() NOT NULL,
     updated_at TIMESTAMP DEFAULT now(),
-    
+
     -- Indexes
     INDEX idx_policies_category (category),
     INDEX idx_policies_status (status),
@@ -189,21 +189,21 @@ CREATE TRIGGER policies_audit AFTER INSERT OR UPDATE OR DELETE ON policies
 ```sql
 CREATE TABLE funding_data (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    
+
     -- Source
     source VARCHAR(50) NOT NULL,               -- fec, propublica, opensecrets, etc.
     external_id VARCHAR(255) UNIQUE,           -- ID from external source
-    
+
     -- Data
     data JSONB NOT NULL,                       -- Flexible structure
     entity_name VARCHAR(255),
     entity_type VARCHAR(50),                   -- person, organization, candidate
-    
+
     -- Metadata
     last_fetched TIMESTAMP DEFAULT now(),
     last_updated TIMESTAMP DEFAULT now(),
     created_at TIMESTAMP DEFAULT now(),
-    
+
     -- Indexes
     INDEX idx_funding_source (source),
     INDEX idx_funding_entity (entity_name),
@@ -223,24 +223,24 @@ CREATE TRIGGER funding_audit AFTER INSERT OR UPDATE OR DELETE ON funding_data
 CREATE TABLE llm_queries (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    
+
     -- Query details
     query TEXT NOT NULL,
     model VARCHAR(50) DEFAULT 'mistral',       -- mistral, mistral-variant-2, etc.
     parameters JSONB,                          -- Temperature, top_p, etc.
-    
+
     -- Response
     response TEXT,
     tokens_used INTEGER,
     latency_ms INTEGER,
-    
+
     -- Context
     context_type VARCHAR(50),                  -- funding, policy, etc.
     context_data JSONB,
-    
+
     -- Metadata
     created_at TIMESTAMP DEFAULT now(),
-    
+
     -- Indexes
     INDEX idx_llm_user (user_id, created_at DESC),
     INDEX idx_llm_model (model),
@@ -258,26 +258,26 @@ CREATE TRIGGER llm_queries_audit AFTER INSERT OR UPDATE OR DELETE ON llm_queries
 CREATE TABLE analytics_events (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES users(id) ON DELETE SET NULL,
-    
+
     -- Event details
     event_type VARCHAR(100) NOT NULL,          -- page_view, search, query, etc.
     event_data JSONB,
-    
+
     -- Performance
     page_load_ms INTEGER,
     interaction_time_ms INTEGER,
-    
+
     -- Session
     session_id UUID,
     correlation_id UUID,
-    
+
     -- Device/Browser
     ip_address INET,
     user_agent VARCHAR(500),
-    
+
     -- Metadata
     created_at TIMESTAMP DEFAULT now(),
-    
+
     -- Indexes
     INDEX idx_analytics_type (event_type, created_at DESC),
     INDEX idx_analytics_user (user_id, created_at DESC),
@@ -310,20 +310,20 @@ CREATE TABLE analytics_events (
 ### Scrubbing Function Example
 
 ```sql
-CREATE OR REPLACE FUNCTION scrub_for_user(raw_data JSONB) 
+CREATE OR REPLACE FUNCTION scrub_for_user(raw_data JSONB)
 RETURNS JSONB AS $$
 DECLARE
     scrubbed JSONB;
 BEGIN
     -- Remove sensitive fields
-    scrubbed := raw_data 
+    scrubbed := raw_data
         - 'password_hash'
         - 'email'
         - 'phone'
         - 'address'
         - 'ssn'
         - 'internal_id';
-    
+
     RETURN scrubbed;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
@@ -336,7 +336,7 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 ### Get User's Own Audit Trail (Scrubbed)
 
 ```sql
-SELECT 
+SELECT
     id,
     operation,
     entity_type,
@@ -353,7 +353,7 @@ LIMIT 100;
 ### Track What Changed for an Entity
 
 ```sql
-SELECT 
+SELECT
     id,
     user_id,
     operation,
@@ -369,7 +369,7 @@ ORDER BY created_at ASC;
 ### System Admin: Full Audit Trail (All Sensitive Data)
 
 ```sql
-SELECT 
+SELECT
     id,
     user_id,
     entity_type,

@@ -99,13 +99,13 @@ Look for logs in this order:
 
 ## Key Metrics to Check
 
-| Metric | Where to Find | Normal Range |
-| --- | --- | --- |
-| `latencyMs` | Response in browser console | 50-500ms |
-| `apiToGoLatency` | Backend console | 100-1000ms |
-| `frontToApiLatency` | Backend console | 200-2000ms |
-| Client count | `[TelemetryGateway]` logs | 1-10 |
-| Connection status | `[PipelineTelemetryService]` | ✅ connected |
+| Metric              | Where to Find                | Normal Range |
+| ------------------- | ---------------------------- | ------------ |
+| `latencyMs`         | Response in browser console  | 50-500ms     |
+| `apiToGoLatency`    | Backend console              | 100-1000ms   |
+| `frontToApiLatency` | Backend console              | 200-2000ms   |
+| Client count        | `[TelemetryGateway]` logs    | 1-10         |
+| Connection status   | `[PipelineTelemetryService]` | ✅ connected |
 
 ## Common Issues
 

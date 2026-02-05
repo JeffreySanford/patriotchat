@@ -44,15 +44,15 @@ These texts form the “gold” corpus that we embed, sample, and cite. They are
 - Constitution + Bill of Rights + Amendments
 - Federalist Papers (all 85 essays)
 - Anti-Federalist Papers (Brutus, Centinel, etc.)
-- Locke, *Second Treatise of Government*
-- Montesquieu, *The Spirit of the Laws* (separation of powers sections)
-- Paine, *Common Sense* & *Rights of Man*
-- Jefferson, Kentucky Resolutions & *Notes on the State of Virginia*
-- Madison, *Notes of the Debates at the Constitutional Convention*
+- Locke, _Second Treatise of Government_
+- Montesquieu, _The Spirit of the Laws_ (separation of powers sections)
+- Paine, _Common Sense_ & _Rights of Man_
+- Jefferson, Kentucky Resolutions & _Notes on the State of Virginia_
+- Madison, _Notes of the Debates at the Constitutional Convention_
 - Supreme Court opinions that affirm limits on federal power and highlight enumerated rights
 - Reagan, Coolidge, Goldwater speeches (public domain excerpts)
-- Bastiat, *The Law*
-- Hayek, *The Road to Serfdom* (public domain excerpts)
+- Bastiat, _The Law_
+- Hayek, _The Road to Serfdom_ (public domain excerpts)
 - Mises, Friedman, Rand (public domain or carefully paraphrased core ideas)
 - Walter Williams and Thomas Sowell (public domain essays where available)
 

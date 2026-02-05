@@ -23,12 +23,7 @@ No 'Access-Control-Allow-Origin' header is present on the requested resource.
 - Updated `ALLOWED_ORIGINS` constant to include all frontend dev server addresses:
 
 ```typescript
-const ALLOWED_ORIGINS: string[] = [
-  'http://localhost:4200',
-  'http://127.0.0.1:4200',
-  'http://localhost:4205',
-  'http://127.0.0.1:4205',
-];
+const ALLOWED_ORIGINS: string[] = ['http://localhost:4200', 'http://127.0.0.1:4200', 'http://localhost:4205', 'http://127.0.0.1:4205'];
 ```
 
 ---
@@ -125,12 +120,10 @@ this.socket = io(fallbackEndpoint, {
    ```
 
 3. **Check browser Network tab for:**
-
    - ✅ POST `/api/query` with status 200
    - ✅ WebSocket connection to `/socket.io/?EIO=4&transport=websocket` with status 101
 
 4. **Submit a query in frontend:**
-
    - Should see progress metrics flowing from WebSocket
    - Should see latency metrics in response
 
@@ -139,4 +132,4 @@ this.socket = io(fallbackEndpoint, {
 ## Key Files Modified
 
 | File | Change | Lines |
-| --- | --- | --- |
+| ---- | ------ | ----- |

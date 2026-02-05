@@ -2,12 +2,12 @@
 
 ## TL;DR
 
-| Question  | Answer |
-| ---------- |--------|
-| **Why `unknown` in catch clauses?**  | **TypeScript spec requirement.** JavaScript allows throwing ANY value, not just Error objects. |
-| **Why not specific error types?**  | **TypeScript forbids it.** You cannot annotate catch clause parameters with specific types. |
-| **Are we cheating with eslint-disable?**  | **NO. This is the correct pattern.** It's how ALL production code handles errors. |
-| **Should we change it?**  | **NO. Keep exactly what you have.** It's industry best practice. |
+| Question                                 | Answer                                                                                         |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Why `unknown` in catch clauses?**      | **TypeScript spec requirement.** JavaScript allows throwing ANY value, not just Error objects. |
+| **Why not specific error types?**        | **TypeScript forbids it.** You cannot annotate catch clause parameters with specific types.    |
+| **Are we cheating with eslint-disable?** | **NO. This is the correct pattern.** It's how ALL production code handles errors.              |
+| **Should we change it?**                 | **NO. Keep exactly what you have.** It's industry best practice.                               |
 
 ---
 
@@ -17,12 +17,12 @@
 
 ```typescript
 // All valid in JavaScript:
-throw new Error("oops");           // Standard
-throw "just a string";             // String (not Error!)
-throw 42;                          // Number
-throw { custom: true };            // Object
-throw null;                        // null
-throw undefined;                   // undefined
+throw new Error('oops'); // Standard
+throw 'just a string'; // String (not Error!)
+throw 42; // Number
+throw { custom: true }; // Object
+throw null; // null
+throw undefined; // undefined
 ```
 
 **TypeScript's question:** "How do I know what type to expect in a catch clause?"
@@ -35,14 +35,16 @@ throw undefined;                   // undefined
 // ❌ ILLEGAL - TypeScript won't allow this:
 try {
   await operation();
-} catch (error: Error) {  // Type error! Can't annotate catch parameter!
+} catch (error: Error) {
+  // Type error! Can't annotate catch parameter!
   // ...
 }
 
 // ✅ LEGAL - Must use unknown:
 try {
   await operation();
-} catch (error: unknown) {  // ✅ Only option allowed
+} catch (error: unknown) {
+  // ✅ Only option allowed
   // Now type-guard as needed
 }
 ```
@@ -90,9 +92,9 @@ Prevents unsafe code like:
 
 ```typescript
 // ❌ BAD - Lazy typing
-let value: unknown;  // Unclear type
+let value: unknown; // Unclear type
 // ... lots of code ...
-console.log(value.property);  // Might crash
+console.log(value.property); // Might crash
 ```
 
 ### Why Catch Clauses Are Special

@@ -56,7 +56,7 @@ report_to: none
 
 seed: 42
 special_tokens:
-  bos_token: "<s>"
-  eos_token: "</s>"
+  bos_token: '<s>'
+  eos_token: '</s>'
 use_wandb: false
 wandb_mode: disabled

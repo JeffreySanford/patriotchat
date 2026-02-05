@@ -64,14 +64,19 @@ describe('InferenceService', () => {
     it('should accept inference request', () => {
       const prompt = 'Hello, how are you?';
       const model = 'llama2';
-      
+
       // Mock the HTTP service to return an Observable
       mockHttpClient.post.mockReturnValue({
         pipe: vi.fn().mockReturnValue(of({})),
       });
-      
-      const result = service.generateInference(prompt, model, undefined, undefined);
-      
+
+      const result = service.generateInference(
+        prompt,
+        model,
+        undefined,
+        undefined,
+      );
+
       expect(result).toBeDefined();
       expect(typeof result.subscribe).toBe('function');
     });

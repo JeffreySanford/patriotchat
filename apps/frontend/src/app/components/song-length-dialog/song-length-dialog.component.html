@@ -4,12 +4,12 @@
       <h2>Song Length Preference</h2>
       <button class="close-btn" (click)="closeDialog()">&times;</button>
     </div>
-    
+
     <div class="dialog-body">
       <p>How long would you like your song to be?</p>
-      
+
       <div class="options-grid">
-        <button 
+        <button
           *ngFor="let option of songLengthOptions"
           (click)="selectLength(option.seconds)"
           class="length-option"

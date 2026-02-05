@@ -214,7 +214,7 @@ test.describe('E2E Telemetry & WebSocket Validation', () => {
       expect(invalidEventResponse.status).toBeGreaterThan(200);
       expect(invalidEventResponse.status).toBeLessThan(500);
       console.log(
-        `✓ Invalid telemetry event handled gracefully (status: ${invalidEventResponse.status})`
+        `✓ Invalid telemetry event handled gracefully (status: ${invalidEventResponse.status})`,
       );
     });
 
@@ -260,7 +260,9 @@ test.describe('E2E Telemetry & WebSocket Validation', () => {
         service: 'analytics',
       });
 
-      expect(userEventsResponse.ok || userEventsResponse.status === 404).toBe(true);
+      expect(userEventsResponse.ok || userEventsResponse.status === 404).toBe(
+        true,
+      );
       console.log(`✓ User session events correlated correctly`);
     });
   });
@@ -287,7 +289,9 @@ test.describe('E2E Telemetry & WebSocket Validation', () => {
       expect(registerResponse.ok).toBe(true);
       // Registration should be fast (telemetry should be async)
       expect(duration).toBeLessThan(5000);
-      console.log(`✓ Registration completed in ${duration}ms (telemetry non-blocking)`);
+      console.log(
+        `✓ Registration completed in ${duration}ms (telemetry non-blocking)`,
+      );
     });
 
     test('Should handle high-volume analytics events', async () => {
@@ -321,7 +325,7 @@ test.describe('E2E Telemetry & WebSocket Validation', () => {
               eventType: `event_${i}`,
               data: { index: i },
             },
-          })
+          }),
         );
       }
 
@@ -358,7 +362,9 @@ test.describe('E2E Telemetry & WebSocket Validation', () => {
 
       // Should be ready or not ready, but endpoint should exist
       expect(readyResponse.status).toBeLessThan(500);
-      console.log(`✓ Readiness check available (status: ${readyResponse.status})`);
+      console.log(
+        `✓ Readiness check available (status: ${readyResponse.status})`,
+      );
     });
 
     test('Should provide consistent health metrics', async () => {
@@ -398,7 +404,9 @@ test.describe('E2E Telemetry & WebSocket Validation', () => {
       });
 
       expect(registerResponse.ok).toBe(true);
-      console.log(`✓ Telemetry service connection maintained during registration`);
+      console.log(
+        `✓ Telemetry service connection maintained during registration`,
+      );
 
       // Verify telemetry can be queried
       const userId = registerResponse.data?.userId;
@@ -471,7 +479,9 @@ test.describe('E2E Telemetry & WebSocket Validation', () => {
         service: 'analytics',
       });
 
-      expect(analyticsResponse.ok || analyticsResponse.status === 404).toBe(true);
+      expect(analyticsResponse.ok || analyticsResponse.status === 404).toBe(
+        true,
+      );
       console.log(`✓ Step 4: Analytics pipeline captured events`);
 
       console.log(`✓ Complete message flow validated end-to-end`);

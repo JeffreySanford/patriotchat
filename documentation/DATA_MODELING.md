@@ -83,43 +83,43 @@ export const LogSchema = new Schema<ILog>(
       type: String,
       required: true,
       index: true,
-      enum: ['frontend-interceptor', 'api-controller', 'go-query-handler', 'ollama-inference']
+      enum: ['frontend-interceptor', 'api-controller', 'go-query-handler', 'ollama-inference'],
     },
     severity: {
       type: String,
       required: true,
       enum: ['DEBUG', 'INFO', 'WARN', 'ERROR', 'METRIC'],
-      index: true
+      index: true,
     },
     message: {
       type: String,
-      required: true
+      required: true,
     },
     traceId: {
       type: String,
       required: true,
       index: true,
-      match: /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+      match: /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
     },
     context: {
       type: Schema.Types.Mixed,
-      default: {}
+      default: {},
     },
     timestamp: {
       type: Date,
       required: true,
       default: () => new Date(),
-      index: true
+      index: true,
     },
     latencyMs: {
       type: Number,
-      min: 0
-    }
+      min: 0,
+    },
   },
   {
     timestamps: true, // Adds createdAt, updatedAt
-    collection: 'logs'
-  }
+    collection: 'logs',
+  },
 );
 
 // Add compound indexes for common queries
@@ -269,7 +269,7 @@ export class LogService {
       traceId: createLogDTO.traceId || this.generateTraceId(),
       context: createLogDTO.context || {},
       timestamp: new Date(),
-      latencyMs: createLogDTO.latencyMs
+      latencyMs: createLogDTO.latencyMs,
     };
 
     // Validate against domain rules
@@ -316,22 +316,13 @@ export class LogService {
     const limit = Math.min(query.limit || 50, 500); // Cap at 500
     const skip = (page - 1) * limit;
 
-    const [data, total] = await Promise.all([
-      this.logModel
-        .find(filter)
-        .sort({ timestamp: -1 })
-        .skip(skip)
-        .limit(limit)
-        .lean()
-        .exec(),
-      this.logModel.countDocuments(filter)
-    ]);
+    const [data, total] = await Promise.all([this.logModel.find(filter).sort({ timestamp: -1 }).skip(skip).limit(limit).lean().exec(), this.logModel.countDocuments(filter)]);
 
     return {
-      data: data.map(doc => new LogResponseDTO(doc)),
+      data: data.map((doc) => new LogResponseDTO(doc)),
       total,
       page,
-      limit
+      limit,
     };
   }
 
@@ -346,7 +337,7 @@ export class LogService {
       traceId: doc.traceId,
       context: doc.context,
       timestamp: doc.timestamp,
-      latencyMs: doc.latencyMs
+      latencyMs: doc.latencyMs,
     };
   }
 
@@ -387,7 +378,7 @@ export class LogController {
     return new LogResponseDTO({
       _id: new (require('mongodb').ObjectId)(),
       ...logEntry,
-      timestamp: logEntry.timestamp
+      timestamp: logEntry.timestamp,
     });
   }
 
@@ -474,17 +465,17 @@ const log: LogEntry = {
   message: 'Request processed',
   traceId: 'uuid',
   context: {},
-  timestamp: new Date()
+  timestamp: new Date(),
 };
 
 // ❌ Compiler error - invalid severity
 const badLog: LogEntry = {
-  severity: 'INVALID' // Error!
+  severity: 'INVALID', // Error!
 };
 
 // ❌ Compiler error - missing field
 const incompleteLog: LogEntry = {
-  serviceId: 'api-controller'
+  serviceId: 'api-controller',
   // Error! Missing required fields
 };
 ```
@@ -572,36 +563,37 @@ export class CreateErrorLogDTO extends CreateLogDTO {
 }
 
 // Mongoose schema with nested object
-export const LogSchema = new Schema<ILog>(
-  {
-    // ... other fields
-    context: new Schema({
+export const LogSchema = new Schema<ILog>({
+  // ... other fields
+  context: new Schema(
+    {
       userId: String,
       userAgent: String,
       ipAddress: String,
       requestId: String,
       errorCode: Number,
       errorMessage: String,
-      stackTrace: String
-    }, { _id: false })
-  }
-);
+      stackTrace: String,
+    },
+    { _id: false },
+  ),
+});
 ```
 
 ---
 
 ## 📊 Comparison: Different Patterns
 
-| Aspect | Mongoose Only | DTO Only | Hybrid (Recommended) |
-| --- | --- | --- | --- |
-| **Compile-time safety** | ❌ None | ✅ Full | ✅ Full |
-| **Runtime validation** | ✅ Schema | ❌ None | ✅ Both layers |
-| **Type duplication** | N/A | ❌ Yes | ✅ DRY |
-| **API mismatch** | Possible | Possible | Prevented |
-| **IDE support** | Limited | ✅ Excellent | ✅ Excellent |
-| **Error messages** | Generic | Custom | Both |
-| **Refactoring safety** | Poor | Good | ✅ Excellent |
-| **Testing** | Difficult | ✅ Easy | ✅ Easy |
+| Aspect                  | Mongoose Only | DTO Only     | Hybrid (Recommended) |
+| ----------------------- | ------------- | ------------ | -------------------- |
+| **Compile-time safety** | ❌ None       | ✅ Full      | ✅ Full              |
+| **Runtime validation**  | ✅ Schema     | ❌ None      | ✅ Both layers       |
+| **Type duplication**    | N/A           | ❌ Yes       | ✅ DRY               |
+| **API mismatch**        | Possible      | Possible     | Prevented            |
+| **IDE support**         | Limited       | ✅ Excellent | ✅ Excellent         |
+| **Error messages**      | Generic       | Custom       | Both                 |
+| **Refactoring safety**  | Poor          | Good         | ✅ Excellent         |
+| **Testing**             | Difficult     | ✅ Easy      | ✅ Easy              |
 
 ---
 
@@ -611,10 +603,7 @@ export const LogSchema = new Schema<ILog>(
 
 ```typescript
 // ✅ Fast: Returns plain JavaScript objects (no Mongoose overhead)
-const logs = await this.logModel
-  .find(filter)
-  .lean()
-  .exec();
+const logs = await this.logModel.find(filter).lean().exec();
 
 // ❌ Slow: Returns Mongoose documents with overhead
 const logs = await this.logModel.find(filter).exec();
@@ -624,11 +613,7 @@ const logs = await this.logModel.find(filter).exec();
 
 ```typescript
 // ✅ Optimized: Only fetch required fields
-const logs = await this.logModel
-  .find(filter)
-  .select('serviceId severity message timestamp')
-  .lean()
-  .exec();
+const logs = await this.logModel.find(filter).select('serviceId severity message timestamp').lean().exec();
 ```
 
 ### 3. Index Strategy

@@ -10,13 +10,13 @@ This document maps every API endpoint to its corresponding DTOs, frontend servic
 
 #### 1. POST `/auth/register`
 
-| Component | Location | Details |
-|-----------|----------|---------|
-| **Request DTO** | `libs/shared/src/lib/api/auth.dto.ts` | `AuthRegisterRequest` |
-| **Response DTO** | `libs/shared/src/lib/api/auth.dto.ts` | `AuthResponse` |
-| **Frontend Service** | `apps/frontend/src/app/services/auth.service.ts` | `register(req: AuthRegisterRequest): Observable<AuthResponse>` |
+| Component              | Location                                                | Details                                                                                      |
+| ---------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| **Request DTO**        | `libs/shared/src/lib/api/auth.dto.ts`                   | `AuthRegisterRequest`                                                                        |
+| **Response DTO**       | `libs/shared/src/lib/api/auth.dto.ts`                   | `AuthResponse`                                                                               |
+| **Frontend Service**   | `apps/frontend/src/app/services/auth.service.ts`        | `register(req: AuthRegisterRequest): Observable<AuthResponse>`                               |
 | **Backend Controller** | `apps/services/api-gateway/src/auth/auth.controller.ts` | `@Post('register') async register(@Body() body: AuthRegisterRequest): Promise<AuthResponse>` |
-| **Description** | User registration with email/password |
+| **Description**        | User registration with email/password                   |
 
 **Request Example:**
 
@@ -44,25 +44,25 @@ This document maps every API endpoint to its corresponding DTOs, frontend servic
 
 #### 2. POST `/auth/login`
 
-| Component | Location | Details |
-|-----------|----------|---------|
-| **Request DTO** | `libs/shared/src/lib/api/auth.dto.ts` | `AuthLoginRequest` |
-| **Response DTO** | `libs/shared/src/lib/api/auth.dto.ts` | `AuthResponse` |
-| **Frontend Service** | `apps/frontend/src/app/services/auth.service.ts` | `login(req: AuthLoginRequest): Observable<AuthResponse>` |
+| Component              | Location                                                | Details                                                                             |
+| ---------------------- | ------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **Request DTO**        | `libs/shared/src/lib/api/auth.dto.ts`                   | `AuthLoginRequest`                                                                  |
+| **Response DTO**       | `libs/shared/src/lib/api/auth.dto.ts`                   | `AuthResponse`                                                                      |
+| **Frontend Service**   | `apps/frontend/src/app/services/auth.service.ts`        | `login(req: AuthLoginRequest): Observable<AuthResponse>`                            |
 | **Backend Controller** | `apps/services/api-gateway/src/auth/auth.controller.ts` | `@Post('login') async login(@Body() body: AuthLoginRequest): Promise<AuthResponse>` |
-| **Description** | User login with email/password |
+| **Description**        | User login with email/password                          |
 
 ---
 
 #### 3. POST `/auth/validate`
 
-| Component | Location | Details |
-|-----------|----------|---------|
-| **Request Auth** | (Token in Authorization header) | JWT token |
-| **Response DTO** | `libs/shared/src/lib/api/auth.dto.ts` | `AuthValidateResponse` |
-| **Frontend Service** | `apps/frontend/src/app/services/auth.service.ts` | `validate(): Observable<AuthValidateResponse>` |
+| Component              | Location                                                | Details                                                             |
+| ---------------------- | ------------------------------------------------------- | ------------------------------------------------------------------- |
+| **Request Auth**       | (Token in Authorization header)                         | JWT token                                                           |
+| **Response DTO**       | `libs/shared/src/lib/api/auth.dto.ts`                   | `AuthValidateResponse`                                              |
+| **Frontend Service**   | `apps/frontend/src/app/services/auth.service.ts`        | `validate(): Observable<AuthValidateResponse>`                      |
 | **Backend Controller** | `apps/services/api-gateway/src/auth/auth.controller.ts` | `@Post('validate') async validate(): Promise<AuthValidateResponse>` |
-| **Description** | Validate JWT token and get user info |
+| **Description**        | Validate JWT token and get user info                    |
 
 **Response Example:**
 
@@ -83,13 +83,13 @@ This document maps every API endpoint to its corresponding DTOs, frontend servic
 
 #### 4. GET `/inference/models`
 
-| Component | Location | Details |
-|-----------|----------|---------|
-| **Request** | (No body) | GET request |
-| **Response DTO** | `libs/shared/src/lib/api/inference.dto.ts` | `InferenceModelsResponse` |
-| **Frontend Service** | `apps/frontend/src/app/services/inference.service.ts` | `getModels(): Observable<InferenceModelsResponse>` |
+| Component              | Location                                                          | Details                                                              |
+| ---------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
+| **Request**            | (No body)                                                         | GET request                                                          |
+| **Response DTO**       | `libs/shared/src/lib/api/inference.dto.ts`                        | `InferenceModelsResponse`                                            |
+| **Frontend Service**   | `apps/frontend/src/app/services/inference.service.ts`             | `getModels(): Observable<InferenceModelsResponse>`                   |
 | **Backend Controller** | `apps/services/api-gateway/src/inference/inference.controller.ts` | `@Get('models') async getModels(): Promise<InferenceModelsResponse>` |
-| **Description** | Get list of available LLM models |
+| **Description**        | Get list of available LLM models                                  |
 
 **Response Example:**
 
@@ -97,20 +97,20 @@ This document maps every API endpoint to its corresponding DTOs, frontend servic
 {
   models: [
     {
-      id: "llama2",
-      name: "Llama 2",
+      id: 'llama2',
+      name: 'Llama 2',
       description: "Meta's Llama 2 model",
-      provider: "LLM Service",
-      contextWindow: 4096
+      provider: 'LLM Service',
+      contextWindow: 4096,
     },
     {
-      id: "mistral",
-      name: "Mistral",
-      description: "Mistral 7B model",
-      provider: "LLM Service",
-      contextWindow: 8000
-    }
-  ]
+      id: 'mistral',
+      name: 'Mistral',
+      description: 'Mistral 7B model',
+      provider: 'LLM Service',
+      contextWindow: 8000,
+    },
+  ];
 }
 ```
 
@@ -118,14 +118,14 @@ This document maps every API endpoint to its corresponding DTOs, frontend servic
 
 #### 5. POST `/inference/generate`
 
-| Component | Location | Details |
-|-----------|----------|---------|
-| **Request DTO** | `libs/shared/src/lib/api/inference.dto.ts` | `InferenceGenerateRequest` |
-| **Response DTO** | `libs/shared/src/lib/api/inference.dto.ts` | `InferenceGenerateResponse` |
-| **Frontend Service** | `apps/frontend/src/app/services/inference.service.ts` | `generateInference(req: InferenceGenerateRequest): Observable<InferenceGenerateResponse>` |
+| Component              | Location                                                          | Details                                                                                                                 |
+| ---------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Request DTO**        | `libs/shared/src/lib/api/inference.dto.ts`                        | `InferenceGenerateRequest`                                                                                              |
+| **Response DTO**       | `libs/shared/src/lib/api/inference.dto.ts`                        | `InferenceGenerateResponse`                                                                                             |
+| **Frontend Service**   | `apps/frontend/src/app/services/inference.service.ts`             | `generateInference(req: InferenceGenerateRequest): Observable<InferenceGenerateResponse>`                               |
 | **Backend Controller** | `apps/services/api-gateway/src/inference/inference.controller.ts` | `@Post('generate') async generateInference(@Body() body: InferenceGenerateRequest): Promise<InferenceGenerateResponse>` |
-| **Authentication** | Required (JwtAuthGuard) | JWT token required |
-| **Description** | Generate text using specified LLM model |
+| **Authentication**     | Required (JwtAuthGuard)                                           | JWT token required                                                                                                      |
+| **Description**        | Generate text using specified LLM model                           |
 
 **Request Example:**
 
@@ -193,12 +193,7 @@ HttpResponse sent to frontend
 ### Frontend (uses local copy due to module resolution)
 
 ```typescript
-import { 
-  InferenceGenerateRequest, 
-  InferenceGenerateResponse,
-  AuthResponse,
-  AuthError
-} from '../types/api.dto';
+import { InferenceGenerateRequest, InferenceGenerateResponse, AuthResponse, AuthError } from '../types/api.dto';
 ```
 
 **Location**: `apps/frontend/src/app/types/api.dto.ts`
@@ -206,12 +201,7 @@ import {
 ### Backend (uses shared library)
 
 ```typescript
-import {
-  InferenceGenerateRequest,
-  InferenceGenerateResponse,
-  AuthResponse,
-  ApiError
-} from '@patriotchat/shared';
+import { InferenceGenerateRequest, InferenceGenerateResponse, AuthResponse, ApiError } from '@patriotchat/shared';
 ```
 
 **Location**: `libs/shared/src/index.ts`

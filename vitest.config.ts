@@ -32,7 +32,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './apps/frontend/src') as string,
-      '@patriotchat/shared': path.resolve(__dirname, './libs/shared/src/index.ts') as string,
+      '@patriotchat/shared': path.resolve(
+        __dirname,
+        './libs/shared/src/index.ts',
+      ) as string,
     },
   },
 });

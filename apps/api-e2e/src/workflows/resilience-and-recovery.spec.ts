@@ -211,7 +211,7 @@ test.describe('E2E Resilience & Error Recovery', () => {
               prompt: query.text,
               model: query.model,
             },
-          })
+          }),
         );
       }
 
@@ -223,7 +223,9 @@ test.describe('E2E Resilience & Error Recovery', () => {
         console.log(`✓ Concurrent request ${index + 1} succeeded`);
       });
 
-      console.log(`✓ All ${responses.length} concurrent requests completed successfully`);
+      console.log(
+        `✓ All ${responses.length} concurrent requests completed successfully`,
+      );
     });
 
     test('Should rate-limit excessive requests appropriately', async () => {
@@ -271,7 +273,7 @@ test.describe('E2E Resilience & Error Recovery', () => {
       // Should have gotten through some requests or rate limited appropriately
       expect(successCount + rateLimitedCount).toBe(5);
       console.log(
-        `✓ Rate limiting: ${successCount} successful, ${rateLimitedCount} rate limited`
+        `✓ Rate limiting: ${successCount} successful, ${rateLimitedCount} rate limited`,
       );
     });
   });
@@ -402,7 +404,9 @@ test.describe('E2E Resilience & Error Recovery', () => {
       });
 
       expect(registerResponse.ok).toBe(true);
-      console.log(`✓ Registration succeeded (independent of analytics service)`);
+      console.log(
+        `✓ Registration succeeded (independent of analytics service)`,
+      );
 
       // Token extracted but not needed for subsequent login (can authenticate with email + password)
       void registerResponse.data?.token;
@@ -459,12 +463,12 @@ test.describe('E2E Resilience & Error Recovery', () => {
       expect(
         inferenceResponse.ok ||
           inferenceResponse.status === 503 ||
-          inferenceResponse.status === 502
+          inferenceResponse.status === 502,
       ).toBe(true);
 
       if (!inferenceResponse.ok) {
         console.log(
-          `✓ Gracefully handled LLM service unavailability (status: ${inferenceResponse.status})`
+          `✓ Gracefully handled LLM service unavailability (status: ${inferenceResponse.status})`,
         );
       } else {
         console.log(`✓ LLM service operational`);

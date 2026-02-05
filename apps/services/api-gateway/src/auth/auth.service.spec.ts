@@ -8,19 +8,21 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     mockHttpClient = {
-      post: vi.fn().mockReturnValue(of({
-        data: {
-          token: 'test.jwt.token',
-          user: {
-            id: 'user1',
-            username: 'testuser',
-            email: 'test@example.com',
-            tier: 'free',
-            created_at: new Date().toISOString(),
+      post: vi.fn().mockReturnValue(
+        of({
+          data: {
+            token: 'test.jwt.token',
+            user: {
+              id: 'user1',
+              username: 'testuser',
+              email: 'test@example.com',
+              tier: 'free',
+              created_at: new Date().toISOString(),
+            },
+            expires_at: new Date(Date.now() + 3600000).toISOString(),
           },
-          expires_at: new Date(Date.now() + 3600000).toISOString(),
-        },
-      })),
+        }),
+      ),
       get: vi.fn(),
     };
     service = new AuthService(mockHttpClient);

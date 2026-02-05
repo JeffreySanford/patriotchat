@@ -16,6 +16,7 @@ Apply these settings in the repository Settings → Branches → Branch protecti
 - Include administrators: optional (recommended: enabled so admins also follow rules)
 
 Notes & Checklist
+
 - After enabling, create a quick PR that modifies a non-critical file (README.md) to validate the rule is enforced.
 - If the CI uses different check names than above, adapt the required checks to match the exact status check names emitted by the workflow.
 - Document the enabled rules in `README.md` or `documentation/GOVERNANCE.md` so the team knows the merge expectations.

@@ -34,13 +34,13 @@ PatriotChat is a privacy-first, enterprise-grade civic intelligence platform com
 
 All 5 critical requirements have been **met and verified**:
 
-| Requirement | Target | Status | Evidence |
-| --- | --- | --- | --- |
-| **Performance** | Auth < 100ms | ✅ **57ms** | Measured via health endpoint |
-| **Audit Trail** | Immutable PostgreSQL logs | ✅ **Implemented** | `audit_logs` table with RULES |
-| **Database** | PostgreSQL with pooling | ✅ **Deployed** | 16-alpine, 25 max connections |
-| **LLM Selector** | Frontend model dropdown | ✅ **Operational** | 3 models: llama2, mistral, neural-chat |
-| **Rate Limiting** | 4-dimensional guards | ✅ **Active** | IP, user, endpoint, tier-based |
+| Requirement       | Target                    | Status             | Evidence                               |
+| ----------------- | ------------------------- | ------------------ | -------------------------------------- |
+| **Performance**   | Auth < 100ms              | ✅ **57ms**        | Measured via health endpoint           |
+| **Audit Trail**   | Immutable PostgreSQL logs | ✅ **Implemented** | `audit_logs` table with RULES          |
+| **Database**      | PostgreSQL with pooling   | ✅ **Deployed**    | 16-alpine, 25 max connections          |
+| **LLM Selector**  | Frontend model dropdown   | ✅ **Operational** | 3 models: llama2, mistral, neural-chat |
+| **Rate Limiting** | 4-dimensional guards      | ✅ **Active**      | IP, user, endpoint, tier-based         |
 
 👉 **See [PROJECT_STATUS.md](PROJECT_STATUS.md) for complete verification and metrics**
 
@@ -236,8 +236,8 @@ curl "http://localhost:4003/policy/search?entity_id=test-entity"
 
 -### Phase 1: LLM Training (Sprint 1-2)
 
-- [x] Build JSONL civic instruction dataset with TypeScript schema and generate 1,000 liberty-first prompts (`my_liberty_dataset/train.jsonl`).  
-    - [x] Run the trimmed Liberty Mistral LoRA training (`liberty-mistral-lora.yaml`) – resulting adapter/tokenizer/metadata live in `liberty-mistral-out/` and the zipped bundle now lives under `tools/checkpoints/liberty-mistral-v1.0-2026-02-05/` with Values Commitment notes plus metadata covering the second pass evaluation.
+- [x] Build JSONL civic instruction dataset with TypeScript schema and generate 1,000 liberty-first prompts (`my_liberty_dataset/train.jsonl`).
+  - [x] Run the trimmed Liberty Mistral LoRA training (`liberty-mistral-lora.yaml`) – resulting adapter/tokenizer/metadata live in `liberty-mistral-out/` and the zipped bundle now lives under `tools/checkpoints/liberty-mistral-v1.0-2026-02-05/` with Values Commitment notes plus metadata covering the second pass evaluation.
 - [x] Implement the label-discipline evaluation suite, regulatory drift checks, and citation coverage logging (`documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`) with the `pnpm run check:liberty-prompts` summary recorded alongside the Values Commitment text (`README.md#values-commitment`) before declaring Liberty Mistral the default.
 - [x] Publish evaluation snapshots, dataset hashes, and bias scores in `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md` and `documentation/LLM_TUNING_AND_RAG.md` so reviewers can trace the guardrails referenced in `README.md#values-commitment`.
 

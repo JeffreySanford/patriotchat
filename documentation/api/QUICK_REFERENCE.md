@@ -13,11 +13,11 @@ pnpm run test:api:endpoints
 
 ## 📋 Available Endpoints
 
-| Method | Endpoint | Purpose | Response |
-| --- | --- | --- | --- |
-| GET | `/api` | Root endpoint | `{ message: "Hello API" }` |
-| GET | `/api/status` | System status | `{ revision, uptimeMs, activeModel, guardrailPassRate, indicators[] }` |
-| POST | `/api/query` | Submit LLM query | `{ response: string, latencyMs?: number }` |
+| Method | Endpoint      | Purpose          | Response                                                               |
+| ------ | ------------- | ---------------- | ---------------------------------------------------------------------- |
+| GET    | `/api`        | Root endpoint    | `{ message: "Hello API" }`                                             |
+| GET    | `/api/status` | System status    | `{ revision, uptimeMs, activeModel, guardrailPassRate, indicators[] }` |
+| POST   | `/api/query`  | Submit LLM query | `{ response: string, latencyMs?: number }`                             |
 
 ## 🧪 Testing Methods
 
@@ -115,13 +115,13 @@ curl -v http://localhost:3000/api/nonexistent
 
 ## ⚡ Common Issues & Solutions
 
-| Issue | Solution |
-| --- | --- |
-| Connection refused | `pnpm run start:api` in separate terminal |
-| Port already in use | `lsof -i :3000` then kill the process |
-| CORS errors | Check allowed origins in `api/src/main.ts` |
-| 404 not found | Verify API is built: `pnpm run build` |
-| Tests timeout | Increase timeout in test files |
+| Issue               | Solution                                   |
+| ------------------- | ------------------------------------------ |
+| Connection refused  | `pnpm run start:api` in separate terminal  |
+| Port already in use | `lsof -i :3000` then kill the process      |
+| CORS errors         | Check allowed origins in `api/src/main.ts` |
+| 404 not found       | Verify API is built: `pnpm run build`      |
+| Tests timeout       | Increase timeout in test files             |
 
 ## 📚 Documentation
 

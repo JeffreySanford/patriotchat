@@ -98,7 +98,7 @@ describe('RateLimitingGuard', () => {
 
       expect(mockResponse.set).toHaveBeenCalledWith(
         expect.stringContaining('X-RateLimit'),
-        expect.any(String)
+        expect.any(String),
       );
     });
   });
@@ -242,7 +242,7 @@ describe('RateLimitingGuard', () => {
   describe('Response Headers', () => {
     it('should set X-RateLimit-Limit header', async () => {
       mockRateLimitingService.checkLimit.mockReturnValue(true);
-      
+
       await guard.canActivate(mockContext as any);
 
       expect(mockResponse.set).toHaveBeenCalled();
@@ -250,7 +250,7 @@ describe('RateLimitingGuard', () => {
 
     it('should set X-RateLimit-Remaining header', async () => {
       mockRateLimitingService.checkLimit.mockReturnValue(true);
-      
+
       await guard.canActivate(mockContext as any);
 
       expect(mockResponse.set).toHaveBeenCalled();
@@ -258,7 +258,7 @@ describe('RateLimitingGuard', () => {
 
     it('should set X-RateLimit-Reset header', async () => {
       mockRateLimitingService.checkLimit.mockReturnValue(true);
-      
+
       await guard.canActivate(mockContext as any);
 
       expect(mockResponse.set).toHaveBeenCalled();

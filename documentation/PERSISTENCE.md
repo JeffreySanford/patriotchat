@@ -58,70 +58,65 @@ mongodb+srv://user:pass@mongodb-cluster.mongodb.net/patriotchat?retryWrites=true
 **Purpose:** Store all application logs from all services
 
 ```typescript
-db.createCollection("logs", {
+db.createCollection('logs', {
   validator: {
     $jsonSchema: {
-      bsonType: "object",
-      required: ["serviceId", "severity", "message", "traceId", "timestamp"],
+      bsonType: 'object',
+      required: ['serviceId', 'severity', 'message', 'traceId', 'timestamp'],
       properties: {
         _id: {
-          bsonType: "objectId"
+          bsonType: 'objectId',
         },
         serviceId: {
-          bsonType: "string",
-          enum: [
-            "frontend-interceptor",
-            "api-controller",
-            "go-query-handler",
-            "ollama-inference"
-          ],
-          description: "Source service"
+          bsonType: 'string',
+          enum: ['frontend-interceptor', 'api-controller', 'go-query-handler', 'ollama-inference'],
+          description: 'Source service',
         },
         severity: {
-          bsonType: "string",
-          enum: ["DEBUG", "INFO", "WARN", "ERROR", "METRIC"],
-          description: "Log level"
+          bsonType: 'string',
+          enum: ['DEBUG', 'INFO', 'WARN', 'ERROR', 'METRIC'],
+          description: 'Log level',
         },
         message: {
-          bsonType: "string",
-          description: "Log message"
+          bsonType: 'string',
+          description: 'Log message',
         },
         traceId: {
-          bsonType: "string",
-          pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          description: "W3C Trace Context ID"
+          bsonType: 'string',
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
+          description: 'W3C Trace Context ID',
         },
         context: {
-          bsonType: "object",
-          description: "Additional context (userId, errorCode, etc.)"
+          bsonType: 'object',
+          description: 'Additional context (userId, errorCode, etc.)',
         },
         latencyMs: {
-          bsonType: "int",
+          bsonType: 'int',
           minimum: 0,
-          description: "Operation latency in milliseconds"
+          description: 'Operation latency in milliseconds',
         },
         timestamp: {
-          bsonType: "date",
-          description: "When log was created"
+          bsonType: 'date',
+          description: 'When log was created',
         },
         createdAt: {
-          bsonType: "date",
-          description: "MongoDB auto-timestamp"
+          bsonType: 'date',
+          description: 'MongoDB auto-timestamp',
         },
         updatedAt: {
-          bsonType: "date",
-          description: "MongoDB auto-timestamp"
-        }
-      }
-    }
-  }
-})
+          bsonType: 'date',
+          description: 'MongoDB auto-timestamp',
+        },
+      },
+    },
+  },
+});
 
 // Indexes
-db.logs.createIndex({ traceId: 1, timestamp: -1 })        // Trace queries
-db.logs.createIndex({ serviceId: 1, severity: 1, timestamp: -1 }) // Filter
-db.logs.createIndex({ timestamp: -1 })                     // Recent logs
-db.logs.createIndex({ severity: 1 })                       // By severity
+db.logs.createIndex({ traceId: 1, timestamp: -1 }); // Trace queries
+db.logs.createIndex({ serviceId: 1, severity: 1, timestamp: -1 }); // Filter
+db.logs.createIndex({ timestamp: -1 }); // Recent logs
+db.logs.createIndex({ severity: 1 }); // By severity
 ```
 
 **Sample Document:**
@@ -153,61 +148,47 @@ db.logs.createIndex({ severity: 1 })                       // By severity
 **Purpose:** Store performance metrics and trace latencies
 
 ```typescript
-db.createCollection("metrics", {
+db.createCollection('metrics', {
   validator: {
     $jsonSchema: {
-      bsonType: "object",
-      required: ["serviceId", "metricType", "timestamp"],
+      bsonType: 'object',
+      required: ['serviceId', 'metricType', 'timestamp'],
       properties: {
         _id: {
-          bsonType: "objectId"
+          bsonType: 'objectId',
         },
         serviceId: {
-          bsonType: "string",
-          enum: [
-            "frontend-interceptor",
-            "api-controller",
-            "go-query-handler",
-            "ollama-inference"
-          ]
+          bsonType: 'string',
+          enum: ['frontend-interceptor', 'api-controller', 'go-query-handler', 'ollama-inference'],
         },
         metricType: {
-          bsonType: "string",
-          enum: [
-            "request_latency",
-            "inference_latency",
-            "db_query_latency",
-            "websocket_message_latency",
-            "error_rate",
-            "memory_usage",
-            "cpu_usage",
-            "network_throughput"
-          ]
+          bsonType: 'string',
+          enum: ['request_latency', 'inference_latency', 'db_query_latency', 'websocket_message_latency', 'error_rate', 'memory_usage', 'cpu_usage', 'network_throughput'],
         },
         value: {
-          bsonType: "number",
-          description: "Metric value"
+          bsonType: 'number',
+          description: 'Metric value',
         },
         unit: {
-          bsonType: "string",
-          enum: ["ms", "bytes", "percent", "messages/sec", "count"],
-          description: "Measurement unit"
+          bsonType: 'string',
+          enum: ['ms', 'bytes', 'percent', 'messages/sec', 'count'],
+          description: 'Measurement unit',
         },
         tags: {
-          bsonType: "object",
-          description: "Additional metadata (endpoint, userId, etc.)"
+          bsonType: 'object',
+          description: 'Additional metadata (endpoint, userId, etc.)',
         },
         timestamp: {
-          bsonType: "date"
-        }
-      }
-    }
-  }
-})
+          bsonType: 'date',
+        },
+      },
+    },
+  },
+});
 
-db.metrics.createIndex({ serviceId: 1, metricType: 1, timestamp: -1 })
-db.metrics.createIndex({ timestamp: -1 })
-db.metrics.createIndex({ metricType: 1, timestamp: -1 })
+db.metrics.createIndex({ serviceId: 1, metricType: 1, timestamp: -1 });
+db.metrics.createIndex({ timestamp: -1 });
+db.metrics.createIndex({ metricType: 1, timestamp: -1 });
 ```
 
 **Sample Documents:**
@@ -249,80 +230,75 @@ db.metrics.createIndex({ metricType: 1, timestamp: -1 })
 **Purpose:** Distributed tracing records with full request flow
 
 ```typescript
-db.createCollection("traces", {
+db.createCollection('traces', {
   validator: {
     $jsonSchema: {
-      bsonType: "object",
-      required: ["traceId", "spanId", "timestamp"],
+      bsonType: 'object',
+      required: ['traceId', 'spanId', 'timestamp'],
       properties: {
         _id: {
-          bsonType: "objectId"
+          bsonType: 'objectId',
         },
         traceId: {
-          bsonType: "string",
-          pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          bsonType: 'string',
+          pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
         },
         spanId: {
-          bsonType: "string",
-          description: "Unique span within trace"
+          bsonType: 'string',
+          description: 'Unique span within trace',
         },
         parentSpanId: {
-          bsonType: "string",
-          description: "Parent span ID (optional, for call hierarchy)"
+          bsonType: 'string',
+          description: 'Parent span ID (optional, for call hierarchy)',
         },
         serviceId: {
-          bsonType: "string",
-          enum: [
-            "frontend-interceptor",
-            "api-controller",
-            "go-query-handler",
-            "ollama-inference"
-          ]
+          bsonType: 'string',
+          enum: ['frontend-interceptor', 'api-controller', 'go-query-handler', 'ollama-inference'],
         },
         operationName: {
-          bsonType: "string",
-          description: "Operation name (e.g., 'POST /api/query')"
+          bsonType: 'string',
+          description: "Operation name (e.g., 'POST /api/query')",
         },
         status: {
-          bsonType: "string",
-          enum: ["UNSET", "OK", "ERROR"]
+          bsonType: 'string',
+          enum: ['UNSET', 'OK', 'ERROR'],
         },
         startTime: {
-          bsonType: "date",
-          description: "When span started"
+          bsonType: 'date',
+          description: 'When span started',
         },
         endTime: {
-          bsonType: "date",
-          description: "When span ended"
+          bsonType: 'date',
+          description: 'When span ended',
         },
         durationMs: {
-          bsonType: "int"
+          bsonType: 'int',
         },
         attributes: {
-          bsonType: "object",
-          description: "Span attributes (userId, endpoint, errorCode, etc.)"
+          bsonType: 'object',
+          description: 'Span attributes (userId, endpoint, errorCode, etc.)',
         },
         events: {
-          bsonType: "array",
-          description: "Events within span",
+          bsonType: 'array',
+          description: 'Events within span',
           items: {
-            bsonType: "object",
+            bsonType: 'object',
             properties: {
-              name: { bsonType: "string" },
-              timestamp: { bsonType: "date" },
-              attributes: { bsonType: "object" }
-            }
-          }
-        }
-      }
-    }
-  }
-})
+              name: { bsonType: 'string' },
+              timestamp: { bsonType: 'date' },
+              attributes: { bsonType: 'object' },
+            },
+          },
+        },
+      },
+    },
+  },
+});
 
-db.traces.createIndex({ traceId: 1 })                    // Query full trace
-db.traces.createIndex({ serviceId: 1, timestamp: -1 })   // Service traces
-db.traces.createIndex({ startTime: -1 })                 // Recent traces
-db.traces.createIndex({ durationMs: -1 })                // Slow traces
+db.traces.createIndex({ traceId: 1 }); // Query full trace
+db.traces.createIndex({ serviceId: 1, timestamp: -1 }); // Service traces
+db.traces.createIndex({ startTime: -1 }); // Recent traces
+db.traces.createIndex({ durationMs: -1 }); // Slow traces
 ```
 
 **Sample Trace Tree:**
@@ -394,64 +370,64 @@ db.traces.createIndex({ durationMs: -1 })                // Slow traces
 **Purpose:** Store conversation records for replay and audit
 
 ```typescript
-db.createCollection("chat_history", {
+db.createCollection('chat_history', {
   validator: {
     $jsonSchema: {
-      bsonType: "object",
-      required: ["conversationId", "userId", "messages", "createdAt"],
+      bsonType: 'object',
+      required: ['conversationId', 'userId', 'messages', 'createdAt'],
       properties: {
         _id: {
-          bsonType: "objectId"
+          bsonType: 'objectId',
         },
         conversationId: {
-          bsonType: "string",
-          description: "Unique conversation identifier"
+          bsonType: 'string',
+          description: 'Unique conversation identifier',
         },
         userId: {
-          bsonType: "string",
-          description: "User ID"
+          bsonType: 'string',
+          description: 'User ID',
         },
         messages: {
-          bsonType: "array",
+          bsonType: 'array',
           items: {
-            bsonType: "object",
+            bsonType: 'object',
             properties: {
-              messageId: { bsonType: "string" },
-              role: { bsonType: "string", enum: ["user", "assistant"] },
-              content: { bsonType: "string" },
-              traceId: { bsonType: "string" },
-              timestamp: { bsonType: "date" },
-              metadata: { bsonType: "object" }
-            }
-          }
+              messageId: { bsonType: 'string' },
+              role: { bsonType: 'string', enum: ['user', 'assistant'] },
+              content: { bsonType: 'string' },
+              traceId: { bsonType: 'string' },
+              timestamp: { bsonType: 'date' },
+              metadata: { bsonType: 'object' },
+            },
+          },
         },
         metadata: {
-          bsonType: "object",
+          bsonType: 'object',
           properties: {
-            sessionId: { bsonType: "string" },
-            ipAddress: { bsonType: "string" },
-            userAgent: { bsonType: "string" },
-            topic: { bsonType: "string" },
+            sessionId: { bsonType: 'string' },
+            ipAddress: { bsonType: 'string' },
+            userAgent: { bsonType: 'string' },
+            topic: { bsonType: 'string' },
             tagsApplied: {
-              bsonType: "array",
-              items: { bsonType: "string" }
-            }
-          }
+              bsonType: 'array',
+              items: { bsonType: 'string' },
+            },
+          },
         },
         createdAt: {
-          bsonType: "date"
+          bsonType: 'date',
         },
         updatedAt: {
-          bsonType: "date"
-        }
-      }
-    }
-  }
-})
+          bsonType: 'date',
+        },
+      },
+    },
+  },
+});
 
-db.chat_history.createIndex({ conversationId: 1 })
-db.chat_history.createIndex({ userId: 1, createdAt: -1 })
-db.chat_history.createIndex({ "messages.traceId": 1 })
+db.chat_history.createIndex({ conversationId: 1 });
+db.chat_history.createIndex({ userId: 1, createdAt: -1 });
+db.chat_history.createIndex({ 'messages.traceId': 1 });
 ```
 
 ---
@@ -461,43 +437,38 @@ db.chat_history.createIndex({ "messages.traceId": 1 })
 **Purpose:** Store reference seed data for seeding operations
 
 ```typescript
-db.createCollection("seed_data", {
+db.createCollection('seed_data', {
   validator: {
     $jsonSchema: {
-      bsonType: "object",
-      required: ["dataType", "mode"],
+      bsonType: 'object',
+      required: ['dataType', 'mode'],
       properties: {
         _id: {
-          bsonType: "objectId"
+          bsonType: 'objectId',
         },
         dataType: {
-          bsonType: "string",
-          enum: [
-            "civic_prompts",
-            "error_scenarios",
-            "performance_baselines",
-            "test_users"
-          ]
+          bsonType: 'string',
+          enum: ['civic_prompts', 'error_scenarios', 'performance_baselines', 'test_users'],
         },
         mode: {
-          bsonType: "string",
-          enum: ["minimal", "demo"],
-          description: "Seeding mode"
+          bsonType: 'string',
+          enum: ['minimal', 'demo'],
+          description: 'Seeding mode',
         },
         data: {
-          bsonType: "object",
-          description: "Actual seed data"
+          bsonType: 'object',
+          description: 'Actual seed data',
         },
         version: {
-          bsonType: "string"
+          bsonType: 'string',
         },
         createdAt: {
-          bsonType: "date"
-        }
-      }
-    }
-  }
-})
+          bsonType: 'date',
+        },
+      },
+    },
+  },
+});
 ```
 
 ---
@@ -533,11 +504,11 @@ import { ConfigService } from '@nestjs/config';
         minPoolSize: 5,
         retryWrites: true,
         serverSelectionTimeoutMS: 5000,
-        socketTimeoutMS: 45000
-      })
-    })
+        socketTimeoutMS: 45000,
+      }),
+    }),
   ],
-  exports: [MongooseModule]
+  exports: [MongooseModule],
 })
 export class MongoModule {}
 ```
@@ -563,57 +534,55 @@ MONGODB_TIMEOUT=45000
 ```typescript
 // Pattern 1: Find logs by traceId and time range
 // Used: LogService.queryLogs({ traceId })
-db.logs.createIndex({ traceId: 1, timestamp: -1 })
+db.logs.createIndex({ traceId: 1, timestamp: -1 });
 
 // Pattern 2: Find logs by service and severity
 // Used: LogService.queryLogs({ serviceId, severity })
-db.logs.createIndex({ serviceId: 1, severity: 1, timestamp: -1 })
+db.logs.createIndex({ serviceId: 1, severity: 1, timestamp: -1 });
 
 // Pattern 3: Recent logs
 // Used: LogService.getRecentLogs()
-db.logs.createIndex({ timestamp: -1 })
+db.logs.createIndex({ timestamp: -1 });
 
 // Pattern 4: Logs by severity for alerts
 // Used: LogService.getErrorLogs()
-db.logs.createIndex({ severity: 1 })
+db.logs.createIndex({ severity: 1 });
 
 // Pattern 5: Query metrics by service and type
 // Used: MetricsService.query({ serviceId, metricType })
-db.metrics.createIndex({ serviceId: 1, metricType: 1, timestamp: -1 })
+db.metrics.createIndex({ serviceId: 1, metricType: 1, timestamp: -1 });
 
 // Pattern 6: Recent metrics
 // Used: MetricsService.getRecent()
-db.metrics.createIndex({ timestamp: -1 })
+db.metrics.createIndex({ timestamp: -1 });
 
 // Pattern 7: Full trace retrieval
 // Used: TraceService.getTrace({ traceId })
-db.traces.createIndex({ traceId: 1 })
+db.traces.createIndex({ traceId: 1 });
 
 // Pattern 8: Service traces
 // Used: TraceService.getServiceTraces({ serviceId })
-db.traces.createIndex({ serviceId: 1, timestamp: -1 })
+db.traces.createIndex({ serviceId: 1, timestamp: -1 });
 
 // Pattern 9: Slow traces (performance analysis)
 // Used: MetricsService.getSlowTraces()
-db.traces.createIndex({ durationMs: -1 })
+db.traces.createIndex({ durationMs: -1 });
 ```
 
 ### Index Maintenance
 
 ```typescript
 // Check index sizes
-db.logs.aggregate([
-  { $indexStats: {} }
-])
+db.logs.aggregate([{ $indexStats: {} }]);
 
 // Drop unused indexes
-db.logs.dropIndex("serviceId_1")
+db.logs.dropIndex('serviceId_1');
 
 // Rebuild indexes (maintenance)
-db.logs.reIndex()
+db.logs.reIndex();
 
 // Get index info
-db.logs.getIndexes()
+db.logs.getIndexes();
 ```
 
 ---
@@ -667,7 +636,7 @@ services:
   mongodb:
     image: mongo:7.0
     ports:
-      - "27017:27017"
+      - '27017:27017'
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -694,10 +663,18 @@ networks:
 
 ```javascript
 // scripts/init-mongodb.js
-db.createCollection("logs", { /* validation schema */ });
-db.createCollection("metrics", { /* validation schema */ });
-db.createCollection("traces", { /* validation schema */ });
-db.createCollection("chat_history", { /* validation schema */ });
+db.createCollection('logs', {
+  /* validation schema */
+});
+db.createCollection('metrics', {
+  /* validation schema */
+});
+db.createCollection('traces', {
+  /* validation schema */
+});
+db.createCollection('chat_history', {
+  /* validation schema */
+});
 
 // Create indexes
 db.logs.createIndex({ traceId: 1, timestamp: -1 });
@@ -705,7 +682,7 @@ db.logs.createIndex({ serviceId: 1, severity: 1, timestamp: -1 });
 db.metrics.createIndex({ serviceId: 1, metricType: 1, timestamp: -1 });
 db.traces.createIndex({ traceId: 1 });
 
-console.log("✓ MongoDB initialized with collections and indexes");
+console.log('✓ MongoDB initialized with collections and indexes');
 ```
 
 ---
@@ -719,34 +696,28 @@ import mongoose from 'mongoose';
 async function checkMongo() {
   try {
     const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/patriotchat-dev';
-    
+
     const connection = await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 5000
+      serverSelectionTimeoutMS: 5000,
     });
-    
+
     const adminDb = connection.connection.getClient().db('admin');
     const serverStatus = await adminDb.admin().ping();
-    
+
     console.log('✓ MongoDB Connection Successful');
     console.log(`  URI: ${uri}`);
     console.log(`  Status: ${serverStatus.ok === 1 ? 'OK' : 'ERROR'}`);
-    
+
     // Check collections
-    const collections = await connection.connection.getClient()
-      .db('patriotchat-dev')
-      .listCollections()
-      .toArray();
-    
-    console.log(`  Collections: ${collections.map(c => c.name).join(', ')}`);
-    
+    const collections = await connection.connection.getClient().db('patriotchat-dev').listCollections().toArray();
+
+    console.log(`  Collections: ${collections.map((c) => c.name).join(', ')}`);
+
     // Check indexes
-    const logIndexes = await connection.connection.getClient()
-      .db('patriotchat-dev')
-      .collection('logs')
-      .getIndexes();
-    
+    const logIndexes = await connection.connection.getClient().db('patriotchat-dev').collection('logs').getIndexes();
+
     console.log(`  Log indexes: ${Object.keys(logIndexes).length}`);
-    
+
     await mongoose.connection.close();
   } catch (error) {
     console.error('✗ MongoDB Connection Failed:', error.message);

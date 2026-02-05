@@ -20,14 +20,14 @@ This is NOT optional. It's a hard requirement. Here's why:
 
 ```typescript
 // All of these are valid JavaScript:
-throw new Error("standard");           // ✅ Error object
-throw "just a string";                 // ✅ String literal
-throw 42;                              // ✅ Number
-throw { custom: "object" };            // ✅ Plain object
-throw null;                            // ✅ null
-throw undefined;                       // ✅ undefined
-throw Symbol("crash");                 // ✅ Symbol
-throw Promise.reject("async error");   // ✅ Promise rejection
+throw new Error('standard'); // ✅ Error object
+throw 'just a string'; // ✅ String literal
+throw 42; // ✅ Number
+throw { custom: 'object' }; // ✅ Plain object
+throw null; // ✅ null
+throw undefined; // ✅ undefined
+throw Symbol('crash'); // ✅ Symbol
+throw Promise.reject('async error'); // ✅ Promise rejection
 ```
 
 ### Your Code Doesn't Control Everything That Throws
@@ -37,9 +37,10 @@ You might write defensive code assuming only `Error` objects:
 ```typescript
 // Your code:
 try {
-  await someLibraryFunction();  // You control this? No, maybe a dependency does
-} catch (error: Error) {  // ❌ WRONG: Assumes error is Error type
-  console.log(error.message);  // ⚠️ Could crash if error is string!
+  await someLibraryFunction(); // You control this? No, maybe a dependency does
+} catch (error: Error) {
+  // ❌ WRONG: Assumes error is Error type
+  console.log(error.message); // ⚠️ Could crash if error is string!
 }
 ```
 
@@ -49,15 +50,16 @@ But what if the library throws a string? Or the third-party code doesn't follow 
 // Third-party library code:
 async function unreliableLibrary() {
   if (somethingWrong) {
-    throw "oops";  // ⚠️ Throws string, not Error!
+    throw 'oops'; // ⚠️ Throws string, not Error!
   }
 }
 
 // Your code catches it:
 try {
   await unreliableLibrary();
-} catch (error: Error) {  // Declares error as Error
-  console.log(error.message);  // 💥 CRASH! error.message is undefined
+} catch (error: Error) {
+  // Declares error as Error
+  console.log(error.message); // 💥 CRASH! error.message is undefined
 }
 ```
 
@@ -69,28 +71,28 @@ From actual JavaScript/Node.js code:
 // Express middleware might throw:
 app.use((req, res, next) => {
   if (!req.user) {
-    next("route");  // ⚠️ String, not Error!
+    next('route'); // ⚠️ String, not Error!
   }
 });
 
 // Event emitters:
-emitter.on("error", (error) => {
+emitter.on('error', (error) => {
   // Could be Error, string, number, anything
 });
 
 // Promise rejection:
-Promise.reject("failed");  // ⚠️ String rejection
+Promise.reject('failed'); // ⚠️ String rejection
 
 // DOM API:
 try {
-  XML.parse(data);  // Some XML parsers throw non-Error objects
+  XML.parse(data); // Some XML parsers throw non-Error objects
 } catch (e) {
   // Could be various object types
 }
 
 // Legacy code:
 function oldFunction() {
-  throw { status: 404, message: "not found" };  // ⚠️ Object, not Error
+  throw { status: 404, message: 'not found' }; // ⚠️ Object, not Error
 }
 ```
 
@@ -104,7 +106,7 @@ function oldFunction() {
 // ❌ WRONG - This is a type error!
 try {
   await httpCall();
-} catch (error: Error | HttpException) {  
+} catch (error: Error | HttpException) {
   // TypeScript Error: A catch clause variable cannot have a type annotation.
   // You must use `unknown` and then type guard.
 }
@@ -118,8 +120,9 @@ try {
 // ❌ WRONG - False security
 try {
   await httpCall();
-} catch (error: Error) {  // Assumes error is Error
-  console.log(error.message);  // Could crash if thrown value isn't Error
+} catch (error: Error) {
+  // Assumes error is Error
+  console.log(error.message); // Could crash if thrown value isn't Error
 }
 ```
 
@@ -131,14 +134,15 @@ The runtime will throw whatever it wants, regardless of your type annotation.
 // ✅ CORRECT - Type guards after catching
 try {
   await httpCall();
-} catch (error: unknown) {  // Must use unknown
+} catch (error: unknown) {
+  // Must use unknown
   // Now safely narrow the type:
   if (error instanceof Error) {
-    console.log(error.message);  // ✅ Safe: we verified it's Error
-  } else if (typeof error === "string") {
-    console.log(error);  // ✅ Safe: we verified it's string
+    console.log(error.message); // ✅ Safe: we verified it's Error
+  } else if (typeof error === 'string') {
+    console.log(error); // ✅ Safe: we verified it's string
   } else {
-    console.log(String(error));  // ✅ Safe: fallback conversion
+    console.log(String(error)); // ✅ Safe: fallback conversion
   }
 }
 ```
@@ -196,13 +200,13 @@ try {
 
 ### Summary Table: Valid vs Invalid Uses of eslint-disable
 
-| Location  | Pattern | Valid?  | Reasoning |
-| ---------- |---------| -------- |-----------|
-| **Catch clause**  | `catch (error: unknown)` | ✅ **YES**  | TypeScript spec requires it |
-| **Function param**  | `function(data: unknown)` | ❌ **NO**  | Type it properly with overloads |
-| **Variable type**  | `let x: unknown;` | ❌ **NO**  | Type it based on context |
-| **RxJS operator**  | `.pipe(map(x: unknown))` | ⚠️ **CONDITIONAL**  | Only if type inference fails |
-| **Error assertion**  | `as unknown as Type` | ❌ **NO**  | Never - type guards instead |
+| Location            | Pattern                   | Valid?             | Reasoning                       |
+| ------------------- | ------------------------- | ------------------ | ------------------------------- |
+| **Catch clause**    | `catch (error: unknown)`  | ✅ **YES**         | TypeScript spec requires it     |
+| **Function param**  | `function(data: unknown)` | ❌ **NO**          | Type it properly with overloads |
+| **Variable type**   | `let x: unknown;`         | ❌ **NO**          | Type it based on context        |
+| **RxJS operator**   | `.pipe(map(x: unknown))`  | ⚠️ **CONDITIONAL** | Only if type inference fails    |
+| **Error assertion** | `as unknown as Type`      | ❌ **NO**          | Never - type guards instead     |
 
 ### Our Usage: Valid ✅
 
@@ -283,7 +287,7 @@ async checkHttpHealth(name: string): Promise<ServiceStatus> {
 6. **Third-party might throw plain objects**
 
    ```typescript
-   throw { error: 'Something bad' };  // Not an Error instance!
+   throw { error: 'Something bad' }; // Not an Error instance!
    ```
 
 ### The Point: You Can't Predict ALL Possibilities
@@ -328,7 +332,7 @@ Even though YOU know your HTTP library, updates to dependencies could introduce 
   } else {
     statusMessage = String(error);
   }
-  
+
   this.logger.warn(`[${name}] HTTP health check failed: ${statusMessage}`, error);
   throw error;
 }
@@ -342,14 +346,14 @@ Even though YOU know your HTTP library, updates to dependencies could introduce 
 
 **NO - Keep `unknown`.** Here's why:
 
-| Aspect  | Specific Type | Unknown  |
-| -------- |---------------| --------- |
-| **Type Safety**  | ⚠️ False sense | ✅ Actual safety  |
-| **Compatibility**  | ❌ Breaks with updates | ✅ Works forever  |
-| **Third-party libs**  | ❌ Unknown to library | ✅ Handles all cases  |
-| **Runtime crashes**  | ✅ Possible | ✅ Prevented  |
-| **Code durability**  | ⚠️ Fragile | ✅ Robust  |
-| **TypeScript spec**  | ❌ Non-compliant | ✅ Compliant  |
+| Aspect               | Specific Type          | Unknown              |
+| -------------------- | ---------------------- | -------------------- |
+| **Type Safety**      | ⚠️ False sense         | ✅ Actual safety     |
+| **Compatibility**    | ❌ Breaks with updates | ✅ Works forever     |
+| **Third-party libs** | ❌ Unknown to library  | ✅ Handles all cases |
+| **Runtime crashes**  | ✅ Possible            | ✅ Prevented         |
+| **Code durability**  | ⚠️ Fragile             | ✅ Robust            |
+| **TypeScript spec**  | ❌ Non-compliant       | ✅ Compliant         |
 
 ### Decision: Keep eslint-disable in Catch Clauses
 
@@ -364,13 +368,13 @@ This is the industry standard pattern endorsed by:
 
 ## Summary
 
-| Question  | Answer |
-| ---------- |--------|
-| **Why `unknown`?**  | TypeScript spec requires it. JavaScript allows throwing anything. |
-| **Why not specific types?**  | Runtime doesn't guarantee your type. Throws could be any value. |
-| **Are we cheating?**  | ✅ **NO.** This is the correct, standard pattern. |
-| **Is eslint-disable valid?**  | ✅ **YES.** It's appropriate for spec-required exceptions. |
-| **Should we change it?**  | ❌ **NO.** Keep the pattern - it's best practice. |
+| Question                     | Answer                                                            |
+| ---------------------------- | ----------------------------------------------------------------- |
+| **Why `unknown`?**           | TypeScript spec requires it. JavaScript allows throwing anything. |
+| **Why not specific types?**  | Runtime doesn't guarantee your type. Throws could be any value.   |
+| **Are we cheating?**         | ✅ **NO.** This is the correct, standard pattern.                 |
+| **Is eslint-disable valid?** | ✅ **YES.** It's appropriate for spec-required exceptions.        |
+| **Should we change it?**     | ❌ **NO.** Keep the pattern - it's best practice.                 |
 
 ---
 

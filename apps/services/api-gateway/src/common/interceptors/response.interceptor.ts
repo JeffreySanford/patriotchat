@@ -15,7 +15,9 @@ import type { Response } from 'express';
  * Ensures consistent response structure
  */
 @Injectable()
-export class ResponseInterceptor<T> implements NestInterceptor<T, { data: T; timestamp: number; status: number }> {
+export class ResponseInterceptor<T>
+  implements NestInterceptor<T, { data: T; timestamp: number; status: number }>
+{
   intercept(
     context: ExecutionContext,
     next: CallHandler,

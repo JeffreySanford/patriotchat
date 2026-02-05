@@ -274,15 +274,15 @@ docker ps  # Check for ollama, heavy service
 
 ## Test Statistics
 
-| Metric | Value |
-| --- | --- |
-| Total Tests | 22+ |
-| Endpoints Tested | 3 |
-| Error Scenarios | 3 |
-| CORS Tests | 2 |
-| Performance Tests | 2 |
-| Contract Tests | 2 |
-| Pass Rate Target | 100% |
+| Metric            | Value |
+| ----------------- | ----- |
+| Total Tests       | 22+   |
+| Endpoints Tested  | 3     |
+| Error Scenarios   | 3     |
+| CORS Tests        | 2     |
+| Performance Tests | 2     |
+| Contract Tests    | 2     |
+| Pass Rate Target  | 100%  |
 
 ## Next Steps After Successful Tests
 

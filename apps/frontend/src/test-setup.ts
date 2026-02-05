@@ -10,7 +10,9 @@ import {
 import { vi } from 'vitest';
 
 // Mock fetch for template loading
-global.fetch = vi.fn().mockRejectedValue(new Error('Templates disabled in tests'));
+global.fetch = vi
+  .fn()
+  .mockRejectedValue(new Error('Templates disabled in tests'));
 
 // Mock XMLHttpRequest for any file loading
 class MockXHR {
@@ -34,4 +36,3 @@ getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting(),
 );
-

@@ -161,7 +161,10 @@ describe('AnalyticsController', () => {
       };
 
       vi.spyOn(service, 'trackEvent').mockImplementation(() => {
-        throw new HttpException('event_type is required', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'event_type is required',
+          HttpStatus.BAD_REQUEST,
+        );
       });
 
       expect(() => controller.trackEvent(event as any)).toThrow();
@@ -213,7 +216,10 @@ describe('AnalyticsController', () => {
       };
 
       vi.spyOn(service, 'trackEvent').mockImplementation(() => {
-        throw new HttpException('Invalid timestamp format', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'Invalid timestamp format',
+          HttpStatus.BAD_REQUEST,
+        );
       });
 
       expect(() => controller.trackEvent(event as any)).toThrow();
@@ -239,7 +245,10 @@ describe('AnalyticsController', () => {
       };
 
       vi.spyOn(service, 'trackEvent').mockImplementation(() => {
-        throw new HttpException('Invalid event_type format', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'Invalid event_type format',
+          HttpStatus.BAD_REQUEST,
+        );
       });
 
       expect(() => controller.trackEvent(event as any)).toThrow();
@@ -254,7 +263,10 @@ describe('AnalyticsController', () => {
       };
 
       vi.spyOn(service, 'trackEvent').mockImplementation(() => {
-        throw new HttpException('Payload too large', HttpStatus.REQUEST_ENTITY_TOO_LARGE);
+        throw new HttpException(
+          'Payload too large',
+          HttpStatus.REQUEST_ENTITY_TOO_LARGE,
+        );
       });
 
       expect(() => controller.trackEvent(event as any)).toThrow();
@@ -270,7 +282,10 @@ describe('AnalyticsController', () => {
       };
 
       vi.spyOn(service, 'trackEvent').mockImplementation(() => {
-        throw new HttpException('Service error', HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new HttpException(
+          'Service error',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
       });
 
       expect(() => controller.trackEvent(event, mockRequest)).toThrow();
@@ -284,7 +299,10 @@ describe('AnalyticsController', () => {
       };
 
       vi.spyOn(service, 'trackEvent').mockImplementation(() => {
-        throw new HttpException('Backend unavailable', HttpStatus.SERVICE_UNAVAILABLE);
+        throw new HttpException(
+          'Backend unavailable',
+          HttpStatus.SERVICE_UNAVAILABLE,
+        );
       });
 
       expect(() => controller.trackEvent(event, mockRequest)).toThrow();
@@ -298,7 +316,10 @@ describe('AnalyticsController', () => {
       };
 
       vi.spyOn(service, 'trackEvent').mockImplementation(() => {
-        throw new HttpException('Internal Error', HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new HttpException(
+          'Internal Error',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
       });
 
       expect(() => controller.trackEvent(event, mockRequest)).toThrow();
@@ -438,7 +459,14 @@ describe('AnalyticsController', () => {
   });
 
   describe('Event Types', () => {
-    const eventTypes = ['login', 'logout', 'inference', 'error', 'signup', 'payment'];
+    const eventTypes = [
+      'login',
+      'logout',
+      'inference',
+      'error',
+      'signup',
+      'payment',
+    ];
 
     eventTypes.forEach((eventType) => {
       it(`should track ${eventType} events`, () => {

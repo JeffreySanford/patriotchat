@@ -59,8 +59,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.router.events
       .pipe(
         filter(
-          (event): event is NavigationEnd =>
-            event instanceof NavigationEnd,
+          (event): event is NavigationEnd => event instanceof NavigationEnd,
         ),
         takeUntil(this.destroy$),
       )

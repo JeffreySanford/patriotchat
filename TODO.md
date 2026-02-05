@@ -33,7 +33,7 @@ _Updated 2026-02-04 18:30 UTC - AGILE-informed guardrail tracker - single develo
 
 ## Agile Notes & Pro-Liberty Principles
 
-- Keep stories small, incremental, and trace every decision to README.md#values-commitment plus the relevant documentation/planning/pro-liberty/* doc (roadmap, data pipeline, alignment tests, tracking board).
+- Keep stories small, incremental, and trace every decision to README.md#values-commitment plus the relevant documentation/planning/pro-liberty/\* doc (roadmap, data pipeline, alignment tests, tracking board).
 - Pair documentation updates (README, TODO, MODEL CHARTER) with code changes; the lone developer + AI workflow relies on these canonical references before approving contributions.
 - When training resumes, log dataset hash, batch size, eval metrics, and bias scores inside PRO_LIBERTY_TRACKING.md and the new tools/checkpoints metadata before tagging the artifact.
 - Document new sprints in the Linear import (documentation/planning/pro-liberty/PRO_LIBERTY_LINEAR.csv) so PRO-LLM-001...005 stay synchronized.

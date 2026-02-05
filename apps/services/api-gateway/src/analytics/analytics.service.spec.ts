@@ -101,9 +101,22 @@ describe('AnalyticsService', () => {
   describe('Event Batching', () => {
     it('should batch multiple events', () => {
       const events = [
-        { event_type: 'login', user_id: 'user123', timestamp: new Date().toISOString() },
-        { event_type: 'inference', user_id: 'user123', model: 'llama2', timestamp: new Date().toISOString() },
-        { event_type: 'logout', user_id: 'user123', timestamp: new Date().toISOString() },
+        {
+          event_type: 'login',
+          user_id: 'user123',
+          timestamp: new Date().toISOString(),
+        },
+        {
+          event_type: 'inference',
+          user_id: 'user123',
+          model: 'llama2',
+          timestamp: new Date().toISOString(),
+        },
+        {
+          event_type: 'logout',
+          user_id: 'user123',
+          timestamp: new Date().toISOString(),
+        },
       ];
 
       for (const event of events) {

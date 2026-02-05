@@ -73,7 +73,7 @@ async function checkAllServicesHealth(): Promise<ServiceHealthStatus[]> {
   ];
 
   const results = await Promise.all(
-    services.map(service => checkServiceHealth(service)),
+    services.map((service) => checkServiceHealth(service)),
   );
 
   return results;
@@ -86,7 +86,7 @@ async function globalSetup(): Promise<void> {
   const serviceHealth = await checkAllServicesHealth();
 
   console.log('Service Status:');
-  serviceHealth.forEach(service => {
+  serviceHealth.forEach((service) => {
     const status = service.healthy ? '✓ HEALTHY' : '✗ UNAVAILABLE';
     const latency = service.latency ? ` (${service.latency.toFixed(0)}ms)` : '';
     console.log(`  ${status}: ${service.service}${latency}`);
@@ -96,7 +96,7 @@ async function globalSetup(): Promise<void> {
     }
   });
 
-  const healthyCount = serviceHealth.filter(s => s.healthy).length;
+  const healthyCount = serviceHealth.filter((s) => s.healthy).length;
   const totalCount = serviceHealth.length;
 
   console.log(`\nOverall: ${healthyCount}/${totalCount} services healthy`);

@@ -8,13 +8,13 @@ All debug documentation has been organized into the `documentation/debug/` folde
 
 ## Quick Links
 
-| Document | Purpose | Read Time |
-| --- | --- | --- |
-| **[Quick Start](documentation/debug/DEBUGGING_QUICK_START.md)** | Get started in 2 minutes | 2 min |
-| **[Complete Guide](documentation/debug/DEBUG_LOGGING_GUIDE.md)** | Comprehensive reference | 10 min |
-| **[Error Reference](documentation/debug/DEBUG_ERRORS_REFERENCE.md)** | Troubleshooting guide | 5 min |
-| **[Changes Summary](documentation/debug/CHANGES_SUMMARY.md)** | What was changed | 3 min |
-| **[CORS & WebSocket Fix](documentation/debug/CORS_WEBSOCKET_FIX.md)** | Configuration fix | 3 min |
+| Document                                                              | Purpose                  | Read Time |
+| --------------------------------------------------------------------- | ------------------------ | --------- |
+| **[Quick Start](documentation/debug/DEBUGGING_QUICK_START.md)**       | Get started in 2 minutes | 2 min     |
+| **[Complete Guide](documentation/debug/DEBUG_LOGGING_GUIDE.md)**      | Comprehensive reference  | 10 min    |
+| **[Error Reference](documentation/debug/DEBUG_ERRORS_REFERENCE.md)**  | Troubleshooting guide    | 5 min     |
+| **[Changes Summary](documentation/debug/CHANGES_SUMMARY.md)**         | What was changed         | 3 min     |
+| **[CORS & WebSocket Fix](documentation/debug/CORS_WEBSOCKET_FIX.md)** | Configuration fix        | 3 min     |
 
 ---
 
@@ -23,7 +23,7 @@ All debug documentation has been organized into the `documentation/debug/` folde
 These documents provide complete visibility into the PatriotChat query pipeline:
 
 - ✅ Frontend → Backend query flow
-- ✅ WebSocket stage updates  
+- ✅ WebSocket stage updates
 - ✅ Performance metrics
 - ✅ Common errors and solutions
 - ✅ CORS & WebSocket configuration

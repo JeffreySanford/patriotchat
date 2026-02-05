@@ -51,13 +51,15 @@ curl -X POST http://localhost:11434/api/generate \
 ## What Changed in docker-compose.yml
 
 **Before:**
+
 ```yaml
 ollama:
   volumes:
-    - ./models:/models    # Local models dir (empty)
+    - ./models:/models # Local models dir (empty)
 ```
 
 **Now:**
+
 ```yaml
 ollama:
   volumes:
@@ -74,16 +76,17 @@ This tells Docker to use the real model files from Windows instead of looking fo
 
 ## Model Path
 
-| OS | Location |
-|----|----|
-| Windows (Host) | `C:\Users\Sanford\.ollama\models\mistralai\Mistral-7B-Instruct-v0.3\` |
-| Docker (Container) | `/root/.ollama/models/mistralai/Mistral-7B-Instruct-v0.3/` |
+| OS                 | Location                                                              |
+| ------------------ | --------------------------------------------------------------------- |
+| Windows (Host)     | `C:\Users\Sanford\.ollama\models\mistralai\Mistral-7B-Instruct-v0.3\` |
+| Docker (Container) | `/root/.ollama/models/mistralai/Mistral-7B-Instruct-v0.3/`            |
 
 ---
 
 ## Troubleshooting
 
 **Ollama says "model not found":**
+
 ```bash
 # 1. Restart Ollama container
 docker-compose restart ollama
@@ -96,11 +99,13 @@ docker exec patriotchat-ollama ollama pull mistral
 ```
 
 **Slow first request:**
+
 - Ollama is loading the 13.7GB model into memory
 - First request takes 30-60 seconds
 - Subsequent requests are fast (cached)
 
 **Check Ollama status:**
+
 ```bash
 curl http://localhost:11434/api/tags
 

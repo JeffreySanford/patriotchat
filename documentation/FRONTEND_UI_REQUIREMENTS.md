@@ -322,14 +322,14 @@ export class QueryStore extends ComponentStore<QueryState> {
       results: [],
       isLoading: false,
       error: null,
-      rateLimitRemaining: 10
+      rateLimitRemaining: 10,
     });
   }
 
   readonly submitQuery = this.updater((state, query: string) => ({
     ...state,
     queryText: query,
-    isLoading: true
+    isLoading: true,
   }));
 
   readonly setModel = this.updater((state, model: string) => {

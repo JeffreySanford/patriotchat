@@ -94,27 +94,27 @@ All 5 critical requirements remain **MET and VERIFIED** as of 2026-02-03 12:30 U
 
 **Goal**: Reduce linting to <1,000 errors; harden E2E tests
 
-| Task | Points | Status |
-| --- | --- | --- |
-| Complete remaining linting campaign | 5 | 1,709 errors fixed, continuing |
-| E2E test hardening for chat pipeline | 3 | Awaiting linting completion |
+| Task                                 | Points | Status                         |
+| ------------------------------------ | ------ | ------------------------------ |
+| Complete remaining linting campaign  | 5      | 1,709 errors fixed, continuing |
+| E2E test hardening for chat pipeline | 3      | Awaiting linting completion    |
 
 ### Sprint 3 (Planned)
 
 **Goal**: Build JSONL civic instruction dataset & evaluation harness
 
-| Task | Points | Status |
-| --- | --- | --- |
-| Build JSONL civic instruction dataset + LoRA | 8 | Backlog |
-| Implement label-discipline evaluation suite | 5 | Backlog |
+| Task                                         | Points | Status  |
+| -------------------------------------------- | ------ | ------- |
+| Build JSONL civic instruction dataset + LoRA | 8      | Backlog |
+| Implement label-discipline evaluation suite  | 5      | Backlog |
 
 ### Sprint 4 (Planned)
 
 **Goal**: Add RAG retrieval connectors for modern civic data
 
-| Task | Points | Status |
-| --- | --- | --- |
-| Add RAG retrieval connectors | 5 | Backlog |
+| Task                         | Points | Status  |
+| ---------------------------- | ------ | ------- |
+| Add RAG retrieval connectors | 5      | Backlog |
 
 ---
 
@@ -122,22 +122,22 @@ All 5 critical requirements remain **MET and VERIFIED** as of 2026-02-03 12:30 U
 
 ### Linting Campaign Progress
 
-| Phase | Date | Problems | Improvement | Notes |
-| --- | --- | --- | --- | --- |
-| Baseline | 2026-02-01 | 3,981 | — | Starting point before fixes |
-| Phase 1 | 2026-02-03 11:00 | 2,028 | 49% (1,953 fixed) | Auto-fixed 1,946+; manual 151 |
-| Phase 2 | 2026-02-03 12:00 | ~1,800 | ~55% | Ongoing fixes in other services |
-| Target | Sprint 2 | <1,000 | >75% | Goal for end of Sprint 2 |
+| Phase    | Date             | Problems | Improvement       | Notes                           |
+| -------- | ---------------- | -------- | ----------------- | ------------------------------- |
+| Baseline | 2026-02-01       | 3,981    | —                 | Starting point before fixes     |
+| Phase 1  | 2026-02-03 11:00 | 2,028    | 49% (1,953 fixed) | Auto-fixed 1,946+; manual 151   |
+| Phase 2  | 2026-02-03 12:00 | ~1,800   | ~55%              | Ongoing fixes in other services |
+| Target   | Sprint 2         | <1,000   | >75%              | Goal for end of Sprint 2        |
 
 ### Type Safety Implementation
 
-| Component | Date | Status | Notes |
-| --- | --- | --- | --- |
-| error-handler.ts | 2026-02-03 | ✅ Created | AppException, getErrorMessage, getErrorStatus |
-| type-guards.ts | 2026-02-03 | ✅ Created | Runtime type checking for Request/Response |
-| inference.service.ts | 2026-02-03 | ✅ Updated | Added LLMModelsResponse, LLMGenerateResponse interfaces |
-| rate-limiting.guard.ts | 2026-02-03 | ✅ Updated | Proper error handling with type guards |
-| main.ts | 2026-02-03 | ✅ Updated | NestExpressApplication typing |
+| Component              | Date       | Status     | Notes                                                   |
+| ---------------------- | ---------- | ---------- | ------------------------------------------------------- |
+| error-handler.ts       | 2026-02-03 | ✅ Created | AppException, getErrorMessage, getErrorStatus           |
+| type-guards.ts         | 2026-02-03 | ✅ Created | Runtime type checking for Request/Response              |
+| inference.service.ts   | 2026-02-03 | ✅ Updated | Added LLMModelsResponse, LLMGenerateResponse interfaces |
+| rate-limiting.guard.ts | 2026-02-03 | ✅ Updated | Proper error handling with type guards                  |
+| main.ts                | 2026-02-03 | ✅ Updated | NestExpressApplication typing                           |
 
 ---
 
@@ -193,14 +193,14 @@ All 5 critical requirements remain **MET and VERIFIED** as of 2026-02-03 12:30 U
 
 ### Major Documentation Work
 
-| Date | Task | Status | Notes |
-| --- | --- | --- | --- |
-| 2026-02-01 19:00 | Created LLM documentation suite | ✅ | 8 files across documentation/LLM/ |
-| 2026-02-01 19:30 | Aligned documentation for consistency | ✅ | Updated CONTRIBUTING.md, GOVERNANCE.md, SECURITY.md |
-| 2026-02-03 12:30 | Consolidated TODO with Feb 3 status | ✅ | Updated sprint tracking and AGILE principles |
-| 2026-02-03 12:30 | Created PROJECT_STATUS.md | ✅ | Single source of truth for requirements verification |
-| 2026-02-03 12:30 | Updated README with production status | ✅ | Added Feb 3 accomplishments and status overview |
-| 2026-02-03 12:30 | Created DOCUMENTATION_MAP.md | ✅ | Hierarchical ownership reducing redundancy across 55 files |
+| Date             | Task                                  | Status | Notes                                                      |
+| ---------------- | ------------------------------------- | ------ | ---------------------------------------------------------- |
+| 2026-02-01 19:00 | Created LLM documentation suite       | ✅     | 8 files across documentation/LLM/                          |
+| 2026-02-01 19:30 | Aligned documentation for consistency | ✅     | Updated CONTRIBUTING.md, GOVERNANCE.md, SECURITY.md        |
+| 2026-02-03 12:30 | Consolidated TODO with Feb 3 status   | ✅     | Updated sprint tracking and AGILE principles               |
+| 2026-02-03 12:30 | Created PROJECT_STATUS.md             | ✅     | Single source of truth for requirements verification       |
+| 2026-02-03 12:30 | Updated README with production status | ✅     | Added Feb 3 accomplishments and status overview            |
+| 2026-02-03 12:30 | Created DOCUMENTATION_MAP.md          | ✅     | Hierarchical ownership reducing redundancy across 55 files |
 
 ---
 

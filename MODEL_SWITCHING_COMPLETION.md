@@ -111,8 +111,7 @@ expect(responseText.length).toBeGreaterThan(0);
 ### Pattern 3: Property Existence Checks
 
 ```typescript
-const hasTimestamp = typeof response === 'object' && 'timestamp' in response || 
-                   typeof responseData === 'object' && 'timestamp' in responseData;
+const hasTimestamp = (typeof response === 'object' && 'timestamp' in response) || (typeof responseData === 'object' && 'timestamp' in responseData);
 expect(hasTimestamp).toBe(true);
 ```
 
@@ -126,15 +125,15 @@ expect(usedModel.toLowerCase()).toBe(testModel.toLowerCase());
 
 ## 📊 Test Metrics
 
-| Metric | Value |
-| -------- | ------- |
-| Total Test Cases | 17 |
-| Test Suites | 7 |
-| Lines of Code | 495 |
-| TypeScript Errors Fixed | 11 |
-| Remaining Errors | 0 |
-| Test Scenarios Covered | 6 major areas |
-| Civic Education Focus | 100% (constitutional topics) |
+| Metric                  | Value                        |
+| ----------------------- | ---------------------------- |
+| Total Test Cases        | 17                           |
+| Test Suites             | 7                            |
+| Lines of Code           | 495                          |
+| TypeScript Errors Fixed | 11                           |
+| Remaining Errors        | 0                            |
+| Test Scenarios Covered  | 6 major areas                |
+| Civic Education Focus   | 100% (constitutional topics) |
 
 ## 🚀 How to Run
 

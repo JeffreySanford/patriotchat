@@ -32,7 +32,7 @@
 try {
   const response = await this.httpService.get(url);
   return { status: 'healthy', timestamp: Date.now() };
-  
+
 } catch (error: unknown) {  ← Required by TypeScript spec
   // eslint-disable-next-line no-restricted-syntax
   //     ↑ Valid exception because TypeScript spec requires this
@@ -55,8 +55,9 @@ try {
 ```typescript
 try {
   await operation();
-} catch (error: Error) {  // ⚠️ Claims error is Error
-  console.log(error.message);  // 💥 Could crash if error is "string"
+} catch (error: Error) {
+  // ⚠️ Claims error is Error
+  console.log(error.message); // 💥 Could crash if error is "string"
 }
 
 // Risk: Library updates might throw non-Error
@@ -68,11 +69,10 @@ try {
 ```typescript
 try {
   await operation();
-} catch (error: unknown) {  // ✅ Truthful type
-  const message = error instanceof Error 
-    ? error.message 
-    : String(error);
-  console.log(message);  // ✅ Always works
+} catch (error: unknown) {
+  // ✅ Truthful type
+  const message = error instanceof Error ? error.message : String(error);
+  console.log(message); // ✅ Always works
 }
 
 // Handles: Any possible throw type
@@ -188,7 +188,7 @@ async checkHttpHealth(name: string): Promise<ServiceStatus> {
   try {
     const response = await this.httpService.get(url);
     return { status: 'healthy', timestamp: Date.now() };
-    
+
   } catch (error: unknown) {  // ← Catches anything
     this.logger.warn(`[${name}] HTTP health check failed`);
     throw error;
@@ -224,7 +224,7 @@ async checkHttpHealth(name: string): Promise<ServiceStatus> {
 // ❌ Prevents this (lazy typing):
 let data: unknown;
 // ... later ...
-data.something;  // Error! unknown is too vague
+data.something; // Error! unknown is too vague
 ```
 
 ### Why Exception is Valid
@@ -267,25 +267,25 @@ try {
 } catch (error: unknown) {
   // eslint-disable-next-line no-restricted-syntax
   //   ↑ Valid: TypeScript spec requirement
-  
+
   // Extract error message safely
-  const message = error instanceof Error 
-    ? error.message 
+  const message = error instanceof Error
+    ? error.message
     : String(error);
-  
+
   // Log with context
   logger.error('Operation failed:', {
     context: name,
     error: message,
     timestamp: new Date().toISOString(),
   });
-  
+
   // Handle appropriately
   throw error;  // or return failure, or recover
 }
 
 ✅ Type-safe
-✅ Runtime-safe  
+✅ Runtime-safe
 ✅ Debuggable (good logging)
 ✅ Standards-compliant
 ✅ Ready for production
@@ -295,15 +295,15 @@ try {
 
 ## Summary
 
-| Aspect | Status | Why |
-| --- | --- | --- |
-| **Type Safety** | ✅ Good | unknown + type guards handle all cases |
-| **Runtime Safety** | ✅ Good | Prevents crashes from unexpected error types |
-| **Error Messages** | ✅ Good | Can safely extract message or use fallback |
-| **ESLint Compliance** | ✅ Good | Suppress is justified and documented |
-| **Industry Standard** | ✅ Good | Used everywhere in production code |
-| **Maintainability** | ✅ Good | Pattern is clear and well-known |
-| **Future-Proof** | ✅ Good | Works with any error type |
+| Aspect                | Status  | Why                                          |
+| --------------------- | ------- | -------------------------------------------- |
+| **Type Safety**       | ✅ Good | unknown + type guards handle all cases       |
+| **Runtime Safety**    | ✅ Good | Prevents crashes from unexpected error types |
+| **Error Messages**    | ✅ Good | Can safely extract message or use fallback   |
+| **ESLint Compliance** | ✅ Good | Suppress is justified and documented         |
+| **Industry Standard** | ✅ Good | Used everywhere in production code           |
+| **Maintainability**   | ✅ Good | Pattern is clear and well-known              |
+| **Future-Proof**      | ✅ Good | Works with any error type                    |
 
 ---
 

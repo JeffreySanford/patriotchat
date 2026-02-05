@@ -34,7 +34,9 @@ describe('InferenceService', () => {
 
   describe('Inference Generation', () => {
     it('should have generateInference method defined', () => {
-      expect(typeof InferenceService.prototype.generateInference).toBe('function');
+      expect(typeof InferenceService.prototype.generateInference).toBe(
+        'function',
+      );
     });
 
     it('should send inference requests to API', () => {

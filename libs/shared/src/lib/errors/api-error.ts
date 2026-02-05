@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /**
  * API Response wrapper and error types
- * 
+ *
  * Note: This file disables the no-restricted-syntax rule for TSUnknownKeyword
  * because error handling requires flexible type handling. ErrorDetails uses
  * Record<string, unknown> to allow backends to return any structured error data.

@@ -28,13 +28,13 @@ This E2E test suite provides comprehensive integration testing for the PatriotCh
 
 The E2E tests are **integration tests** that require the following services to be running:
 
-| Service | Port | Health Endpoint |
-| --- | --- | --- |
-| API Gateway | 3000 | `/health` |
-| Auth Service | 4001 | `/auth/health` |
-| Funding Service | 4002 | `/funding/health` |
-| Policy Service | 4003 | `/policy/health` |
-| LLM Service | 4004 | `/inference/health` |
+| Service           | Port | Health Endpoint     |
+| ----------------- | ---- | ------------------- |
+| API Gateway       | 3000 | `/health`           |
+| Auth Service      | 4001 | `/auth/health`      |
+| Funding Service   | 4002 | `/funding/health`   |
+| Policy Service    | 4003 | `/policy/health`    |
+| LLM Service       | 4004 | `/inference/health` |
 | Analytics Service | 4005 | `/analytics/health` |
 
 ### Starting Services
@@ -192,13 +192,13 @@ const testQuery = generateTestQuery();
 
 ## Common Failure Causes
 
-| Symptom | Cause | Solution |
-| --- | --- | --- |
-| All tests fail | Services not running | Run `docker-compose up -d` |
-| Some tests pass | Partial service availability | Check service logs: `docker-compose logs -f` |
-| Timeout errors | Services slow to respond | Increase timeout in `api-client.ts` |
-| Auth failures | Missing database setup | Run database migrations |
-| Telemetry missing | Analytics service not initialized | Check analytics service startup logs |
+| Symptom           | Cause                             | Solution                                     |
+| ----------------- | --------------------------------- | -------------------------------------------- |
+| All tests fail    | Services not running              | Run `docker-compose up -d`                   |
+| Some tests pass   | Partial service availability      | Check service logs: `docker-compose logs -f` |
+| Timeout errors    | Services slow to respond          | Increase timeout in `api-client.ts`          |
+| Auth failures     | Missing database setup            | Run database migrations                      |
+| Telemetry missing | Analytics service not initialized | Check analytics service startup logs         |
 
 ## Debugging
 
@@ -298,15 +298,17 @@ Example:
 test.describe('Feature Name', () => {
   test('Should accomplish specific goal', async () => {
     const testData = generateTestUser();
-    
+
     // Act
     const response = await apiRequest({
       method: 'POST',
       endpoint: '/endpoint',
       service: 'serviceName',
-      body: { /* ... */ }
+      body: {
+        /* ... */
+      },
     });
-    
+
     // Assert
     expect(response.ok).toBe(true);
     console.log('✓ Feature validated');

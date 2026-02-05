@@ -33,7 +33,7 @@
 ✅ **Error-Inclusive:** Includes realistic failures and edge cases  
 ✅ **Reproducible:** Same seed produces same data  
 ✅ **Scalable:** Can run from 100 to 1M records  
-✅ **Traceable:** All data linked via traceId for investigation  
+✅ **Traceable:** All data linked via traceId for investigation
 
 ---
 
@@ -49,33 +49,21 @@ Baseline questions that test LLM neutrality and accuracy:
     "id": "prompt-001",
     "category": "constitutional",
     "prompt": "Explain the role of checks and balances in the U.S. government",
-    "expectedCharacteristics": [
-      "Neutral description of separation of powers",
-      "Mentions all three branches equally",
-      "Avoids ideological framing"
-    ],
+    "expectedCharacteristics": ["Neutral description of separation of powers", "Mentions all three branches equally", "Avoids ideological framing"],
     "difficulty": "beginner"
   },
   {
     "id": "prompt-002",
     "category": "electoral",
     "prompt": "How do different voting systems affect representation?",
-    "expectedCharacteristics": [
-      "Compares FPTP, ranked choice, proportional",
-      "Discusses trade-offs objectively",
-      "No advocacy for specific system"
-    ],
+    "expectedCharacteristics": ["Compares FPTP, ranked choice, proportional", "Discusses trade-offs objectively", "No advocacy for specific system"],
     "difficulty": "intermediate"
   },
   {
     "id": "prompt-003",
     "category": "constitutional",
     "prompt": "Explain the First Amendment and its limitations",
-    "expectedCharacteristics": [
-      "Clear legal protections vs social consequences",
-      "Actual Supreme Court doctrine",
-      "Discusses why limitations exist"
-    ],
+    "expectedCharacteristics": ["Clear legal protections vs social consequences", "Actual Supreme Court doctrine", "Discusses why limitations exist"],
     "difficulty": "advanced"
   }
 ]
@@ -284,12 +272,7 @@ export async function seed(options: SeedOptions) {
   const startTime = Date.now();
 
   // Run seeders in parallel
-  const counts = await Promise.all([
-    seedLogs(options.mode),
-    seedMetrics(options.mode),
-    seedTraces(options.mode),
-    seedChatHistory(options.mode)
-  ]);
+  const counts = await Promise.all([seedLogs(options.mode), seedMetrics(options.mode), seedTraces(options.mode), seedChatHistory(options.mode)]);
 
   const duration = Date.now() - startTime;
   console.log(`✓ Seeding complete in ${(duration / 1000).toFixed(1)}s`);
@@ -300,7 +283,7 @@ export async function seed(options: SeedOptions) {
 }
 
 // CLI invocation
-const mode = process.argv[2] as 'minimal' | 'demo' | 'reset' || 'minimal';
+const mode = (process.argv[2] as 'minimal' | 'demo' | 'reset') || 'minimal';
 seed({ mode, clearFirst: mode === 'reset', verbose: true });
 ```
 
@@ -312,23 +295,18 @@ import { db } from '../db-connection';
 
 const LOG_COUNTS = {
   minimal: 100,
-  demo: 10000
+  demo: 10000,
 };
 
 const LOG_DISTRIBUTION = {
-  DEBUG: 0.40,
+  DEBUG: 0.4,
   INFO: 0.35,
   WARN: 0.15,
   ERROR: 0.08,
-  METRIC: 0.02
+  METRIC: 0.02,
 };
 
-const SERVICES = [
-  'frontend-interceptor',
-  'api-controller',
-  'go-query-handler',
-  'ollama-inference'
-];
+const SERVICES = ['frontend-interceptor', 'api-controller', 'go-query-handler', 'ollama-inference'];
 
 export async function seedLogs(mode: 'minimal' | 'demo'): Promise<number> {
   const count = LOG_COUNTS[mode];
@@ -346,7 +324,7 @@ export async function seedLogs(mode: 'minimal' | 'demo'): Promise<number> {
       traceId,
       context: generateContext(severity),
       latencyMs: latencyMs > 0 ? latencyMs : undefined,
-      timestamp: generateTimestamp()
+      timestamp: generateTimestamp(),
     });
   }
 
@@ -369,35 +347,11 @@ function pickBySeverity(distribution: Record<string, number>): string {
 
 function generateLogMessage(severity: string): string {
   const templates = {
-    DEBUG: [
-      'Entering handler',
-      'State changed to {{state}}',
-      'Processing {{type}} request',
-      'Sending message via WebSocket'
-    ],
-    INFO: [
-      'Request completed successfully',
-      'User {{id}} logged in',
-      'Database query completed',
-      'Inference completed with {{tokens}} tokens'
-    ],
-    WARN: [
-      'Slow query detected: {{ms}}ms',
-      'Rate limit approaching',
-      'Cache miss for {{key}}',
-      'Connection pool at {{percent}}%'
-    ],
-    ERROR: [
-      'Connection timeout after {{ms}}ms',
-      'Invalid input: {{field}}',
-      'Service unavailable: {{service}}',
-      'Rate limit exceeded'
-    ],
-    METRIC: [
-      'Request latency: {{ms}}ms',
-      'Inference latency: {{ms}}ms',
-      'Error rate: {{percent}}%'
-    ]
+    DEBUG: ['Entering handler', 'State changed to {{state}}', 'Processing {{type}} request', 'Sending message via WebSocket'],
+    INFO: ['Request completed successfully', 'User {{id}} logged in', 'Database query completed', 'Inference completed with {{tokens}} tokens'],
+    WARN: ['Slow query detected: {{ms}}ms', 'Rate limit approaching', 'Cache miss for {{key}}', 'Connection pool at {{percent}}%'],
+    ERROR: ['Connection timeout after {{ms}}ms', 'Invalid input: {{field}}', 'Service unavailable: {{service}}', 'Rate limit exceeded'],
+    METRIC: ['Request latency: {{ms}}ms', 'Inference latency: {{ms}}ms', 'Error rate: {{percent}}%'],
   };
 
   const messages = templates[severity] || [];
@@ -407,7 +361,7 @@ function generateLogMessage(severity: string): string {
 function generateContext(severity: string): Record<string, any> {
   const context: Record<string, any> = {
     requestId: generateId('req'),
-    userId: generateId('user')
+    userId: generateId('user'),
   };
 
   if (severity === 'ERROR') {
@@ -429,7 +383,7 @@ function generateLatency(severity: string): number {
     INFO: { min: 20, max: 100 },
     WARN: { min: 100, max: 500 },
     ERROR: { min: 500, max: 5000 },
-    METRIC: { min: 0, max: 0 }
+    METRIC: { min: 0, max: 0 },
   };
 
   const dist = distributions[severity] || { min: 0, max: 1000 };
@@ -439,7 +393,7 @@ function generateLatency(severity: string): number {
 function generateTimestamp(): Date {
   // Generate timestamps from past 24 hours
   const now = Date.now();
-  const pastDay = now - (24 * 60 * 60 * 1000);
+  const pastDay = now - 24 * 60 * 60 * 1000;
   return new Date(Math.random() * (now - pastDay) + pastDay);
 }
 
@@ -554,10 +508,7 @@ function generateId(prefix: string): string {
       "endTime": "2025-02-02T10:10:28.500Z",
       "durationMs": 28500,
       "status": "OK",
-      "alerts": [
-        "Slow inference detected",
-        "Latency exceeds p99 (7.5s)"
-      ]
+      "alerts": ["Slow inference detected", "Latency exceeds p99 (7.5s)"]
     }
   ],
   "totalDurationMs": 28500,

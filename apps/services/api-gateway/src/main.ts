@@ -7,7 +7,8 @@ import { AppModule } from './app.module';
 import helmet from 'helmet';
 
 async function bootstrap(): Promise<void> {
-  const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app: NestExpressApplication =
+    await NestFactory.create<NestExpressApplication>(AppModule);
 
   // Security middleware
   app.use(helmet());

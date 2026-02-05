@@ -13,7 +13,9 @@ describe('HealthGateway', () => {
         'llm-service': { status: 'healthy', latency: 100 },
         'analytics-service': { status: 'healthy', latency: 40 },
       }),
-      getServiceStatus: vi.fn().mockResolvedValue({ status: 'healthy', latency: 50 }),
+      getServiceStatus: vi
+        .fn()
+        .mockResolvedValue({ status: 'healthy', latency: 50 }),
       subscribeToHealthChanges: vi.fn().mockReturnValue({
         on: vi.fn(),
         unsubscribe: vi.fn(),

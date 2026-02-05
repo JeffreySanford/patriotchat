@@ -28,4 +28,3 @@ export class LoginDto {
     Object.assign(this, data);
   }
 }
-

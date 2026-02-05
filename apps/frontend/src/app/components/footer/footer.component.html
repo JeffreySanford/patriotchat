@@ -1,7 +1,12 @@
 <footer class="app-footer" *ngIf="isAuthenticated">
   <div class="footer-content">
     <div class="ws-status">
-      <span class="ws-indicator" [class.connected]="wsConnected" [title]="wsConnected ? 'WebSocket Connected' : 'WebSocket Disconnected'">●</span>
+      <span
+        class="ws-indicator"
+        [class.connected]="wsConnected"
+        [title]="wsConnected ? 'WebSocket Connected' : 'WebSocket Disconnected'"
+        >●</span
+      >
     </div>
 
     <button
@@ -14,10 +19,18 @@
     </button>
 
     <div class="services-list" [title]="errorMessage || ''">
-      <div class="service-item" *ngFor="let service of services" [ngClass]="getStatusClass(service.status)">
-        <span class="service-icon-emoji">{{ getServiceIcon(service.name) }}</span>
+      <div
+        class="service-item"
+        *ngFor="let service of services"
+        [ngClass]="getStatusClass(service.status)"
+      >
+        <span class="service-icon-emoji">{{
+          getServiceIcon(service.name)
+        }}</span>
         <span class="service-name">{{ service.name }}</span>
-        <span class="status-indicator">{{ getStatusIcon(service.status) }}</span>
+        <span class="status-indicator">{{
+          getStatusIcon(service.status)
+        }}</span>
         <span class="response-time">{{ service.responseTime }}ms</span>
       </div>
     </div>

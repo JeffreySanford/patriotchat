@@ -69,7 +69,7 @@ export async function checkAllServicesHealth(): Promise<ServiceHealthStatus[]> {
   ];
 
   const results = await Promise.all(
-    services.map(service => checkServiceHealth(service)),
+    services.map((service) => checkServiceHealth(service)),
   );
 
   return results;
@@ -82,10 +82,10 @@ export async function areRequiredServicesHealthy(
   requiredServices: Array<keyof typeof SERVICE_URLS> = ['auth', 'gateway'],
 ): Promise<boolean> {
   const results = await Promise.all(
-    requiredServices.map(service => checkServiceHealth(service)),
+    requiredServices.map((service) => checkServiceHealth(service)),
   );
 
-  return results.every(result => result.healthy);
+  return results.every((result) => result.healthy);
 }
 
 /**
@@ -94,12 +94,12 @@ export async function areRequiredServicesHealthy(
 export async function getServiceHealthSummary(): Promise<string> {
   const results = await checkAllServicesHealth();
 
-  const healthy = results.filter(r => r.healthy).length;
+  const healthy = results.filter((r) => r.healthy).length;
   const total = results.length;
 
   let summary = `Service Health: ${healthy}/${total} services healthy\n`;
 
-  results.forEach(result => {
+  results.forEach((result) => {
     const status = result.healthy ? '✓' : '✗';
     const latency = result.latency ? ` (${result.latency.toFixed(0)}ms)` : '';
     const error = result.error ? ` - ${result.error}` : '';

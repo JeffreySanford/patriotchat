@@ -85,11 +85,11 @@ pnpm run test:api:endpoints
 
 ## 📋 API Endpoints Summary
 
-| # | Method | Endpoint | Purpose | Status |
-| --- | --- | --- | --- | --- |
-| 1 | GET | `/api` | Root endpoint | ✅ Tested |
-| 2 | GET | `/api/status` | System status & health | ✅ Tested |
-| 3 | POST | `/api/query` | Submit LLM query | ✅ Tested |
+| #   | Method | Endpoint      | Purpose                | Status    |
+| --- | ------ | ------------- | ---------------------- | --------- |
+| 1   | GET    | `/api`        | Root endpoint          | ✅ Tested |
+| 2   | GET    | `/api/status` | System status & health | ✅ Tested |
+| 3   | POST   | `/api/query`  | Submit LLM query       | ✅ Tested |
 
 ## 📊 Test Coverage
 

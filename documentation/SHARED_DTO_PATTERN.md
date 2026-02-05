@@ -49,10 +49,10 @@ The **Shared DTO Pattern** ensures **end-to-end type safety** from frontend to b
 
 **Purpose**: LLM model inference - get available models and generate text
 
-| Operation | Method | Endpoint | Frontend Service | Backend Controller | DTO(s) |
-|-----------|--------|----------|------------------|-------------------|--------|
-| Get Models | GET | `/inference/models` | `InferenceService.getModels()` | `InferenceController.getModels()` | `InferenceModelsResponse` |
-| Generate | POST | `/inference/generate` | `InferenceService.generateInference()` | `InferenceController.generateInference()` | `InferenceGenerateRequest` → `InferenceGenerateResponse` |
+| Operation  | Method | Endpoint              | Frontend Service                       | Backend Controller                        | DTO(s)                                                   |
+| ---------- | ------ | --------------------- | -------------------------------------- | ----------------------------------------- | -------------------------------------------------------- |
+| Get Models | GET    | `/inference/models`   | `InferenceService.getModels()`         | `InferenceController.getModels()`         | `InferenceModelsResponse`                                |
+| Generate   | POST   | `/inference/generate` | `InferenceService.generateInference()` | `InferenceController.generateInference()` | `InferenceGenerateRequest` → `InferenceGenerateResponse` |
 
 **Frontend Implementation** (`apps/frontend/src/app/services/inference.service.ts`):
 
@@ -72,11 +72,11 @@ generateInference(req: InferenceGenerateRequest): Observable<{ data: InferenceGe
 
 **Purpose**: User authentication and validation
 
-| Operation | Method | Endpoint | Frontend Service | Backend Controller | DTO(s) |
-|-----------|--------|----------|------------------|-------------------|--------|
-| Register | POST | `/auth/register` | `AuthService.register()` | `AuthController.register()` | `AuthRegisterRequest` → `AuthResponse` |
-| Login | POST | `/auth/login` | `AuthService.login()` | `AuthController.login()` | `AuthLoginRequest` → `AuthResponse` |
-| Validate | POST | `/auth/validate` | `AuthService.validate()` | `AuthController.validate()` | (token in header) → `AuthValidateResponse` |
+| Operation | Method | Endpoint         | Frontend Service         | Backend Controller          | DTO(s)                                     |
+| --------- | ------ | ---------------- | ------------------------ | --------------------------- | ------------------------------------------ |
+| Register  | POST   | `/auth/register` | `AuthService.register()` | `AuthController.register()` | `AuthRegisterRequest` → `AuthResponse`     |
+| Login     | POST   | `/auth/login`    | `AuthService.login()`    | `AuthController.login()`    | `AuthLoginRequest` → `AuthResponse`        |
+| Validate  | POST   | `/auth/validate` | `AuthService.validate()` | `AuthController.validate()` | (token in header) → `AuthValidateResponse` |
 
 ## DTO Enforcement Rules
 
@@ -132,7 +132,7 @@ throw new BadGatewayException(
     message: 'LLM service unavailable',
     code: 'LLM_SERVICE_ERROR',
     details: { service: 'LLM', endpoint: '/models' },
-  })
+  }),
 );
 
 // ❌ WRONG - Generic exceptions lose type info
@@ -185,7 +185,7 @@ export class MyFeatureController {
 File: `apps/frontend/src/app/services/my-feature.service.ts`
 
 ```typescript
-import { MyFeatureRequest, MyFeatureResponse } from '../types/api.dto';  // or shared if path resolves
+import { MyFeatureRequest, MyFeatureResponse } from '../types/api.dto'; // or shared if path resolves
 
 @Injectable({ providedIn: 'root' })
 export class MyFeatureService {
@@ -207,19 +207,19 @@ this.myFeatureService.doAction(request).subscribe({
   },
   error: (err: ApiError | HttpErrorResponse) => {
     // Error handling
-  }
+  },
 });
 ```
 
 ## Type Safety Guarantees
 
-| Scenario | Without Pattern | With DTO Pattern |
-|----------|---|---|
-| Frontend calls wrong endpoint | Runtime error | TypeScript error at compile time |
-| Backend changes response structure | Runtime error | Build failure |
-| Backend returns wrong type | Runtime error | Build failure |
-| Frontend doesn't handle error | Uncaught error | Typed error handling enforced |
-| Adding new field to request | No validation | Build failure if not handled |
+| Scenario                           | Without Pattern | With DTO Pattern                 |
+| ---------------------------------- | --------------- | -------------------------------- |
+| Frontend calls wrong endpoint      | Runtime error   | TypeScript error at compile time |
+| Backend changes response structure | Runtime error   | Build failure                    |
+| Backend returns wrong type         | Runtime error   | Build failure                    |
+| Frontend doesn't handle error      | Uncaught error  | Typed error handling enforced    |
+| Adding new field to request        | No validation   | Build failure if not handled     |
 
 ## Implementation Checklist
 

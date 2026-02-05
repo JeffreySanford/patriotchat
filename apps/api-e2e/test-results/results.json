@@ -26,9 +26,7 @@
         "name": "chromium",
         "testDir": "C:/repos/patriotchat/apps/api-e2e/src",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.spec.ts"
-        ],
+        "testMatch": ["**/*.spec.ts"],
         "timeout": 30000
       },
       {
@@ -42,9 +40,7 @@
         "name": "firefox",
         "testDir": "C:/repos/patriotchat/apps/api-e2e/src",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.spec.ts"
-        ],
+        "testMatch": ["**/*.spec.ts"],
         "timeout": 30000
       },
       {
@@ -58,9 +54,7 @@
         "name": "webkit",
         "testDir": "C:/repos/patriotchat/apps/api-e2e/src",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.spec.ts"
-        ],
+        "testMatch": ["**/*.spec.ts"],
         "timeout": 30000
       }
     ],
@@ -84,10 +78,7 @@
           "outputFile": "test-results/junit.xml"
         }
       ],
-      [
-        "list",
-        null
-      ]
+      ["list", null]
     ],
     "reportSlowTests": {
       "max": 5,

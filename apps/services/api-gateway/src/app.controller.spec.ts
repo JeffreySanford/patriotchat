@@ -11,21 +11,33 @@ describe('AppController', () => {
 
   beforeEach(() => {
     mockAuthService = {
-      register: vi.fn().mockResolvedValue({ userId: 'user1', email: 'test@example.com' }),
-      login: vi.fn().mockResolvedValue({ token: 'jwt-token', user: { id: 'user1' } }),
-      validateToken: vi.fn().mockResolvedValue({ valid: true, userId: 'user1' }),
+      register: vi
+        .fn()
+        .mockResolvedValue({ userId: 'user1', email: 'test@example.com' }),
+      login: vi
+        .fn()
+        .mockResolvedValue({ token: 'jwt-token', user: { id: 'user1' } }),
+      validateToken: vi
+        .fn()
+        .mockResolvedValue({ valid: true, userId: 'user1' }),
     };
 
     mockInferenceService = {
-      getModels: vi.fn().mockResolvedValue([
-        { id: 'model1', name: 'GPT-2', status: 'available' },
-      ]),
-      generateText: vi.fn().mockResolvedValue({ text: 'Generated response', tokens: 100 }),
+      getModels: vi
+        .fn()
+        .mockResolvedValue([
+          { id: 'model1', name: 'GPT-2', status: 'available' },
+        ]),
+      generateText: vi
+        .fn()
+        .mockResolvedValue({ text: 'Generated response', tokens: 100 }),
     };
 
     mockAnalyticsService = {
       trackEvent: vi.fn().mockResolvedValue({ eventId: 'evt1' }),
-      getAnalytics: vi.fn().mockResolvedValue({ totalEvents: 100, uniqueUsers: 50 }),
+      getAnalytics: vi
+        .fn()
+        .mockResolvedValue({ totalEvents: 100, uniqueUsers: 50 }),
     };
 
     mockHealthService = {
@@ -102,7 +114,7 @@ describe('AppController', () => {
     it('should handle user registration', async () => {
       const result = await controller.register(
         { email: 'test@example.com', password: 'pass123' },
-        mockResponse
+        mockResponse,
       );
 
       expect(result).toBeDefined();
@@ -111,7 +123,7 @@ describe('AppController', () => {
     it('should handle user login', async () => {
       const result = await controller.login(
         { email: 'test@example.com', password: 'pass123' },
-        mockResponse
+        mockResponse,
       );
 
       expect(result).toBeDefined();
@@ -145,7 +157,7 @@ describe('AppController', () => {
       const result = await controller.generateText(
         { model: 'model1', prompt: 'Hello' },
         mockRequest,
-        mockResponse
+        mockResponse,
       );
 
       expect(result).toBeDefined();
@@ -177,7 +189,7 @@ describe('AppController', () => {
       const result = await controller.trackEvent(
         { eventType: 'page_view', data: {} },
         mockRequest,
-        mockResponse
+        mockResponse,
       );
 
       expect(result).toBeDefined();
@@ -220,10 +232,9 @@ describe('AppController', () => {
     it('should handle invalid request data', async () => {
       mockAuthService.register.mockRejectedValueOnce(new Error('Invalid data'));
 
-      const result = await controller.register(
-        { email: 'invalid' },
-        mockResponse
-      ).catch((e) => e);
+      const result = await controller
+        .register({ email: 'invalid' }, mockResponse)
+        .catch((e) => e);
 
       expect(result).toBeDefined();
     });
@@ -413,9 +424,9 @@ describe('AppController', () => {
 
   describe('Concurrent Request Handling', () => {
     it('should handle multiple simultaneous requests', async () => {
-      const promises = Array(10).fill(null).map(() =>
-        controller.getModels(mockRequest, mockResponse)
-      );
+      const promises = Array(10)
+        .fill(null)
+        .map(() => controller.getModels(mockRequest, mockResponse));
 
       const results = await Promise.all(promises);
 

@@ -7,15 +7,15 @@
 
 ## 🚀 Quick Start
 
-| Need | Location |
-| --- | --- |
-| **Start here** | [../README.md](../README.md) |
-| **Current tasks** | [../TODO.md](../TODO.md) |
-| **Architecture** | [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) |
-| **Type Safety (NEW)** | [SHARED_DTO_PATTERN.md](SHARED_DTO_PATTERN.md) |
-| **API reference** | [api/GUIDE.md](api/GUIDE.md) |
-| **Debugging** | [debug/DEBUGGING_QUICK_START.md](debug/DEBUGGING_QUICK_START.md) |
-| **Contributing** | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Need                  | Location                                                         |
+| --------------------- | ---------------------------------------------------------------- |
+| **Start here**        | [../README.md](../README.md)                                     |
+| **Current tasks**     | [../TODO.md](../TODO.md)                                         |
+| **Architecture**      | [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md)   |
+| **Type Safety (NEW)** | [SHARED_DTO_PATTERN.md](SHARED_DTO_PATTERN.md)                   |
+| **API reference**     | [api/GUIDE.md](api/GUIDE.md)                                     |
+| **Debugging**         | [debug/DEBUGGING_QUICK_START.md](debug/DEBUGGING_QUICK_START.md) |
+| **Contributing**      | [CONTRIBUTING.md](CONTRIBUTING.md)                               |
 
 ---
 
@@ -85,14 +85,14 @@
 
 ## 👥 Start by Role
 
-| Role | Read First | Then |
-| --- | --- | --- |
-| **Backend Dev** | [SHARED_DTO_PATTERN.md](SHARED_DTO_PATTERN.md) | [DTO_ENDPOINTS_REGISTRY.md](DTO_ENDPOINTS_REGISTRY.md) → [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) |
-| **Frontend Dev** | [SHARED_DTO_PATTERN.md](SHARED_DTO_PATTERN.md) | [DTO_ENDPOINTS_REGISTRY.md](DTO_ENDPOINTS_REGISTRY.md) → [FRONTEND_UI_REQUIREMENTS.md](FRONTEND_UI_REQUIREMENTS.md) |
-| **DevOps** | [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) | Docker setup → Service health checks |
-| **ML Engineer** | [LLM_TUNING_AND_RAG.md](LLM_TUNING_AND_RAG.md) | [LLM/](LLM/) folder → Mistral fine-tuning |
-| **QA/Tester** | [SHARED_DTO_PATTERN.md](SHARED_DTO_PATTERN.md) | [DTO_ENDPOINTS_REGISTRY.md](DTO_ENDPOINTS_REGISTRY.md) → Test data seeding |
-| **Newcomer** | [../README.md](../README.md) | [SHARED_DTO_PATTERN.md](SHARED_DTO_PATTERN.md) → Pick a service to learn |
+| Role             | Read First                                                     | Then                                                                                                                    |
+| ---------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Backend Dev**  | [SHARED_DTO_PATTERN.md](SHARED_DTO_PATTERN.md)                 | [DTO_ENDPOINTS_REGISTRY.md](DTO_ENDPOINTS_REGISTRY.md) → [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) |
+| **Frontend Dev** | [SHARED_DTO_PATTERN.md](SHARED_DTO_PATTERN.md)                 | [DTO_ENDPOINTS_REGISTRY.md](DTO_ENDPOINTS_REGISTRY.md) → [FRONTEND_UI_REQUIREMENTS.md](FRONTEND_UI_REQUIREMENTS.md)     |
+| **DevOps**       | [MICROSERVICES_ARCHITECTURE.md](MICROSERVICES_ARCHITECTURE.md) | Docker setup → Service health checks                                                                                    |
+| **ML Engineer**  | [LLM_TUNING_AND_RAG.md](LLM_TUNING_AND_RAG.md)                 | [LLM/](LLM/) folder → Mistral fine-tuning                                                                               |
+| **QA/Tester**    | [SHARED_DTO_PATTERN.md](SHARED_DTO_PATTERN.md)                 | [DTO_ENDPOINTS_REGISTRY.md](DTO_ENDPOINTS_REGISTRY.md) → Test data seeding                                              |
+| **Newcomer**     | [../README.md](../README.md)                                   | [SHARED_DTO_PATTERN.md](SHARED_DTO_PATTERN.md) → Pick a service to learn                                                |
 
 ---
 

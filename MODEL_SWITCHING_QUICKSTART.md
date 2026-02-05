@@ -8,15 +8,15 @@ A comprehensive E2E test suite (`model-switching.spec.ts`) that validates model 
 
 **Total Tests**: 17 organized in 7 test suites
 
-|Suite|Tests|Purpose|
-|-|-|-|
-|Model Availability and Switching|3|Verify model list, properties, and expected models present|
-|Single Model Query Execution|3|Test individual queries for llama2, mistral, neural-chat|
-|Model Switching with Sequential Queries|2|Switch models and maintain state across requests|
-|Model-Specific Response Validation|2|Validate response structure and model identification|
-|Error Handling and Edge Cases|3|Invalid models, empty prompts, missing fields|
-|Performance with Model Switching|1|Measure query times with rapid model switching|
-|Integration: Frontend Model Selector Scenario|2|Full user workflow: load → select → query → switch|
+| Suite                                         | Tests | Purpose                                                    |
+| --------------------------------------------- | ----- | ---------------------------------------------------------- |
+| Model Availability and Switching              | 3     | Verify model list, properties, and expected models present |
+| Single Model Query Execution                  | 3     | Test individual queries for llama2, mistral, neural-chat   |
+| Model Switching with Sequential Queries       | 2     | Switch models and maintain state across requests           |
+| Model-Specific Response Validation            | 2     | Validate response structure and model identification       |
+| Error Handling and Edge Cases                 | 3     | Invalid models, empty prompts, missing fields              |
+| Performance with Model Switching              | 1     | Measure query times with rapid model switching             |
+| Integration: Frontend Model Selector Scenario | 2     | Full user workflow: load → select → query → switch         |
 
 ## 🚀 Running the Tests
 

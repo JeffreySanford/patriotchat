@@ -7,7 +7,7 @@ RUN go mod download || go mod tidy
 
 COPY src ./src
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o llm ./src/main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o llm ./src
 
 FROM alpine:latest
 

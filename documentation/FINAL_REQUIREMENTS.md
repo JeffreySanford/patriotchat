@@ -109,16 +109,16 @@ All critical requirements gathered and finalized for PatriotChat V2 microservice
 
 ### Services (All containerized)
 
-| Service | Port | Language | Role |
-| --- | --- | --- | --- |
-| **API Gateway** | 3000 | NestJS | Entry point, routing, rate limiting, auth |
-| **Auth Service** | 4001 | Go | JWT, OAuth, session management |
-| **Funding Service** | 4002 | Go | FEC, ProPublica data aggregation |
-| **Policy Service** | 4003 | Go | Policy management, versioning |
-| **LLM Service** | 4004 | Go | Mistral fine-tuned inference |
-| **Analytics Service** | 4005 | Go | Metrics, reports, trends |
-| **Frontend** | 4200 | Angular | SPA with Material Design 3 |
-| **Database** | 5432 | PostgreSQL | Audit trails, all data |
+| Service               | Port | Language   | Role                                      |
+| --------------------- | ---- | ---------- | ----------------------------------------- |
+| **API Gateway**       | 3000 | NestJS     | Entry point, routing, rate limiting, auth |
+| **Auth Service**      | 4001 | Go         | JWT, OAuth, session management            |
+| **Funding Service**   | 4002 | Go         | FEC, ProPublica data aggregation          |
+| **Policy Service**    | 4003 | Go         | Policy management, versioning             |
+| **LLM Service**       | 4004 | Go         | Mistral fine-tuned inference              |
+| **Analytics Service** | 4005 | Go         | Metrics, reports, trends                  |
+| **Frontend**          | 4200 | Angular    | SPA with Material Design 3                |
+| **Database**          | 5432 | PostgreSQL | Audit trails, all data                    |
 
 ### Technology Stack
 
@@ -287,7 +287,7 @@ RATE_LIMIT_TIER=development
 ✅ Unit tests verify business logic  
 ✅ Integration tests verify database operations  
 ✅ E2E tests verify full flows  
-✅ 80%+ code coverage per service  
+✅ 80%+ code coverage per service
 
 ### Auditability
 
@@ -295,7 +295,7 @@ RATE_LIMIT_TIER=development
 ✅ User-visible scrubbed audit trail  
 ✅ Correlation IDs trace requests  
 ✅ Performance metrics recorded  
-✅ Error logs with full context  
+✅ Error logs with full context
 
 ### Security
 
@@ -303,7 +303,7 @@ RATE_LIMIT_TIER=development
 ✅ Service-to-service authentication  
 ✅ Secrets in environment variables  
 ✅ HTTPS-only in production  
-✅ CORS properly configured  
+✅ CORS properly configured
 
 ### Performance
 
@@ -311,7 +311,7 @@ RATE_LIMIT_TIER=development
 ✅ Heavy operations < 500ms  
 ✅ OpenTelemetry tracing  
 ✅ Health checks on every service  
-✅ No cascading failures  
+✅ No cascading failures
 
 ### Operations
 
@@ -319,7 +319,7 @@ RATE_LIMIT_TIER=development
 ✅ docker-compose orchestration  
 ✅ Service dependencies defined  
 ✅ Rollback strategy  
-✅ Documentation up-to-date  
+✅ Documentation up-to-date
 
 ---
 

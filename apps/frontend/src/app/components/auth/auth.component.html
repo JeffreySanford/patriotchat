@@ -41,7 +41,13 @@
       </div>
 
       <button type="submit" [disabled]="loading" class="btn-primary">
-        {{ loading ? 'Loading...' : (currentForm === 'login' ? 'Login' : 'Register') }}
+        {{
+          loading
+            ? 'Loading...'
+            : currentForm === 'login'
+              ? 'Login'
+              : 'Register'
+        }}
       </button>
 
       <p *ngIf="error" class="error-message">{{ error }}</p>
@@ -49,12 +55,12 @@
 
     <div class="form-toggle">
       <p>
-        {{ currentForm === 'login' ? "Don't have an account?" : 'Already have an account?' }}
-        <button
-          type="button"
-          (click)="toggleForm()"
-          class="toggle-btn"
-        >
+        {{
+          currentForm === 'login'
+            ? "Don't have an account?"
+            : 'Already have an account?'
+        }}
+        <button type="button" (click)="toggleForm()" class="toggle-btn">
           {{ currentForm === 'login' ? 'Register' : 'Login' }}
         </button>
       </p>

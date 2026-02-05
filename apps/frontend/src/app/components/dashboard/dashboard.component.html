@@ -1,9 +1,10 @@
 <div class="dashboard-container">
   <!-- Song Length Selection Dialog -->
-  <app-song-length-dialog 
+  <app-song-length-dialog
     #songLengthDialog
     (selected)="onSongLengthSelected($event)"
-    (cancelled)="onSongLengthDialogCancelled()">
+    (cancelled)="onSongLengthDialogCancelled()"
+  >
   </app-song-length-dialog>
 
   <div class="chat-panel">
@@ -26,7 +27,11 @@
       </div>
     </div>
     <div class="messages" #messagesContainer>
-      <div *ngFor="let msg of messages" [class.user]="msg.role === 'user'" class="message">
+      <div
+        *ngFor="let msg of messages"
+        [class.user]="msg.role === 'user'"
+        class="message"
+      >
         <div class="message-content">
           <div *ngIf="msg.isSong" class="song-container">
             <div class="song-header">
@@ -51,7 +56,8 @@
         </div>
         <div class="loading-info">
           <small>
-            Estimated: {{ estimatedTime }}s | Elapsed: {{ (elapsedTime | number: '1.1-1') }}s
+            Estimated: {{ estimatedTime }}s | Elapsed:
+            {{ elapsedTime | number: '1.1-1' }}s
           </small>
         </div>
       </div>
@@ -75,3 +81,6 @@
         Send
       </button>
       <p *ngIf="error" class="error-message">{{ error }}</p>
+    </div>
+  </div>
+</div>

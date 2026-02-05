@@ -23,10 +23,10 @@
          Auth   Funding  Policy  LLM   Analytics
        Service  Service Service Service Service
          :4001   :4002   :4003  :4004   :4005
-         
+
                    Docker Containers
             (Each service independent & scalable)
-            
+
                       PostgreSQL
             (ACID, audit trails, JSONB support)
 ```
@@ -316,20 +316,20 @@ services:
       POSTGRES_DB: patriotchat
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 10s
       timeout: 5s
       retries: 5
-  
+
   gateway:
     build: ./apps/gateway
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       postgres:
         condition: service_healthy
@@ -340,15 +340,15 @@ services:
       - DB_HOST=postgres
       - RATE_LIMIT_TIER=development
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/health']
       interval: 10s
       timeout: 5s
       retries: 3
-  
+
   auth:
     build: ./apps/services/auth
     ports:
-      - "4001:4001"
+      - '4001:4001'
     depends_on:
       postgres:
         condition: service_healthy
@@ -357,69 +357,69 @@ services:
       - JWT_SECRET=${JWT_SECRET}
       - JWT_EXPIRY=24h
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4001/health"]
+      test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:4001/health']
       interval: 10s
       timeout: 5s
       retries: 3
-  
+
   funding:
     build: ./apps/services/funding
     ports:
-      - "4002:4002"
+      - '4002:4002'
     depends_on:
       postgres:
         condition: service_healthy
     environment:
       - DB_HOST=postgres
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4002/health"]
+      test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:4002/health']
       interval: 10s
       timeout: 5s
       retries: 3
-  
+
   policy:
     build: ./apps/services/policy
     ports:
-      - "4003:4003"
+      - '4003:4003'
     depends_on:
       postgres:
         condition: service_healthy
     environment:
       - DB_HOST=postgres
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4003/health"]
+      test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:4003/health']
       interval: 10s
       timeout: 5s
       retries: 3
-  
+
   llm:
     build: ./apps/services/llm
     ports:
-      - "4004:4004"
+      - '4004:4004'
     depends_on:
       postgres:
         condition: service_healthy
     environment:
       - DB_HOST=postgres
       - LLM_MODEL=mistral
-      - LLM_VARIANTS=3  # Optional: support 3 fine-tuned variants
+      - LLM_VARIANTS=3 # Optional: support 3 fine-tuned variants
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4004/health"]
+      test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:4004/health']
       interval: 10s
       timeout: 5s
       retries: 3
-  
+
   analytics:
     build: ./apps/services/analytics
     ports:
-      - "4005:4005"
+      - '4005:4005'
     depends_on:
       postgres:
         condition: service_healthy
     environment:
       - DB_HOST=postgres
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4005/health"]
+      test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:4005/health']
       interval: 10s
       timeout: 5s
       retries: 3
@@ -557,17 +557,17 @@ CREATE TABLE user_activity (
 ```typescript
 // Example: Remove PII from audit response
 const scrubAuditForUser = (audit: AuditLog) => ({
-    id: audit.id,
-    entity_type: audit.entity_type,
-    entity_id: audit.entity_id,
-    operation: audit.operation,
-    created_at: audit.created_at,
-    changes: {
-        // Only show non-PII fields
-        status: audit.changes.status,
-        category: audit.changes.category,
-        // Exclude: email, phone, ssn, address, etc.
-    }
+  id: audit.id,
+  entity_type: audit.entity_type,
+  entity_id: audit.entity_id,
+  operation: audit.operation,
+  created_at: audit.created_at,
+  changes: {
+    // Only show non-PII fields
+    status: audit.changes.status,
+    category: audit.changes.category,
+    // Exclude: email, phone, ssn, address, etc.
+  },
 });
 ```
 
@@ -583,7 +583,7 @@ The gateway will enforce rate limits across 4 dimensions:
 
 ```
 Free: 1,000 req/min
-Power: 5,000 req/min  
+Power: 5,000 req/min
 Premium: 10,000 req/min
 ```
 
@@ -611,12 +611,12 @@ Free Tier:
   - 100 requests/hour total
   - 1 LLM query/min
   - 5 funding searches/hour
-  
+
 Power Tier:
   - 10,000 requests/hour total
   - 10 LLM queries/min
   - 100 funding searches/hour
-  
+
 Premium Tier:
   - 100,000 requests/hour total
   - 100 LLM queries/min
@@ -649,7 +649,7 @@ X-RateLimit-Tier: power
 ✅ **Team Autonomy:** Different teams own different services  
 ✅ **Deployment:** Deploy individual services without full rebuild  
 ✅ **Performance:** Go services for CPU-intensive work  
-✅ **Clear Boundaries:** Each service has specific responsibility  
+✅ **Clear Boundaries:** Each service has specific responsibility
 
 ---
 

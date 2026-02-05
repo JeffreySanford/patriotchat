@@ -22,22 +22,26 @@ export class SongLengthDialogComponent {
     {
       label: '76 seconds',
       seconds: 76,
-      description: 'Viral hit - punchy hook with minimal structure, perfect for social media',
+      description:
+        'Viral hit - punchy hook with minimal structure, perfect for social media',
     },
     {
       label: '3 minutes',
       seconds: 180,
-      description: 'Classic pop - verse, chorus, bridge structure with full arrangement',
+      description:
+        'Classic pop - verse, chorus, bridge structure with full arrangement',
     },
     {
       label: '5 minutes',
       seconds: 300,
-      description: 'Epic production - extended sections, instrumental breaks, and dynamic transitions',
+      description:
+        'Epic production - extended sections, instrumental breaks, and dynamic transitions',
     },
     {
       label: 'As long as needed',
       seconds: 600,
-      description: 'Experimental - let the AI create the perfect length and style for your idea',
+      description:
+        'Experimental - let the AI create the perfect length and style for your idea',
     },
   ];
 

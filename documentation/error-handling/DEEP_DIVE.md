@@ -8,12 +8,12 @@ Your instinct is right to question it, but the answer surprises most developers:
 
 ```typescript
 // All valid JavaScript:
-throw new Error("oops");           // Error object
-throw "string error";              // String
-throw 42;                          // Number  
-throw { custom: true };            // Object
-throw null;                        // null
-throw undefined;                   // undefined
+throw new Error('oops'); // Error object
+throw 'string error'; // String
+throw 42; // Number
+throw { custom: true }; // Object
+throw null; // null
+throw undefined; // undefined
 ```
 
 **TypeScript's response:** "I can't protect you from all possibilities. Use `unknown`."
@@ -34,7 +34,7 @@ You wrote:
 }
 ```
 
-And wondered: *"We know what errors it will throw. Why `unknown`? Why the eslint-disable?"*
+And wondered: _"We know what errors it will throw. Why `unknown`? Why the eslint-disable?"_
 
 ### Why This Matters
 
@@ -52,8 +52,9 @@ This is the #1 misunderstanding about TypeScript error handling. Let me show you
 // You assume: "HTTP calls throw HttpException or Error"
 try {
   const result = await this.httpService.get(url);
-} catch (error: Error) {  // ❌ Assumes Error
-  console.log(error.message);  // You're safe!
+} catch (error: Error) {
+  // ❌ Assumes Error
+  console.log(error.message); // You're safe!
 }
 ```
 
@@ -61,7 +62,7 @@ try {
 
 ```typescript
 // New version of httpService throws:
-throw { statusCode: 404, message: "not found" };  // ⚠️ Plain object, not Error!
+throw { statusCode: 404, message: 'not found' }; // ⚠️ Plain object, not Error!
 ```
 
 **Your code:**
@@ -86,8 +87,9 @@ async function thirdPartyHealthCheck() {
 // Your code with specific type:
 try {
   await thirdPartyHealthCheck();
-} catch (error: Error) {  // ❌ Assumes Error
-  console.log(error.message);  // Could crash in future versions!
+} catch (error: Error) {
+  // ❌ Assumes Error
+  console.log(error.message); // Could crash in future versions!
 }
 ```
 
@@ -97,15 +99,16 @@ try {
 // Express allows:
 app.use((req, res, next) => {
   if (problem) {
-    next("route");  // ⚠️ Throws string, not Error!
+    next('route'); // ⚠️ Throws string, not Error!
   }
 });
 
 // What gets caught?
 try {
   // ... express middleware runs
-} catch (error: Error) {  // ❌ Assumes Error
-  console.log(error.message);  // 💥 Crash! error is string "route"
+} catch (error: Error) {
+  // ❌ Assumes Error
+  console.log(error.message); // 💥 Crash! error is string "route"
 }
 ```
 
@@ -120,9 +123,7 @@ try {
 try {
   await operation();
 } catch (error: unknown) {
-  const message = error instanceof Error 
-    ? error.message 
-    : String(error);
+  const message = error instanceof Error ? error.message : String(error);
   logger.error(message);
 }
 ```
@@ -141,7 +142,7 @@ try {
   await httpCall();
 } catch (error: unknown) {
   let errorInfo: string;
-  
+
   if (error instanceof HttpException) {
     errorInfo = `HTTP ${error.status}: ${error.message}`;
   } else if (error instanceof Error) {
@@ -153,7 +154,7 @@ try {
     // Fallback for primitives
     errorInfo = String(error);
   }
-  
+
   logger.error(errorInfo);
 }
 ```
@@ -194,9 +195,9 @@ if (data) {
   // Can't safely use data properties
 }
 
-let value: unknown;  // Unclear type
+let value: unknown; // Unclear type
 // ... later ...
-console.log(value.property);  // Might crash
+console.log(value.property); // Might crash
 ```
 
 ### Why Catch Clauses Are Different
@@ -205,12 +206,14 @@ console.log(value.property);  // Might crash
 // The ONLY valid use of unknown:
 try {
   // code
-} catch (error: unknown) {  // ✅ REQUIRED by TypeScript spec
+} catch (error: unknown) {
+  // ✅ REQUIRED by TypeScript spec
   // Must use unknown here - no choice
 }
 ```
 
 **TypeScript Team's Official Statement:**
+
 > "A catch clause variable cannot be declared with any explicit type annotation. Instead, you can use `unknown` to check the error."
 
 Source: [TypeScript 4.0 Release Notes](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html)
@@ -249,8 +252,9 @@ Source: [TypeScript 4.0 Release Notes](https://www.typescriptlang.org/docs/handb
 // ❌ Type annotation suggests safety that doesn't exist
 try {
   await operation();
-} catch (error: Error) {  // Lies to TypeScript
-  console.log(error.message);  // Could crash if error isn't Error
+} catch (error: Error) {
+  // Lies to TypeScript
+  console.log(error.message); // Could crash if error isn't Error
 }
 ```
 
@@ -276,11 +280,11 @@ try {
 } catch (error: unknown) {
   // eslint-disable-next-line no-restricted-syntax
   if (error instanceof HttpException) {
-    handleHttpError(error);  // Now TypeScript knows it's HttpException
+    handleHttpError(error); // Now TypeScript knows it's HttpException
   } else if (error instanceof Error) {
-    handleStandardError(error);  // Now TypeScript knows it's Error
+    handleStandardError(error); // Now TypeScript knows it's Error
   } else {
-    handleUnknownError(error);  // Last resort
+    handleUnknownError(error); // Last resort
   }
 }
 ```
@@ -327,13 +331,13 @@ async checkHttpHealth(name: string): Promise<ServiceStatus> {
 
 ### The Score
 
-| Aspect  | Assessment | Why  |
-| -------- |------------| ----- |
-| **Type Safety**  | ✅ Excellent | Handles all JS throw types  |
-| **Error Handling**  | ✅ Excellent | Prevents runtime crashes  |
-| **Code Quality**  | ✅ Excellent | Follows best practices  |
-| **ESLint Compliance**  | ⚠️ Override | Necessary override for spec  |
-| **Maintainability**  | ✅ Excellent | Clear intent, documented  |
+| Aspect                | Assessment   | Why                         |
+| --------------------- | ------------ | --------------------------- |
+| **Type Safety**       | ✅ Excellent | Handles all JS throw types  |
+| **Error Handling**    | ✅ Excellent | Prevents runtime crashes    |
+| **Code Quality**      | ✅ Excellent | Follows best practices      |
+| **ESLint Compliance** | ⚠️ Override  | Necessary override for spec |
+| **Maintainability**   | ✅ Excellent | Clear intent, documented    |
 
 ### Final Answer
 

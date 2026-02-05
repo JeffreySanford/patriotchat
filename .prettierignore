@@ -4,3 +4,10 @@
 /.nx/cache
 /.nx/workspace-data
 .angular
+data/founding/
+*.min.js
+*.min.css
+node_modules
+pnpm-lock.yaml
+apps/api-e2e/test-results/
+apps/frontend/coverage/

@@ -29,7 +29,7 @@ This document outlines the migration from Jasmine/Jest testing framework to **Vi
 ### Why Vitest?
 
 | Criteria | Jest | Vitest | Winner |
-|----------|------|--------|--------|
+| -------- | ---- | ------ | ------ |
 
 | **Speed** | ~5-10s for small suites | ~1-2s for small suites | **Vitest** (5-10x faster) |
 | **ESM Support** | Through transpilation | Native/zero-config | **Vitest** |
@@ -158,11 +158,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/',
-        'src/test-setup.ts',
-        '**/*.spec.ts',
-      ],
+      exclude: ['node_modules/', 'src/test-setup.ts', '**/*.spec.ts'],
     },
   },
   resolve: {
@@ -251,14 +247,14 @@ Configure Nx to use Vitest executor for frontend tests
 **1. Environment Choice**
 
 ```typescript
-environment: 'jsdom'  // Browser-like environment for Angular tests
+environment: 'jsdom'; // Browser-like environment for Angular tests
 // Alternative: 'node' for non-DOM tests
 ```
 
 **2. Globals Configuration**
 
 ```typescript
-globals: true  // Enables describe, it, expect, beforeEach, etc. without imports
+globals: true; // Enables describe, it, expect, beforeEach, etc. without imports
 // When true, reduces imports boilerplate in tests
 ```
 
@@ -354,13 +350,13 @@ vi.spyOn(service, 'method').mockReturnValue(value);
 
 **Test Suite**: frontend application with 50+ test files
 
-| Metric | Jest | Vitest | Improvement |
-|--------|------|--------|-------------|
-| Cold Run | 12.5s | 2.1s | **6.0x faster** |
-| Warm Run (HMR) | 8.2s | 0.8s | **10.2x faster** |
-| Memory (Peak) | 450MB | 120MB | **73% reduction** |
-| Startup Time | 4.5s | 0.3s | **15x faster** |
-| Watch Mode Rebuild | 3.2s | 0.2s | **16x faster** |
+| Metric             | Jest  | Vitest | Improvement       |
+| ------------------ | ----- | ------ | ----------------- |
+| Cold Run           | 12.5s | 2.1s   | **6.0x faster**   |
+| Warm Run (HMR)     | 8.2s  | 0.8s   | **10.2x faster**  |
+| Memory (Peak)      | 450MB | 120MB  | **73% reduction** |
+| Startup Time       | 4.5s  | 0.3s   | **15x faster**    |
+| Watch Mode Rebuild | 3.2s  | 0.2s   | **16x faster**    |
 
 ### HMR (Hot Module Reload) Impact
 

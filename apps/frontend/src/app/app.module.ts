@@ -18,7 +18,15 @@ import { routes } from './app.routes';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent, DashboardComponent, FooterComponent, HeaderComponent, SongLengthDialogComponent, ClickOutsideDirective],
+  declarations: [
+    AppComponent,
+    AuthComponent,
+    DashboardComponent,
+    FooterComponent,
+    HeaderComponent,
+    SongLengthDialogComponent,
+    ClickOutsideDirective,
+  ],
   imports: [
     BrowserModule,
     CommonModule,

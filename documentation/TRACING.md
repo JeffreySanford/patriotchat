@@ -66,21 +66,13 @@ X-Trace-Flags: 01 (always sampled for dev)
 ```typescript
 // src/interceptors/trace.interceptor.ts
 import { Injectable } from '@angular/core';
-import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent
-} from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class TraceInterceptor implements HttpInterceptor {
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Generate trace ID for new requests, reuse for retries
     const traceId = req.headers.get('X-Trace-ID') || uuidv4();
     const spanId = `span-${Math.random().toString(36).substr(2, 9)}`;
@@ -90,8 +82,8 @@ export class TraceInterceptor implements HttpInterceptor {
       setHeaders: {
         'X-Trace-ID': traceId,
         'X-Span-ID': spanId,
-        'X-Trace-Flags': '01' // Always sampled in dev
-      }
+        'X-Trace-Flags': '01', // Always sampled in dev
+      },
     });
 
     // Log request initiation
@@ -103,21 +95,14 @@ export class TraceInterceptor implements HttpInterceptor {
       tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
           const duration = performance.now() - startTime;
-          console.log(
-            `[${traceId}] ${req.method} ${req.url} ` +
-            `${event.status} ${duration.toFixed(0)}ms`
-          );
+          console.log(`[${traceId}] ${req.method} ${req.url} ` + `${event.status} ${duration.toFixed(0)}ms`);
         }
       }),
       catchError((error: any) => {
         const duration = performance.now() - startTime;
-        console.error(
-          `[${traceId}] ${req.method} ${req.url} ` +
-          `ERROR ${error.status || 'UNKNOWN'} ${duration.toFixed(0)}ms`,
-          error
-        );
+        console.error(`[${traceId}] ${req.method} ${req.url} ` + `ERROR ${error.status || 'UNKNOWN'} ${duration.toFixed(0)}ms`, error);
         throw error;
-      })
+      }),
     );
   }
 }
@@ -127,9 +112,9 @@ providers: [
   {
     provide: HTTP_INTERCEPTORS,
     useClass: TraceInterceptor,
-    multi: true
-  }
-]
+    multi: true,
+  },
+];
 ```
 
 ### 2. API Controller (NestJS)
@@ -162,31 +147,23 @@ export class TraceMiddleware implements NestMiddleware {
 
     // Log request
     const startTime = Date.now();
-    this.logger.info(
-      `${req.method} ${req.path}`,
-      { traceId, spanId, parentSpanId, method: req.method, path: req.path }
-    );
+    this.logger.info(`${req.method} ${req.path}`, { traceId, spanId, parentSpanId, method: req.method, path: req.path });
 
     // Intercept response finish
     const originalSend = res.send.bind(res);
-    res.send = function(data) {
+    res.send = function (data) {
       const duration = Date.now() - startTime;
-      const logLevel = res.statusCode >= 500 ? 'error' : 
-                       res.statusCode >= 400 ? 'warn' : 
-                       'info';
+      const logLevel = res.statusCode >= 500 ? 'error' : res.statusCode >= 400 ? 'warn' : 'info';
 
-      Logger[logLevel](
-        `${req.method} ${req.path} ${res.statusCode} ${duration}ms`,
-        {
-          traceId,
-          spanId,
-          parentSpanId,
-          method: req.method,
-          path: req.path,
-          statusCode: res.statusCode,
-          latencyMs: duration
-        }
-      );
+      Logger[logLevel](`${req.method} ${req.path} ${res.statusCode} ${duration}ms`, {
+        traceId,
+        spanId,
+        parentSpanId,
+        method: req.method,
+        path: req.path,
+        statusCode: res.statusCode,
+        latencyMs: duration,
+      });
 
       return originalSend(data);
     };
@@ -339,8 +316,8 @@ def init_trace_middleware(app):
 
 ```typescript
 interface TraceDocument {
-  traceId: string;           // Primary key for queries
-  spans: Span[];             // All spans in order
+  traceId: string; // Primary key for queries
+  spans: Span[]; // All spans in order
   totalDurationMs: number;
   status: 'OK' | 'ERROR';
   startTime: Date;
@@ -352,7 +329,7 @@ interface TraceDocument {
     path: string;
     httpMethod: string;
   };
-  events?: TraceEvent[];     // Timeline of significant events
+  events?: TraceEvent[]; // Timeline of significant events
 }
 
 interface Span {
@@ -379,39 +356,44 @@ interface TraceEvent {
 
 ```javascript
 // Find trace by ID
-db.traces.findOne({ traceId: '550e8400-e29b-41d4-a716-446655440000' })
+db.traces.findOne({ traceId: '550e8400-e29b-41d4-a716-446655440000' });
 
 // Find all traces for a user in last hour
-db.traces.find({
-  'attributes.userId': 'user-123',
-  startTime: { $gte: new Date(Date.now() - 3600000) }
-}).sort({ startTime: -1 })
+db.traces
+  .find({
+    'attributes.userId': 'user-123',
+    startTime: { $gte: new Date(Date.now() - 3600000) },
+  })
+  .sort({ startTime: -1 });
 
 // Find slow traces (> 5 seconds)
-db.traces.find({
-  totalDurationMs: { $gt: 5000 },
-  startTime: { $gte: new Date(Date.now() - 86400000) }
-}).sort({ totalDurationMs: -1 })
+db.traces
+  .find({
+    totalDurationMs: { $gt: 5000 },
+    startTime: { $gte: new Date(Date.now() - 86400000) },
+  })
+  .sort({ totalDurationMs: -1 });
 
 // Find error traces
 db.traces.find({
   status: 'ERROR',
-  startTime: { $gte: new Date(Date.now() - 3600000) }
-})
+  startTime: { $gte: new Date(Date.now() - 3600000) },
+});
 
 // Analyze span latencies
 db.traces.aggregate([
   { $match: { status: 'OK' } },
   { $unwind: '$spans' },
-  { $group: {
+  {
+    $group: {
       _id: '$spans.serviceId',
       avgLatency: { $avg: '$spans.durationMs' },
       maxLatency: { $max: '$spans.durationMs' },
-      count: { $sum: 1 }
-    }
+      count: { $sum: 1 },
+    },
   },
-  { $sort: { avgLatency: -1 } }
-])
+  { $sort: { avgLatency: -1 } },
+]);
 ```
 
 ---
@@ -494,35 +476,35 @@ getErrorTraces(timeRange?: TimeRange) {
 ```text
 1. USER INITIATES REQUEST
    └─ Browser sends HTTP request
-   
+
 2. FRONTEND INTERCEPTOR
    └─ Generates UUID traceId
    └─ Adds X-Trace-ID header
    └─ Creates initial log entry
-   
+
 3. API CONTROLLER
    └─ Receives X-Trace-ID header
    └─ Creates span-002
    └─ Logs request with traceId
    └─ Creates new span ID for downstream call
-   
+
 4. GO QUERY HANDLER
    └─ Receives X-Trace-ID header
    └─ Receives X-Span-ID from API
    └─ Creates span-003
    └─ Calls Ollama service with X-Trace-ID
-   
+
 5. OLLAMA INFERENCE
    └─ Receives X-Trace-ID header
    └─ Processes request
    └─ Returns response with headers
-   
+
 6. TRACE COLLECTION
    └─ All services log with same traceId
    └─ Logs collection has entries with traceId
    └─ Traces collection has complete trace document
    └─ Metrics collection has latency measurements
-   
+
 7. QUERY TIME (Logger UI)
    └─ User searches by traceId
    └─ MongoDB returns trace document + related logs
@@ -541,7 +523,7 @@ const tracedHeaders = {
   'X-Trace-ID': parentTraceId,
   'X-Span-ID': currentSpanId,
   'X-Parent-Span-ID': parentSpanId,
-  ...otherHeaders
+  ...otherHeaders,
 };
 
 httpClient.post('/downstream', data, { headers: tracedHeaders });
@@ -563,13 +545,13 @@ async function processWithTrace(traceId: string, data: any) {
 const traceContext = {
   traceId: '550e8400-e29b-41d4-a716-446655440000',
   spanId: 'span-001',
-  startTime: Date.now()
+  startTime: Date.now(),
 };
 
 setTimeout(() => {
   logger.info('Async work complete', {
     ...traceContext,
-    durationMs: Date.now() - traceContext.startTime
+    durationMs: Date.now() - traceContext.startTime,
   });
 }, 5000);
 ```
@@ -587,7 +569,7 @@ describe('Distributed Tracing', () => {
     const response = await fetch('/api/query', {
       method: 'POST',
       headers: { 'X-Trace-ID': traceId },
-      body: JSON.stringify({ query: 'test' })
+      body: JSON.stringify({ query: 'test' }),
     });
 
     // Verify response has trace headers
@@ -603,7 +585,7 @@ describe('Distributed Tracing', () => {
     // Verify all logs have same traceId
     const logs = await db.logs.find({ traceId }).toArray();
     expect(logs.length).toBeGreaterThan(0);
-    logs.forEach(log => {
+    logs.forEach((log) => {
       expect(log.traceId).toBe(traceId);
     });
   });
@@ -613,15 +595,15 @@ describe('Distributed Tracing', () => {
     const response = await fetch('/api/query', {
       method: 'POST',
       headers: { 'X-Trace-ID': traceId },
-      body: JSON.stringify({ query: 'invalid' })
+      body: JSON.stringify({ query: 'invalid' }),
     });
 
     // Error trace should be recorded
     const trace = await db.traces.findOne({ traceId });
     expect(trace.status).toBe('ERROR');
-    
+
     // Error span should be marked
-    const errorSpan = trace.spans.find(s => s.status === 'ERROR');
+    const errorSpan = trace.spans.find((s) => s.status === 'ERROR');
     expect(errorSpan).toBeDefined();
   });
 });

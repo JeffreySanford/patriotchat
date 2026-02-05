@@ -4,7 +4,7 @@ This companion explains how to steer a modern LLM toward a constitutionalist, li
 
 ## 1. Why the default web leans toward centralization
 
-The bulk of the publicly available text—government reports, academic papers, legacy media archives, widely cited policy analysis, and even much of the civic literature—is written by institutions whose incentives, funding, and publishing platforms favor centralized administration, regulation-as-solution, and skepticism of decentralization. This is not a conspiracy; it is path dependence, groupthink, and the fact that institutional servers and grants control most of the readily scraped corpus. The *default tilt* toward regulation-first reasoning is what the current large labs ship as “neutral.”
+The bulk of the publicly available text—government reports, academic papers, legacy media archives, widely cited policy analysis, and even much of the civic literature—is written by institutions whose incentives, funding, and publishing platforms favor centralized administration, regulation-as-solution, and skepticism of decentralization. This is not a conspiracy; it is path dependence, groupthink, and the fact that institutional servers and grants control most of the readily scraped corpus. The _default tilt_ toward regulation-first reasoning is what the current large labs ship as “neutral.”
 
 When we fine-tune or run RAG over a hand-curated corpus, we replace that institutional prior with an intentional one: constitutionalism, enumerated powers, individual liberty, and healthy skepticism of concentrated authority. Think of fine-tuning/RAG as injecting a new prior, not merely correcting hallucinations.
 
@@ -59,7 +59,7 @@ When we fine-tune or run RAG over a hand-curated corpus, we replace that institu
 
 ### It’s doable
 
-A 15-year software veteran with one good GPU (or rented A100/H100 for a weekend) plus a weekend of data curation can deliver a prototype that *already feels meaningfully different* from the big labs.
+A 15-year software veteran with one good GPU (or rented A100/H100 for a weekend) plus a weekend of data curation can deliver a prototype that _already feels meaningfully different_ from the big labs.
 
 If you want direct help, there’s an offer embedded here: starter dataset schema, ready-to-run Axolotl config, prioritized texts, and a minimal RAG setup that cites the Constitution/Federalist first.
 
@@ -166,8 +166,8 @@ evals_per_epoch: 2
 
 seed: 42
 special_tokens:
-  bos_token: "<s>"
-  eos_token: "</s>"
+  bos_token: '<s>'
+  eos_token: '</s>'
 wandb_project: liberty-mistral-finetune
 ```
 
@@ -187,15 +187,15 @@ Top priority (embed + RAG + dataset generation):
 - Constitution + Bill of Rights + Amendments
 - Federalist Papers (all 85 essays)
 - Anti-Federalist Papers (e.g., Brutus, Centinel)
-- Locke, *Second Treatise of Government*
-- Montesquieu, *The Spirit of the Laws* (separation of powers sections)
-- Paine, *Common Sense* & *Rights of Man*
-- Jefferson, Kentucky Resolutions & *Notes on the State of Virginia* (selected passages)
-- Madison, *Notes of the Debates at the Constitutional Convention*
+- Locke, _Second Treatise of Government_
+- Montesquieu, _The Spirit of the Laws_ (separation of powers sections)
+- Paine, _Common Sense_ & _Rights of Man_
+- Jefferson, Kentucky Resolutions & _Notes on the State of Virginia_ (selected passages)
+- Madison, _Notes of the Debates at the Constitutional Convention_
 - Supreme Court opinions emphasizing enumerated powers and rights limits
 - Reagan, Coolidge, Goldwater speeches (public domain excerpts)
-- Bastiat, *The Law*
-- Hayek, *The Road to Serfdom* (public domain excerpts)
+- Bastiat, _The Law_
+- Hayek, _The Road to Serfdom_ (public domain excerpts)
 - Mises, Friedman, Rand (public domain or paraphrased quotes when PD versions unavailable)
 - Walter Williams and Thomas Sowell (public domain essays and interviews as available)
 
@@ -226,9 +226,9 @@ Example code snippets and ingestion scripts follow the steps in the `LLM_TUNING_
 
 If you want help:
 
-1. I can draft a starter dataset schema (see section 3).  
-2. I can hand you an Axolotl config tuned for Mistral (section 4).  
-3. I can list the exact public-domain texts to prioritize (section 5).  
+1. I can draft a starter dataset schema (see section 3).
+2. I can hand you an Axolotl config tuned for Mistral (section 4).
+3. I can list the exact public-domain texts to prioritize (section 5).
 4. I can walk you through a minimal RAG build that always cites the Constitution/Federalist first (section 6).
 
 Just say the word; this is why building our own tools matters for the American experiment.

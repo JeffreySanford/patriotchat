@@ -156,17 +156,17 @@ All 5 critical requirements have been **met and verified** as of 2026-02-03 14:4
 
 ### All 9 Services Operational ✅
 
-| Service | Port | Status | Notes |
-| --- | --- | --- | --- |
-| Frontend | 4200 | ✅ Running | Angular 21.1.2, JWT auth, model selector |
-| API Gateway | 3000 | ✅ Running | NestJS 11.1.12, 4D rate limiting, CORS |
-| Auth Service | 4001 | ✅ Running | Go, JWT generation, audit logging |
-| Funding Service | 4002 | ✅ Running | Go, entity search |
-| Policy Service | 4003 | ✅ Running | Go, policy search |
-| LLM Service | 4004 | ✅ Running | Go, Ollama integration, model listing, inference |
-| Analytics Service | 4005 | ✅ Running | Go, event tracking |
-| PostgreSQL | 5432 | ✅ Running | 16-alpine, audit logs, connection pooling |
-| Ollama | 11434 | ✅ Running | llama2, mistral, neural-chat models available |
+| Service           | Port  | Status     | Notes                                            |
+| ----------------- | ----- | ---------- | ------------------------------------------------ |
+| Frontend          | 4200  | ✅ Running | Angular 21.1.2, JWT auth, model selector         |
+| API Gateway       | 3000  | ✅ Running | NestJS 11.1.12, 4D rate limiting, CORS           |
+| Auth Service      | 4001  | ✅ Running | Go, JWT generation, audit logging                |
+| Funding Service   | 4002  | ✅ Running | Go, entity search                                |
+| Policy Service    | 4003  | ✅ Running | Go, policy search                                |
+| LLM Service       | 4004  | ✅ Running | Go, Ollama integration, model listing, inference |
+| Analytics Service | 4005  | ✅ Running | Go, event tracking                               |
+| PostgreSQL        | 5432  | ✅ Running | 16-alpine, audit logs, connection pooling        |
+| Ollama            | 11434 | ✅ Running | llama2, mistral, neural-chat models available    |
 
 ### Health Checks ✅
 
@@ -179,27 +179,27 @@ All 5 critical requirements have been **met and verified** as of 2026-02-03 14:4
 
 ### Completed (29 story points)
 
-| Item | Points | Timestamp | Status |
-| --- | --- | --- | --- |
-| LLM Service Integration Complete | 5 | 2026-02-03 12:00 | ✅ Ollama → Go → NestJS → Angular working end-to-end |
-| Infrastructure Bug Fixes | 3 | 2026-02-03 11:45 | ✅ Fixed infinite loop in health service |
-| Type Safety & Error Handling | 8 | 2026-02-03 11:30 | ✅ AppException, error-handler.ts, type-guards.ts |
-| ESLint Linting Campaign | 13 | 2026-02-03 11:00 | ✅ 49% improvement (3981 → 2028), 1946+ auto-fixed |
+| Item                             | Points | Timestamp        | Status                                               |
+| -------------------------------- | ------ | ---------------- | ---------------------------------------------------- |
+| LLM Service Integration Complete | 5      | 2026-02-03 12:00 | ✅ Ollama → Go → NestJS → Angular working end-to-end |
+| Infrastructure Bug Fixes         | 3      | 2026-02-03 11:45 | ✅ Fixed infinite loop in health service             |
+| Type Safety & Error Handling     | 8      | 2026-02-03 11:30 | ✅ AppException, error-handler.ts, type-guards.ts    |
+| ESLint Linting Campaign          | 13     | 2026-02-03 11:00 | ✅ 49% improvement (3981 → 2028), 1946+ auto-fixed   |
 
 ### In Progress (8 story points)
 
-| Item | Points | Status |
-| --- | --- | --- |
-| Complete remaining linting campaign | 5 | 1709 errors fixed, targeting <1000 |
-| E2E test hardening | 3 | Awaiting linting completion |
+| Item                                | Points | Status                             |
+| ----------------------------------- | ------ | ---------------------------------- |
+| Complete remaining linting campaign | 5      | 1709 errors fixed, targeting <1000 |
+| E2E test hardening                  | 3      | Awaiting linting completion        |
 
 ### Backlog (18 story points)
 
-| Item | Points | Status |
-| --- | --- | --- |
-| Build JSONL civic instruction dataset | 8 | Planned for Sprint 3 |
-| Evaluation harness (label discipline, steelman) | 5 | Planned for Sprint 3 |
-| RAG retrieval layer | 5 | Planned for Sprint 4 |
+| Item                                            | Points | Status               |
+| ----------------------------------------------- | ------ | -------------------- |
+| Build JSONL civic instruction dataset           | 8      | Planned for Sprint 3 |
+| Evaluation harness (label discipline, steelman) | 5      | Planned for Sprint 3 |
+| RAG retrieval layer                             | 5      | Planned for Sprint 4 |
 
 ## Verification Checklist
 

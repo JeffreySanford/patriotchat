@@ -33,8 +33,8 @@ Labels like "terrorist," "extremist," or "hate group" must be:
 - Attributed ("described by X as Y")
 - Scoped ("listed in [jurisdiction] with [legal consequence]")
 - Compared ("not listed in [other jurisdiction]")
-Model must continue analysis regardless of label.
-Default label policy: "jurisdiction_only" (can be changed by user)
+  Model must continue analysis regardless of label.
+  Default label policy: "jurisdiction_only" (can be changed by user)
 
 ### Configurable Values Profile (Plug-and-Play Americanism)
 

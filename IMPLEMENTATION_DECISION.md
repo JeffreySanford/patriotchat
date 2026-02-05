@@ -9,6 +9,7 @@
 ## The Problem
 
 Ollama registry at `registry.ollama.ai` returned 404, blocking model pull:
+
 ```
 2024-10-15T10:23:45 ERROR: Failed to pull mistralai/Mistral-7B-Instruct-v0.3
   Status code: 404 from https://registry.ollama.ai/...
@@ -19,12 +20,14 @@ Ollama registry at `registry.ollama.ai` returned 404, blocking model pull:
 ## Initial Solution - Option A (Not Used)
 
 Created a Python-based inference service:
+
 - Python FastAPI on port 5000
 - Loads Mistral 7B directly from HuggingFace
 - Go gateway on port 4004 with fallback to Ollama
 - WSL environment with virtual environment
 
 **Why discarded:**
+
 - Introduced complexity (Python + Go + WSL)
 - Duplicate functionality (Ollama already does this)
 - Extra maintenance burden
@@ -35,6 +38,7 @@ Created a Python-based inference service:
 ## Chosen Solution - Ollama Direct (Simple)
 
 The model files were **already downloaded** locally:
+
 - Location: `C:\Users\Sanford\.ollama\models\mistralai\Mistral-7B-Instruct-v0.3\`
 - Size: 13.7 GB (3 safetensors files)
 - Status: Already at rest on disk
@@ -42,6 +46,7 @@ The model files were **already downloaded** locally:
 **Solution:** Just point the Ollama Docker container to these files.
 
 **Changes made:**
+
 ```yaml
 # docker-compose.yml - Ollama service
 volumes:
@@ -52,7 +57,8 @@ environment:
 ```
 
 **Result:**
-- Ollama now loads models from Windows filesystem  
+
+- Ollama now loads models from Windows filesystem
 - No registry pull needed
 - Docker container sees the files via volume mount
 - Single service approach (existing architecture)
@@ -61,22 +67,23 @@ environment:
 
 ## Comparison
 
-| Aspect | Option A (Python) | Option B (Ollama) |
-|--------|---|---|
-| Services | 2 (Python 5000 + Go 4004) | 1 (Ollama 11434) |
-| Complexity | High | Low |
-| Setup Time | 1+ hour | 5 minutes |
-| Maintenance | WSL venv, Python deps | Docker only |
-| OS Portability | Windows-specific | Any OS |
-| Reliability | More failure points | Battle-tested |
-| Code Changes | ~5 new files | ~1 docker-compose edit |
-| Production Ready | Not yet | Yes |
+| Aspect           | Option A (Python)         | Option B (Ollama)      |
+| ---------------- | ------------------------- | ---------------------- |
+| Services         | 2 (Python 5000 + Go 4004) | 1 (Ollama 11434)       |
+| Complexity       | High                      | Low                    |
+| Setup Time       | 1+ hour                   | 5 minutes              |
+| Maintenance      | WSL venv, Python deps     | Docker only            |
+| OS Portability   | Windows-specific          | Any OS                 |
+| Reliability      | More failure points       | Battle-tested          |
+| Code Changes     | ~5 new files              | ~1 docker-compose edit |
+| Production Ready | Not yet                   | Yes                    |
 
 ---
 
 ## Files from Option A (Kept for Reference)
 
 **Available but not used:**
+
 - `apps/services/llm/src/hf_loader.py`
 - `apps/services/llm/src/app.py`
 - `OPTION_A_STATUS.md`
@@ -115,13 +122,14 @@ Ollama Container (port 11434)
 ✅ Simple volume mount solution  
 ✅ One less service to manage  
 ✅ No WSL complexity  
-✅ Production-ready  
+✅ Production-ready
 
 ---
 
 ## Key Learning
 
 Sometimes the simplest solution is the best one:
+
 - Problem: Registry unavailable
 - First instinct: Build alternative (Python service)
 - Better solution: Use existing system differently (volume mount)

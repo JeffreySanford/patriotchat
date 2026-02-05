@@ -84,7 +84,10 @@ export async function apiRequest(
       let responseData: JsonObject | null = null;
 
       // Try to parse response as JSON if there's content
-      if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
+      if (
+        response.ok &&
+        response.headers.get('content-type')?.includes('application/json')
+      ) {
         try {
           responseData = (await response.json()) as JsonObject;
         } catch {
@@ -115,7 +118,9 @@ export async function apiRequest(
       }
       // Wait before retrying (exponential backoff)
       if (attempt < retries - 1) {
-        await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 100));
+        await new Promise((resolve) =>
+          setTimeout(resolve, Math.pow(2, attempt) * 100),
+        );
       }
     }
   }

@@ -130,12 +130,12 @@ Tests:      2 passed
 
 ## Summary of Changes
 
-| Project | Type | Before | After |
-| --- | --- | --- | --- |
-| Frontend | Linting | 6 issues (2 errors, 4 warnings) | ✅ 0 issues |
-| Frontend | Tests | 293 passed | ✅ 293 passed |
-| API Gateway | Tests | 510 passed, 4 failed | ✅ 514 passed, 0 failed |
-| Shared Library | Tests | 2 passed | ✅ 2 passed |
+| Project        | Type    | Before                          | After                   |
+| -------------- | ------- | ------------------------------- | ----------------------- |
+| Frontend       | Linting | 6 issues (2 errors, 4 warnings) | ✅ 0 issues             |
+| Frontend       | Tests   | 293 passed                      | ✅ 293 passed           |
+| API Gateway    | Tests   | 510 passed, 4 failed            | ✅ 514 passed, 0 failed |
+| Shared Library | Tests   | 2 passed                        | ✅ 2 passed             |
 
 ---
 

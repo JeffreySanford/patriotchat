@@ -46,12 +46,13 @@ Strong typing is mandatory across the workspace to prevent `any`/`unknown` creep
       status?: number;
       timestamp?: string;
     }
-    
+
     // Replace: catchError((err: any) =>
     // With: catchError((err: Error | ErrorDetails) =>
     ```
 
   - For event handlers like `onChange`, `onTouch`, implement them or add `// TODO: Implement handler` comments rather than just removing
+
 - **Typing exceptions**: Temporary exceptions during prototyping are allowed but must be documented in the PR and converted to typed APIs before merging to `master`.
 
 Enforcement:
@@ -90,10 +91,14 @@ export interface ChatMessageDto {
 
 ```typescript
 // Bad
-function process(input: any) { return input; }
+function process(input: any) {
+  return input;
+}
 
 // Good
-function process(input: ChatMessageDto): ChatMessageDto { return input; }
+function process(input: ChatMessageDto): ChatMessageDto {
+  return input;
+}
 ```
 
 ### Component Configuration Example
@@ -105,7 +110,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-example',
   templateUrl: './example.component.html',
   styleUrls: ['./example.component.scss'],
-  standalone: false  // CRITICAL: Must always be explicitly set to false for all components
+  standalone: false, // CRITICAL: Must always be explicitly set to false for all components
 })
 export class ExampleComponent implements OnInit {
   // Component implementation
@@ -128,20 +133,20 @@ import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
-    ExampleComponent,  // Always declare components here
-    OtherComponent
+    ExampleComponent, // Always declare components here
+    OtherComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
-    MatButtonModule,  // Explicitly import all needed Angular Material modules
-    MatIconModule     // rather than using CUSTOM_ELEMENTS_SCHEMA
+    MatButtonModule, // Explicitly import all needed Angular Material modules
+    MatIconModule, // rather than using CUSTOM_ELEMENTS_SCHEMA
   ],
   exports: [
-    ExampleComponent  // Export components intended for use outside this module
-  ]
+    ExampleComponent, // Export components intended for use outside this module
+  ],
 })
-export class FeatureModule { }
+export class FeatureModule {}
 ```
 
 ## Real-Time Communication Standards
@@ -176,7 +181,7 @@ import { SocketClientService } from './socket-client.service'; // Assuming Socke
 import { DataType } from '../models/data-type.model'; // Assuming DataType model exists
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataFacade implements OnDestroy {
   private dataSubject = new BehaviorSubject<DataType[]>([]);
@@ -185,13 +190,14 @@ export class DataFacade implements OnDestroy {
 
   constructor(private socketClient: SocketClientService) {
     // Subscribe to socket events
-    this.socketClient.on<DataType[]>('data:update')
+    this.socketClient
+      .on<DataType[]>('data:update')
       .pipe(
         takeUntil(this.destroyed$),
         // Compare stringified versions for deep equality check if needed
-        distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr))
+        distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         this.dataSubject.next(data);
       });
   }
@@ -205,15 +211,15 @@ export class DataFacade implements OnDestroy {
 
 ### When to Use Sockets vs. HTTP
 
-| Data Characteristic          | Recommended Approach        | Rationale                                           |
-|------------------------------|-----------------------------|-----------------------------------------------------|
-| High frequency updates       | Socket.IO                   | Efficient for real-time, continuous data streams    |
-| Large initial dataset        | HTTP + Socket for updates   | Load bulk data via HTTP, push changes via Socket.IO |
-| User-specific updates        | Socket.IO with rooms/users  | Target specific clients without broadcasting        |
-| Infrequent updates           | Traditional HTTP (Polling)  | Simpler, less overhead for non-real-time data       |
-| Critical transactions        | HTTP with confirmation      | Ensures delivery and allows for transactional logic |
-| Collaborative features       | Socket.IO                   | Essential for real-time multi-user interactions     |
-| Server-sent events (SSE)     | HTTP (SSE)                  | Suitable for one-way server-to-client push          |
+| Data Characteristic      | Recommended Approach       | Rationale                                           |
+| ------------------------ | -------------------------- | --------------------------------------------------- |
+| High frequency updates   | Socket.IO                  | Efficient for real-time, continuous data streams    |
+| Large initial dataset    | HTTP + Socket for updates  | Load bulk data via HTTP, push changes via Socket.IO |
+| User-specific updates    | Socket.IO with rooms/users | Target specific clients without broadcasting        |
+| Infrequent updates       | Traditional HTTP (Polling) | Simpler, less overhead for non-real-time data       |
+| Critical transactions    | HTTP with confirmation     | Ensures delivery and allows for transactional logic |
+| Collaborative features   | Socket.IO                  | Essential for real-time multi-user interactions     |
+| Server-sent events (SSE) | HTTP (SSE)                 | Suitable for one-way server-to-client push          |
 
 ### Socket Event Naming Conventions
 
@@ -237,7 +243,7 @@ For optimal performance with large datasets, follow these guidelines:
 
 - For datasets under 100,000 records: Use client-side rendering with full dataset loaded
 - For datasets over 100,000 records: Use server-side rendering with pagination
-  
+
 ### Implementation Pattern
 
 ```typescript
@@ -249,36 +255,36 @@ export class RecordService {
     if (total > 100000) {
       return this.getServerSidePaginatedRecords(page, pageSize);
     }
-    
+
     // Otherwise, return full dataset for client-side handling
     return this.getAllRecords(total);
   }
-  
+
   private async getServerSidePaginatedRecords(page: number, pageSize: number): Promise<RecordResponse> {
     // Calculate offset
     const skip = page * pageSize;
-    
+
     // Fetch only the required chunk from database
     const records = await this.recordRepository.find({
       take: pageSize,
       skip: skip,
       order: { id: 'ASC' }
     });
-    
+
     // Get total count for pagination info
     const totalCount = await this.recordRepository.count();
-    
+
     return {
       records,
       totalCount,
       serverSidePagination: true
     };
   }
-  
+
   private async getAllRecords(total: number): Promise<RecordResponse> {
     // Generate or fetch all records
     const records = await this.generateMockRecords(total);
-    
+
     return {
       records,
       totalCount: records.length,
@@ -293,7 +299,7 @@ export class RecordListComponent implements OnInit {
   // Properties
   dataSource: MatTableDataSource<Record> | null = null;
   serverSidePagination = false;
-  
+
   // Handle pagination
   onTableChange(event: PageEvent): void {
     if (this.serverSidePagination) {
@@ -308,17 +314,17 @@ export class RecordListComponent implements OnInit {
       // No additional action required
     }
   }
-  
+
   // Switch between servers or dataset sizes
   onDatasetChange(size: number): void {
     this.totalRecords = size;
     this.serverSidePagination = size > 100000;
-    
+
     // Reset to first page when changing dataset size
     if (this.paginator) {
       this.paginator.firstPage();
     }
-    
+
     // Fetch records with new parameters
     this.fetchRecords();
   }
@@ -368,7 +374,8 @@ try {
 // ❌ WRONG: Type error parameters as Error | CustomType
 try {
   // ...
-} catch (error: Error | CustomException) {  // ❌ Not valid in TypeScript
+} catch (error: Error | CustomException) {
+  // ❌ Not valid in TypeScript
   // Type errors will occur
 }
 ```
@@ -441,9 +448,7 @@ try {
   validate(data);
 } catch (error: unknown) {
   // eslint-disable-next-line no-restricted-syntax
-  const appError: AppError = error instanceof AppException 
-    ? error.toJSON() 
-    : { message: String(error), code: 'UNKNOWN', timestamp: Date.now() };
+  const appError: AppError = error instanceof AppException ? error.toJSON() : { message: String(error), code: 'UNKNOWN', timestamp: Date.now() };
   throw appError;
 }
 ```

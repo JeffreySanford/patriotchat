@@ -20,10 +20,10 @@ Use this log to track datasets, models, guardrails, and ethics reviews before th
 - After writing local logs, compute hash digests and anchor them to the approved blockchain ledger for immutable audit proof. Only the hashes are stored on-chain, while the actual audit files remain in governed storage.
 - Describe the anonymized/auditing workflow in every PR that touches rate limits, guardrails, or logging so reviewers understand where sensitive data lives and where the blockchain anchoring happens.
 
-| Date | Artifact | Owner | License | Guardrail Tags | Notes |
-| --- | --- | --- | --- | --- | --- |
-| 2026-01-01 | Base patriotic corpus | DataOps | CC-BY-SA 4.0 | patriotism, civics | Initial dataset, reviewed. |
-| TBD | [New dataset/model] | TBD | TBD | TBD | Placeholder for future entries. |
+| Date       | Artifact              | Owner   | License      | Guardrail Tags     | Notes                           |
+| ---------- | --------------------- | ------- | ------------ | ------------------ | ------------------------------- |
+| 2026-01-01 | Base patriotic corpus | DataOps | CC-BY-SA 4.0 | patriotism, civics | Initial dataset, reviewed.      |
+| TBD        | [New dataset/model]   | TBD     | TBD          | TBD                | Placeholder for future entries. |
 
 ## Updates
 
