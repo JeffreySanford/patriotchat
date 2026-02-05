@@ -93,6 +93,11 @@ export const TEST_DATA: TestDataConfig = {
   CONCURRENT_REQUEST_COUNT: 10,
 
   // LLM test data
-  AVAILABLE_MODELS: ['llama2', 'mistral', 'neural-chat'],
+  AVAILABLE_MODELS: [
+    'liberty-mistral-v1.0',
+    'mistral',
+    'llama2',
+    'neural-chat',
+  ],
   MODEL_TIMEOUT_MS: 5000,
 };
