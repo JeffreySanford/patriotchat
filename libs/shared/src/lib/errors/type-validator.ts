@@ -7,22 +7,22 @@ interface ValidationSchema {
   [key: string]: string;
 }
 
-// Type for validated values - allows recursive structures
-type ValidatedValue =
+// Value type for dynamic validation - represents JSON-like structures
+type JsonValue =
   | string
   | number
   | boolean
   | null
-  | Record<string, ValidatedValue | undefined | null>
-  | (ValidatedValue | undefined | null)[];
+  | { [key: string]: JsonValue }
+  | JsonValue[];
 
 export class TypeValidator {
   /**
    * Validates an object matches the expected shape
    * Throws ValidationError if validation fails
    */
-  static validate<T extends Record<string, ValidatedValue>>(
-    data: Record<string, ValidatedValue> | null,
+  static validate<T extends Record<string, JsonValue>>(
+    data: Record<string, JsonValue> | null,
     schema: ValidationSchema,
     typeName: string,
   ): T {
@@ -32,15 +32,12 @@ export class TypeValidator {
       );
     }
 
-    const obj: Record<string, ValidatedValue> = data as Record<
-      string,
-      ValidatedValue
-    >;
+    const obj: Record<string, JsonValue> = data as Record<string, JsonValue>;
     const errors: ValidationSchema = {};
 
     // Check required fields
     for (const [key, expectedType] of Object.entries(schema)) {
-      const value: ValidatedValue | undefined = obj[key];
+      const value: JsonValue | undefined = obj[key];
       const actualType: string =
         (this.getType(value ?? null) as string) || 'unknown';
 
@@ -65,7 +62,7 @@ export class TypeValidator {
     return obj as T;
   }
 
-  private static getType(value: ValidatedValue): string {
+  private static getType(value: JsonValue): string {
     if (value === null) return 'null';
     if (Array.isArray(value)) return 'array';
     return typeof value;
