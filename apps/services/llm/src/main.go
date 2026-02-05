@@ -16,7 +16,7 @@ import (
 
 var db *sql.DB
 
-const defaultModelID = "mistral"
+const defaultModelID = "liberty-mistral-v1.0"
 
 type ModelInfo struct {
 	ID            string `json:"id"`
