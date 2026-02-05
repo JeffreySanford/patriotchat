@@ -264,6 +264,10 @@ Response + Source Citations
 
 > For an operational Constitution/Federalist-first RAG setup (including metadata tagging, Ollama + LlamaIndex wiring, and local vector stores) refer to the new `documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md`. It includes scripts to force founding documents to appear ahead of other sources for civic prompts and is paired with the regression checks in `documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md` so you can verify Constitution-first retrieval remains intact after every retrain.
 
+-### Operational Implementation (2026-02-05)
+
+- The Go inference service (`apps/services/llm/src/main.go`) now loads the founding corpus (`data/founding`), scores each civic prompt against chunks tagged with `source_type=founding_core`, and prepends the top context block before calling the LLM. Details live in `apps/services/llm/src/rag.go`, and the retrieval output is appended to `logs/rag_retrieval.jsonl` so reviewers can trace which founding-document chunks influenced every response while citing `README.md#values-commitment`.
+
 ### RAG Implementation Steps
 
 1. **Build Vector Database:**

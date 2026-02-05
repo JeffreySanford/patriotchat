@@ -234,16 +234,16 @@ curl "http://localhost:4003/policy/search?entity_id=test-entity"
 
 ## Next Steps & Roadmap
 
-### Phase 1: LLM Training (Sprint 1-2)
+-### Phase 1: LLM Training (Sprint 1-2)
 
 - [x] Build JSONL civic instruction dataset with TypeScript schema and generate 1,000 liberty-first prompts (`my_liberty_dataset/train.jsonl`).  
     - [x] Run the trimmed Liberty Mistral LoRA training (`liberty-mistral-lora.yaml`) – resulting adapter/tokenizer/metadata live in `liberty-mistral-out/` and the zipped bundle now lives under `tools/checkpoints/liberty-mistral-v1.0-2026-02-05/` with Values Commitment notes plus metadata covering the second pass evaluation.
-- [ ] Implement the label-discipline evaluation suite, regulatory drift checks, and citation coverage logging (`documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`) before declaring Liberty Mistral the default.
-- [ ] Publish evaluation snapshots, dataset hashes, and bias scores in `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md`.
+- [x] Implement the label-discipline evaluation suite, regulatory drift checks, and citation coverage logging (`documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md`) with the `pnpm run check:liberty-prompts` summary recorded alongside the Values Commitment text (`README.md#values-commitment`) before declaring Liberty Mistral the default.
+- [x] Publish evaluation snapshots, dataset hashes, and bias scores in `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md` and `documentation/LLM_TUNING_AND_RAG.md` so reviewers can trace the guardrails referenced in `README.md#values-commitment`.
 
 ### Phase 2: Data Integration (Sprint 3-4)
 
-- [ ] Add the Constitution-first RAG retrieval layer with `source_type=founding_core` prioritization (`documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md`).
+- [x] Add the Constitution-first RAG retrieval layer with `source_type=founding_core` prioritization (`documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md`); the Go inference service now enriches prompts with founding-doc context and writes metadata audits to `logs/rag_retrieval.jsonl` so the Values Commitment trace stays visible.
 - [ ] Implement provenance metadata tracking for policy/funding sources and guardrail citations.
 - [ ] Build values-profile filters so UI queries can gain liberty-focused context.
 

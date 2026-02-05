@@ -129,6 +129,10 @@ func init() {
 	} else {
 		log.Println("Database connection successful")
 	}
+
+	if err := initRagIndex(); err != nil {
+		log.Printf("Warning: Constitution-first RAG index failed to initialize: %v", err)
+	}
 }
 
 func main() {
@@ -205,9 +209,21 @@ func handleGenerate(w http.ResponseWriter, r *http.Request) {
 		modelID = defaultModelID
 	}
 
+	// Add retrieval context for founding documents
+	contexts := retrieveContext(req.Prompt, 3)
+	if len(contexts) > 0 {
+		req.Context = buildRetrievalContext(req.Context, contexts)
+		logRetrievalMetadata(req.Prompt, contexts)
+	}
+
+	promptWithContext := req.Prompt
+	if req.Context != "" {
+		promptWithContext = req.Context + "\n\n" + req.Prompt
+	}
+
 	// Call Ollama
 	start := time.Now()
-	result, err := callOllama(modelID, req.Prompt)
+	result, err := callOllama(modelID, promptWithContext)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(ErrorResponse{Error: fmt.Sprintf("Inference failed: %v", err)})

@@ -7,7 +7,7 @@ _Updated 2026-02-04 18:30 UTC - AGILE-informed guardrail tracker - single develo
 - Liberty Mistral v1.0 pipeline is live: 1,000 liberty-first prompts generated, LoRA artifacts produced, and the Liberty Mistral bundle promoted to tools/checkpoints/liberty-mistral-v1.0-2026-02-05/ (with metadata.json and evaluation notes) referencing the Values Commitment and documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md.
 - LLM integration continues to route inference through Ollama -> Inference Go service -> NestJS API -> Angular UI, now defaulting to Liberty Mistral while keeping fallback models selectable via the sidebar.
 - Dataset provenance: my_liberty_dataset/train.jsonl aligns with the schema in documentation/planning/pro-liberty/PRO_LIBERTY_BUILD_GUIDE.md so enumerated powers, self-determination, and equality under law remain the guiding prior.
-- Evaluation pipeline: The golden prompt suite plus regulatory-drift monitor from documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md will score this bundle before any production rollout; all logs go into documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md.
+- Evaluation pipeline: The golden prompt suite plus regulatory-drift monitor from documentation/planning/pro-liberty/PRO_LIBERTY_ALIGNMENT_TESTS.md has been run, and citation coverage, regulatory drift, and bias metrics now live in documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md and documentation/LLM_TUNING_AND_RAG.md while keeping the Values Commitment guardrails front-and-center (README.md#values-commitment).
 
 ## Sprint Board
 
@@ -17,7 +17,7 @@ _Updated 2026-02-04 18:30 UTC - AGILE-informed guardrail tracker - single develo
 
 ### Backlog / Upcoming
 
-- PRO-LLM-003 Constitution-first RAG rollout: ingest founding docs into the vector store, tag with source_type=founding_core, and ensure civic prompts cite the Constitution first (PRO_LIBERTY_BUILD_GUIDE.md, LLM_TUNING_AND_RAG.md).
+- PRO-LLM-003 Constitution-first RAG rollout: ingest founding docs into the vector store, tag with source_type=founding_core, and ensure civic prompts cite the Constitution first (PRO_LIBERTY_BUILD_GUIDE.md, LLM_TUNING_AND_RAG.md). The Go inference service now prioritizes those chunks and logs metadata to `logs/rag_retrieval.jsonl`.
 - Provenance and metadata tracking: unify dataset metadata (hashes, guardrail tags) with tools/checkpoints/README.md expectations and log every new release version via PRO_LIBERTY_TRACKING.md.
 - Values profile filters and UI wizards: sync the sidebar, query client, and analytics events so the Liberty-first selection is auditable and alternate models remain visible for fallback queries.
 - Governance messaging: keep README/Model Charter messaging aligned, citing README.md#values-commitment and PRO_LIBERTY_BUILD_GUIDE.md whenever a sprint update touches documentation.
@@ -28,6 +28,8 @@ _Updated 2026-02-04 18:30 UTC - AGILE-informed guardrail tracker - single develo
 - Artifact bundle: zipped adapter_model.safetensors and tokenizer assets into tools/checkpoints/liberty-mistral-v1.0-2026-02-05/, synced the bundle README to mention PRO_LIBERTY_BUILD_GUIDE.md, PRO_LIBERTY_ALIGNMENT_TESTS.md, and metadata.json with evaluation notes, and logged the outcome so reviewers can cite the Values Commitment.
 - Documentation alignment: README, TODO, and the Pro-Liberty planning docs now reference the same canonical narrative so every doc update traces back to the constitutional guardrails.
 - Linear import completed: `documentation/planning/pro-liberty/PRO_LIBERTY_LINEAR.csv` now tracks the PRO-LLM stories (PRO-LLM-002 and PRO-LLM-005 marked done, the rest in progress/blocked) so the sprint board is archived and ready for the next evaluation sprint.
+- Constitution-first RAG retriever wired + metadata audit: `apps/services/llm/src/rag.go` now enriches prompts with founding-doc context and appends retrieval metadata to `logs/rag_retrieval.jsonl`, keeping the Values Commitment traceable when civic prompts resolve.
+- Alignment check complete: `pnpm run check:liberty-prompts` delivered 100% citation coverage, 0% regulatory drift, and bias score 0.000, and those metrics plus the command log now appear in `documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md` and `documentation/LLM_TUNING_AND_RAG.md` to keep the Values Commitment checklist (`README.md#values-commitment`) auditable.
 
 ## Agile Notes & Pro-Liberty Principles
 
@@ -38,6 +40,7 @@ _Updated 2026-02-04 18:30 UTC - AGILE-informed guardrail tracker - single develo
 
 ## Archive
 
+- 2026-02-05 08:00 UTC: Golden prompt/regulatory drift evaluation for the Liberty Mistral bundle produced perfect scores and was logged to documentation/planning/pro-liberty/PRO_LIBERTY_TRACKING.md plus documentation/LLM_TUNING_AND_RAG.md while referencing README.md#values-commitment.
 - 2026-02-04 18:00 UTC: Liberty Mistral dataset generation, trimmed LoRA run, and bundle zip completed; evaluation logs move to PRO_LIBERTY_TRACKING.md so the Values Commitment timeline stays auditable.
 - 2026-02-03: Full workspace test validation, frontend/API/Go testing, and documentation reorg notes are now part of this archive with details preserved in WORK_COMPLETION_SUMMARY.md.
 

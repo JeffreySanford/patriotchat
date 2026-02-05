@@ -1,7 +1,7 @@
 Title,Description,State,Estimate,Assignee,Labels
 PRO-LLM-001: Values Commitment Vision Check,Log weekly Values Commitment reviews and flag drift states for charter/doc updates,In Progress,2,ML Lead,values-commitment;planning
 PRO-LLM-002: Federalist Dataset Sprint,Curate 200-400 Q&A from the Federalist/Anti-Federalist batch, sanity-check outputs, and LoRA-train that subset,Done,8,Data Lead + AI,data-pipeline;training
-PRO-LLM-003: Constitution-first RAG Rollout,Ingest founding texts with source_type=founding_core metadata and boost them in retriever,Blocked,5,Infra/LLM,pipeline;RAG
+PRO-LLM-003: Constitution-first RAG Rollout,Ingest founding texts with source_type=founding_core metadata and boost them in retriever,Done,5,Infra/LLM,pipeline;RAG
 PRO-LLM-004: Evaluation Loop & Metrics,Re-run loaded civic prompts after updates and score for pro-liberty framing/citations,In Progress,3,QA,evaluation;alignment
 PRO-LLM-005: Governance Messaging,Update README/MODEL-CHARTER communication to reference Values Commitment and planning docs,Done,1,Docs Lead,docs;governance
 PRO-LLM-006: Liberty Mistral bundle & evaluation,Zip the adapter/tokenizer bundle, log it in tools/checkpoints, and run the golden prompt/regulatory suite so the artifact references the Values Commitment,In Progress,5,LLM Lead,artifact;evaluation
