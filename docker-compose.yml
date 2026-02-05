@@ -193,7 +193,7 @@ services:
       - AUTH_URL=http://auth:4001
       - FUNDING_URL=http://funding:4002
       - POLICY_URL=http://policy:4003
-      - LLM_URL=http://llm:4004
+      - LLM_SERVICE_URL=http://patriotchat-llm:4004
       - ANALYTICS_URL=http://analytics:4005
       - JWT_SECRET=dev-secret-change-in-prod
       - NODE_ENV=development
