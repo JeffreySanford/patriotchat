@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start:deps": "docker compose up -d && sleep 15 && pnpm run status:report",
-    "start": "cross-env LLM_SERVICE_URL=http://localhost:4004 pnpm nx run-many --target=serve --projects=frontend,api-gateway,auth",
+    "start": "pnpm nx serve frontend --port 4200",
     "start:frontend": "pnpm nx serve frontend --port 4200",
     "start:api": "pnpm nx serve api --port 3000",
     "start:all": "cross-env NODE_OPTIONS=--no-deprecation concurrently \"pnpm run start:deps\" \"pnpm run start\"",
