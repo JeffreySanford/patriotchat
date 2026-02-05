@@ -1,8 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-
-// Mock environment variables
-const TEST_USER_EMAIL = 'test@example.com';
-const TEST_USER_PASSWORD = 'pass123';
+import { TEST_USER_EMAIL, TEST_USER_PASSWORD } from './test-env';
 
 describe('AppController', () => {
   let controller: any;
@@ -238,7 +235,7 @@ describe('AppController', () => {
 
       const result = await controller
         .register({ email: 'invalid' }, mockResponse)
-        .catch((e) => e);
+        .catch((e: Error) => e);
 
       expect(result).toBeDefined();
     });

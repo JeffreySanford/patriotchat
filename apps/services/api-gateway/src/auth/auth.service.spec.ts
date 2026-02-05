@@ -1,10 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { of } from 'rxjs';
 import { AuthService } from './auth.service';
-
-// Mock environment variables
-const TEST_USER_EMAIL = 'test@example.com';
-const TEST_USER_PASSWORD = 'pass123';
+import {
+  TEST_USER_EMAIL,
+  TEST_USER_PASSWORD,
+  TEST_USER_USERNAME,
+} from '../test-env';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -18,7 +19,7 @@ describe('AuthService', () => {
             token: 'test.jwt.token',
             user: {
               id: 'user1',
-              username: 'testuser',
+              username: TEST_USER_USERNAME,
               email: TEST_USER_EMAIL,
               tier: 'free',
               created_at: new Date().toISOString(),
@@ -44,18 +45,18 @@ describe('AuthService', () => {
 
     it('should accept registration DTO', () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
       expect(() => service.register(dto)).not.toThrow();
     });
 
     it('should validate email format', () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: 'invalid-email',
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
       // Service should validate email
       expect(service.register).toBeDefined();
@@ -63,9 +64,9 @@ describe('AuthService', () => {
 
     it('should hash password before storing', () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
       // Service should hash password
       expect(service.register).toBeDefined();
@@ -73,9 +74,9 @@ describe('AuthService', () => {
 
     it('should return auth response with token', () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
       // Service should return token in response
       expect(service.register).toBeDefined();
@@ -91,7 +92,7 @@ describe('AuthService', () => {
     it('should accept login credentials', () => {
       const dto = {
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
       expect(() => service.login(dto)).not.toThrow();
     });
@@ -117,7 +118,7 @@ describe('AuthService', () => {
     it('should generate JWT token on successful login', () => {
       const dto = {
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
       // Service should generate token
       expect(service.login).toBeDefined();
@@ -126,7 +127,7 @@ describe('AuthService', () => {
     it('should return user info with token', () => {
       const dto = {
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
       // Service should return user data
       expect(service.login).toBeDefined();
@@ -167,7 +168,7 @@ describe('AuthService', () => {
   describe('Error Handling', () => {
     it('should handle registration errors', () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
         password: 'pass',
       };
@@ -217,7 +218,7 @@ describe('AuthService', () => {
   describe('User Data', () => {
     it('should store user role', () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
         password: TEST_USER_PASSWORD,
       };
@@ -227,9 +228,9 @@ describe('AuthService', () => {
 
     it('should store user tier', () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
       // Service should assign tier
       expect(service.register).toBeDefined();

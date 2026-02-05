@@ -2,25 +2,51 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { of, throwError } from 'rxjs';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import {
+  TEST_USER_EMAIL,
+  TEST_USER_PASSWORD,
+  TEST_USER_USERNAME,
+} from '../test-env';
 
-// Mock environment variables
-const TEST_USER_EMAIL = 'test@example.com';
+const createAuthResponse = () => ({
+  token: 'jwt.token',
+  user: {
+    id: 'user1',
+    username: TEST_USER_USERNAME,
+    email: TEST_USER_EMAIL,
+    tier: 'free',
+    created_at: new Date().toISOString(),
+  },
+  expires_at: new Date(Date.now() + 3600000).toISOString(),
+});
+
+const createValidateResponse = () => ({
+  valid: true,
+  user: {
+    id: 'user1',
+    username: TEST_USER_USERNAME,
+  },
+  user_id: 'user1',
+});
 
 describe('AuthController', () => {
   let controller: AuthController;
   let service: AuthService;
 
   beforeEach(() => {
+    const expiresAt = new Date(Date.now() + 3600000).toISOString();
+
     const mockAuthService = {
       register: vi.fn().mockReturnValue(
         of({
           token: 'test.jwt.token',
           user: {
             id: 'user1',
-            username: 'testuser',
+            username: TEST_USER_USERNAME,
             email: TEST_USER_EMAIL,
             tier: 'free',
           },
+          expires_at: expiresAt,
         }),
       ),
       login: vi.fn().mockReturnValue(
@@ -28,10 +54,11 @@ describe('AuthController', () => {
           token: 'test.jwt.token',
           user: {
             id: 'user1',
-            username: 'testuser',
+            username: TEST_USER_USERNAME,
             email: TEST_USER_EMAIL,
             tier: 'free',
           },
+          expires_at: expiresAt,
         }),
       ),
       validate: vi.fn().mockReturnValue(
@@ -39,8 +66,9 @@ describe('AuthController', () => {
           valid: true,
           user: {
             id: 'user1',
-            username: 'testuser',
+            username: TEST_USER_USERNAME,
           },
+          user_id: 'user1',
         }),
       ),
     };
@@ -60,30 +88,21 @@ describe('AuthController', () => {
 
     it('should accept registration request', () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
       expect(() => controller.register(dto)).not.toThrow();
     });
 
     it('should call auth service register', () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
-      vi.spyOn(service, 'register').mockReturnValue(
-        of({
-          token: 'jwt.token',
-          user: {
-            id: 'user1',
-            username: 'testuser',
-            email: TEST_USER_EMAIL,
-            tier: 'free',
-          },
-        }),
-      );
+      const authResponse = createAuthResponse();
+      vi.spyOn(service, 'register').mockReturnValue(of(authResponse));
 
       controller.register(dto);
       expect(service.register).toHaveBeenCalledWith(dto);
@@ -91,19 +110,11 @@ describe('AuthController', () => {
 
     it('should return auth response on success', async () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
-      const response = {
-        token: 'jwt.token',
-        user: {
-          id: 'user1',
-          username: 'testuser',
-          email: TEST_USER_EMAIL,
-          tier: 'free',
-        },
-      };
+      const response = createAuthResponse();
 
       vi.spyOn(service, 'register').mockReturnValue(of(response));
 
@@ -128,7 +139,7 @@ describe('AuthController', () => {
     it('should accept login credentials', () => {
       const dto = {
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
       expect(() => controller.login(dto)).not.toThrow();
     });
@@ -136,19 +147,10 @@ describe('AuthController', () => {
     it('should call auth service login', () => {
       const dto = {
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
-      vi.spyOn(service, 'login').mockReturnValue(
-        of({
-          token: 'jwt.token',
-          user: {
-            id: 'user1',
-            username: 'testuser',
-            email: TEST_USER_EMAIL,
-            tier: 'free',
-          },
-        }),
-      );
+      const loginResponse = createAuthResponse();
+      vi.spyOn(service, 'login').mockReturnValue(of(loginResponse));
 
       controller.login(dto);
       expect(service.login).toHaveBeenCalledWith(dto);
@@ -157,17 +159,9 @@ describe('AuthController', () => {
     it('should return token on successful login', async () => {
       const dto = {
         email: TEST_USER_EMAIL,
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
-      const response = {
-        token: 'jwt.token',
-        user: {
-          id: 'user1',
-          username: 'testuser',
-          email: TEST_USER_EMAIL,
-          tier: 'free',
-        },
-      };
+      const response = createAuthResponse();
 
       vi.spyOn(service, 'login').mockReturnValue(of(response));
 
@@ -200,15 +194,8 @@ describe('AuthController', () => {
     it('should call auth service validate', () => {
       const token = 'jwt.token';
       const auth = `Bearer ${token}`;
-      vi.spyOn(service, 'validate').mockReturnValue(
-        of({
-          valid: true,
-          user: {
-            id: 'user1',
-            username: 'testuser',
-          },
-        }),
-      );
+      const validateResponse = createValidateResponse();
+      vi.spyOn(service, 'validate').mockReturnValue(of(validateResponse));
 
       controller.validate(auth);
       expect(service.validate).toHaveBeenCalledWith(token);
@@ -216,13 +203,7 @@ describe('AuthController', () => {
 
     it('should return validation result', async () => {
       const token = 'jwt.token';
-      const response = {
-        valid: true,
-        user: {
-          id: 'user1',
-          username: 'testuser',
-        },
-      };
+      const response = createValidateResponse();
 
       vi.spyOn(service, 'validate').mockReturnValue(of(response));
 
@@ -237,7 +218,7 @@ describe('AuthController', () => {
   describe('Error Handling', () => {
     it('should handle registration errors', async () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
         password: 'pass',
       };
@@ -276,7 +257,7 @@ describe('AuthController', () => {
 
     it('should throw HttpException on service error', () => {
       const dto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
         password: 'pass',
       };
@@ -303,9 +284,9 @@ describe('AuthController', () => {
   describe('Input Validation', () => {
     it('should validate email format in registration', () => {
       const invalidDto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: 'invalid-email',
-        password: 'SecurePass123!',
+        password: TEST_USER_PASSWORD,
       };
       // Controller should validate DTO
       expect(controller.register).toBeDefined();
@@ -313,7 +294,7 @@ describe('AuthController', () => {
 
     it('should validate password strength', () => {
       const weakPasswordDto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
         password: '123', // too short
       };
@@ -323,7 +304,7 @@ describe('AuthController', () => {
 
     it('should require all fields', () => {
       const incompleteDto = {
-        username: 'testuser',
+        username: TEST_USER_USERNAME,
         email: TEST_USER_EMAIL,
         // missing password
       };

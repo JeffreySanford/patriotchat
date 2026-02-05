@@ -2,6 +2,8 @@
 import path from 'path';
 import dotenv from 'dotenv';
 
+import { SERVICE_PORTS } from './ports';
+
 const envPath: string = path.resolve(process.cwd(), '.env');
 dotenv.config({ path: envPath });
 
@@ -9,24 +11,33 @@ function resolvePort(value: string | undefined, fallback: string): string {
   return value && value.trim().length > 0 ? value.trim() : fallback;
 }
 
-export const AUTH_PORT: string = resolvePort(process.env.AUTH_PORT, '4001');
+export const AUTH_PORT: string = resolvePort(
+  process.env.AUTH_PORT,
+  SERVICE_PORTS.auth,
+);
 export const FUNDING_PORT: string = resolvePort(
   process.env.FUNDING_PORT,
-  '4002',
+  SERVICE_PORTS.funding,
 );
-export const POLICY_PORT: string = resolvePort(process.env.POLICY_PORT, '4003');
-export const LLM_PORT: string = resolvePort(process.env.LLM_PORT, '4004');
+export const POLICY_PORT: string = resolvePort(
+  process.env.POLICY_PORT,
+  SERVICE_PORTS.policy,
+);
+export const LLM_PORT: string = resolvePort(
+  process.env.LLM_PORT,
+  SERVICE_PORTS.llm,
+);
 export const ANALYTICS_PORT: string = resolvePort(
   process.env.ANALYTICS_PORT,
-  '4005',
+  SERVICE_PORTS.analytics,
 );
 export const POSTGRES_PORT: string = resolvePort(
   process.env.POSTGRES_PORT,
-  '5432',
+  SERVICE_PORTS.postgres,
 );
 export const OLLAMA_PORT: string = resolvePort(
   process.env.OLLAMA_PORT,
-  '11434',
+  SERVICE_PORTS.ollama,
 );
 
 export const AUTH_URL: string =
