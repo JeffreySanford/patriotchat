@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { RegisterDto, LoginDto } from './dto';
 import { ErrorResponse } from '../types/api.dto';
+import { AUTH_URL } from '@patriotchat/env';
 
 export interface AuthResponse {
   token: string;
@@ -25,7 +26,7 @@ export interface ValidateResponse {
 @Injectable()
 export class AuthService {
   private readonly authServiceUrl: string =
-    process.env.AUTH_SERVICE_URL || 'http://localhost:4001';
+    process.env.AUTH_SERVICE_URL || AUTH_URL;
 
   constructor(@Inject(HttpService) private readonly httpService: HttpService) {
     console.log(

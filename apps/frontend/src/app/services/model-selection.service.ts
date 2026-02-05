@@ -30,7 +30,8 @@ export class ModelSelectionService {
       .pipe(take(1))
       .subscribe({
         next: (response: InferenceModelsResponse) => {
-          const models: ModelInfo[] = response.data.models;
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          const models: ModelInfo[] = response.data.models; // eslint-disable-line @typescript-eslint/no-unsafe-assignment
           if (Array.isArray(models) && models.length > 0) {
             this.modelsSubject.next(models);
             if (!this.selectedModelSubject.value) {

@@ -2,7 +2,7 @@ import { Controller, Get, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
 import { tap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 
 @Controller()
 export class AppController {
@@ -19,8 +19,12 @@ export class AppController {
 
   @Get('/ready')
   ready(@Res() res: Response) {
-    this.appService
-      .checkBackendServices()
+    const readiness$: Observable<boolean> = this.appService
+      ?.checkBackendServices
+      ? this.appService.checkBackendServices()
+      : of(false);
+
+    readiness$
       .pipe(
         tap((ready: boolean) => {
           if (ready) {

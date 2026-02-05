@@ -1,5 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
+// Mock environment variables
+const TEST_USER_EMAIL = 'test@example.com';
+const TEST_USER_PASSWORD = 'pass123';
+
 describe('AppController', () => {
   let controller: any;
   let mockAuthService: any;
@@ -13,7 +17,7 @@ describe('AppController', () => {
     mockAuthService = {
       register: vi
         .fn()
-        .mockResolvedValue({ userId: 'user1', email: 'test@example.com' }),
+        .mockResolvedValue({ userId: 'user1', email: TEST_USER_EMAIL }),
       login: vi
         .fn()
         .mockResolvedValue({ token: 'jwt-token', user: { id: 'user1' } }),
@@ -113,7 +117,7 @@ describe('AppController', () => {
 
     it('should handle user registration', async () => {
       const result = await controller.register(
-        { email: 'test@example.com', password: 'pass123' },
+        { email: TEST_USER_EMAIL, password: TEST_USER_PASSWORD },
         mockResponse,
       );
 
@@ -122,7 +126,7 @@ describe('AppController', () => {
 
     it('should handle user login', async () => {
       const result = await controller.login(
-        { email: 'test@example.com', password: 'pass123' },
+        { email: TEST_USER_EMAIL, password: TEST_USER_PASSWORD },
         mockResponse,
       );
 

@@ -3,6 +3,9 @@ import { of, throwError } from 'rxjs';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
+// Mock environment variables
+const TEST_USER_EMAIL = 'test@example.com';
+
 describe('AuthController', () => {
   let controller: AuthController;
   let service: AuthService;
@@ -15,7 +18,7 @@ describe('AuthController', () => {
           user: {
             id: 'user1',
             username: 'testuser',
-            email: 'test@example.com',
+            email: TEST_USER_EMAIL,
             tier: 'free',
           },
         }),
@@ -26,7 +29,7 @@ describe('AuthController', () => {
           user: {
             id: 'user1',
             username: 'testuser',
-            email: 'test@example.com',
+            email: TEST_USER_EMAIL,
             tier: 'free',
           },
         }),
@@ -58,7 +61,7 @@ describe('AuthController', () => {
     it('should accept registration request', () => {
       const dto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       expect(() => controller.register(dto)).not.toThrow();
@@ -67,7 +70,7 @@ describe('AuthController', () => {
     it('should call auth service register', () => {
       const dto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       vi.spyOn(service, 'register').mockReturnValue(
@@ -76,7 +79,7 @@ describe('AuthController', () => {
           user: {
             id: 'user1',
             username: 'testuser',
-            email: 'test@example.com',
+            email: TEST_USER_EMAIL,
             tier: 'free',
           },
         }),
@@ -89,7 +92,7 @@ describe('AuthController', () => {
     it('should return auth response on success', async () => {
       const dto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       const response = {
@@ -97,7 +100,7 @@ describe('AuthController', () => {
         user: {
           id: 'user1',
           username: 'testuser',
-          email: 'test@example.com',
+          email: TEST_USER_EMAIL,
           tier: 'free',
         },
       };
@@ -124,7 +127,7 @@ describe('AuthController', () => {
 
     it('should accept login credentials', () => {
       const dto = {
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       expect(() => controller.login(dto)).not.toThrow();
@@ -132,7 +135,7 @@ describe('AuthController', () => {
 
     it('should call auth service login', () => {
       const dto = {
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       vi.spyOn(service, 'login').mockReturnValue(
@@ -141,7 +144,7 @@ describe('AuthController', () => {
           user: {
             id: 'user1',
             username: 'testuser',
-            email: 'test@example.com',
+            email: TEST_USER_EMAIL,
             tier: 'free',
           },
         }),
@@ -153,7 +156,7 @@ describe('AuthController', () => {
 
     it('should return token on successful login', async () => {
       const dto = {
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       const response = {
@@ -161,7 +164,7 @@ describe('AuthController', () => {
         user: {
           id: 'user1',
           username: 'testuser',
-          email: 'test@example.com',
+          email: TEST_USER_EMAIL,
           tier: 'free',
         },
       };
@@ -235,7 +238,7 @@ describe('AuthController', () => {
     it('should handle registration errors', async () => {
       const dto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'pass',
       };
 
@@ -274,7 +277,7 @@ describe('AuthController', () => {
     it('should throw HttpException on service error', () => {
       const dto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'pass',
       };
 
@@ -311,7 +314,7 @@ describe('AuthController', () => {
     it('should validate password strength', () => {
       const weakPasswordDto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: '123', // too short
       };
       // Controller should validate password
@@ -321,7 +324,7 @@ describe('AuthController', () => {
     it('should require all fields', () => {
       const incompleteDto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         // missing password
       };
       // Controller should require all fields

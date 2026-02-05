@@ -97,6 +97,11 @@ This board tracks the implementation plan from `PRO_LIBERTY_BUILD_GUIDE.md` (wit
 1. `apps/services/llm/src/rag.go` now indexes the founding-doc corpus (data/founding), assigns `source_type=founding_core`, and scores civic prompts against those chunks before falling back to other knowledge, ensuring the Constitution/Federalist lens guides every response.
 2. Retrieval metadata (prompt hash + chunk citations) is appended to `logs/rag_retrieval.jsonl` so reviewers can audit which founding-doc chunks influenced a given answer while linking back to `README.md#values-commitment` and the pro-liberty build guide.
 
+### 2026-02-05 – Inference routing note
+
+1. Repeated attempts from Windows to hit `http://172.19.0.1:11434/api/generate` (and, by extension, the longer `curl --max-time` inference tests) keep timing out because the bridge IP is not reachable from the host before the 60‑second deadline. The Go service and other containers (e.g., via `docker exec patriotchat-llm curl ... 172.19.0.1:11434/api/tags`) succeed, so only container-local routes can reach Ollama reliably.
+2. Future regression runs or latency checks should therefore be executed either from inside the llm container (or another service that already lives on the Docker network) or against `http://localhost:11434` on the host, and this guidance should accompany the PRO_LIBERTY_TEST_STRATEGY regression suite documentation so the Values Commitment (`README.md#values-commitment`) and guardrails stay auditable.
+
 ### 2026-02-04 – Liberty Mistral bundle & evaluation readiness
 
 1. The trimmed LoRA run created `liberty-mistral-out/adapter_model.safetensors`, `tokenizer.model`, and `tokenizer_config.json`; these artifacts are now zipped inside `tools/checkpoints/liberty-mistral-v1.0-2026-02-04/liberty-mistral-v1.0-2026-02-04.zip` alongside `adapter_config.json`, and the new README there references `README.md#values-commitment`, `PRO_LIBERTY_BUILD_GUIDE.md`, and `PRO_LIBERTY_ALIGNMENT_TESTS.md` so future reviewers can trace the asset back to the constitutional guardrails before the UI defaults to it.

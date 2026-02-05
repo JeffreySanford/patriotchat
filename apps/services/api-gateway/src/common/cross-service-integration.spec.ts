@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
+// Mock the environment variables
+const AUTH_URL = 'http://localhost:4001';
+const LLM_URL = 'http://localhost:4004';
+const ANALYTICS_URL = 'http://localhost:4005';
+
 /**
  * Cross-Service Integration Test Suite
  * Tests for service communication failures, cascading timeouts, and circuit breaker patterns
@@ -25,14 +30,14 @@ describe('Cross-Service Integration', () => {
     };
 
     mockAuthService = {
-      url: 'http://localhost:4001',
+      url: AUTH_URL,
       circuitBreaker: { ...mockCircuitBreaker },
       verify: vi.fn().mockResolvedValue({ userId: 'user123', token: 'valid' }),
       isHealthy: vi.fn().mockResolvedValue(true),
     };
 
     mockInferenceService = {
-      url: 'http://localhost:4004',
+      url: LLM_URL,
       circuitBreaker: { ...mockCircuitBreaker },
       generate: vi
         .fn()
@@ -41,7 +46,7 @@ describe('Cross-Service Integration', () => {
     };
 
     mockAnalyticsService = {
-      url: 'http://localhost:4005',
+      url: ANALYTICS_URL,
       circuitBreaker: { ...mockCircuitBreaker },
       track: vi.fn().mockResolvedValue({ success: true }),
       isHealthy: vi.fn().mockResolvedValue(true),

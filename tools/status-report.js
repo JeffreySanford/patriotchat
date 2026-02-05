@@ -1,5 +1,13 @@
 const { spawnSync } = require('child_process');
 const http = require('http');
+const path = require('path');
+
+require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
+
+const authHost =
+  process.env.AUTH_URL || `http://localhost:${process.env.AUTH_PORT || '4001'}`;
+const llmHost =
+  process.env.LLM_URL || `http://localhost:${process.env.LLM_PORT || '4004'}`;
 
 const ANSI = {
   reset: '\x1b[0m',
@@ -13,8 +21,8 @@ const ANSI = {
 const projects = [
   { name: 'Frontend (Nx)', url: 'http://localhost:4200/' },
   { name: 'API Gateway (Nest)', url: 'http://localhost:3000/health' },
-  { name: 'Auth Service (Go)', url: 'http://localhost:4001/health' },
-  { name: 'LLM Service (Go)', url: 'http://localhost:4004/health' },
+  { name: 'Auth Service (Go)', url: `${authHost}/health` },
+  { name: 'LLM Service (Go)', url: `${llmHost}/health` },
 ];
 
 const containers = [

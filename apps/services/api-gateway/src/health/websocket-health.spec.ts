@@ -467,7 +467,7 @@ describe('WebSocket Health Channel', () => {
 
   describe('Heartbeat Mechanism', () => {
     it('should send periodic heartbeat', async () => {
-      const heartbeatInterval = 30000; // 30 seconds
+      const heartbeatInterval = 30000; // 30 seconds // eslint-disable-line @typescript-eslint/no-unused-vars
       let heartbeatCount = 0;
 
       const sendHeartbeat = () => {

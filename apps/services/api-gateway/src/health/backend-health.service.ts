@@ -9,6 +9,7 @@ import {
   ServiceStatusDto,
   ErrorResponse,
 } from './dto/health-check.dto';
+import { AUTH_URL, LLM_URL } from '@patriotchat/env';
 
 type ExecAsyncType = (
   command: string,
@@ -37,12 +38,12 @@ export class BackendHealthService {
   private readonly services: ServiceConfig[] = [
     {
       name: 'Auth Service',
-      url: 'http://localhost:4001/health',
+      url: `${AUTH_URL}/health`,
       // Auth runs locally as Go process, not in Docker container
     },
     {
       name: 'LLM Service',
-      url: 'http://localhost:4004/health',
+      url: `${LLM_URL}/health`,
       dockerContainer: 'patriotchat-llm',
     },
     // Uncomment services below when they become active

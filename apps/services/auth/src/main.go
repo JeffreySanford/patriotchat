@@ -8,17 +8,29 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"golang.org/x/crypto/bcrypt"
 )
 
 var (
-	db *sql.DB
+	db               *sql.DB
+	testUserEmail    = getEnv("TEST_USER_EMAIL", "test@example.com")
+	testUserPassword = getEnv("TEST_USER_PASSWORD", "pass123")
+	testUserUsername = getEnv("TEST_USER_USERNAME", "testuser")
 )
+
+func init() {
+	envPath := filepath.Join(".", ".env")
+	if err := godotenv.Load(envPath); err != nil {
+		log.Printf("Warning: failed to load .env file (%s): %v", envPath, err)
+	}
+}
 
 // User represents a user in the system
 type User struct {
@@ -194,7 +206,7 @@ func createTables() error {
 func seedTestUser() error {
 	// Check if test user already exists
 	var exists bool
-	err := db.QueryRow("SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", "test@example.com").Scan(&exists)
+	err := db.QueryRow("SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", testUserEmail).Scan(&exists)
 	if err != nil {
 		return err
 	}
@@ -203,8 +215,8 @@ func seedTestUser() error {
 		return nil // User already exists, skip seeding
 	}
 
-	// Hash password for "password"
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte("password"), bcrypt.DefaultCost)
+	// Hash password for seeded user
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(testUserPassword), bcrypt.DefaultCost)
 	if err != nil {
 		return err
 	}
@@ -218,8 +230,8 @@ func seedTestUser() error {
 
 	_, err = db.ExecContext(context.Background(), query,
 		userID,
-		"testuser",
-		"test@example.com",
+		testUserUsername,
+		testUserEmail,
 		hashedPassword,
 		"free",
 		"active",
@@ -229,7 +241,11 @@ func seedTestUser() error {
 		return fmt.Errorf("failed to seed test user: %v", err)
 	}
 
-	log.Printf("Test user seeded successfully (email: test@example.com, password: password)")
+	log.Printf(
+		"Test user seeded successfully (email: %s, password: %s)",
+		testUserEmail,
+		testUserPassword,
+	)
 	return nil
 }
 

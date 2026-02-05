@@ -1,6 +1,118 @@
+[33mConvert compiler options from json failed, No inputs were found in config file 'tsconfig.json'. Specified 'include' paths were '["index.js"]' and 'exclude' paths were '["node_modules","dist"]'.[39m
+TypeError: Cannot convert undefined or null to object
+    at Function.entries (<anonymous>)
+    at C:\repos\patriotchat\node_modules\.pnpm\@nx+eslint-plugin@22.4.4_@b_498725a6f4807294bd48f75744193e75\node_modules\@nx\eslint-plugin\src\resolve-workspace-rules.js:149:53
+    at Object.<anonymous> (C:\repos\patriotchat\node_modules\.pnpm\@nx+eslint-plugin@22.4.4_@b_498725a6f4807294bd48f75744193e75\node_modules\@nx\eslint-plugin\src\resolve-workspace-rules.js:165:3)
+    at Module._compile (node:internal/modules/cjs/loader:1554:14)
+    at Object.<anonymous> (node:internal/modules/cjs/loader:1706:10)
+    at Module.load (node:internal/modules/cjs/loader:1289:32)
+    at Function._load (node:internal/modules/cjs/loader:1108:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Module.require (node:internal/modules/cjs/loader:1311:12)
+(node:40192) [DEP0180] DeprecationWarning: fs.Stats constructor is deprecated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
 
- NX   Unable to resolve @nx/linter:eslint.
+C:\repos\patriotchat\apps\frontend\src\app\services\model-selection.service.ts
+  33:17  warning  Unsafe assignment of an error typed value                       @typescript-eslint/no-unsafe-assignment
+  33:53  warning  Unsafe member access .models on a type that cannot be resolved  @typescript-eslint/no-unsafe-member-access
 
-Unable to resolve local plugin with import path @nx/linter
-Pass --verbose to see the stacktrace.
+C:\repos\patriotchat\apps\services\api-gateway\src\analytics\analytics.controller.spec.ts
+  340:15  warning  'result' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  414:15  warning  'result' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  435:13  warning  'event' is assigned a value but never used   @typescript-eslint/no-unused-vars
+  481:15  warning  'result' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\analytics\analytics.service.spec.ts
+  147:13  warning  'event' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  158:13  warning  'event' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  169:13  warning  'event' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  207:13  warning  'event' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  228:13  warning  'event' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  269:13  warning  'event' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  281:13  warning  'event' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\auth\auth.controller.spec.ts
+  190:13  warning  'headers' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  302:13  warning  'invalidDto' is assigned a value but never used       @typescript-eslint/no-unused-vars
+  312:13  warning  'weakPasswordDto' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  322:13  warning  'incompleteDto' is assigned a value but never used    @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\auth\auth.service.spec.ts
+   51:13  warning  'dto' is assigned a value but never used           @typescript-eslint/no-unused-vars
+   61:13  warning  'dto' is assigned a value but never used           @typescript-eslint/no-unused-vars
+   71:13  warning  'dto' is assigned a value but never used           @typescript-eslint/no-unused-vars
+   96:13  warning  'dto' is assigned a value but never used           @typescript-eslint/no-unused-vars
+  105:13  warning  'dto' is assigned a value but never used           @typescript-eslint/no-unused-vars
+  114:13  warning  'dto' is assigned a value but never used           @typescript-eslint/no-unused-vars
+  123:13  warning  'dto' is assigned a value but never used           @typescript-eslint/no-unused-vars
+  139:13  warning  'token' is assigned a value but never used         @typescript-eslint/no-unused-vars
+  145:13  warning  'expiredToken' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  151:13  warning  'invalidToken' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  157:13  warning  'token' is assigned a value but never used         @typescript-eslint/no-unused-vars
+  165:13  warning  'dto' is assigned a value but never used           @typescript-eslint/no-unused-vars
+  175:13  warning  'dto' is assigned a value but never used           @typescript-eslint/no-unused-vars
+  184:13  warning  'token' is assigned a value but never used         @typescript-eslint/no-unused-vars
+  207:13  warning  'token' is assigned a value but never used         @typescript-eslint/no-unused-vars
+  215:13  warning  'dto' is assigned a value but never used           @typescript-eslint/no-unused-vars
+  225:13  warning  'dto' is assigned a value but never used           @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\common\cross-service-integration.spec.ts
+    8:7   warning  'mockGateway' is assigned a value but never used       @typescript-eslint/no-unused-vars
+  184:13  warning  'serviceCallStart' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  198:13  warning  'timeout' is assigned a value but never used           @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\common\data-validation.spec.ts
+  1:32  warning  'vi' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\common\database-transactions.spec.ts
+  130:13  warning  'innerTrx' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  155:33  warning  'trx' is defined but never used                @typescript-eslint/no-unused-vars
+  172:15  warning  'lock' is assigned a value but never used      @typescript-eslint/no-unused-vars
+  224:15  warning  'record' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  438:33  warning  'trx' is defined but never used                @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\common\interceptors\error.interceptor.ts
+  22:5  warning  Unsafe return of type `Observable<any>` from function with return type `Observable<Record<string, never>>`  @typescript-eslint/no-unsafe-return
+
+C:\repos\patriotchat\apps\services\api-gateway\src\health\websocket-health.spec.ts
+  265:58  warning  'sub' is defined but never used                         @typescript-eslint/no-unused-vars
+  373:27  warning  'idx' is defined but never used                         @typescript-eslint/no-unused-vars
+  470:13  warning  'heartbeatInterval' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\inference\inference.service.spec.ts
+   91:13  warning  'request' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  102:13  warning  'request' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  112:13  warning  'request' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  122:13  warning  'request' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  134:13  warning  'invalidRequest' is assigned a value but never used   @typescript-eslint/no-unused-vars
+  144:13  warning  'request' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  154:13  warning  'request' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  434:13  warning  'attemptedModels' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\rate-limiting\rate-limiting.guard.spec.ts
+  160:16  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+  179:16  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+  197:16  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\rate-limiting\rate-limiting.guard.ts
+  28:13  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+  30:13  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+
+C:\repos\patriotchat\apps\services\api-gateway\src\rate-limiting\rate-limiting.module.spec.ts
+  1:32  warning  'vi' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\apps\services\api-gateway\src\rate-limiting\rate-limiting.service.spec.ts
+  1:32  warning  'vi' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\repos\patriotchat\scripts\run_inference_test.js
+  4:0  error  Parsing error: '}' expected
+
+C:\repos\patriotchat\vitest.config.ts
+  34:12  warning  Unsafe call of a type that could not be resolved                 @typescript-eslint/no-unsafe-call
+  34:17  warning  Unsafe member access .resolve on a type that cannot be resolved  @typescript-eslint/no-unsafe-member-access
+  35:30  warning  Unsafe call of a type that could not be resolved                 @typescript-eslint/no-unsafe-call
+  35:35  warning  Unsafe member access .resolve on a type that cannot be resolved  @typescript-eslint/no-unsafe-member-access
+
+✖ 67 problems (1 error, 66 warnings)
 

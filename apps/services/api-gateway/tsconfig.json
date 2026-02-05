@@ -19,6 +19,7 @@
     "noImplicitAny": false,
     "baseUrl": ".",
     "paths": {
+      "@patriotchat/env": ["../../../libs/env/src/index.ts"],
       "@patriotchat/shared": ["../../../libs/shared/src/index.ts"],
       "@patriotchat/shared/*": ["../../../libs/shared/src/*"]
     },

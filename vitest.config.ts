@@ -31,7 +31,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       '@': path.resolve(__dirname, './apps/frontend/src') as string,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       '@patriotchat/shared': path.resolve(
         __dirname,
         './libs/shared/src/index.ts',

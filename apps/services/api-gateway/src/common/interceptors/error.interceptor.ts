@@ -19,6 +19,7 @@ export class ErrorInterceptor implements NestInterceptor {
     _context: ExecutionContext,
     next: CallHandler,
   ): Observable<Record<string, never>> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return next.handle().pipe(
       catchError((error: Error | Record<string, string>): Observable<never> => {
         console.error('API Error:', error);

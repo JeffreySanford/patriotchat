@@ -2,6 +2,10 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { of } from 'rxjs';
 import { AuthService } from './auth.service';
 
+// Mock environment variables
+const TEST_USER_EMAIL = 'test@example.com';
+const TEST_USER_PASSWORD = 'pass123';
+
 describe('AuthService', () => {
   let service: AuthService;
   let mockHttpClient: any;
@@ -15,7 +19,7 @@ describe('AuthService', () => {
             user: {
               id: 'user1',
               username: 'testuser',
-              email: 'test@example.com',
+              email: TEST_USER_EMAIL,
               tier: 'free',
               created_at: new Date().toISOString(),
             },
@@ -41,7 +45,7 @@ describe('AuthService', () => {
     it('should accept registration DTO', () => {
       const dto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       expect(() => service.register(dto)).not.toThrow();
@@ -60,7 +64,7 @@ describe('AuthService', () => {
     it('should hash password before storing', () => {
       const dto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       // Service should hash password
@@ -70,7 +74,7 @@ describe('AuthService', () => {
     it('should return auth response with token', () => {
       const dto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       // Service should return token in response
@@ -86,7 +90,7 @@ describe('AuthService', () => {
 
     it('should accept login credentials', () => {
       const dto = {
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       expect(() => service.login(dto)).not.toThrow();
@@ -103,7 +107,7 @@ describe('AuthService', () => {
 
     it('should verify password matches', () => {
       const dto = {
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'WrongPassword',
       };
       // Service should validate password
@@ -112,7 +116,7 @@ describe('AuthService', () => {
 
     it('should generate JWT token on successful login', () => {
       const dto = {
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       // Service should generate token
@@ -121,7 +125,7 @@ describe('AuthService', () => {
 
     it('should return user info with token', () => {
       const dto = {
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       // Service should return user data
@@ -164,7 +168,7 @@ describe('AuthService', () => {
     it('should handle registration errors', () => {
       const dto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'pass',
       };
       // Service should handle errors gracefully
@@ -173,7 +177,7 @@ describe('AuthService', () => {
 
     it('should handle login errors', () => {
       const dto = {
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'password',
       };
       // Service should handle errors gracefully
@@ -214,8 +218,8 @@ describe('AuthService', () => {
     it('should store user role', () => {
       const dto = {
         username: 'testuser',
-        email: 'test@example.com',
-        password: 'SecurePass123!',
+        email: TEST_USER_EMAIL,
+        password: TEST_USER_PASSWORD,
       };
       // Service should assign default role
       expect(service.register).toBeDefined();
@@ -224,7 +228,7 @@ describe('AuthService', () => {
     it('should store user tier', () => {
       const dto = {
         username: 'testuser',
-        email: 'test@example.com',
+        email: TEST_USER_EMAIL,
         password: 'SecurePass123!',
       };
       // Service should assign tier

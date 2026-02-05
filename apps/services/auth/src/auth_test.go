@@ -160,7 +160,7 @@ func TestRegisterRequestValidation(t *testing.T) {
 			name: "valid request",
 			req: RegisterRequest{
 				Username: "testuser",
-				Email:    "test@example.com",
+				Email:    testUserEmail,
 				Password: "SecurePass123!",
 			},
 			wantErr: false,
@@ -169,7 +169,7 @@ func TestRegisterRequestValidation(t *testing.T) {
 			name: "missing username",
 			req: RegisterRequest{
 				Username: "",
-				Email:    "test@example.com",
+				Email:    testUserEmail,
 				Password: "SecurePass123!",
 			},
 			wantErr: true,
@@ -187,7 +187,7 @@ func TestRegisterRequestValidation(t *testing.T) {
 			name: "missing password",
 			req: RegisterRequest{
 				Username: "testuser",
-				Email:    "test@example.com",
+				Email:    testUserEmail,
 				Password: "",
 			},
 			wantErr: true,
@@ -196,7 +196,7 @@ func TestRegisterRequestValidation(t *testing.T) {
 			name: "weak password",
 			req: RegisterRequest{
 				Username: "testuser",
-				Email:    "test@example.com",
+				Email:    testUserEmail,
 				Password: "weak",
 			},
 			wantErr: true,
@@ -261,7 +261,7 @@ func TestUserDataStructure(t *testing.T) {
 	user := User{
 		ID:        "user123",
 		Username:  "testuser",
-		Email:     "test@example.com",
+		Email:     testUserEmail,
 		Tier:      "free",
 		CreatedAt: time.Now(),
 	}
@@ -338,7 +338,7 @@ func TestAuthResponse(t *testing.T) {
 	user := User{
 		ID:       "user123",
 		Username: "testuser",
-		Email:    "test@example.com",
+		Email:    testUserEmail,
 		Tier:     "free",
 	}
 

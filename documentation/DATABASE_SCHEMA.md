@@ -55,7 +55,7 @@ CREATE TABLE audit_logs (
     -- What was changed
     entity_type VARCHAR(50) NOT NULL,          -- users, policies, funding, etc.
     entity_id UUID NOT NULL,
-    operation VARCHAR(10) NOT NULL,            -- CREATE, READ, UPDATE, DELETE
+    operation VARCHAR(50) NOT NULL,            -- CREATE, READ, UPDATE, DELETE, HEALTH_CHECK
 
     -- Who made the change
     user_id UUID REFERENCES users(id) ON DELETE SET NULL,

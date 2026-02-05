@@ -4,6 +4,7 @@ import {
   HealthCheckEvent,
   ServiceStatus,
 } from './websocket-health.service';
+import { AUTH_URL, LLM_URL } from '@patriotchat/env';
 
 describe('WebSocketHealthService', () => {
   let service: WebSocketHealthService;
@@ -83,14 +84,14 @@ describe('WebSocketHealthService', () => {
         services: [
           {
             name: 'Auth',
-            url: 'http://localhost:4001',
+            url: AUTH_URL,
             status: 'healthy',
             lastCheck: Date.now(),
             responseTime: 10,
           },
           {
             name: 'LLM',
-            url: 'http://localhost:11434',
+            url: LLM_URL,
             status: 'healthy',
             lastCheck: Date.now(),
             responseTime: 20,

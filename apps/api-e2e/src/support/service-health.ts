@@ -1,3 +1,11 @@
+import {
+  AUTH_URL,
+  FUNDING_URL,
+  POLICY_URL,
+  LLM_URL,
+  ANALYTICS_URL,
+} from '@patriotchat/env';
+
 /**
  * Service Health Check Utilities
  * Used to determine if services are available before running integration tests
@@ -5,11 +13,11 @@
 
 const SERVICE_URLS: Record<string, string> = {
   gateway: process.env.GATEWAY_URL || 'http://localhost:3000',
-  auth: process.env.AUTH_URL || 'http://localhost:4001',
-  funding: process.env.FUNDING_URL || 'http://localhost:4002',
-  policy: process.env.POLICY_URL || 'http://localhost:4003',
-  llm: process.env.LLM_URL || 'http://localhost:4004',
-  analytics: process.env.ANALYTICS_URL || 'http://localhost:4005',
+  auth: process.env.AUTH_URL || AUTH_URL,
+  funding: process.env.FUNDING_URL || FUNDING_URL,
+  policy: process.env.POLICY_URL || POLICY_URL,
+  llm: process.env.LLM_URL || LLM_URL,
+  analytics: process.env.ANALYTICS_URL || ANALYTICS_URL,
 };
 
 export interface ServiceHealthStatus {

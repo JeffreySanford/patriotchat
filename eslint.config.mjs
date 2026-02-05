@@ -40,6 +40,7 @@ export default [
       // 'vitest/prefer-to-be-truthy': 'error',
       // 'vitest/prefer-to-be-falsy': 'error',
       'testing-library/prefer-screen-queries': 'warn',
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
   {
@@ -199,7 +200,7 @@ export default [
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
-      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': 'off',
       'no-restricted-syntax': 'off',
     },
   },

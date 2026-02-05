@@ -1,3 +1,11 @@
+import {
+  AUTH_URL,
+  FUNDING_URL,
+  POLICY_URL,
+  LLM_URL,
+  ANALYTICS_URL,
+} from '@patriotchat/env';
+
 /**
  * Global Test Setup for E2E Tests
  * Checks service availability and logs diagnostics
@@ -5,11 +13,11 @@
 
 const SERVICE_URLS: Record<string, string> = {
   gateway: process.env.GATEWAY_URL || 'http://localhost:3000',
-  auth: process.env.AUTH_URL || 'http://localhost:4001',
-  funding: process.env.FUNDING_URL || 'http://localhost:4002',
-  policy: process.env.POLICY_URL || 'http://localhost:4003',
-  llm: process.env.LLM_URL || 'http://localhost:4004',
-  analytics: process.env.ANALYTICS_URL || 'http://localhost:4005',
+  auth: process.env.AUTH_URL || AUTH_URL,
+  funding: process.env.FUNDING_URL || FUNDING_URL,
+  policy: process.env.POLICY_URL || POLICY_URL,
+  llm: process.env.LLM_URL || LLM_URL,
+  analytics: process.env.ANALYTICS_URL || ANALYTICS_URL,
 };
 
 interface ServiceHealthStatus {
@@ -106,11 +114,11 @@ async function globalSetup(): Promise<void> {
       '\n⚠️  WARNING: No services are responding. E2E tests will likely fail.\n' +
         'To run E2E tests, ensure services are running:\n' +
         '  - API Gateway: localhost:3000\n' +
-        '  - Auth Service: localhost:4001\n' +
-        '  - Funding Service: localhost:4002\n' +
-        '  - Policy Service: localhost:4003\n' +
-        '  - LLM Service: localhost:4004\n' +
-        '  - Analytics Service: localhost:4005\n' +
+        `  - Auth Service: ${process.env.AUTH_URL || `http://localhost:${process.env.AUTH_PORT || '4001'}`}\n` +
+        `  - Funding Service: ${process.env.FUNDING_URL || `http://localhost:${process.env.FUNDING_PORT || '4002'}`}\n` +
+        `  - Policy Service: ${process.env.POLICY_URL || `http://localhost:${process.env.POLICY_PORT || '4003'}`}\n` +
+        `  - LLM Service: ${process.env.LLM_URL || `http://localhost:${process.env.LLM_PORT || '4004'}`}\n` +
+        `  - Analytics Service: ${process.env.ANALYTICS_URL || `http://localhost:${process.env.ANALYTICS_PORT || '4005'}`}\n` +
         '\nYou can start services with: docker-compose up -d\n',
     );
   } else {

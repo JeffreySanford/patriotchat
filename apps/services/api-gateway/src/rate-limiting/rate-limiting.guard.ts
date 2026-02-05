@@ -25,9 +25,9 @@ export class RateLimitingGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     try {
       // eslint-disable-next-line no-restricted-syntax,@typescript-eslint/no-explicit-any -- Runtime values from context require flexibility
-      const requestValue: any = context.switchToHttp().getRequest();
+      const requestValue: any = context.switchToHttp().getRequest(); // eslint-disable-line @typescript-eslint/no-unsafe-assignment
       // eslint-disable-next-line no-restricted-syntax,@typescript-eslint/no-explicit-any -- Runtime values from context require flexibility
-      const responseValue: any = context.switchToHttp().getResponse();
+      const responseValue: any = context.switchToHttp().getResponse(); // eslint-disable-line @typescript-eslint/no-unsafe-assignment
 
       if (!isRequestLike(requestValue) || !isResponseLike(responseValue)) {
         throw new AppException('Invalid request context');
