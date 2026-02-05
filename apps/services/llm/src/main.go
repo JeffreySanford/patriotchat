@@ -16,7 +16,7 @@ import (
 
 var db *sql.DB
 
-const defaultModelID = "liberty-mistral-v1.0"
+const defaultModelID = "mistral"
 
 type ModelInfo struct {
 	ID            string `json:"id"`
@@ -27,13 +27,6 @@ type ModelInfo struct {
 }
 
 var availableModels = []ModelInfo{
-	{
-		ID:            defaultModelID,
-		Name:          "Liberty Mistral v1.0",
-		Description:   "Values-first constitutional reasoning with enumerated powers citations",
-		Provider:      "local",
-		ContextWindow: 8192,
-	},
 	{
 		ID:            "mistral",
 		Name:          "Mistral 7B Instruct (Ollama)",
@@ -264,7 +257,6 @@ func callOllama(model, prompt string) (string, error) {
 
 	// Map model IDs to actual Ollama models
 	modelMapping := map[string]string{
-		"liberty-mistral-v1.0": "mistral:7b",
 		"mistral":              "mistral:7b",
 		"llama2":               "llama2",
 		"neural-chat":          "codellama:7b", // fallback to codellama
