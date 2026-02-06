@@ -137,7 +137,7 @@ test.describe('E2E Resilience & Error Recovery', () => {
     });
   });
 
-  test.describe('Timeout & Performance Handling', () => {
+  test.describe.serial('Timeout & Performance Handling', () => {
     test('Should complete inference within timeout window', async () => {
       const testUser = generateTestUser();
       const testQuery = generateTestQuery();

@@ -33,38 +33,75 @@ interface ServiceHealthStatus {
  */
 async function checkServiceHealth(
   serviceName: keyof typeof SERVICE_URLS,
+  retries = 6,
+  retryDelayMs = 2000,
 ): Promise<ServiceHealthStatus> {
   const url = SERVICE_URLS[serviceName];
   const healthEndpoint = `${url}/${serviceName}/health`;
+  const alternateEndpoint = `${url}/health`;
 
-  const startTime = performance.now();
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
+      const startTime = performance.now();
 
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000);
+      try {
+        let response = await fetch(healthEndpoint, {
+          method: 'GET',
+          signal: controller.signal,
+        });
 
-    const response = await fetch(healthEndpoint, {
-      method: 'GET',
-      signal: controller.signal,
-    });
+        // Try alternate health endpoint if primary fails
+        if (!response.ok) {
+          response = await fetch(alternateEndpoint, {
+            method: 'GET',
+            signal: controller.signal,
+          });
+        }
 
-    clearTimeout(timeoutId);
-    const latency = performance.now() - startTime;
+        clearTimeout(timeoutId);
+        const latency = performance.now() - startTime;
 
-    return {
-      service: serviceName,
-      url,
-      healthy: response.ok,
-      latency,
-    };
-  } catch (error) {
-    return {
-      service: serviceName,
-      url,
-      healthy: false,
-      error: (error as Error).message,
-    };
+        if (response.ok) {
+          return {
+            service: serviceName,
+            url,
+            healthy: true,
+            latency,
+          };
+        }
+      } finally {
+        clearTimeout(timeoutId);
+      }
+
+      // Retry with delay if not healthy
+      if (attempt < retries) {
+        const delay = retryDelayMs * Math.pow(1.5, attempt - 1);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
+    } catch (error) {
+      if (attempt === retries) {
+        return {
+          service: serviceName,
+          url,
+          healthy: false,
+          error: (error as Error).message,
+        };
+      }
+
+      // Retry with delay on error
+      const delay = retryDelayMs * Math.pow(1.5, attempt - 1);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
   }
+
+  return {
+    service: serviceName,
+    url,
+    healthy: false,
+    error: 'Max retries exceeded',
+  };
 }
 
 /**
@@ -89,8 +126,9 @@ async function checkAllServicesHealth(): Promise<ServiceHealthStatus[]> {
 
 async function globalSetup(): Promise<void> {
   console.log('\n=== E2E Test Suite Global Setup ===\n');
+  console.log('Waiting for services to be ready... (this may take a moment)\n');
 
-  // Check service health
+  // Check service health with retries
   const serviceHealth = await checkAllServicesHealth();
 
   console.log('Service Status:');
@@ -109,20 +147,24 @@ async function globalSetup(): Promise<void> {
 
   console.log(`\nOverall: ${healthyCount}/${totalCount} services healthy`);
 
-  if (healthyCount === 0) {
+  if (healthyCount < totalCount) {
     console.warn(
-      '\n⚠️  WARNING: No services are responding. E2E tests will likely fail.\n' +
-        'To run E2E tests, ensure services are running:\n' +
-        '  - API Gateway: localhost:3000\n' +
-        `  - Auth Service: ${process.env.AUTH_URL || `http://localhost:${process.env.AUTH_PORT || '4001'}`}\n` +
-        `  - Funding Service: ${process.env.FUNDING_URL || `http://localhost:${process.env.FUNDING_PORT || '4002'}`}\n` +
-        `  - Policy Service: ${process.env.POLICY_URL || `http://localhost:${process.env.POLICY_PORT || '4003'}`}\n` +
-        `  - LLM Service: ${process.env.LLM_URL || `http://localhost:${process.env.LLM_PORT || '4004'}`}\n` +
-        `  - Analytics Service: ${process.env.ANALYTICS_URL || `http://localhost:${process.env.ANALYTICS_PORT || '4005'}`}\n` +
-        '\nYou can start services with: docker-compose up -d\n',
+      '\n⚠️  WARNING: Not all services are responding.\n' +
+        'Some tests may fail. To ensure all tests pass, make sure services are running:\n' +
+        '\nStart services with:\n' +
+        '  docker-compose up -d\n' +
+        '\nOr run all services with:\n' +
+        '  pnpm run start:all\n' +
+        '\nService URLs:\n' +
+        '  - API Gateway: http://localhost:3000\n' +
+        '  - Auth Service: http://localhost:4001\n' +
+        '  - Funding Service: http://localhost:4002\n' +
+        '  - Policy Service: http://localhost:4003\n' +
+        '  - LLM Service: http://localhost:4004\n' +
+        '  - Analytics Service: http://localhost:4005\n',
     );
   } else {
-    console.log('\n✓ Service infrastructure is ready for testing\n');
+    console.log('\n✓ All services are ready for testing\n');
   }
 
   console.log('=================================\n');

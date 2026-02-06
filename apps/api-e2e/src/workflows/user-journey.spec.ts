@@ -88,7 +88,7 @@ test.describe('E2E Workflows', () => {
     });
   });
 
-  test.describe('Query & Inference Workflow', () => {
+  test.describe.serial('Query & Inference Workflow', () => {
     test('Should execute complete query workflow', async () => {
       const testUser = generateTestUser();
       const testQuery = generateTestQuery();

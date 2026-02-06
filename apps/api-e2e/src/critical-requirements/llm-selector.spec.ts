@@ -59,7 +59,7 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
     });
   });
 
-  test.describe('Model Selection', () => {
+  test.describe.serial('Model Selection', () => {
     test('Should execute inference with llama2 model', async () => {
       const testUser = generateTestUser();
 

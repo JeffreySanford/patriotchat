@@ -116,7 +116,7 @@ test.describe('Model Switching and Multi-Model Queries', () => {
     });
   });
 
-  test.describe('Single Model Query Execution', () => {
+  test.describe.serial('Single Model Query Execution', () => {
     test('Should execute query successfully with llama2 model', async () => {
       const testPrompt = testPrompts[0];
       const payload = {
