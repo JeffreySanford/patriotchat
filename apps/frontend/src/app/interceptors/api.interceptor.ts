@@ -63,6 +63,18 @@ export class ApiInterceptor implements HttpInterceptor {
       }),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       catchError((error: any) => {
+        // Special handling for 401 errors
+        if (error instanceof HttpErrorResponse && error.status === 401) {
+          console.error(
+            '[Interceptor] 401 Unauthorized - Potential token issue',
+            {
+              url: error.url,
+              token: localStorage.getItem('token')?.substring(0, 50),
+              headers: error.headers.get('Authorization'),
+            },
+          );
+          // Could trigger token refresh here if implemented
+        }
         return throwError(() => this.handleError(error));
       }),
     );

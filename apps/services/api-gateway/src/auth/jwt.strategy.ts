@@ -15,6 +15,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: AuthPayload) {
+    console.log('[JWT Strategy] Token validation:', {
+      userId: payload.sub,
+      issuedAt: new Date(payload.iat * 1000),
+      expiresAt: new Date(payload.exp * 1000),
+      now: new Date(),
+      isExpired: Date.now() > payload.exp * 1000,
+    });
     return { userId: payload.sub };
   }
 }
