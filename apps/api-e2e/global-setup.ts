@@ -167,6 +167,12 @@ async function globalSetup(): Promise<void> {
     console.log('\n✓ All services are ready for testing\n');
   }
 
+  // Wait for services to fully initialize after health checks pass
+  // This allows services time to establish connections, load models, etc.
+  console.log('Warming up services...');
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  console.log('Service warmup complete. Starting tests...\n');
+
   console.log('=================================\n');
 }
 
