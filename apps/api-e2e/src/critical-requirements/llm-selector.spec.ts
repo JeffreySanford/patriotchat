@@ -13,7 +13,7 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
 
       expect(response.ok).toBe(true);
       expect(Array.isArray(response.data?.models)).toBe(true);
-      expect(response.data?.models.length).toBeGreaterThan(0);
+      expect((response.data?.models as Array<any>).length).toBeGreaterThan(0);
 
       const models = response.data?.models as string[];
       console.log(`✓ Available models: ${models.join(', ')}`);
@@ -27,10 +27,11 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
       });
 
       expect(response.ok).toBe(true);
-      const models = response.data?.models as Array<{
-        id: string;
-        name: string;
-      }>;
+      const models =
+        (response.data?.models as Array<{
+          id: string;
+          name: string;
+        }>) || [];
 
       // Verify expected models are available by checking model IDs
       const modelIds = models.map((m) => m.id);
@@ -51,8 +52,9 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
       });
 
       expect(response.ok).toBe(true);
-      expect(response.data?.models).toBeDefined();
-      expect(response.data?.models[0]).toBeDefined();
+      const models = (response.data?.models as Array<any>) || [];
+      expect(models).toBeDefined();
+      expect(models[0]).toBeDefined();
       console.log(`✓ Model selector API operational`);
     });
   });
@@ -74,13 +76,13 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
       });
 
       expect(registerResponse.ok).toBe(true);
-      const token = registerResponse.data?.token;
+      const token = registerResponse.data?.token as string;
 
       // Query with llama2
       const queryResponse = await apiRequest({
         method: 'POST',
         endpoint: '/inference/generate',
-        service: 'api-gateway',
+        service: 'gateway',
         token,
         body: {
           prompt: 'What is AI?',
@@ -109,13 +111,13 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
       });
 
       expect(registerResponse.ok).toBe(true);
-      const token = registerResponse.data?.token;
+      const token = registerResponse.data?.token as string;
 
       // Query with liberty-mistral-v1.0
       const queryResponse = await apiRequest({
         method: 'POST',
         endpoint: '/inference/generate',
-        service: 'api-gateway',
+        service: 'gateway',
         token,
         body: {
           prompt: 'What is constitutional governance?',
@@ -144,13 +146,13 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
       });
 
       expect(registerResponse.ok).toBe(true);
-      const token = registerResponse.data?.token;
+      const token = registerResponse.data?.token as string;
 
       // Query with mistral
       const queryResponse = await apiRequest({
         method: 'POST',
         endpoint: '/inference/generate',
-        service: 'api-gateway',
+        service: 'gateway',
         token,
         body: {
           prompt: 'Explain machine learning',
@@ -179,13 +181,13 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
       });
 
       expect(registerResponse.ok).toBe(true);
-      const token = registerResponse.data?.token;
+      const token = registerResponse.data?.token as string;
 
       // Query with neural-chat
       const queryResponse = await apiRequest({
         method: 'POST',
         endpoint: '/inference/generate',
-        service: 'api-gateway',
+        service: 'gateway',
         token,
         body: {
           prompt: 'What is deep learning?',
@@ -216,13 +218,13 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
       });
 
       expect(registerResponse.ok).toBe(true);
-      const token = registerResponse.data?.token;
+      const token = registerResponse.data?.token as string;
 
       // Query with invalid model
       const queryResponse = await apiRequest({
         method: 'POST',
         endpoint: '/inference/generate',
-        service: 'api-gateway',
+        service: 'gateway',
         token,
         body: {
           prompt: 'Test query',
@@ -241,7 +243,7 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
     test('Model metadata should be available', async () => {
       const response = await apiRequest({
         method: 'GET',
-        endpoint: '/inference/models/metadata',
+        endpoint: '/inference/models',
         service: 'llm',
       });
 
@@ -249,8 +251,9 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
       expect(response.data?.models).toBeDefined();
       expect(Array.isArray(response.data?.models)).toBe(true);
 
-      const models = response.data?.models;
-      for (const model of models) {
+      const models = response.data?.models as Array<any>;
+      expect(models).toBeDefined();
+      for (const model of models || []) {
         expect(model.name).toBeDefined();
         expect(model.description).toBeDefined();
       }
@@ -293,7 +296,7 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
       });
 
       expect(registerResponse.ok).toBe(true);
-      const token = registerResponse.data?.token;
+      const token = registerResponse.data?.token as string;
 
       // Query with model 1
       const query1 = await apiRequest({
@@ -303,7 +306,7 @@ test.describe('Critical Requirement: LLM Model Selector', () => {
         token,
         body: {
           text: 'First query',
-          model: 'llama2',
+          model: 'liberty-mistral-v1.0',
         },
       });
 

@@ -41,21 +41,20 @@ var availableModels = []ModelInfo{
 		Provider:      "ollama-maintained",
 		ContextWindow: 8192,
 	},
-	// Llama2 and Neural Chat disabled - experiencing inference timeouts/errors
-	// {
-	// 	ID:            "llama2",
-	// 	Name:          "Llama 2",
-	// 	Description:   "Ollama-hosted Llama 2 baseline",
-	// 	Provider:      "ollama",
-	// 	ContextWindow: 4096,
-	// },
-	// {
-	// 	ID:            "neural-chat",
-	// 	Name:          "Neural Chat",
-	// 	Description:   "Legacy Neural Chat endpoint",
-	// 	Provider:      "ollama",
-	// 	ContextWindow: 4096,
-	// },
+	{
+		ID:            "llama2",
+		Name:          "Llama 2",
+		Description:   "Ollama-hosted Llama 2 baseline",
+		Provider:      "ollama",
+		ContextWindow: 4096,
+	},
+	{
+		ID:            "neural-chat",
+		Name:          "Neural Chat",
+		Description:   "Legacy Neural Chat endpoint",
+		Provider:      "ollama",
+		ContextWindow: 4096,
+	},
 }
 
 type InferenceRequest struct {
@@ -267,9 +266,8 @@ func callOllama(model, prompt string) (string, error) {
 	modelMapping := map[string]string{
 		"liberty-mistral-v1.0": "mistral:7b",
 		"mistral":              "mistral:7b",
-		// llama2 and neural-chat disabled due to performance issues
-		// "llama2":               "llama2",
-		// "neural-chat":          "codellama:7b",
+		"llama2":               "llama2",
+		"neural-chat":          "neural-chat",
 	}
 
 	actualModel := modelMapping[model]
